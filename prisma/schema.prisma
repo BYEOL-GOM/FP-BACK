@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  userId   Int    @id @default(autoincrement())
+  nickname String
+  fruit    Int    @default(0)
+
+  worries  Worries[]
+  likes    Likes[]
+}
+
+model Worries {
+  worryId     Int       @id @default(autoincrement())
+  authorId    Int       
+  content     String    @db.Text
+  createdAt   DateTime  @default(now())
+  endAt       DateTime?
+  icon        Icon?
+
+  userId      Int
+  user        Users    @relation(fields: [userId], references: [userId], onDelete: Cascade)
+
+  comments    Comments[] // 이 걱정에 달린 댓글들
+  likes       Likes[]    // 이 걱정에 대한 좋아요
+}
+
+enum Icon{
+  A
+  B
+  C
+  D
+}
+
+model Comments {
+  commentId Int      @id @default(autoincrement())
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  worryId    Int
+  worry      Worries  @relation(fields: [worryId], references: [worryId])
+  
+  likes      Likes[] // 댓글에 대한 좋아요들
+
+}
+
+model Likes {
+  likeId    Int       @id @default(autoincrement())
+  checkLike Boolean   @default(false)
+
+  userId    Int
+  user      Users     @relation(fields: [userId], references: [userId], onDelete: Cascade)
+
+  commentId Int
+  comment   Comments  @relation(fields: [commentId], references: [commentId], onDelete: Cascade)
+
+  worryId   Int
+  worry     Worries   @relation(fields: [worryId], references: [worryId])
+}
