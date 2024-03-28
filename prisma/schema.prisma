@@ -15,23 +15,44 @@ model Users {
   nickname String @map("nickname")
   fruit    Int    @default(0) @map("fruit")
 
-  authorId  Int? 
+  authorId  Int?
   
   worries  Worries[]
   likes    Likes[]
   comments Comments[]
-  bookmark   Bookmark[]
+
+  present    Presents[] @relation("PresentSender")
+  presentReceived    Presents[] @relation("PresentReceiver")
+
+  solvedWorries Worries[] @relation("SolvedWorries")
+  helpedSolveWorries Worries[] @relation("HelpedSolveWorries")
 }
+
 
 model Worries {
   worryId     Int       @id @default(autoincrement()) @map("worryId")
-  authorId    Int       @map("authorId")
+  commentAuthorId       Int       @map("commentAuthorId")
   content     String    @db.Text @map("content")
   createdAt   DateTime  @default(now()) @map("createdAt")
-  endAt       DateTime? @map("endAt")
   icon        Icon? @map("icon")
   lastReplyTime DateTime?  //답변이 도착한 시간
-  deletedAt          DateTime? // 소프트 삭제를 위한  @map("icon")
+  deletedAt          DateTime? @map("deletedAt") // 소프트 삭제를 위한  
+
+  // 해결된 답변
+  isSolved     Boolean    @default(false)
+  solvingCommentId Int?   @unique @map("solvingCommentId")
+  solvingComment   Comments? @relation("SolvingComment", fields: [solvingCommentId], references: [commentId])
+
+  // 고민을 등록한 유저(선물을 보냄)
+  solvedByUserId Int? @map("solvedByUserId")
+  solvedByUser   Users? @relation("SolvedWorries", fields: [solvedByUserId], references: [userId])
+
+  // 고민을 해결한 유저(선물을 받음)
+  helperUserId Int? @map("helperUserId")
+  helperUser   Users? @relation("HelpedSolveWorries", fields: [helperUserId], references: [userId])
+
+  // 선물을 보냈는지에 대한 여부 확인
+  presentCheck Boolean @default(false) @map("presentCheck")
 
   userId      Int
   user        Users    @relation(fields: [userId], references: [userId], onDelete: Cascade)
@@ -40,12 +61,14 @@ model Worries {
   likes       Likes[]    // 이 걱정에 대한 좋아요
 }
 
+
 enum Icon{
   A
   B
   C
   D
 }
+
 
 model Comments {
   commentId Int      @id @default(autoincrement()) @map("commentId")
@@ -64,7 +87,24 @@ model Comments {
   worry      Worries  @relation(fields: [worryId], references: [worryId])
 
   likes      Likes[]
-  bookmark   Bookmark[]
+  present    Presents[]
+
+  solvingWorryId Int?
+  solvingWorry Worries? @relation("SolvingComment")
+}
+
+
+model Presents {
+  presentId    Int      @id @default(autoincrement()) @map("presentId")
+  createdAt DateTime @default(now()) @map("createdAt")
+
+  senderId  Int      @map("senderId")
+  receiverId Int     @map("receiverId")
+  commentId Int      @map("commentId")
+  
+  sender    Users    @relation("PresentSender", fields: [senderId], references: [userId])
+  receiver  Users    @relation("PresentReceiver", fields: [receiverId], references: [userId])
+  comment   Comments @relation(fields: [commentId], references: [commentId])
 }
 
 
@@ -80,18 +120,4 @@ model Likes {
 
   worryId   Int
   worry     Worries   @relation(fields: [worryId], references: [worryId])
-}
-
-
-model Bookmark {
-  bookmarkId Int      @id @default(autoincrement()) @map("bookmarkId")
-  createdAt  DateTime @default(now()) @map("createdAt")
-
-  userId     Int
-  user     Users    @relation(fields: [userId], references: [userId], onDelete: Cascade)
-  
-  commentId  Int
-  comment  Comments @relation(fields: [commentId], references: [commentId], onDelete: Cascade)
-
-  @@unique([userId, commentId])
 }

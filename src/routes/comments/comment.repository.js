@@ -1,6 +1,6 @@
 import { prisma } from '../../utils/prisma/index.js';
 
-// 댓글이 참조하는 고민 찾기
+// 해당 댓글이 참조하는 고민 찾기
 export const findWorryById = async (worryId) => {
     return await prisma.worries.findUnique({ where: { worryId: parseInt(worryId) } });
 };
@@ -10,6 +10,30 @@ export const createComment = async (data) => {
     console.log('🩷🩷🩷컨트롤러 : ', data.worryId, data.content, data.userId, data.authorId);
     return await prisma.comments.create({
         data,
+    });
+};
+
+// commentId에 해당하는 댓글 찾기
+export const findCommentById = async (commentId) => {
+    return await prisma.comments.findUnique({
+        where: { commentId: parseInt(commentId) },
+        include: { worry: true },
+    });
+};
+
+// 고민을 해결된 상태로 변경
+export const markWorryAsSolved = async (worryId, commentId, senderId, receiverId) => {
+    return prisma.worries.update({
+        where: { worryId },
+        data: {
+            isSolved: true,
+            solvingCommentId: parseInt(commentId),
+            solvedByUserId: senderId,
+            helperUserId: receiverId,
+            // commentId: solvingCommentId,
+            // senderId: solvedByUserId,
+            // receiverId: helperUserId,
+        },
     });
 };
 

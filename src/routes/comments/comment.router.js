@@ -13,7 +13,7 @@ let router = express.Router({ mergeParams: true });
 router.post('/comments', createCommentController);
 
 // 대댓글 생성
-router.post('/comments/reply', createCommentReplyController);
+router.post('/comments/:commentId/replies', createCommentReplyController);
 
 // 댓글 조회
 router.get('/comments', readCommentController);
