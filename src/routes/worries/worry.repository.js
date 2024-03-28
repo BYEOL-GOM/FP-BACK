@@ -30,7 +30,7 @@ export const createWorry = async ({ content, icon, userId, randomAuthorId }) => 
                 content,
                 icon,
                 userId,
-                authorId: randomAuthorId,
+                commentAuthorId: randomAuthorId,
             },
         });
     } catch (error) {
