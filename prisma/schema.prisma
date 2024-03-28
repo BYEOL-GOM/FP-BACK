@@ -14,24 +14,27 @@ model Users {
   userId   Int    @id @default(autoincrement())
   nickname String
   fruit    Int    @default(0)
-
+  authorId  Int?  
   worries  Worries[]
   likes    Likes[]
 }
 
 model Worries {
   worryId     Int       @id @default(autoincrement())
-  authorId    Int       
+  commentAuthorId    Int?       // 고민답변자 id
   content     String    @db.Text
   createdAt   DateTime  @default(now())
   endAt       DateTime?
   icon        Icon?
+  lastReplyTime DateTime?  //답변이 도착한 시간
+  deletedAt          DateTime? // 소프트 삭제를 위한 
+
 
   userId      Int
   user        Users    @relation(fields: [userId], references: [userId], onDelete: Cascade)
 
-  comments    Comments[] // 이 걱정에 달린 댓글들
-  likes       Likes[]    // 이 걱정에 대한 좋아요
+  comments    Comments? // 고민에 달린 댓글
+  likes       Likes[]    // 고민에 달린 좋아요
 }
 
 enum Icon{
@@ -47,7 +50,7 @@ model Comments {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 
-  worryId    Int
+  worryId    Int   @unique
   worry      Worries  @relation(fields: [worryId], references: [worryId])
   
   likes      Likes[] // 댓글에 대한 좋아요들

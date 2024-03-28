@@ -1,0 +1,214 @@
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 404, Duration: 31ms","timestamp":"2024-03-28T01:46:28.488Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 13ms","timestamp":"2024-03-28T01:48:23.813Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 18ms","timestamp":"2024-03-28T01:48:53.740Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 22ms","timestamp":"2024-03-28T01:49:23.257Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 4ms","timestamp":"2024-03-28T01:49:30.422Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 25ms","timestamp":"2024-03-28T01:49:49.311Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 25ms","timestamp":"2024-03-28T01:50:57.111Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 155ms","timestamp":"2024-03-28T01:53:23.956Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 70ms","timestamp":"2024-03-28T01:54:24.677Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 56ms","timestamp":"2024-03-28T02:16:00.315Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 69ms","timestamp":"2024-03-28T02:20:46.863Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 1128ms","timestamp":"2024-03-28T02:24:08.055Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 430ms","timestamp":"2024-03-28T02:28:23.537Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 70ms","timestamp":"2024-03-28T02:33:10.062Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 54ms","timestamp":"2024-03-28T02:33:24.103Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 130ms","timestamp":"2024-03-28T02:33:50.133Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 341ms","timestamp":"2024-03-28T03:22:46.551Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 68ms","timestamp":"2024-03-28T03:23:31.647Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 60ms","timestamp":"2024-03-28T03:26:43.689Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 18ms","timestamp":"2024-03-28T03:27:13.588Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 14ms","timestamp":"2024-03-28T04:13:41.359Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 19ms","timestamp":"2024-03-28T04:14:52.469Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 2ms","timestamp":"2024-03-28T04:15:00.600Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 123ms","timestamp":"2024-03-28T04:15:03.796Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 49ms","timestamp":"2024-03-28T04:15:43.384Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 41ms","timestamp":"2024-03-28T04:15:47.632Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 36ms","timestamp":"2024-03-28T04:15:51.007Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 176ms","timestamp":"2024-03-28T04:15:54.953Z"}
+{"level":"info","message":"Method: POST, URL: /posts, Status: 404, Duration: 2ms","timestamp":"2024-03-28T04:16:20.716Z"}
+{"level":"info","message":"Method: POST, URL: /worry, Status: 404, Duration: 2ms","timestamp":"2024-03-28T04:16:35.251Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 98ms","timestamp":"2024-03-28T04:16:42.642Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 61ms","timestamp":"2024-03-28T04:16:58.856Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 56ms","timestamp":"2024-03-28T04:17:26.935Z"}
+{"level":"info","message":"Method: GET, URL: /api/worry/1, Status: 404, Duration: 7ms","timestamp":"2024-03-28T04:34:32.922Z"}
+{"level":"info","message":"Method: GET, URL: /api/worry/1/send, Status: 404, Duration: 2ms","timestamp":"2024-03-28T04:34:53.242Z"}
+{"level":"info","message":"Method: GET, URL: /api/worry/1/send, Status: 404, Duration: 1ms","timestamp":"2024-03-28T04:35:37.384Z"}
+{"level":"info","message":"Method: GET, URL: /api/worry/1/send, Status: 404, Duration: 3ms","timestamp":"2024-03-28T04:36:24.695Z"}
+{"level":"info","message":"Method: GET, URL: /api/worry/1/send, Status: 404, Duration: 2ms","timestamp":"2024-03-28T04:36:26.204Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민 상세조회 실패: 고민 상세조회에 실패하였습니다 \nInvalid `prisma.worries.findUnique()` invocation:\n\n{\n  where: {\n    worryId: \"1\"\n             ~~~\n  }\n}\n\nArgument `worryId`: Invalid value provided. Expected Int, provided String.","timestamp":"2024-03-28T04:36:47.690Z"}
+{"level":"info","message":"Method: GET, URL: /api/worry/1/send, Status: 500, Duration: 86ms","timestamp":"2024-03-28T04:36:47.693Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민 상세조회 실패: 고민 상세조회에 실패하였습니다 \nInvalid `prisma.worries.findUnique()` invocation:\n\n{\n  where: {\n    worryId: \"1\"\n             ~~~\n  }\n}\n\nArgument `worryId`: Invalid value provided. Expected Int, provided String.","timestamp":"2024-03-28T04:36:50.406Z"}
+{"level":"info","message":"Method: GET, URL: /api/worry/1/send, Status: 500, Duration: 8ms","timestamp":"2024-03-28T04:36:50.408Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민 상세조회 실패: 고민 상세조회에 실패하였습니다 \nInvalid `prisma.worries.findUnique()` invocation:\n\n{\n  where: {\n    worryId: \"2\"\n             ~~~\n  }\n}\n\nArgument `worryId`: Invalid value provided. Expected Int, provided String.","timestamp":"2024-03-28T04:37:17.922Z"}
+{"level":"info","message":"Method: GET, URL: /api/worry/2/send, Status: 500, Duration: 261ms","timestamp":"2024-03-28T04:37:17.928Z"}
+{"level":"info","message":"Method: GET, URL: /2/send, Status: 200, Duration: 83ms","timestamp":"2024-03-28T04:37:39.393Z"}
+{"level":"info","message":"Method: GET, URL: /1/send, Status: 200, Duration: 19ms","timestamp":"2024-03-28T04:37:43.343Z"}
+{"level":"info","message":"Method: POST, URL: /worry/1/comments, Status: 404, Duration: 29ms","timestamp":"2024-03-28T05:17:08.021Z"}
+{"level":"info","message":"Method: POST, URL: /1/comments, Status: 500, Duration: 4ms","timestamp":"2024-03-28T05:17:18.781Z"}
+{"level":"info","message":"Method: POST, URL: /1/comments, Status: 500, Duration: 91ms","timestamp":"2024-03-28T05:17:55.140Z"}
+{"level":"info","message":"Method: POST, URL: /1/comments, Status: 500, Duration: 100ms","timestamp":"2024-03-28T05:44:21.702Z"}
+{"level":"info","message":"Method: POST, URL: /1/comments, Status: 500, Duration: 92ms","timestamp":"2024-03-28T05:47:30.020Z"}
+{"level":"info","message":"Method: POST, URL: /1/comments, Status: 500, Duration: 404ms","timestamp":"2024-03-28T05:48:08.197Z"}
+{"level":"info","message":"Method: POST, URL: /1/comments, Status: 500, Duration: 106ms","timestamp":"2024-03-28T05:49:02.799Z"}
+{"level":"info","message":"Method: POST, URL: /1/comments, Status: 500, Duration: 134ms","timestamp":"2024-03-28T05:56:07.954Z"}
+{"level":"info","message":"Method: GET, URL: /1/send, Status: 200, Duration: 34ms","timestamp":"2024-03-28T05:57:18.339Z"}
+{"level":"info","message":"Method: GET, URL: /1/send, Status: 200, Duration: 11ms","timestamp":"2024-03-28T05:57:22.584Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 110ms","timestamp":"2024-03-28T05:57:38.949Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 134ms","timestamp":"2024-03-28T05:59:44.364Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패고민등록에 실패하였습니다. \nInvalid `prisma.worries.create()` invocation:\n\n{\n  data: {\n    content: \"concern\",\n    icon: \"B\",\n    userId: 5,\n    authorId: 4,\n    ~~~~~~~~\n?   worryId?: Int,\n?   commentAuthorId?: Int | Null,\n?   createdAt?: DateTime,\n?   endAt?: DateTime | Null,\n?   lastReplyTime?: DateTime | Null,\n?   deletedAt?: DateTime | Null,\n?   comments?: CommentsUncheckedCreateNestedOneWithoutWorryInput,\n?   likes?: LikesUncheckedCreateNestedManyWithoutWorryInput\n  }\n}\n\nUnknown argument `authorId`. Available options are marked with ?.","timestamp":"2024-03-28T06:00:01.083Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry, Status: 500, Duration: 59ms","timestamp":"2024-03-28T06:00:01.086Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 158ms","timestamp":"2024-03-28T06:00:40.667Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 53ms","timestamp":"2024-03-28T06:01:53.583Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 500, Duration: 121ms","timestamp":"2024-03-28T06:10:16.761Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 500, Duration: 15ms","timestamp":"2024-03-28T06:11:23.000Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 500, Duration: 15ms","timestamp":"2024-03-28T06:11:36.831Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 500, Duration: 274ms","timestamp":"2024-03-28T06:14:10.635Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 500, Duration: 69ms","timestamp":"2024-03-28T06:15:57.591Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 500, Duration: 90ms","timestamp":"2024-03-28T06:16:21.875Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패고민등록에 실패하였습니다. \nInvalid `prisma.worries.create()` invocation:\n\n\nThe column `commentAuthorId` does not exist in the current database.","timestamp":"2024-03-28T06:17:06.200Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry, Status: 500, Duration: 62ms","timestamp":"2024-03-28T06:17:06.202Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 118ms","timestamp":"2024-03-28T06:18:29.931Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 36ms","timestamp":"2024-03-28T06:18:36.565Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 49ms","timestamp":"2024-03-28T06:18:41.309Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 41ms","timestamp":"2024-03-28T06:18:45.345Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 79ms","timestamp":"2024-03-28T06:18:51.999Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 53ms","timestamp":"2024-03-28T06:19:02.431Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 46ms","timestamp":"2024-03-28T06:19:07.688Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 59ms","timestamp":"2024-03-28T06:19:24.436Z"}
+{"level":"info","message":"Method: GET, URL: /1/send, Status: 200, Duration: 18ms","timestamp":"2024-03-28T06:19:38.362Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 31ms","timestamp":"2024-03-28T06:19:55.909Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 15ms","timestamp":"2024-03-28T06:20:04.868Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 11ms","timestamp":"2024-03-28T06:20:08.964Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 51ms","timestamp":"2024-03-28T06:20:21.167Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 44ms","timestamp":"2024-03-28T06:20:23.642Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 10ms","timestamp":"2024-03-28T06:20:33.151Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 104ms","timestamp":"2024-03-28T06:26:58.369Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 120ms","timestamp":"2024-03-28T06:28:23.480Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 63ms","timestamp":"2024-03-28T06:28:28.195Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 141ms","timestamp":"2024-03-28T06:28:32.031Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 45ms","timestamp":"2024-03-28T06:28:35.030Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패고민등록에 실패하였습니다. \nInvalid `prisma.worries.create()` invocation:\n\n{\n  data: {\n    content: \"concern\",\n    icon: \"B\",\n    userId: 1,\n    commentAuthorId: 3,\n+   title: String\n  }\n}\n\nArgument `title` is missing.","timestamp":"2024-03-28T06:28:52.844Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry, Status: 500, Duration: 35ms","timestamp":"2024-03-28T06:28:52.846Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패고민등록에 실패하였습니다. \nInvalid `prisma.worries.create()` invocation:\n\n{\n  data: {\n    content: \"concern\",\n    icon: \"B\",\n    userId: 1,\n    commentAuthorId: 2,\n+   title: String\n  }\n}\n\nArgument `title` is missing.","timestamp":"2024-03-28T06:29:42.019Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry, Status: 500, Duration: 93ms","timestamp":"2024-03-28T06:29:42.024Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패고민등록에 실패하였습니다. title is not defined","timestamp":"2024-03-28T06:29:43.813Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry, Status: 500, Duration: 96ms","timestamp":"2024-03-28T06:29:43.817Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패고민등록에 실패하였습니다. title is not defined","timestamp":"2024-03-28T06:29:47.029Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry, Status: 500, Duration: 12ms","timestamp":"2024-03-28T06:29:47.030Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패고민등록에 실패하였습니다. title is not defined","timestamp":"2024-03-28T06:30:05.148Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry, Status: 500, Duration: 368ms","timestamp":"2024-03-28T06:30:05.155Z"}
+{"level":"error","message":"Error Status: undefined, Message: worryService.createWorry is not a function","timestamp":"2024-03-28T06:32:22.036Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry, Status: 500, Duration: 31ms","timestamp":"2024-03-28T06:32:22.042Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패고민등록에 실패하였습니다. title is not defined","timestamp":"2024-03-28T06:32:33.235Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry, Status: 500, Duration: 85ms","timestamp":"2024-03-28T06:32:33.239Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 144ms","timestamp":"2024-03-28T06:42:09.918Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 83ms","timestamp":"2024-03-28T06:42:37.424Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 67ms","timestamp":"2024-03-28T06:42:42.474Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 30ms","timestamp":"2024-03-28T06:43:11.886Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 19ms","timestamp":"2024-03-28T06:43:30.301Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 81ms","timestamp":"2024-03-28T06:43:31.890Z"}
+{"level":"info","message":"Method: GET, URL: /1/send, Status: 200, Duration: 19ms","timestamp":"2024-03-28T06:43:39.064Z"}
+{"level":"info","message":"Method: GET, URL: /1/send, Status: 200, Duration: 10ms","timestamp":"2024-03-28T06:43:40.185Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 96ms","timestamp":"2024-03-28T07:01:28.915Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 88ms","timestamp":"2024-03-28T07:02:17.748Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 10ms","timestamp":"2024-03-28T07:02:18.548Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 18ms","timestamp":"2024-03-28T07:02:51.372Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 80ms","timestamp":"2024-03-28T07:02:52.531Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 11ms","timestamp":"2024-03-28T07:02:56.764Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 21ms","timestamp":"2024-03-28T07:02:59.267Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 12ms","timestamp":"2024-03-28T07:03:00.242Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 13ms","timestamp":"2024-03-28T07:03:01.810Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 30ms","timestamp":"2024-03-28T07:03:12.661Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 278ms","timestamp":"2024-03-28T07:03:18.078Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 12ms","timestamp":"2024-03-28T07:03:21.606Z"}
+{"level":"info","message":"Method: GET, URL: /1/send, Status: 200, Duration: 34ms","timestamp":"2024-03-28T07:03:40.001Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 93ms","timestamp":"2024-03-28T07:03:52.014Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 295ms","timestamp":"2024-03-28T07:04:02.868Z"}
+{"level":"info","message":"Method: GET, URL: /1, Status: 200, Duration: 101ms","timestamp":"2024-03-28T07:20:50.310Z"}
+{"level":"info","message":"Method: GET, URL: /1, Status: 200, Duration: 15ms","timestamp":"2024-03-28T07:20:51.379Z"}
+{"level":"info","message":"Method: GET, URL: /1, Status: 200, Duration: 80ms","timestamp":"2024-03-28T07:22:36.116Z"}
+{"level":"info","message":"Method: GET, URL: /1, Status: 200, Duration: 13ms","timestamp":"2024-03-28T07:22:37.619Z"}
+{"level":"info","message":"Method: GET, URL: /1, Status: 200, Duration: 74ms","timestamp":"2024-03-28T07:23:22.098Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 73ms","timestamp":"2024-03-28T07:24:15.044Z"}
+{"level":"error","message":"Error Status: 400, Message: Expected ',' or '}' after property value in JSON at position 20","timestamp":"2024-03-28T07:48:01.339Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/1/comments, Status: 400, Duration: 15ms","timestamp":"2024-03-28T07:48:01.344Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/1/comments, Status: 404, Duration: 2ms","timestamp":"2024-03-28T07:48:24.265Z"}
+{"level":"info","message":"Method: POST, URL: /api/comments, Status: 404, Duration: 1ms","timestamp":"2024-03-28T07:48:46.426Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 400, Duration: 104ms","timestamp":"2024-03-28T07:49:32.036Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 400, Duration: 125ms","timestamp":"2024-03-28T07:49:51.727Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/comments, Status: 404, Duration: 13ms","timestamp":"2024-03-28T07:51:43.413Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/comments, Status: 404, Duration: 1ms","timestamp":"2024-03-28T07:51:45.070Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 179ms","timestamp":"2024-03-28T07:51:56.937Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 400, Duration: 83ms","timestamp":"2024-03-28T07:52:44.322Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 39ms","timestamp":"2024-03-28T07:53:06.376Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 65ms","timestamp":"2024-03-28T07:53:51.409Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 400, Duration: 11ms","timestamp":"2024-03-28T07:54:02.571Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 400, Duration: 62ms","timestamp":"2024-03-28T07:58:19.143Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 75ms","timestamp":"2024-03-28T07:58:38.994Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 70ms","timestamp":"2024-03-28T07:58:53.536Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 172ms","timestamp":"2024-03-28T08:02:46.849Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 61ms","timestamp":"2024-03-28T08:02:47.767Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 50ms","timestamp":"2024-03-28T08:02:48.487Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 56ms","timestamp":"2024-03-28T08:02:49.594Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 58ms","timestamp":"2024-03-28T08:02:52.715Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 99ms","timestamp":"2024-03-28T08:03:03.111Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 31ms","timestamp":"2024-03-28T08:03:58.940Z"}
+{"level":"info","message":"Method: DELETE, URL: /4, Status: 204, Duration: 103ms","timestamp":"2024-03-28T08:18:46.815Z"}
+{"level":"info","message":"Method: DELETE, URL: /4, Status: 200, Duration: 105ms","timestamp":"2024-03-28T08:19:41.919Z"}
+{"level":"info","message":"Method: DELETE, URL: /3, Status: 200, Duration: 217ms","timestamp":"2024-03-28T08:19:47.740Z"}
+{"level":"info","message":"Method: DELETE, URL: /3, Status: 200, Duration: 28ms","timestamp":"2024-03-28T08:20:08.190Z"}
+{"level":"info","message":"Method: DELETE, URL: /3, Status: 200, Duration: 104ms","timestamp":"2024-03-28T08:20:09.973Z"}
+{"level":"info","message":"Method: GET, URL: /3, Status: 200, Duration: 30ms","timestamp":"2024-03-28T08:24:52.229Z"}
+{"level":"info","message":"Method: GET, URL: /4, Status: 200, Duration: 15ms","timestamp":"2024-03-28T08:24:56.244Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 177ms","timestamp":"2024-03-28T08:57:01.784Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 162ms","timestamp":"2024-03-28T08:57:18.263Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 75ms","timestamp":"2024-03-28T08:57:48.073Z"}
+{"level":"info","message":"Method: GET, URL: /12, Status: 200, Duration: 25ms","timestamp":"2024-03-28T08:58:13.862Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 16ms","timestamp":"2024-03-28T08:58:23.743Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 20ms","timestamp":"2024-03-28T08:58:50.186Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 75ms","timestamp":"2024-03-28T08:59:14.388Z"}
+{"level":"info","message":"Method: GET, URL: /12, Status: 200, Duration: 27ms","timestamp":"2024-03-28T08:59:45.443Z"}
+{"level":"error","message":"Error Status: undefined, Message: 오래된 고민 삭제에 실패했습니다: 오래된 고민 삭제에 실패했습니다: \nInvalid `prisma.worries.findMany()` invocation:\n\n{\n  where: {\n    createdAt: {\n      lt: new Date(\"2024-03-28T09:20:36.448Z\")\n    },\n    comments: {\n      none: {},\n      ~~~~\n?     is?: CommentsWhereInput | Null,\n?     isNot?: CommentsWhereInput | Null\n    }\n  }\n}\n\nUnknown argument `none`. Available options are marked with ?.","timestamp":"2024-03-28T09:30:36.557Z"}
+{"level":"info","message":"Method: DELETE, URL: /api/worry, Status: 500, Duration: 115ms","timestamp":"2024-03-28T09:30:36.562Z"}
+{"level":"error","message":"Error Status: undefined, Message: 오래된 고민 삭제에 실패했습니다: 오래된 고민 삭제에 실패했습니다: \nInvalid `prisma.worries.findMany()` invocation:\n\n{\n  where: {\n    createdAt: {\n      lt: new Date(\"2024-03-28T09:21:57.785Z\")\n    },\n    comments: {\n      none: {},\n      ~~~~\n?     is?: CommentsWhereInput | Null,\n?     isNot?: CommentsWhereInput | Null\n    }\n  }\n}\n\nUnknown argument `none`. Available options are marked with ?.","timestamp":"2024-03-28T09:31:57.847Z"}
+{"level":"info","message":"Method: DELETE, URL: /api/worry, Status: 500, Duration: 68ms","timestamp":"2024-03-28T09:31:57.852Z"}
+{"level":"error","message":"Error Status: undefined, Message: 오래된 고민 삭제에 실패했습니다: 오래된 고민 삭제에 실패했습니다: \nInvalid `prisma.worries.findMany()` invocation:\n\n{\n  where: {\n    createdAt: {\n      lt: new Date(\"2024-03-28T09:22:37.905Z\")\n    },\n    NOT: {\n      comments: {\n        some: {},\n        ~~~~\n?       is?: CommentsWhereInput | Null,\n?       isNot?: CommentsWhereInput | Null\n      }\n    }\n  }\n}\n\nUnknown argument `some`. Available options are marked with ?.","timestamp":"2024-03-28T09:32:37.967Z"}
+{"level":"info","message":"Method: DELETE, URL: /api/worry, Status: 500, Duration: 67ms","timestamp":"2024-03-28T09:32:37.971Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to delete old uncommented worries: Failed to fetch worries without comments: \nInvalid `prisma.worries.findMany()` invocation:\n\n{\n  where: {\n    comments: {\n      none: {},\n      ~~~~\n?     is?: CommentsWhereInput | Null,\n?     isNot?: CommentsWhereInput | Null\n    }\n  }\n}\n\nUnknown argument `none`. Available options are marked with ?.","timestamp":"2024-03-28T09:41:38.111Z"}
+{"level":"info","message":"Method: DELETE, URL: /api/worry, Status: 500, Duration: 70ms","timestamp":"2024-03-28T09:41:38.115Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to delete old uncommented worries: prisma is not defined","timestamp":"2024-03-28T09:42:23.853Z"}
+{"level":"info","message":"Method: DELETE, URL: /api/worry, Status: 500, Duration: 9ms","timestamp":"2024-03-28T09:42:23.858Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to delete old uncommented worries: prisma is not defined","timestamp":"2024-03-28T09:43:25.821Z"}
+{"level":"info","message":"Method: DELETE, URL: /api/worry, Status: 500, Duration: 9ms","timestamp":"2024-03-28T09:43:25.825Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to delete old worries: Failed to fetch old worries without comments: \nInvalid `prisma.worries.findMany()` invocation:\n\n{\n  where: {\n    comments: {\n      none: {},\n      ~~~~\n?     is?: CommentsWhereInput | Null,\n?     isNot?: CommentsWhereInput | Null\n    },\n    createdAt: {\n      lt: new Date(\"2024-03-28T10:44:04.088Z\")\n    }\n  }\n}\n\nUnknown argument `none`. Available options are marked with ?.","timestamp":"2024-03-28T10:54:04.214Z"}
+{"level":"info","message":"Method: DELETE, URL: /api/worry, Status: 500, Duration: 132ms","timestamp":"2024-03-28T10:54:04.219Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to delete old worries: Failed to fetch old worries without comments: \nInvalid `prisma.worries.findMany()` invocation:\n\n{\n  where: {\n    comments: {\n      worryId: null,\n      ~~~~~~~\n?     is?: CommentsWhereInput | Null,\n?     isNot?: CommentsWhereInput | Null\n    },\n    createdAt: {\n      lt: new Date(\"2024-03-28T10:46:41.148Z\")\n    }\n  }\n}\n\nUnknown argument `worryId`. Available options are marked with ?.","timestamp":"2024-03-28T10:56:41.243Z"}
+{"level":"info","message":"Method: DELETE, URL: /api/worry, Status: 500, Duration: 103ms","timestamp":"2024-03-28T10:56:41.250Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to delete old worries: Failed to fetch old worries without comments: \nInvalid `prisma.worries.findMany()` invocation:\n\n{\n  where: {\n    comments: {\n      every: {\n      ~~~~~\n        commentId: null\n      },\n?     is?: CommentsWhereInput | Null,\n?     isNot?: CommentsWhereInput | Null\n    },\n    createdAt: {\n      lt: new Date(\"2024-03-28T10:47:46.638Z\")\n    }\n  }\n}\n\nUnknown argument `every`. Available options are marked with ?.","timestamp":"2024-03-28T10:57:46.698Z"}
+{"level":"info","message":"Method: DELETE, URL: /api/worry, Status: 500, Duration: 65ms","timestamp":"2024-03-28T10:57:46.702Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to delete old worries: Failed to fetch old worries without comments: \nInvalid `prisma.worries.findMany()` invocation:\n\n{\n  where: {\n    comments: {\n      select: {\n      ~~~~~~\n        commentId: null\n      },\n?     is?: CommentsWhereInput | Null,\n?     isNot?: CommentsWhereInput | Null\n    },\n    createdAt: {\n      lt: new Date(\"2024-03-28T10:48:10.424Z\")\n    }\n  }\n}\n\nUnknown argument `select`. Available options are marked with ?.","timestamp":"2024-03-28T10:58:10.538Z"}
+{"level":"info","message":"Method: DELETE, URL: /api/worry, Status: 500, Duration: 118ms","timestamp":"2024-03-28T10:58:10.542Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to delete old worries: Failed to fetch old worries without comments: \nInvalid `prisma.worries.findMany()` invocation:\n\n{\n  where: {\n    NOT: {\n      comments: {\n        some: {},\n        ~~~~\n?       is?: CommentsWhereInput | Null,\n?       isNot?: CommentsWhereInput | Null\n      }\n    },\n    createdAt: {\n      lt: new Date(\"2024-03-28T10:49:16.932Z\")\n    }\n  }\n}\n\nUnknown argument `some`. Available options are marked with ?.","timestamp":"2024-03-28T10:59:17.043Z"}
+{"level":"info","message":"Method: DELETE, URL: /api/worry, Status: 500, Duration: 117ms","timestamp":"2024-03-28T10:59:17.048Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to delete old worries: Failed to fetch old worries without comments: \nInvalid `prisma.worries.findMany()` invocation:\n\n{\n  where: {\n    NOT: {\n      comments: {\n        some: {},\n        ~~~~\n?       is?: CommentsWhereInput | Null,\n?       isNot?: CommentsWhereInput | Null\n      }\n    },\n    createdAt: {\n      lt: new Date(\"2024-03-28T10:49:18.522Z\")\n    }\n  }\n}\n\nUnknown argument `some`. Available options are marked with ?.","timestamp":"2024-03-28T10:59:18.530Z"}
+{"level":"info","message":"Method: DELETE, URL: /api/worry, Status: 500, Duration: 11ms","timestamp":"2024-03-28T10:59:18.534Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to delete old worries: Failed to fetch old worries without comments: \nInvalid `prisma.worries.findMany()` invocation:\n\n{\n  where: {\n    NOT: {\n      comments: {\n        some: {\n        ~~~~\n          commentId: {\n            not: null\n          }\n        },\n?       is?: CommentsWhereInput | Null,\n?       isNot?: CommentsWhereInput | Null\n      }\n    },\n    createdAt: {\n      lt: new Date(\"2024-03-28T10:50:13.711Z\")\n    }\n  }\n}\n\nUnknown argument `some`. Available options are marked with ?.","timestamp":"2024-03-28T11:00:13.798Z"}
+{"level":"info","message":"Method: DELETE, URL: /api/worry, Status: 500, Duration: 93ms","timestamp":"2024-03-28T11:00:13.803Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 680ms","timestamp":"2024-03-28T11:31:59.309Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 31ms","timestamp":"2024-03-28T11:32:02.781Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 71ms","timestamp":"2024-03-28T11:32:06.215Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 376ms","timestamp":"2024-03-28T11:32:21.371Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 49ms","timestamp":"2024-03-28T11:32:24.784Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 388ms","timestamp":"2024-03-28T11:32:33.170Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 80ms","timestamp":"2024-03-28T11:32:40.174Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 113ms","timestamp":"2024-03-28T11:32:44.124Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 56ms","timestamp":"2024-03-28T11:32:45.260Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 52ms","timestamp":"2024-03-28T11:32:47.330Z"}
+{"level":"info","message":"Method: GET, URL: /1, Status: 200, Duration: 28ms","timestamp":"2024-03-28T11:33:06.371Z"}
+{"level":"info","message":"Method: GET, URL: /2, Status: 200, Duration: 15ms","timestamp":"2024-03-28T11:33:29.277Z"}
+{"level":"info","message":"Method: GET, URL: /3, Status: 200, Duration: 23ms","timestamp":"2024-03-28T11:33:37.977Z"}
+{"level":"info","message":"Method: GET, URL: /4, Status: 200, Duration: 17ms","timestamp":"2024-03-28T11:33:45.404Z"}
+{"level":"info","message":"Method: GET, URL: /5, Status: 200, Duration: 13ms","timestamp":"2024-03-28T11:33:50.983Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 260ms","timestamp":"2024-03-28T11:34:07.104Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 92ms","timestamp":"2024-03-28T11:34:52.633Z"}
