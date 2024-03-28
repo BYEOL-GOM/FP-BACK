@@ -11,21 +11,23 @@ datasource db {
 }
 
 model Users {
-  userId   Int    @id @default(autoincrement())
-  nickname String
-  fruit    Int    @default(0)
+  userId   Int    @id @default(autoincrement()) @map("userId")
+  nickname String @map("nickname")
+  fruit    Int    @default(0) @map("fruit")
 
   worries  Worries[]
   likes    Likes[]
+  comments Comments[]
+  bookmark   Bookmark[]
 }
 
 model Worries {
-  worryId     Int       @id @default(autoincrement())
-  authorId    Int       
-  content     String    @db.Text
-  createdAt   DateTime  @default(now())
-  endAt       DateTime?
-  icon        Icon?
+  worryId     Int       @id @default(autoincrement()) @map("worryId")
+  authorId    Int       @map("authorId")
+  content     String    @db.Text @map("content")
+  createdAt   DateTime  @default(now()) @map("createdAt")
+  endAt       DateTime? @map("endAt")
+  icon        Icon? @map("icon")
 
   userId      Int
   user        Users    @relation(fields: [userId], references: [userId], onDelete: Cascade)
@@ -42,21 +44,29 @@ enum Icon{
 }
 
 model Comments {
-  commentId Int      @id @default(autoincrement())
-  content   String   @db.Text
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  commentId Int      @id @default(autoincrement()) @map("commentId")
+  content   String   @db.Text  @map("content")
+  createdAt DateTime @default(now())  @map("createdAt")
+  updatedAt DateTime @default(now())  @map("updatedAt")
+  
+  parentId  Int?     
+  parent    Comments? @relation("CommentHierarchy", fields: [parentId], references: [commentId])
+  children  Comments[] @relation("CommentHierarchy")
+
+  authorId  Int
+  author    Users     @relation(fields: [authorId], references: [userId])
 
   worryId    Int
   worry      Worries  @relation(fields: [worryId], references: [worryId])
-  
-  likes      Likes[] // 댓글에 대한 좋아요들
 
+  likes      Likes[]
+  bookmark   Bookmark[]
 }
 
+
 model Likes {
-  likeId    Int       @id @default(autoincrement())
-  checkLike Boolean   @default(false)
+  likeId    Int       @id @default(autoincrement())  @map("likeId")
+  checkLike Boolean   @default(false)  @map("checkLike")
 
   userId    Int
   user      Users     @relation(fields: [userId], references: [userId], onDelete: Cascade)
@@ -66,4 +76,18 @@ model Likes {
 
   worryId   Int
   worry     Worries   @relation(fields: [worryId], references: [worryId])
+}
+
+
+model Bookmark {
+  bookmarkId Int      @id @default(autoincrement()) @map("bookmarkId")
+  createdAt  DateTime @default(now()) @map("createdAt")
+
+  userId     Int
+  user     Users    @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  
+  commentId  Int
+  comment  Comments @relation(fields: [commentId], references: [commentId], onDelete: Cascade)
+
+  @@unique([userId, commentId])
 }
