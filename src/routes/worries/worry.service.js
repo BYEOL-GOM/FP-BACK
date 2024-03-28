@@ -1,4 +1,5 @@
 import * as worryRepository from './worry.repository.js';
+import { prisma } from '../../utils/prisma/index.js';
 
 //고민 등록
 export const createWorry = async ({ content, icon, userId }) => {
@@ -32,19 +33,19 @@ export const getWorryDetail = async (worryId) => {
     }
 };
 
-// 오래된 댓글이 없는 고민 삭제
+// // 댓글이 없는 오래된 고민 삭제
 export const deleteOldWorries = async () => {
     try {
-        const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000);
+        const worries = await worryRepository.findOldWorriesWithoutComments();
 
-        // Find worries that have no comments and were created more than 10 minutes ago
-        const oldWorries = await worryRepository.getOldWorries(tenMinutesAgo);
+        for (const worry of worries) {
+            const { worryId } = worry;
+            await worryRepository.softDeleteWorryById(worryId);
+        }
 
-        // Soft delete old worries
-        await worryRepository.softDeleteWorries(oldWorries);
-
-        console.log('오래된 고민 삭제 성공');
+        // return worries;
     } catch (error) {
-        throw new Error('Failed to delete old worries: ' + error.message);
+        console.error('오래된 댓글 삭제에 실패했습니다.', error);
+        throw error;
     }
 };
