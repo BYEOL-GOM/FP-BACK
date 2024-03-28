@@ -5,7 +5,7 @@ import userRouter from './users/user.router.js';
 import worryRouter from './worries/worry.router.js';
 const router = express.Router();
 router.use('/worry', commentRouter);
-router.use('/worry', likeRouter);
+// router.use('/worry', likeRouter);
 router.use('/', userRouter);
 router.use('/worry', worryRouter);
 
