@@ -83,13 +83,13 @@ export const getWorryDetail = async (worryId) => {
 // 오래된 고민 소프트 삭제
 export const findOldWorriesWithoutComments = async () => {
     try {
-        const tenMinutesAgo = new Date();
-        tenMinutesAgo.setMinutes(tenMinutesAgo.getMinutes() - 1);
+        const twentyFourHoursAgo = new Date();
+        twentyFourHoursAgo.setDate(twentyFourHoursAgo.getDate() - 1);
 
         const worries = await prisma.worries.findMany({
             where: {
                 createdAt: {
-                    lt: tenMinutesAgo,
+                    lt: twentyFourHoursAgo,
                 },
                 comments: {
                     is: null,
