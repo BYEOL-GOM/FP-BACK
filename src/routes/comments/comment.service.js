@@ -12,16 +12,14 @@ export const createComment = async (worryId, content, userId) => {
         err.status = 404;
         throw err;
     }
-    // (성희) 답변 생성할때 worry테이블에 답변시간 등록하기
-    await WorriesService.updateLastReplyTime(worryId);
 
-    // 찾아낸 commentAuthorId를 사용하여 댓글 생성
+    // 찾아낸 authorId를 사용하여 댓글 생성
     const commentData = {
         worryId: parseInt(worryId),
         content,
-        commentAuthorId: worry.commentAuthorId, // 고민 등록 시 랜덤으로 선택된 사용자 ID 사용
+        authorId: worry.authorId, // 고민 등록 시 랜덤으로 선택된 사용자 ID 사용
     };
-    console.log('💚💚💚컨트롤러 : ', worry.commentAuthorId);
+    console.log('💚💚💚컨트롤러 : ', worry.authorId);
 
     return await CommentRepository.createComment(commentData);
 };

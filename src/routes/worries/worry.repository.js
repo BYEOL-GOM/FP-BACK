@@ -45,6 +45,7 @@ export const getWorriesByCommentAuthorId = async (userId) => {
         const worries = await prisma.worries.findMany({
             where: {
                 commentAuthorId: userId,
+                deletedAt: null,
             },
             select: {
                 worryId: true,
@@ -64,6 +65,7 @@ export const getWorryDetail = async (worryId) => {
         return await prisma.worries.findUnique({
             where: {
                 worryId,
+                deletedAt: null,
             },
             select: {
                 worryId: true,
@@ -78,37 +80,54 @@ export const getWorryDetail = async (worryId) => {
     }
 };
 
-//등록한지 24시간 이상 답변이 달리지 않은 고민들 조회
-
-export const getOldWorries = async (date) => {
+// 오래된 고민 소프트 삭제
+export const findOldWorriesWithoutComments = async () => {
     try {
-        return await prisma.worries.findMany({
+        const tenMinutesAgo = new Date();
+        tenMinutesAgo.setMinutes(tenMinutesAgo.getMinutes() - 1);
+
+        const worries = await prisma.worries.findMany({
             where: {
-                NOT: {
-                    comments: { some: { commentId: { not: null } } }, // At least one comment associated
-                },
                 createdAt: {
-                    lt: date, // Created more than specified date
+                    lt: tenMinutesAgo,
                 },
+                comments: {
+                    is: null,
+                },
+                deletedAt: null, // deletedAt이 null인 레코드만 선택
+            },
+            select: {
+                worryId: true,
             },
         });
+
+        return worries;
     } catch (error) {
-        throw new Error('Failed to fetch old worries without comments: ' + error.message);
+        console.error('댓글이 없는 오래된 고민 찾기 실패했습니다', error);
+        throw error;
     }
 };
 
-// 고민 소프트 삭제
-export const softDeleteWorries = async (worries) => {
+export const softDeleteWorryById = async (worryId) => {
     try {
-        await Promise.all(
-            worries.map(async (worry) => {
-                await prisma.worries.update({
-                    where: { id: worry.id },
-                    data: { deletedAt: new Date() }, // Soft delete by updating the deletedAt field
-                });
-            }),
-        );
+        // 해당 고민이 이미 삭제되었는지 확인
+        const existingWorry = await prisma.worries.findUnique({
+            where: { worryId },
+            select: { deletedAt: true },
+        });
+
+        // 이미 삭제된 경우에는 더 이상 업데이트하지 않음
+        if (existingWorry.deletedAt === null) {
+            await prisma.worries.update({
+                where: { worryId },
+                data: { deletedAt: new Date() },
+            });
+            console.log(`오래된 고민 ${worryId}번 삭제 성공`);
+        } else {
+            console.log(`오래된 고민 ${worryId}번은 이미 삭제되었습니다.`);
+        }
     } catch (error) {
-        throw new Error('Failed to soft delete old worries: ' + error.message);
+        console.error(`오래된 고민 ${worryId}번 삭제 실패:`, error);
+        throw error;
     }
 };
