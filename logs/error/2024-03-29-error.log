@@ -71,3 +71,6 @@
 {"level":"error","message":"Error Status: undefined, Message: PresentRepository.getWorryById is not a function","timestamp":"2024-03-29T05:43:26.448Z"}
 {"level":"error","message":"Error Status: undefined, Message: PresentRepository.getWorryById is not a function","timestamp":"2024-03-29T05:43:27.598Z"}
 
+{"level":"error","message":"Error Status: undefined, Message: PresentService.getSolvedWorriesByUserId is not a function","timestamp":"2024-03-29T11:47:23.775Z"}
+{"level":"error","message":"Error Status: undefined, Message: getSolvedWorryDetailsById is not defined","timestamp":"2024-03-29T13:34:19.923Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.findUnique()` invocation:\n\n{\n  where: {\n    worryId: \"24\"\n             ~~~~\n  },\n  include: {\n    comments: {\n      include: {\n        children: true\n      }\n    }\n  }\n}\n\nArgument `worryId`: Invalid value provided. Expected Int, provided String.","timestamp":"2024-03-29T14:14:54.294Z"}
