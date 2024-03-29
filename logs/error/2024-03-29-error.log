@@ -5,3 +5,5 @@
 {"level":"error","message":"Error Status: undefined, Message: worryService.deleteOldWorries is not a function","timestamp":"2024-03-28T15:19:33.853Z"}
 {"level":"error","message":"Error Status: undefined, Message: 고민이 존재하지 않습니다.","timestamp":"2024-03-28T15:33:03.700Z"}
 {"level":"error","message":"Error Status: undefined, Message: Cannot set headers after they are sent to the client","timestamp":"2024-03-28T15:34:18.482Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch comments: CommentRepository.getCommentDetail is not a function","timestamp":"2024-03-29T10:29:58.703Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch comments: CommentRepository.getCommentDetail is not a function","timestamp":"2024-03-29T10:31:12.027Z"}

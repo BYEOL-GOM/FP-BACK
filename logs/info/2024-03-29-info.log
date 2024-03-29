@@ -77,3 +77,15 @@
 {"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 47ms","timestamp":"2024-03-29T09:57:26.957Z"}
 {"level":"info","message":"Method: POST, URL: /29, Status: 400, Duration: 108ms","timestamp":"2024-03-29T09:57:29.280Z"}
 {"level":"info","message":"Method: POST, URL: /28, Status: 201, Duration: 505ms","timestamp":"2024-03-29T09:57:35.314Z"}
+{"level":"info","message":"Method: POST, URL: /28, Status: 400, Duration: 141ms","timestamp":"2024-03-29T09:58:08.247Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 108ms","timestamp":"2024-03-29T09:58:17.562Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 322ms","timestamp":"2024-03-29T10:05:13.814Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 200ms","timestamp":"2024-03-29T10:07:05.347Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 177ms","timestamp":"2024-03-29T10:07:34.089Z"}
+{"level":"info","message":"Method: GET, URL: /comments/1, Status: 404, Duration: 5ms","timestamp":"2024-03-29T10:29:43.287Z"}
+{"level":"info","message":"Method: GET, URL: /1, Status: 400, Duration: 2ms","timestamp":"2024-03-29T10:29:58.702Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch comments: CommentRepository.getCommentDetail is not a function","timestamp":"2024-03-29T10:29:58.703Z"}
+{"level":"info","message":"Method: GET, URL: /1, Status: 400, Duration: 5ms","timestamp":"2024-03-29T10:31:12.025Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch comments: CommentRepository.getCommentDetail is not a function","timestamp":"2024-03-29T10:31:12.027Z"}
+{"level":"info","message":"Method: GET, URL: /1, Status: 200, Duration: 71ms","timestamp":"2024-03-29T10:32:04.805Z"}
+{"level":"info","message":"Method: GET, URL: /1, Status: 200, Duration: 18ms","timestamp":"2024-03-29T10:32:07.577Z"}

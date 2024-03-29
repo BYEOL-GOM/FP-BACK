@@ -64,7 +64,7 @@ export const createCommentReply = async (parentId, worryId, content, userId) => 
 //     },
 // });
 
-// // 댓글 전체 조회 (고민작성자에게 도착할 댓글 목록)
+// 고민작성자Id가 보낸 고민의 응답 전체 조회
 
 export const getCommentsByUserId = async (userId) => {
     try {
@@ -78,28 +78,41 @@ export const getCommentsByUserId = async (userId) => {
             },
         });
 
-        // 고민들의 ID를 추출합니다.
+        // 고민들의 ID를 추출
         const worryIds = worries.map((worry) => worry.worryId);
 
-        // 각 고민에 대한 댓글들을 가져옵니다.
+        // 각 고민에 대한 답변들 가져옴
         const comments = await Promise.all(
             worryIds.map(async (worryId) => {
                 const commentsForWorry = await prisma.comments.findMany({
                     where: { worryId },
                     select: {
+                        worryId: true,
                         commentId: true,
-                        content: true,
+                        // content: true,
                     },
                 });
                 return commentsForWorry;
             }),
         );
 
-        // 모든 댓글들을 하나의 배열로 평평하게 만듭니다.
         const flatComments = comments.flat();
 
         return flatComments;
     } catch (error) {
         throw new Error('Failed to fetch comments from repository: ' + error.message);
     }
+};
+
+// 응답메세지 상세조회
+export const getCommentDetail = async (commentId) => {
+    return await prisma.comments.findFirst({
+        where: { commentId },
+        select: {
+            worryId: true,
+            commentId: true,
+            content: true,
+            createdAt: true,
+        },
+    });
 };
