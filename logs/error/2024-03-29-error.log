@@ -19,6 +19,23 @@
 {"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-28T19:55:04.024Z"}
 {"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-28T19:56:27.834Z"}
 {"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-28T19:56:45.053Z"}
+
+{"level":"error","message":"Error Status: undefined, Message: Request failed with status code 401","timestamp":"2024-03-29T04:40:19.636Z"}
+{"level":"error","message":"Error Status: undefined, Message: Request failed with status code 401","timestamp":"2024-03-29T04:40:59.227Z"}
+{"level":"error","message":"Error Status: undefined, Message: Request failed with status code 401","timestamp":"2024-03-29T04:41:34.226Z"}
+{"level":"error","message":"Error Status: undefined, Message: Request failed with status code 401","timestamp":"2024-03-29T04:42:26.121Z"}
+{"level":"error","message":"Error Status: undefined, Message: Request failed with status code 401","timestamp":"2024-03-29T04:46:00.303Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot destructure property 'access_token' of 'req.headers.access_token' as it is undefined.","timestamp":"2024-03-29T04:57:21.187Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot destructure property 'access_token' of 'req.headers.Access-Token' as it is undefined.","timestamp":"2024-03-29T04:57:54.655Z"}
+{"level":"error","message":"Error Status: undefined, Message: Request failed with status code 401","timestamp":"2024-03-29T05:01:05.345Z"}
+{"level":"error","message":"Error Status: undefined, Message: Request failed with status code 401","timestamp":"2024-03-29T05:02:16.687Z"}
+{"level":"error","message":"Error Status: undefined, Message: Converting circular structure to JSON\n    --> starting at object with constructor 'ClientRequest'\n    |     property 'res' -> object with constructor 'IncomingMessage'\n    --- property 'req' closes the circle","timestamp":"2024-03-29T05:09:18.664Z"}
+{"level":"error","message":"Error Status: undefined, Message: Request failed with status code 401","timestamp":"2024-03-29T07:55:34.258Z"}
+{"level":"error","message":"Error Status: undefined, Message: Invalid status code: []","timestamp":"2024-03-29T07:58:33.580Z"}
+{"level":"error","message":"Error Status: undefined, Message: Invalid status code: []","timestamp":"2024-03-29T07:59:12.018Z"}
+{"level":"error","message":"Error Status: undefined, Message: Converting circular structure to JSON\n    --> starting at object with constructor 'ClientRequest'\n    |     property 'res' -> object with constructor 'IncomingMessage'\n    --- property 'req' closes the circle","timestamp":"2024-03-29T08:00:36.447Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.users.create()` invocation:\n\n{\n+ data: UsersCreateInput | UsersUncheckedCreateInput\n}\n\nArgument `data` is missing.","timestamp":"2024-03-29T08:17:25.373Z"}
+
 {"level":"error","message":"Error Status: undefined, Message: res is not defined","timestamp":"2024-03-28T15:02:57.351Z"}
 {"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.findUnique()` invocation:\n\n{\n  where: {\n    worryId: 1\n  },\n  select: {\n    deletedAt: true,\n    updatedAt: true,\n    ~~~~~~~~~\n?   worryId?: true,\n?   commentAuthorId?: true,\n?   content?: true,\n?   createdAt?: true,\n?   icon?: true,\n?   lastReplyTime?: true,\n?   userId?: true,\n?   user?: true,\n?   comments?: true,\n?   likes?: true,\n?   _count?: true\n  }\n}\n\nUnknown field `updatedAt` for select statement on model `Worries`. Available options are marked with ?.","timestamp":"2024-03-28T15:09:43.397Z"}
 {"level":"error","message":"Error Status: undefined, Message: worryService.deleteOldWorries is not a function","timestamp":"2024-03-28T15:15:36.863Z"}
@@ -26,6 +43,7 @@
 {"level":"error","message":"Error Status: undefined, Message: worryService.deleteOldWorries is not a function","timestamp":"2024-03-28T15:19:33.853Z"}
 {"level":"error","message":"Error Status: undefined, Message: 고민이 존재하지 않습니다.","timestamp":"2024-03-28T15:33:03.700Z"}
 {"level":"error","message":"Error Status: undefined, Message: Cannot set headers after they are sent to the client","timestamp":"2024-03-28T15:34:18.482Z"}
+
 {"level":"error","message":"Error Status: undefined, Message: 데이터 형식이 올바르지 않아요","timestamp":"2024-03-29T05:27:12.303Z"}
 {"level":"error","message":"Error Status: undefined, Message: 데이터 형식이 올바르지 않아요","timestamp":"2024-03-29T05:27:49.098Z"}
 {"level":"error","message":"Error Status: undefined, Message: PresentRepository.getWorryById is not a function","timestamp":"2024-03-29T05:31:33.007Z"}

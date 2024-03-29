@@ -1,3 +1,7 @@
+
+{"level":"info","message":"Method: GET, URL: /login, Status: 404, Duration: 6ms","timestamp":"2024-03-28T05:42:42.893Z"}
+{"level":"info","message":"Method: GET, URL: /login, Status: 302, Duration: 4ms","timestamp":"2024-03-28T05:42:50.426Z"}
+{"level":"info","message":"Method: GET, URL: /oauth, Status: 500, Duration: 180ms","timestamp":"2024-03-28T05:44:05.190Z"}
 {"level":"info","message":"Method: POST, URL: /sign-up, Status: 404, Duration: 31ms","timestamp":"2024-03-28T01:46:28.488Z"}
 {"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 13ms","timestamp":"2024-03-28T01:48:23.813Z"}
 {"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 18ms","timestamp":"2024-03-28T01:48:53.740Z"}

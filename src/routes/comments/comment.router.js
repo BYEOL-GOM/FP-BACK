@@ -1,10 +1,10 @@
 import express from 'express';
 import {
     createCommentController,
-    createCommentReplyController,
-    readCommentController,
-    updateCommentController,
-    deleteCommentController,
+    // createCommentReplyController,
+    // readCommentController,
+    // updateCommentController,
+    // deleteCommentController,
 } from './comment.controller.js';
 
 let router = express.Router({ mergeParams: true });
