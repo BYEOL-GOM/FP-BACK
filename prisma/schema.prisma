@@ -11,12 +11,14 @@ datasource db {
 }
 
 model Users {
-  userId   Int    @id @default(autoincrement()) @map("userId")
-  nickname String @map("nickname")
-  fruit    Int    @default(0) @map("fruit")
+  userId   Int    @id @default(autoincrement())
+  userChekId String 
+  nickname String
+  email String
+  fruit    Int    @default(0)
 
-  authorId  Int?
-  
+  authorId  Int?  
+
   worries  Worries[]
   likes    Likes[]
   comments Comments[]
@@ -63,7 +65,6 @@ enum Icon{
   A
   B
   C
-  D
 }
 
 
