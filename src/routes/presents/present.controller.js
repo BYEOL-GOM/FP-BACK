@@ -22,7 +22,7 @@ export const sendPresent = async (req, res, next) => {
     }
 };
 
-// A유저가 선물을 보낸 '나의 해결된 고민' 목록 조회
+// A유저가 선물을 보낸 '나의 해결된 고민' 목록 전체 조회
 export const getSolvedWorries = async (req, res, next) => {
     try {
         const { userId } = req.body;
@@ -35,7 +35,9 @@ export const getSolvedWorries = async (req, res, next) => {
     }
 };
 
-// A유저가 선물을 받은 '나의 해결한 고민' 목록 조회
+// A유저가 선물을 보낸 '나의 해결된 고민' 상세 조회
+
+// A유저가 선물을 받은 '나의 해결한 고민' 목록 전체 조회
 export const getHelpedSolveWorries = async (req, res, next) => {
     try {
         const { userId } = req.body;
@@ -47,3 +49,5 @@ export const getHelpedSolveWorries = async (req, res, next) => {
         next(error);
     }
 };
+
+// A유저가 선물을 받은 '나의 해결한 고민' 상세 조회

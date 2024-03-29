@@ -1,6 +1,6 @@
 import { prisma } from '../../utils/prisma/index.js';
 
-// 랜덤으로 답변자 선정
+// 랜덤으로 답변자 지정하기
 export const getRandomUser = async (userId) => {
     try {
         const users = await prisma.users.findMany({
@@ -12,7 +12,7 @@ export const getRandomUser = async (userId) => {
         });
 
         if (users.length === 0) {
-            throw new Error('회원가입된 유저가 없습니다.');
+            throw new Error('회원가입한 유저가 없습니다.');
         }
 
         const randomIndex = Math.floor(Math.random() * users.length);
@@ -22,7 +22,7 @@ export const getRandomUser = async (userId) => {
     }
 };
 
-// 고민등록
+// 고민 등록
 export const createWorry = async ({ content, icon, userId, randomAuthorId }) => {
     try {
         return await prisma.worries.create({
@@ -38,12 +38,41 @@ export const createWorry = async ({ content, icon, userId, randomAuthorId }) => 
     }
 };
 
+// 고민답변자Id기준으로 보는 고민 전체 조회
+
+export const getWorriesByCommentAuthorId = async (userId) => {
+    try {
+        const worries = await prisma.worries.findMany({
+            where: {
+                commentAuthorId: userId,
+                deletedAt: null,
+            },
+            select: {
+                worryId: true,
+                userId: true,
+                icon: true,
+            },
+        });
+        return worries;
+    } catch (error) {
+        throw new Error('Error retrieving worries by author ID: ' + error.message);
+    }
+};
+
 // 고민 상세조회
 export const getWorryDetail = async (worryId) => {
     try {
         return await prisma.worries.findUnique({
             where: {
                 worryId,
+                deletedAt: null,
+            },
+            select: {
+                worryId: true,
+                userId: true,
+                commentAuthorId: true,
+                content: true,
+                createdAt: true,
             },
         });
     } catch (error) {
@@ -51,15 +80,54 @@ export const getWorryDetail = async (worryId) => {
     }
 };
 
-// 고민 소프트 삭제
-export const deleteWorryRepository = async (worryId) => {
+// 오래된 고민 소프트 삭제
+export const findOldWorriesWithoutComments = async () => {
     try {
-        // 해당 걱정을 소프트 삭제
-        await prisma.worries.update({
-            where: { worryId },
-            data: { deletedAt: new Date() }, // deletedAt 필드를 현재 시간으로 업데이트하여 소프트 삭제
+        const tenMinutesAgo = new Date();
+        tenMinutesAgo.setMinutes(tenMinutesAgo.getMinutes() - 1);
+
+        const worries = await prisma.worries.findMany({
+            where: {
+                createdAt: {
+                    lt: tenMinutesAgo,
+                },
+                comments: {
+                    is: null,
+                },
+                deletedAt: null, // deletedAt이 null인 레코드만 선택
+            },
+            select: {
+                worryId: true,
+            },
         });
+
+        return worries;
     } catch (error) {
-        throw new Error('삭제에 실패했습니다' + error.message);
+        console.error('댓글이 없는 오래된 고민 찾기 실패했습니다', error);
+        throw error;
+    }
+};
+
+export const softDeleteWorryById = async (worryId) => {
+    try {
+        // 해당 고민이 이미 삭제되었는지 확인
+        const existingWorry = await prisma.worries.findUnique({
+            where: { worryId },
+            select: { deletedAt: true },
+        });
+
+        // 이미 삭제된 경우에는 더 이상 업데이트하지 않음
+        if (existingWorry.deletedAt === null) {
+            await prisma.worries.update({
+                where: { worryId },
+                data: { deletedAt: new Date() },
+            });
+            console.log(`오래된 고민 ${worryId}번 삭제 성공`);
+        } else {
+            console.log(`오래된 고민 ${worryId}번은 이미 삭제되었습니다.`);
+        }
+    } catch (error) {
+        console.error(`오래된 고민 ${worryId}번 삭제 실패:`, error);
+        throw error;
     }
 };

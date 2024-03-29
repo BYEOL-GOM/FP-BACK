@@ -16,7 +16,7 @@ export const sendPresent = async (worryId, commentId, userId, commentAuthorId) =
     console.log('💛💛💛서비스 : ', worryId, commentId, userId, commentAuthorId);
 
     // 해당 고민 게시글 가져오기
-    const worry = await PresentRepository.getWorryById(worryId);
+    const worry = await PresentRepository.findWorryById(worryId);
 
     // 고민이 해결되었거나 선물을 이미 보냈다면 에러 처리
     if (worry.isSolved && worry.presentCheck) {

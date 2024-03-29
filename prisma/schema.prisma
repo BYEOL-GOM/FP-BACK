@@ -35,10 +35,10 @@ model Worries {
   content               String    @db.Text @map("content")
   createdAt             DateTime  @default(now()) @map("createdAt")
   icon                  Icon?     @map("icon")
-  lastReplyTime         DateTime?                           //답변이 도착한 시간
-  deletedAt             DateTime? @map("deletedAt")         // 소프트 삭제를 위한  
-  isSolved     Boolean    @default(false)                   // 고민이 해결됐는지에 대한 여부 확인
-  presentCheck Boolean @default(false) @map("presentCheck") // 선물을 보냈는지에 대한 여부 확인
+  lastReplyTime         DateTime?                             //답변이 도착한 시간
+  deletedAt             DateTime? @map("deletedAt")           // 소프트 삭제를 위한  
+  isSolved     Boolean  @default(false)                       // 고민이 해결됐는지에 대한 여부 확인
+  presentCheck Boolean  @default(false) @map("presentCheck")  // 선물을 보냈는지에 대한 여부 확인
 
   userId      Int
   user        Users    @relation(fields: [userId], references: [userId], onDelete: Cascade)

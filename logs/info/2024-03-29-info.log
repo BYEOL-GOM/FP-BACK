@@ -1,3 +1,42 @@
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 134ms","timestamp":"2024-03-28T15:01:01.328Z"}
+{"level":"error","message":"Error Status: undefined, Message: res is not defined","timestamp":"2024-03-28T15:02:57.351Z"}
+{"level":"info","message":"Method: DELETE, URL: /api/worry, Status: 500, Duration: 1004ms","timestamp":"2024-03-28T15:02:57.356Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 933ms","timestamp":"2024-03-28T15:04:08.914Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 1110ms","timestamp":"2024-03-28T15:04:16.440Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 124ms","timestamp":"2024-03-28T15:05:24.832Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 398ms","timestamp":"2024-03-28T15:06:38.195Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 112ms","timestamp":"2024-03-28T15:07:52.101Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 165ms","timestamp":"2024-03-28T15:07:54.022Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.findUnique()` invocation:\n\n{\n  where: {\n    worryId: 1\n  },\n  select: {\n    deletedAt: true,\n    updatedAt: true,\n    ~~~~~~~~~\n?   worryId?: true,\n?   commentAuthorId?: true,\n?   content?: true,\n?   createdAt?: true,\n?   icon?: true,\n?   lastReplyTime?: true,\n?   userId?: true,\n?   user?: true,\n?   comments?: true,\n?   likes?: true,\n?   _count?: true\n  }\n}\n\nUnknown field `updatedAt` for select statement on model `Worries`. Available options are marked with ?.","timestamp":"2024-03-28T15:09:43.397Z"}
+{"level":"info","message":"Method: DELETE, URL: /api/worry, Status: 500, Duration: 188ms","timestamp":"2024-03-28T15:09:43.403Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 600ms","timestamp":"2024-03-28T15:10:38.893Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 656ms","timestamp":"2024-03-28T15:13:40.146Z"}
+{"level":"error","message":"Error Status: undefined, Message: worryService.deleteOldWorries is not a function","timestamp":"2024-03-28T15:15:36.863Z"}
+{"level":"info","message":"Method: DELETE, URL: /api/worry, Status: 500, Duration: 9ms","timestamp":"2024-03-28T15:15:36.867Z"}
+{"level":"error","message":"Error Status: undefined, Message: worryService.deleteOldWorries is not a function","timestamp":"2024-03-28T15:19:21.771Z"}
+{"level":"info","message":"Method: DELETE, URL: /api/worry, Status: 500, Duration: 10ms","timestamp":"2024-03-28T15:19:21.777Z"}
+{"level":"error","message":"Error Status: undefined, Message: worryService.deleteOldWorries is not a function","timestamp":"2024-03-28T15:19:33.853Z"}
+{"level":"info","message":"Method: DELETE, URL: /api/worry, Status: 500, Duration: 11ms","timestamp":"2024-03-28T15:19:33.859Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 336ms","timestamp":"2024-03-28T15:19:48.625Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 69ms","timestamp":"2024-03-28T15:22:05.427Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 94ms","timestamp":"2024-03-28T15:22:17.555Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 68ms","timestamp":"2024-03-28T15:23:13.368Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 92ms","timestamp":"2024-03-28T15:23:30.367Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 247ms","timestamp":"2024-03-28T15:24:05.814Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 108ms","timestamp":"2024-03-28T15:24:08.074Z"}
+{"level":"info","message":"Method: GET, URL: /26, Status: 200, Duration: 82ms","timestamp":"2024-03-28T15:24:43.920Z"}
+{"level":"info","message":"Method: GET, URL: /27, Status: 200, Duration: 10ms","timestamp":"2024-03-28T15:24:46.961Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 75ms","timestamp":"2024-03-28T15:24:59.128Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민이 존재하지 않습니다.","timestamp":"2024-03-28T15:33:03.700Z"}
+{"level":"info","message":"Method: GET, URL: /api/worry/27, Status: 500, Duration: 97ms","timestamp":"2024-03-28T15:33:03.705Z"}
+{"level":"info","message":"Method: GET, URL: /worry/27, Status: 200, Duration: 82ms","timestamp":"2024-03-28T15:34:18.480Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot set headers after they are sent to the client","timestamp":"2024-03-28T15:34:18.482Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 82ms","timestamp":"2024-03-28T15:36:05.853Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 12ms","timestamp":"2024-03-28T15:36:08.862Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 16ms","timestamp":"2024-03-28T15:36:11.908Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 13ms","timestamp":"2024-03-28T15:36:15.029Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 175ms","timestamp":"2024-03-28T15:40:09.650Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 16ms","timestamp":"2024-03-28T15:40:15.354Z"}
 {"level":"error","message":"Error Status: undefined, Message: PresentService.getWorryById is not a function","timestamp":"2024-03-28T17:38:51.016Z"}
 {"level":"info","message":"Method: POST, URL: /api/worry/12/comments/8/sendPresent, Status: 500, Duration: 32ms","timestamp":"2024-03-28T17:38:51.023Z"}
 {"level":"error","message":"Error Status: undefined, Message: PresentService.getWorryById is not a function","timestamp":"2024-03-28T17:39:07.837Z"}
@@ -80,3 +119,35 @@
 {"level":"info","message":"Method: POST, URL: /api/worry/3/comments/3/sendPresent, Status: 400, Duration: 73ms","timestamp":"2024-03-28T19:56:45.054Z"}
 {"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 19ms","timestamp":"2024-03-28T19:56:54.243Z"}
 {"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry, Status: 404, Duration: 1ms","timestamp":"2024-03-28T19:57:05.140Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 366ms","timestamp":"2024-03-29T05:26:56.633Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 29ms","timestamp":"2024-03-29T05:27:03.219Z"}
+{"level":"error","message":"Error Status: undefined, Message: 데이터 형식이 올바르지 않아요","timestamp":"2024-03-29T05:27:12.303Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry, Status: 500, Duration: 7ms","timestamp":"2024-03-29T05:27:12.304Z"}
+{"level":"error","message":"Error Status: undefined, Message: 데이터 형식이 올바르지 않아요","timestamp":"2024-03-29T05:27:49.098Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry, Status: 500, Duration: 3ms","timestamp":"2024-03-29T05:27:49.099Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 83ms","timestamp":"2024-03-29T05:29:42.640Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 59ms","timestamp":"2024-03-29T05:31:05.033Z"}
+{"level":"error","message":"Error Status: undefined, Message: PresentRepository.getWorryById is not a function","timestamp":"2024-03-29T05:31:33.007Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/9/comments/4/sendPresent, Status: 500, Duration: 20ms","timestamp":"2024-03-29T05:31:33.008Z"}
+{"level":"error","message":"Error Status: undefined, Message: PresentRepository.getWorryById is not a function","timestamp":"2024-03-29T05:35:17.146Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/9/comments/4/sendPresent, Status: 500, Duration: 14ms","timestamp":"2024-03-29T05:35:17.147Z"}
+{"level":"error","message":"Error Status: 400, Message: Expected ',' or '}' after property value in JSON at position 19","timestamp":"2024-03-29T05:35:30.952Z"}
+{"level":"info","message":"Method: GET, URL: /api/mySolvedWorry, Status: 400, Duration: 4ms","timestamp":"2024-03-29T05:35:30.954Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry, Status: 404, Duration: 1ms","timestamp":"2024-03-29T05:35:38.398Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 169ms","timestamp":"2024-03-29T05:39:42.062Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 31ms","timestamp":"2024-03-29T05:39:43.444Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 27ms","timestamp":"2024-03-29T05:39:44.318Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 30ms","timestamp":"2024-03-29T05:39:45.201Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 65ms","timestamp":"2024-03-29T05:42:51.595Z"}
+{"level":"error","message":"Error Status: undefined, Message: PresentRepository.getWorryById is not a function","timestamp":"2024-03-29T05:43:26.448Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/13/comments/5/sendPresent, Status: 500, Duration: 13ms","timestamp":"2024-03-29T05:43:26.449Z"}
+{"level":"error","message":"Error Status: undefined, Message: PresentRepository.getWorryById is not a function","timestamp":"2024-03-29T05:43:27.598Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/13/comments/5/sendPresent, Status: 500, Duration: 11ms","timestamp":"2024-03-29T05:43:27.599Z"}
+{"level":"info","message":"Method: POST, URL: /worry/13/comments/5/sendPresent, Status: 201, Duration: 170ms","timestamp":"2024-03-29T05:44:19.898Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 61ms","timestamp":"2024-03-29T05:44:34.903Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry, Status: 404, Duration: 2ms","timestamp":"2024-03-29T05:44:44.154Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 159ms","timestamp":"2024-03-29T06:23:56.911Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 59ms","timestamp":"2024-03-29T06:24:22.658Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 29ms","timestamp":"2024-03-29T06:24:26.260Z"}
+{"level":"info","message":"Method: POST, URL: /worry/14/comments/6/sendPresent, Status: 201, Duration: 89ms","timestamp":"2024-03-29T06:24:57.565Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 19ms","timestamp":"2024-03-29T06:25:03.014Z"}

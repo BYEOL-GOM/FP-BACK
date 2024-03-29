@@ -20,8 +20,8 @@ export const markWorryAsSolvedAndCreatePresent = async (worryId, commentId, user
             data: {
                 isSolved: true,
                 presentCheck: true,
-                solvedByUserId: userId, // 고민을 해결한 사용자 ID 업데이트
                 solvingCommentId: parseInt(commentId), // 해결을 위한 댓글 ID 업데이트
+                solvedByUserId: userId, // 고민을 해결한 사용자 ID 업데이트
                 helperUserId: commentAuthorId, // 선물을 받는 사용자(답변자) ID 업데이트
             },
         }),
