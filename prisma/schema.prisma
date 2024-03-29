@@ -33,6 +33,7 @@ model Users {
 model Worries {
   worryId               Int       @id @default(autoincrement()) @map("worryId")
   commentAuthorId       Int       @map("commentAuthorId")
+
   content               String    @db.Text @map("content")
   createdAt             DateTime  @default(now()) @map("createdAt")
   icon                  Icon?     @map("icon")
@@ -80,7 +81,7 @@ model Comments {
   authorId  Int
   author    Users     @relation(fields: [authorId], references: [userId])
 
-  worryId    Int
+  worryId    Int   @unique
   worry      Worries  @relation(fields: [worryId], references: [worryId])
 
   likes      Likes[]

@@ -1,6 +1,7 @@
 {"level":"error","message":"Error Status: undefined, Message: 고민 상세조회 실패: 고민 상세조회에 실패하였습니다 \nInvalid `prisma.worries.findUnique()` invocation:\n\n{\n  where: {\n    worryId: \"1\"\n             ~~~\n  }\n}\n\nArgument `worryId`: Invalid value provided. Expected Int, provided String.","timestamp":"2024-03-28T04:36:47.690Z"}
 {"level":"error","message":"Error Status: undefined, Message: 고민 상세조회 실패: 고민 상세조회에 실패하였습니다 \nInvalid `prisma.worries.findUnique()` invocation:\n\n{\n  where: {\n    worryId: \"1\"\n             ~~~\n  }\n}\n\nArgument `worryId`: Invalid value provided. Expected Int, provided String.","timestamp":"2024-03-28T04:36:50.406Z"}
 {"level":"error","message":"Error Status: undefined, Message: 고민 상세조회 실패: 고민 상세조회에 실패하였습니다 \nInvalid `prisma.worries.findUnique()` invocation:\n\n{\n  where: {\n    worryId: \"2\"\n             ~~~\n  }\n}\n\nArgument `worryId`: Invalid value provided. Expected Int, provided String.","timestamp":"2024-03-28T04:37:17.922Z"}
+
 {"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패고민등록에 실패하였습니다. \nInvalid `prisma.worries.create()` invocation:\n\n{\n  data: {\n    content: \"concern\",\n    icon: \"B\",\n    userId: 5,\n    authorId: 4,\n    ~~~~~~~~\n?   worryId?: Int,\n?   commentAuthorId?: Int | Null,\n?   createdAt?: DateTime,\n?   endAt?: DateTime | Null,\n?   lastReplyTime?: DateTime | Null,\n?   deletedAt?: DateTime | Null,\n?   comments?: CommentsUncheckedCreateNestedOneWithoutWorryInput,\n?   likes?: LikesUncheckedCreateNestedManyWithoutWorryInput\n  }\n}\n\nUnknown argument `authorId`. Available options are marked with ?.","timestamp":"2024-03-28T06:00:01.083Z"}
 {"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패고민등록에 실패하였습니다. \nInvalid `prisma.worries.create()` invocation:\n\n\nThe column `commentAuthorId` does not exist in the current database.","timestamp":"2024-03-28T06:17:06.200Z"}
 {"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패고민등록에 실패하였습니다. \nInvalid `prisma.worries.create()` invocation:\n\n{\n  data: {\n    content: \"concern\",\n    icon: \"B\",\n    userId: 1,\n    commentAuthorId: 3,\n+   title: String\n  }\n}\n\nArgument `title` is missing.","timestamp":"2024-03-28T06:28:52.844Z"}
@@ -43,6 +44,7 @@
 {"level":"error","message":"Error Status: undefined, Message: worryService.deleteOldWorries is not a function","timestamp":"2024-03-28T14:50:07.556Z"}
 {"level":"error","message":"Error Status: undefined, Message: Maximum call stack size exceeded","timestamp":"2024-03-28T14:52:32.685Z"}
 {"level":"error","message":"Error Status: undefined, Message: prisma is not defined","timestamp":"2024-03-28T14:55:04.504Z"}
+
 {"level":"error","message":"Error Status: 400, Message: Expected ',' or '}' after property value in JSON at position 31","timestamp":"2024-03-28T05:59:25.202Z"}
 {"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패고민등록에 실패하였습니다. \nInvalid `prisma.worries.create()` invocation:\n\n\nThe column `authorId` does not exist in the current database.","timestamp":"2024-03-28T06:04:20.159Z"}
 {"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패랜덤 답변자 선정 실패: 회원가입된 유저가 없습니다.","timestamp":"2024-03-28T06:07:31.811Z"}
@@ -52,3 +54,4 @@
 {"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패고민등록에 실패하였습니다. \nInvalid `prisma.worries.create()` invocation:\n\n\nForeign key constraint failed on the field: `userId`","timestamp":"2024-03-28T14:18:03.964Z"}
 {"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패고민등록에 실패하였습니다. \nInvalid `prisma.worries.create()` invocation:\n\n\nForeign key constraint failed on the field: `userId`","timestamp":"2024-03-28T14:22:46.543Z"}
 {"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패고민등록에 실패하였습니다. \nInvalid `prisma.worries.create()` invocation:\n\n\nForeign key constraint failed on the field: `userId`","timestamp":"2024-03-28T14:27:04.708Z"}
+

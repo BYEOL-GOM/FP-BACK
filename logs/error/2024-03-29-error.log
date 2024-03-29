@@ -1,3 +1,4 @@
+
 {"level":"error","message":"Error Status: undefined, Message: PresentService.getWorryById is not a function","timestamp":"2024-03-28T17:38:51.016Z"}
 {"level":"error","message":"Error Status: undefined, Message: PresentService.getWorryById is not a function","timestamp":"2024-03-28T17:39:07.837Z"}
 {"level":"error","message":"Error Status: 404, Message: 해당하는 답변의 고민 게시글이 존재하지 않습니다.","timestamp":"2024-03-28T17:43:05.358Z"}
@@ -36,6 +37,7 @@
 {"level":"error","message":"Error Status: undefined, Message: Converting circular structure to JSON\n    --> starting at object with constructor 'ClientRequest'\n    |     property 'res' -> object with constructor 'IncomingMessage'\n    --- property 'req' closes the circle","timestamp":"2024-03-29T08:00:36.447Z"}
 {"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.users.create()` invocation:\n\n{\n+ data: UsersCreateInput | UsersUncheckedCreateInput\n}\n\nArgument `data` is missing.","timestamp":"2024-03-29T08:17:25.373Z"}
 
+
 {"level":"error","message":"Error Status: undefined, Message: res is not defined","timestamp":"2024-03-28T15:02:57.351Z"}
 {"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.findUnique()` invocation:\n\n{\n  where: {\n    worryId: 1\n  },\n  select: {\n    deletedAt: true,\n    updatedAt: true,\n    ~~~~~~~~~\n?   worryId?: true,\n?   commentAuthorId?: true,\n?   content?: true,\n?   createdAt?: true,\n?   icon?: true,\n?   lastReplyTime?: true,\n?   userId?: true,\n?   user?: true,\n?   comments?: true,\n?   likes?: true,\n?   _count?: true\n  }\n}\n\nUnknown field `updatedAt` for select statement on model `Worries`. Available options are marked with ?.","timestamp":"2024-03-28T15:09:43.397Z"}
 {"level":"error","message":"Error Status: undefined, Message: worryService.deleteOldWorries is not a function","timestamp":"2024-03-28T15:15:36.863Z"}
@@ -44,6 +46,23 @@
 {"level":"error","message":"Error Status: undefined, Message: 고민이 존재하지 않습니다.","timestamp":"2024-03-28T15:33:03.700Z"}
 {"level":"error","message":"Error Status: undefined, Message: Cannot set headers after they are sent to the client","timestamp":"2024-03-28T15:34:18.482Z"}
 
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch comments: CommentRepository.getCommentDetail is not a function","timestamp":"2024-03-29T10:29:58.703Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch comments: CommentRepository.getCommentDetail is not a function","timestamp":"2024-03-29T10:31:12.027Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot set headers after they are sent to the client","timestamp":"2024-03-29T12:00:13.601Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot set headers after they are sent to the client","timestamp":"2024-03-29T12:00:19.445Z"}
+{"level":"error","message":"Error Status: 400, Message: Unexpected token '}', ...\"erId\" : \r\n}\" is not valid JSON","timestamp":"2024-03-29T12:02:32.281Z"}
+{"level":"error","message":"Error Status: undefined, Message: 데이터 형식이 올바르지 않아요","timestamp":"2024-03-29T12:02:45.731Z"}
+{"level":"error","message":"Error Status: 400, Message: Unexpected token '}', ...\"erId\" : \r\n}\" is not valid JSON","timestamp":"2024-03-29T12:03:15.782Z"}
+{"level":"error","message":"Error Status: undefined, Message: 데이터 형식이 올바르지 않습니다","timestamp":"2024-03-29T12:05:18.585Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot set headers after they are sent to the client","timestamp":"2024-03-29T12:18:42.211Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot set headers after they are sent to the client","timestamp":"2024-03-29T13:52:34.334Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot set headers after they are sent to the client","timestamp":"2024-03-29T13:52:36.256Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot set headers after they are sent to the client","timestamp":"2024-03-29T13:52:46.057Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot set headers after they are sent to the client","timestamp":"2024-03-29T13:53:10.390Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot set headers after they are sent to the client","timestamp":"2024-03-29T13:53:14.432Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot set headers after they are sent to the client","timestamp":"2024-03-29T13:53:55.330Z"}
+
+
 {"level":"error","message":"Error Status: undefined, Message: 데이터 형식이 올바르지 않아요","timestamp":"2024-03-29T05:27:12.303Z"}
 {"level":"error","message":"Error Status: undefined, Message: 데이터 형식이 올바르지 않아요","timestamp":"2024-03-29T05:27:49.098Z"}
 {"level":"error","message":"Error Status: undefined, Message: PresentRepository.getWorryById is not a function","timestamp":"2024-03-29T05:31:33.007Z"}
@@ -51,3 +70,4 @@
 {"level":"error","message":"Error Status: 400, Message: Expected ',' or '}' after property value in JSON at position 19","timestamp":"2024-03-29T05:35:30.952Z"}
 {"level":"error","message":"Error Status: undefined, Message: PresentRepository.getWorryById is not a function","timestamp":"2024-03-29T05:43:26.448Z"}
 {"level":"error","message":"Error Status: undefined, Message: PresentRepository.getWorryById is not a function","timestamp":"2024-03-29T05:43:27.598Z"}
+
