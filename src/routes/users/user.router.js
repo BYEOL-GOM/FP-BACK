@@ -30,7 +30,6 @@ const router = express.Router();
 //             where: {userChekId: userInpo.id}
 //         })
 
-        
 //           if (!findUser){
 //              const sigup = await prisma.users.create({
 //                 userChekId: userInpo.id,
@@ -40,7 +39,6 @@ const router = express.Router();
 //          }
 
 //          return res.json(userInpo);
-        
 
 //     } catch (err) {
 //         // 오류 발생 시, 에러 핸들링
@@ -49,21 +47,16 @@ const router = express.Router();
 //     }
 // });
 
-
 // 수정한 후 코드
 
 const generateTokens = (userId) => {
-    const accessToken = jwt.sign(
-        { userId },
-        process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: process.env.ACCESS_TOKEN_LIFE }
-    );
+    const accessToken = jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: process.env.ACCESS_TOKEN_LIFE,
+    });
 
-    const refreshToken = jwt.sign(
-        { userId },
-        process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: process.env.REFRESH_TOKEN_LIFE }
-    );
+    const refreshToken = jwt.sign({ userId }, process.env.REFRESH_TOKEN_SECRET, {
+        expiresIn: process.env.REFRESH_TOKEN_LIFE,
+    });
 
     return { accessToken, refreshToken };
 };
@@ -83,7 +76,7 @@ router.post('/naver', async (req, res, next) => {
         const userInfo = response.data.response;
 
         let user = await prisma.users.findFirst({
-            where: {userChekId: userInfo.id}
+            where: { userChekId: userInfo.id },
         });
 
         if (!user) {
@@ -91,11 +84,11 @@ router.post('/naver', async (req, res, next) => {
                 data: {
                     userChekId: userInfo.id,
                     nickname: userInfo.nickname,
-                    email: userInfo.email
-                }
+                    email: userInfo.email,
+                },
             });
         }
-        
+
         // 사용자가 존재하든 새로 생성되었든, 토큰 발급
         const tokens = generateTokens(user.id);
 
@@ -104,8 +97,8 @@ router.post('/naver', async (req, res, next) => {
             user: {
                 id: user.id,
                 nickname: user.nickname,
-                email: user.email
-            }
+                email: user.email,
+            },
         });
     } catch (err) {
         console.error(err);
@@ -113,5 +106,24 @@ router.post('/naver', async (req, res, next) => {
     }
 });
 
+// 임시 회원가입 API
+router.post('/sign-up', async (req, res, next) => {
+    try {
+        const { nickname, email, userCheckId } = req.body;
+        // 비밀번호 해싱
+        const user = await prisma.users.create({
+            data: {
+                nickname,
+                email,
+                userCheckId,
+            },
+        });
+        // Use the newly created userId as authorId
 
+        return res.status(201).json({ user });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: '서버 오류' });
+    }
+});
 export default router;
