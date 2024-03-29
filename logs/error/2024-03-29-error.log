@@ -1,0 +1,15 @@
+{"level":"error","message":"Error Status: undefined, Message: Request failed with status code 401","timestamp":"2024-03-29T04:40:19.636Z"}
+{"level":"error","message":"Error Status: undefined, Message: Request failed with status code 401","timestamp":"2024-03-29T04:40:59.227Z"}
+{"level":"error","message":"Error Status: undefined, Message: Request failed with status code 401","timestamp":"2024-03-29T04:41:34.226Z"}
+{"level":"error","message":"Error Status: undefined, Message: Request failed with status code 401","timestamp":"2024-03-29T04:42:26.121Z"}
+{"level":"error","message":"Error Status: undefined, Message: Request failed with status code 401","timestamp":"2024-03-29T04:46:00.303Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot destructure property 'access_token' of 'req.headers.access_token' as it is undefined.","timestamp":"2024-03-29T04:57:21.187Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot destructure property 'access_token' of 'req.headers.Access-Token' as it is undefined.","timestamp":"2024-03-29T04:57:54.655Z"}
+{"level":"error","message":"Error Status: undefined, Message: Request failed with status code 401","timestamp":"2024-03-29T05:01:05.345Z"}
+{"level":"error","message":"Error Status: undefined, Message: Request failed with status code 401","timestamp":"2024-03-29T05:02:16.687Z"}
+{"level":"error","message":"Error Status: undefined, Message: Converting circular structure to JSON\n    --> starting at object with constructor 'ClientRequest'\n    |     property 'res' -> object with constructor 'IncomingMessage'\n    --- property 'req' closes the circle","timestamp":"2024-03-29T05:09:18.664Z"}
+{"level":"error","message":"Error Status: undefined, Message: Request failed with status code 401","timestamp":"2024-03-29T07:55:34.258Z"}
+{"level":"error","message":"Error Status: undefined, Message: Invalid status code: []","timestamp":"2024-03-29T07:58:33.580Z"}
+{"level":"error","message":"Error Status: undefined, Message: Invalid status code: []","timestamp":"2024-03-29T07:59:12.018Z"}
+{"level":"error","message":"Error Status: undefined, Message: Converting circular structure to JSON\n    --> starting at object with constructor 'ClientRequest'\n    |     property 'res' -> object with constructor 'IncomingMessage'\n    --- property 'req' closes the circle","timestamp":"2024-03-29T08:00:36.447Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.users.create()` invocation:\n\n{\n+ data: UsersCreateInput | UsersUncheckedCreateInput\n}\n\nArgument `data` is missing.","timestamp":"2024-03-29T08:17:25.373Z"}
