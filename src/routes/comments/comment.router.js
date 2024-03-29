@@ -2,7 +2,7 @@ import express from 'express';
 import {
     createCommentController,
     // createCommentReplyController,
-    // readCommentController,
+    getCommentController,
     // updateCommentController,
     // deleteCommentController,
 } from './comment.controller.js';
@@ -15,13 +15,9 @@ router.post('/comments', createCommentController);
 // // 대댓글 생성
 // router.post('/comments/reply', createCommentReplyController);
 
-// // 댓글 조회
-// router.get('/comments', readCommentController);
+// // 댓글 조회 (고민자에게 도착할 댓글 목록)
+router.get('/comments', getCommentController);
 
-// // 댓글 수정
-// router.put('/comments/:commentId', updateCommentController);
-
-// // 댓글 삭제
-// router.delete('/comments/:commentId', deleteCommentController);
+// 댓글 상세 조회 (고민자에게 도착할 답변 상세 조회)
 
 export default router;

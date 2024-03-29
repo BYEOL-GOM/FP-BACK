@@ -16,6 +16,9 @@ export const createCommentController = async (req, res) => {
     }
 };
 
+// // 댓글 전체 조회 (고민자에게 도착할 댓글 목록)
+// 로그인한 유저id가 고민에 해당하는 commentAuthorId 와 일치하는 경우에
+
 // 댓글에 대한 대댓글 생성
 export const createCommentReplyController = async (req, res) => {
     try {
