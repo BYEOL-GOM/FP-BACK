@@ -11,22 +11,32 @@ datasource db {
 }
 
 model Users {
-  userId   Int    @id @default(autoincrement())
-  nickname String
-  fruit    Int    @default(0)
-  authorId  Int?  
+  userId   Int    @id @default(autoincrement()) @map("userId")
+  nickname String @map("nickname")
+  fruit    Int    @default(0) @map("fruit")
+
+  authorId  Int?
+  
   worries  Worries[]
   likes    Likes[]
+  comments Comments[]
+
+  present    Presents[] @relation("PresentSender")
+  presentReceived    Presents[] @relation("PresentReceiver")
+
+  solvedWorries Worries[] @relation("SolvedWorries")
+  helpedSolveWorries Worries[] @relation("HelpedSolveWorries")
 }
 
+
 model Worries {
-  worryId     Int       @id @default(autoincrement())
-  commentAuthorId    Int?       // 고민답변자 id
-  content     String    @db.Text
-  createdAt   DateTime  @default(now())
-  icon        Icon?
+  worryId     Int       @id @default(autoincrement()) @map("worryId")
+  commentAuthorId       Int       @map("commentAuthorId")
+  content     String    @db.Text @map("content")
+  createdAt   DateTime  @default(now()) @map("createdAt")
+  icon        Icon? @map("icon")
   lastReplyTime DateTime?  //답변이 도착한 시간
-  deletedAt          DateTime? // 소프트 삭제를 위한 
+   deletedAt          DateTime? // 소프트 삭제를 위한 
 
 
   userId      Int
@@ -36,6 +46,7 @@ model Worries {
   likes       Likes[]    // 고민에 달린 좋아요
 }
 
+
 enum Icon{
   A
   B
@@ -43,22 +54,48 @@ enum Icon{
   D
 }
 
+
 model Comments {
-  commentId Int      @id @default(autoincrement())
-  content   String   @db.Text
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  commentId Int      @id @default(autoincrement()) @map("commentId")
+  content   String   @db.Text  @map("content")
+  createdAt DateTime @default(now())  @map("createdAt")
+  updatedAt DateTime @default(now())  @map("updatedAt")
+  
+  parentId  Int?     
+  parent    Comments? @relation("CommentHierarchy", fields: [parentId], references: [commentId])
+  children  Comments[] @relation("CommentHierarchy")
+
+  authorId  Int
+  author    Users     @relation(fields: [authorId], references: [userId])
 
   worryId    Int   @unique
   worry      Worries  @relation(fields: [worryId], references: [worryId])
-  
-  likes      Likes[] // 댓글에 대한 좋아요들
 
+  likes      Likes[]
+  present    Presents[]
+
+  solvingWorryId Int?
+  solvingWorry Worries? @relation("SolvingComment")
 }
 
+
+model Presents {
+  presentId    Int      @id @default(autoincrement()) @map("presentId")
+  createdAt DateTime @default(now()) @map("createdAt")
+
+  senderId  Int      @map("senderId")
+  receiverId Int     @map("receiverId")
+  commentId Int      @map("commentId")
+  
+  sender    Users    @relation("PresentSender", fields: [senderId], references: [userId])
+  receiver  Users    @relation("PresentReceiver", fields: [receiverId], references: [userId])
+  comment   Comments @relation(fields: [commentId], references: [commentId])
+}
+
+
 model Likes {
-  likeId    Int       @id @default(autoincrement())
-  checkLike Boolean   @default(false)
+  likeId    Int       @id @default(autoincrement())  @map("likeId")
+  checkLike Boolean   @default(false)  @map("checkLike")
 
   userId    Int
   user      Users     @relation(fields: [userId], references: [userId], onDelete: Cascade)

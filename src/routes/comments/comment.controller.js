@@ -1,7 +1,8 @@
 import * as CommentService from './comment.service.js';
 
 // 고민에 대한 댓글 생성
-export const createCommentController = async (req, res) => {
+
+export const createCommentController = async (req, res, next) => {
     try {
         const { worryId } = req.params;
         const { content, userId } = req.body;
@@ -24,11 +25,13 @@ export const getCommentsByUserIdController = async (req, res, next) => {
         res.status(200).json(comments);
     } catch (error) {
         res.status(400).json({ error: error.message });
+
+        next(error);
     }
 };
 
 // 댓글에 대한 대댓글 생성
-export const createCommentReplyController = async (req, res) => {
+export const createCommentReplyController = async (req, res, next) => {
     try {
         const { worryId, parentId } = req.params;
         const { content, userId } = req.body;

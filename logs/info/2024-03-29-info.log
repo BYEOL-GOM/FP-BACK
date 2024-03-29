@@ -73,3 +73,7 @@
 {"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 39ms","timestamp":"2024-03-29T09:47:41.310Z"}
 {"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 34ms","timestamp":"2024-03-29T09:47:41.771Z"}
 {"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 30ms","timestamp":"2024-03-29T09:47:42.328Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 175ms","timestamp":"2024-03-29T09:57:25.887Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 47ms","timestamp":"2024-03-29T09:57:26.957Z"}
+{"level":"info","message":"Method: POST, URL: /29, Status: 400, Duration: 108ms","timestamp":"2024-03-29T09:57:29.280Z"}
+{"level":"info","message":"Method: POST, URL: /28, Status: 201, Duration: 505ms","timestamp":"2024-03-29T09:57:35.314Z"}
