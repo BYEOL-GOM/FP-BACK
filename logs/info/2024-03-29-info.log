@@ -1,3 +1,4 @@
+
 {"level":"info","message":"Method: GET, URL: /userinfo, Status: 400, Duration: 21ms","timestamp":"2024-03-29T02:22:27.527Z"}
 {"level":"info","message":"Method: GET, URL: /userinfo?%20access_token=AAAAOi1W2o54MkAzo0gxf_6cuqJbLjKxjc5l0rnCxDIJSwovd-gGy4vkZVkUkInmJQTA0FRD6wzjkZ2TB7yDhmLsAXo%26state%3Db85ee270-58ab-4f39-85bc-eaf238d4cfad%26token_type%3Dbearer%26expires_in%3D3600, Status: 400, Duration: 1ms","timestamp":"2024-03-29T02:23:19.546Z"}
 {"level":"info","message":"Method: GET, URL: /userinfo?%20access_token=AAAAOi1W2o54MkAzo0gxf_6cuqJbLjKxjc5l0rnCxDIJSwovd-gGy4vkZVkUkInmJQTA0FRD6wzjkZ2TB7yDhmLsAXo%26state%3Db85ee270-58ab-4f39-85bc-eaf238d4cfad%26token_type%3Dbearer%26expires_in%3D3600, Status: 400, Duration: 1ms","timestamp":"2024-03-29T02:23:39.265Z"}
@@ -62,3 +63,44 @@
 {"level":"info","message":"Method: POST, URL: /naver, Status: 200, Duration: 49ms","timestamp":"2024-03-29T08:38:37.406Z"}
 {"level":"info","message":"Method: POST, URL: /naver, Status: 200, Duration: 70ms","timestamp":"2024-03-29T08:38:38.389Z"}
 {"level":"info","message":"Method: POST, URL: /naver, Status: 200, Duration: 66ms","timestamp":"2024-03-29T08:38:40.086Z"}
+
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 134ms","timestamp":"2024-03-28T15:01:01.328Z"}
+{"level":"error","message":"Error Status: undefined, Message: res is not defined","timestamp":"2024-03-28T15:02:57.351Z"}
+{"level":"info","message":"Method: DELETE, URL: /api/worry, Status: 500, Duration: 1004ms","timestamp":"2024-03-28T15:02:57.356Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 933ms","timestamp":"2024-03-28T15:04:08.914Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 1110ms","timestamp":"2024-03-28T15:04:16.440Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 124ms","timestamp":"2024-03-28T15:05:24.832Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 398ms","timestamp":"2024-03-28T15:06:38.195Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 112ms","timestamp":"2024-03-28T15:07:52.101Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 165ms","timestamp":"2024-03-28T15:07:54.022Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.findUnique()` invocation:\n\n{\n  where: {\n    worryId: 1\n  },\n  select: {\n    deletedAt: true,\n    updatedAt: true,\n    ~~~~~~~~~\n?   worryId?: true,\n?   commentAuthorId?: true,\n?   content?: true,\n?   createdAt?: true,\n?   icon?: true,\n?   lastReplyTime?: true,\n?   userId?: true,\n?   user?: true,\n?   comments?: true,\n?   likes?: true,\n?   _count?: true\n  }\n}\n\nUnknown field `updatedAt` for select statement on model `Worries`. Available options are marked with ?.","timestamp":"2024-03-28T15:09:43.397Z"}
+{"level":"info","message":"Method: DELETE, URL: /api/worry, Status: 500, Duration: 188ms","timestamp":"2024-03-28T15:09:43.403Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 600ms","timestamp":"2024-03-28T15:10:38.893Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 656ms","timestamp":"2024-03-28T15:13:40.146Z"}
+{"level":"error","message":"Error Status: undefined, Message: worryService.deleteOldWorries is not a function","timestamp":"2024-03-28T15:15:36.863Z"}
+{"level":"info","message":"Method: DELETE, URL: /api/worry, Status: 500, Duration: 9ms","timestamp":"2024-03-28T15:15:36.867Z"}
+{"level":"error","message":"Error Status: undefined, Message: worryService.deleteOldWorries is not a function","timestamp":"2024-03-28T15:19:21.771Z"}
+{"level":"info","message":"Method: DELETE, URL: /api/worry, Status: 500, Duration: 10ms","timestamp":"2024-03-28T15:19:21.777Z"}
+{"level":"error","message":"Error Status: undefined, Message: worryService.deleteOldWorries is not a function","timestamp":"2024-03-28T15:19:33.853Z"}
+{"level":"info","message":"Method: DELETE, URL: /api/worry, Status: 500, Duration: 11ms","timestamp":"2024-03-28T15:19:33.859Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 336ms","timestamp":"2024-03-28T15:19:48.625Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 69ms","timestamp":"2024-03-28T15:22:05.427Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 94ms","timestamp":"2024-03-28T15:22:17.555Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 68ms","timestamp":"2024-03-28T15:23:13.368Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 92ms","timestamp":"2024-03-28T15:23:30.367Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 247ms","timestamp":"2024-03-28T15:24:05.814Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 108ms","timestamp":"2024-03-28T15:24:08.074Z"}
+{"level":"info","message":"Method: GET, URL: /26, Status: 200, Duration: 82ms","timestamp":"2024-03-28T15:24:43.920Z"}
+{"level":"info","message":"Method: GET, URL: /27, Status: 200, Duration: 10ms","timestamp":"2024-03-28T15:24:46.961Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 75ms","timestamp":"2024-03-28T15:24:59.128Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민이 존재하지 않습니다.","timestamp":"2024-03-28T15:33:03.700Z"}
+{"level":"info","message":"Method: GET, URL: /api/worry/27, Status: 500, Duration: 97ms","timestamp":"2024-03-28T15:33:03.705Z"}
+{"level":"info","message":"Method: GET, URL: /worry/27, Status: 200, Duration: 82ms","timestamp":"2024-03-28T15:34:18.480Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot set headers after they are sent to the client","timestamp":"2024-03-28T15:34:18.482Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 82ms","timestamp":"2024-03-28T15:36:05.853Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 12ms","timestamp":"2024-03-28T15:36:08.862Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 16ms","timestamp":"2024-03-28T15:36:11.908Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 13ms","timestamp":"2024-03-28T15:36:15.029Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 175ms","timestamp":"2024-03-28T15:40:09.650Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 16ms","timestamp":"2024-03-28T15:40:15.354Z"}
+
