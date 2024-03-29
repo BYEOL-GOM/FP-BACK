@@ -1,4 +1,29 @@
 {
+    "name": "FP-BACK",
+    "version": "1.0.0",
+    "main": "index.js",
+    "repository": "https://github.com/hh99-finalProject/FP-BACK.git",
+    "author": "rosa1435 <158241447+rosa1435@users.noreply.github.com>",
+    "license": "MIT",
+    "type": "module",
+    "dependencies": {
+        "@prisma/client": "^5.11.0",
+        "argon2": "^0.40.1",
+        "cookie-parser": "^1.4.6",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.5",
+        "express": "^4.19.2",
+        "joi": "^17.12.2",
+        "jsonwebtoken": "^9.0.2",
+        "node-cron": "^3.0.3",
+        "prettier": "^3.2.5",
+        "prisma": "^5.11.0",
+        "winston": "^3.13.0",
+        "winston-daily-rotate-file": "^5.0.0"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.0"
+    }
   "type": "module",
   "name": "DilemmaShadowRealm",
   "version": "1.0.0",
