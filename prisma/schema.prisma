@@ -32,7 +32,7 @@ model Worries {
   userId      Int
   user        Users    @relation(fields: [userId], references: [userId], onDelete: Cascade)
 
-  comments    Comments? // 고민에 달린 댓글
+  comments    Comments // 고민에 달린 댓글
   likes       Likes[]    // 고민에 달린 좋아요
 }
 

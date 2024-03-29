@@ -29,8 +29,11 @@ export const createReply = async (worryId, parentId, content, userId) => {
     return CommentRepository.createCommentReply({ worryId, parentId, content, userId });
 };
 
-// 댓글 조회
-
-// 댓글 수정
-
-// 댓글 삭제
+// // 댓글 전체 조회 (고민작성자에게 도착할 댓글 목록)
+export const getCommentsByUserId = async (userId) => {
+    try {
+        return await CommentRepository.getCommentsByUserId(userId);
+    } catch (error) {
+        throw new Error('Failed to fetch comments: ' + error.message);
+    }
+};

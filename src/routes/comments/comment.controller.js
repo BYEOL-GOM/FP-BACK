@@ -16,8 +16,16 @@ export const createCommentController = async (req, res) => {
     }
 };
 
-// // 댓글 전체 조회 (고민자에게 도착할 댓글 목록)
-// 로그인한 유저id가 고민에 해당하는 commentAuthorId 와 일치하는 경우에
+// // 댓글 전체 조회 (고민작성자(=로그인유저) 도착할 댓글 목록)
+export const getCommentsByUserIdController = async (req, res, next) => {
+    try {
+        const { userId } = req.body; // 나중에 사용자 인증미들웨어로 받아오는것으로 변경 = 로그인한 유저(=고민작성자)
+        const comments = await CommentService.getCommentsByUserId(+userId); // Corrected function name
+        res.status(200).json(comments);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
 
 // 댓글에 대한 대댓글 생성
 export const createCommentReplyController = async (req, res) => {
@@ -33,12 +41,6 @@ export const createCommentReplyController = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 };
-
-// 답변 조회
-export const readCommentController = async (req, res, next) => {};
-
-// 답변 수정
-export const updateCommentController = async (req, res, next) => {};
 
 // 답변 삭제
 export const deleteCommentController = async (req, res, next) => {};
