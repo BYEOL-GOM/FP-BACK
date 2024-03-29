@@ -4,6 +4,7 @@ import {
     // createCommentReplyController,
     getCommentsByUserIdController,
     getCommentDetailController,
+
 } from './comment.controller.js';
 
 let router = express.Router({ mergeParams: true });
@@ -20,3 +21,4 @@ router.get('/', getCommentsByUserIdController);
 // 답변 상세 조회 (고민자에게 도착할 답변 상세 조회)
 router.get('/:commentId', getCommentDetailController);
 export default router;
+

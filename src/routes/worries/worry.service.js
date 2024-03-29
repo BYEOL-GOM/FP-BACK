@@ -1,4 +1,5 @@
 import * as worryRepository from './worry.repository.js';
+import { prisma } from '../../utils/prisma/index.js';
 
 //고민 등록
 export const createWorry = async ({ content, icon, userId }) => {

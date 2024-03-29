@@ -1,3 +1,7 @@
+
+{"level":"info","message":"Method: GET, URL: /login, Status: 404, Duration: 6ms","timestamp":"2024-03-28T05:42:42.893Z"}
+{"level":"info","message":"Method: GET, URL: /login, Status: 302, Duration: 4ms","timestamp":"2024-03-28T05:42:50.426Z"}
+{"level":"info","message":"Method: GET, URL: /oauth, Status: 500, Duration: 180ms","timestamp":"2024-03-28T05:44:05.190Z"}
 {"level":"info","message":"Method: POST, URL: /sign-up, Status: 404, Duration: 31ms","timestamp":"2024-03-28T01:46:28.488Z"}
 {"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 13ms","timestamp":"2024-03-28T01:48:23.813Z"}
 {"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 18ms","timestamp":"2024-03-28T01:48:53.740Z"}
@@ -47,7 +51,7 @@
 {"level":"info","message":"Method: POST, URL: /worry/1/comments, Status: 404, Duration: 29ms","timestamp":"2024-03-28T05:17:08.021Z"}
 {"level":"info","message":"Method: POST, URL: /1/comments, Status: 500, Duration: 4ms","timestamp":"2024-03-28T05:17:18.781Z"}
 {"level":"info","message":"Method: POST, URL: /1/comments, Status: 500, Duration: 91ms","timestamp":"2024-03-28T05:17:55.140Z"}
-<<<<<<< HEAD
+
 {"level":"info","message":"Method: POST, URL: /1/comments, Status: 500, Duration: 100ms","timestamp":"2024-03-28T05:44:21.702Z"}
 {"level":"info","message":"Method: POST, URL: /1/comments, Status: 500, Duration: 92ms","timestamp":"2024-03-28T05:47:30.020Z"}
 {"level":"info","message":"Method: POST, URL: /1/comments, Status: 500, Duration: 404ms","timestamp":"2024-03-28T05:48:08.197Z"}
@@ -293,7 +297,7 @@
 {"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 884ms","timestamp":"2024-03-28T14:57:15.593Z"}
 {"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 79ms","timestamp":"2024-03-28T14:57:23.691Z"}
 {"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 951ms","timestamp":"2024-03-28T14:58:36.694Z"}
-=======
+
 {"level":"info","message":"Method: POST, URL: /sign-up, Status: 404, Duration: 23ms","timestamp":"2024-03-28T05:54:38.085Z"}
 {"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 80ms","timestamp":"2024-03-28T05:55:01.372Z"}
 {"level":"info","message":"Method: POST, URL: /worry, Status: 404, Duration: 17ms","timestamp":"2024-03-28T05:57:21.470Z"}
@@ -388,4 +392,4 @@
 {"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 66ms","timestamp":"2024-03-28T14:49:20.968Z"}
 {"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 57ms","timestamp":"2024-03-28T14:49:37.836Z"}
 {"level":"info","message":"Method: GET, URL: /solvedByMe, Status: 200, Duration: 15ms","timestamp":"2024-03-28T14:49:50.924Z"}
->>>>>>> cfbe93fc68f8c947d79abe7fd385f772f5cfad80
+

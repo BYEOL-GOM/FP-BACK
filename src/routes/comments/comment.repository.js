@@ -8,8 +8,14 @@ export const findWorryById = async (worryId) => {
 // 댓글 생성
 export const createComment = async (data) => {
     console.log('🩷🩷🩷컨트롤러 : ', data.worryId, data.content, data.userId, data.commentAuthorId);
+
     return await prisma.comments.create({
-        data,
+        data: {
+            worryId: data.worryId,
+            content: data.content,
+            authorId: data.authorId,
+            // 다른 필요한 필드들을 여기에 추가
+        },
     });
 };
 
