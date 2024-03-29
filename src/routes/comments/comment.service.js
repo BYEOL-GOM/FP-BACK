@@ -2,7 +2,7 @@ import * as CommentRepository from './comment.repository.js';
 
 // 답변 생성
 export const createComment = async (worryId, content, userId) => {
-    console.log('💛💛💛컨트롤러 : ', worryId, content, userId);
+    console.log('💛💛💛서비스 : ', worryId, content, userId);
 
     // worryId를 사용하여 고민의 authorId 찾기
     const worry = await CommentRepository.findWorryById(worryId);
@@ -16,10 +16,11 @@ export const createComment = async (worryId, content, userId) => {
     // 찾아낸 authorId를 사용하여 댓글 생성
     const commentData = {
         worryId: parseInt(worryId),
+        userId,
         content,
-        authorId: worry.authorId, // 고민 등록 시 랜덤으로 선택된 사용자 ID 사용
+        authorId: worry.commentAuthorId, // 고민 등록 시 랜덤으로 선택된 사용자 ID 사용
     };
-    console.log('💚💚💚컨트롤러 : ', worry.authorId);
+    console.log('💚💚💚서비스 : ', worry.commentAuthorId);
 
     return await CommentRepository.createComment(commentData);
 };
@@ -29,8 +30,20 @@ export const createReply = async (worryId, parentId, content, userId) => {
     return CommentRepository.createCommentReply({ worryId, parentId, content, userId });
 };
 
-// 댓글 조회
+//  답변 메세지 전체 조회 (고민작성자에게 도착할 댓글 목록)
+export const getCommentsByUserId = async (userId) => {
+    try {
+        return await CommentRepository.getCommentsByUserId(userId);
+    } catch (error) {
+        throw new Error('Failed to fetch comments: ' + error.message);
+    }
+};
 
-// 댓글 수정
-
-// 댓글 삭제
+// 답변 메세지 상세 조회
+export const getCommentDetail = async (commentId) => {
+    try {
+        return await CommentRepository.getCommentDetail(commentId);
+    } catch (error) {
+        throw new Error('Failed to fetch comments: ' + error.message);
+    }
+};

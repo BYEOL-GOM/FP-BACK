@@ -5,14 +5,13 @@ export const createWorryController = async (req, res, next) => {
     try {
         const { content, icon, userId } = req.body; // 나중에 사용자 인증 미들웨어에서 userId로 변경하기
 
-        if (!content || !icon || !userId) {
-            throw new Error('데이터 형식이 올바르지 않아요');
-        }
+        if (!content || !icon || !userId) return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
+
         const worry = await worryService.createWorry({ content, icon, userId });
-        res.status(201).json(worry);
+        res.status(201).json({ message: '고민이 등록되었습니다' });
     } catch (error) {
         console.error('고민 등록중 에러가 발생했어요! :', error);
-        next(error); // Pass error to error handling middleware
+        next(error);
     }
 };
 
@@ -64,5 +63,23 @@ export const deleteWorryController = async (req, res, next) => {
     } catch (error) {
         console.error(error);
         next(error);
+    }
+};
+
+// 답변자가 곤란한 고민 삭제하기
+export const deleteWorryByCommentAuthorController = async (req, res, next) => {
+    try {
+        const { worryId } = req.params;
+        const { userId } = req.body; // 추후에 사용자 인증 userId로 변경
+
+        const deletedWorry = await worryService.deleteSelectedWorry(+worryId, +userId);
+        res.status(200).json({ message: '답변하기 곤란한 걱정이 삭제되었습니다' });
+    } catch (error) {
+        if (error.message === '해당하는 고민이 존재하지 않습니다') {
+            return res.status(404).json({ error: '해당하는 고민이 존재하지 않습니다' });
+        } else if (error.message === '답변 대상자만 곤란한 고민을 삭제할 수 있습니다') {
+            return res.status(403).json({ error: error.message });
+        }
+        res.status(500).json({ error: error.message });
     }
 };
