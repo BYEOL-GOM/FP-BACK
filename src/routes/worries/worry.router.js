@@ -4,6 +4,7 @@ import {
     WorryDetailController,
     getWorriesByCommentAuthorIdController,
     deleteWorryController,
+    deleteWorryByCommentAuthorController,
 } from '../worries/worry.controller.js';
 
 const router = express.Router();
@@ -21,5 +22,5 @@ router.get('/:worryId', WorryDetailController);
 router.delete('/', deleteWorryController);
 
 // 답변하지 못하거나, 불쾌한 내용의 고민 삭제 api  (답변자 id & 고민id)
-
+router.delete('/:worryId', deleteWorryByCommentAuthorController);
 export default router;

@@ -104,7 +104,7 @@ export const getCommentsByUserId = async (userId) => {
     }
 };
 
-// 응답메세지 상세조회
+// 답변 메세지 상세조회
 export const getCommentDetail = async (commentId) => {
     return await prisma.comments.findFirst({
         where: { commentId },

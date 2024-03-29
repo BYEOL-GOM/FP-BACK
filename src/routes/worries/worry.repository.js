@@ -131,3 +131,36 @@ export const softDeleteWorryById = async (worryId) => {
         throw error;
     }
 };
+
+// 답변하기 곤란한 고민 선택 삭제
+export const deleteSelectedWorry = async (worryId) => {
+    try {
+        const existingWorry = await prisma.worries.findUnique({
+            where: { worryId },
+        });
+
+        if (existingWorry.deletedAt !== null) {
+            console.log(`오래된 고민 ${worryId}번은 이미 삭제되었습니다.`);
+            return;
+        }
+
+        await prisma.worries.update({
+            where: { worryId },
+            data: { deletedAt: new Date() },
+        });
+
+        console.log(`오래된 고민 ${worryId}번 삭제 성공`);
+    } catch (error) {
+        console.error(`오래된 고민 ${worryId}번 삭제 실패:`, error);
+        throw error;
+    }
+};
+
+// worryId 에 해당하는 답변자 가져오기
+export const getCommentAuthorId = async (worryId) => {
+    const worry = await prisma.worries.findUnique({
+        where: { worryId },
+        select: { commentAuthorId: true },
+    });
+    return worry ? worry.commentAuthorId : null;
+};

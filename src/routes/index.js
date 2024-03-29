@@ -7,11 +7,8 @@ import commentRouter from './comments/comment.router.js';
 
 const router = express.Router();
 router.use('/comments', commentRouter);
-// router.use('/worry', likeRouter);
-
 router.use('/', userRouter);
-router.use('/worry', worryRouter);
-router.use('/worry/:worryId', commentRouter);
+router.use('/worries', worryRouter);
 // router.use('/', presentRouter);
 // router.use('/worry', likeRouter);
 

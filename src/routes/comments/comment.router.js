@@ -14,9 +14,9 @@ router.post('/:worryId', createCommentController);
 // // 대댓글 생성
 // router.post('/comments/reply', createCommentReplyController);
 
-// // 댓글 조회 (고민작성자에 해당하는 댓글 목록)
+// // 답변 조회 (고민작성자에 해당하는 답변 목록)
 router.get('/', getCommentsByUserIdController);
 
-// 댓글 상세 조회 (고민자에게 도착할 답변 상세 조회)
+// 답변 상세 조회 (고민자에게 도착할 답변 상세 조회)
 router.get('/:commentId', getCommentDetailController);
 export default router;
