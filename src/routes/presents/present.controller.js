@@ -4,12 +4,12 @@ import * as PresentService from './present.service.js';
 export const sendPresent = async (req, res, next) => {
     try {
         const { worryId, commentId } = req.params;
-        const { userId } = req.body;
+        const { userId } = req.body; // 로그인한 유저. 선물 보낼 사람
         // const userId = res.locals.user.userId;
 
         // 해당 고민 게시글 가져오기
         const worry = await PresentService.getWorryById(worryId);
-        // 고민 등록 시 답변한 유저 아이디 가져오기
+        // 고민 등록 시 답변한 유저 아이디 가져오기. 선물 받을 사람
         const commentAuthorId = worry.commentAuthorId;
 
         const result = await PresentService.sendPresent(worryId, commentId, userId, commentAuthorId);
@@ -22,7 +22,7 @@ export const sendPresent = async (req, res, next) => {
     }
 };
 
-//선물을 보낸 A유저의 해결된 고민 목록 조회
+// A유저가 선물을 보낸 '나의 해결된 고민' 목록 조회
 export const getSolvedWorries = async (req, res, next) => {
     try {
         const { userId } = req.body;
@@ -35,7 +35,7 @@ export const getSolvedWorries = async (req, res, next) => {
     }
 };
 
-// 선물을 받은 B유저가 해결한 고민 목록 조회
+// A유저가 선물을 받은 '나의 해결한 고민' 목록 조회
 export const getHelpedSolveWorries = async (req, res, next) => {
     try {
         const { userId } = req.body;

@@ -2,7 +2,7 @@ import * as PresentRepository from './present.repository.js';
 
 // 해당 고민 게시글 가져오기
 export const getWorryById = async (worryId) => {
-    const worry = await PresentRepository.getWorryById(worryId);
+    const worry = await PresentRepository.findWorryById(worryId);
     if (!worry) {
         const err = new Error('해당하는 답변의 고민 게시글이 존재하지 않습니다.');
         err.status = 404;
@@ -36,12 +36,12 @@ export const sendPresent = async (worryId, commentId, userId, commentAuthorId) =
     return present;
 };
 
-//선물을 보낸 A유저의 해결된 고민 목록 조회
+// A유저가 선물을 보낸 '나의 해결된 고민' 목록 조회
 export const getSolvedWorriesByUserId = async (userId) => {
     return PresentRepository.findSolvedWorriesByUserId(userId);
 };
 
-// 선물을 받은 B유저가 해결한 고민 목록 조회
+// A유저가 선물을 받은 '나의 해결한 고민' 목록 조회
 export const getHelpedSolveWorriesByUserId = async (userId) => {
     return PresentRepository.findHelpedSolveWorriesByUserId(userId);
 };

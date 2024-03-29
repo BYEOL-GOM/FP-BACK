@@ -21,27 +21,31 @@ model Users {
   likes    Likes[]
   comments Comments[]
 
-  present    Presents[] @relation("PresentSender")
-  presentReceived    Presents[] @relation("PresentReceiver")
+  present    Presents[] @relation("PresentSender")              // 선물을 받은 사람 
+  presentReceived    Presents[] @relation("PresentReceiver")    // 선물을 보낸 사람
 
-  solvedWorries Worries[] @relation("SolvedWorries")
-  helpedSolveWorries Worries[] @relation("HelpedSolveWorries")
+  solvedWorries Worries[] @relation("SolvedWorries")            // 해결된 문제
+  helpedSolveWorries Worries[] @relation("HelpedSolveWorries")  // 해결한 문제
 }
 
 
 model Worries {
-  worryId     Int       @id @default(autoincrement()) @map("worryId")
+  worryId               Int       @id @default(autoincrement()) @map("worryId")
   commentAuthorId       Int       @map("commentAuthorId")
-  content     String    @db.Text @map("content")
-  createdAt   DateTime  @default(now()) @map("createdAt")
-  icon        Icon? @map("icon")
-  lastReplyTime DateTime?  //답변이 도착한 시간
-  deletedAt          DateTime? @map("deletedAt") // 소프트 삭제를 위한  
+  content               String    @db.Text @map("content")
+  createdAt             DateTime  @default(now()) @map("createdAt")
+  icon                  Icon?     @map("icon")
+  lastReplyTime         DateTime?                           //답변이 도착한 시간
+  deletedAt             DateTime? @map("deletedAt")         // 소프트 삭제를 위한  
+  isSolved     Boolean    @default(false)                   // 고민이 해결됐는지에 대한 여부 확인
+  presentCheck Boolean @default(false) @map("presentCheck") // 선물을 보냈는지에 대한 여부 확인
 
+  userId      Int
+  user        Users    @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  
   // 해결된 답변
-  isSolved     Boolean    @default(false)
-  solvingCommentId Int?   @unique @map("solvingCommentId")
-  solvingComment   Comments? @relation("SolvingComment", fields: [solvingCommentId], references: [commentId])
+  solvingCommentId Int?       @unique @map("solvingCommentId")
+  solvingComment   Comments?  @relation("SolvingComment", fields: [solvingCommentId], references: [commentId])
 
   // 고민을 등록한 유저(선물을 보냄)
   solvedByUserId Int? @map("solvedByUserId")
@@ -51,16 +55,9 @@ model Worries {
   helperUserId Int? @map("helperUserId")
   helperUser   Users? @relation("HelpedSolveWorries", fields: [helperUserId], references: [userId])
 
-  // 선물을 보냈는지에 대한 여부 확인
-  presentCheck Boolean @default(false) @map("presentCheck")
-
-  userId      Int
-  user        Users    @relation(fields: [userId], references: [userId], onDelete: Cascade)
-
   comments    Comments[] // 이 걱정에 달린 댓글들
   likes       Likes[]    // 이 걱정에 대한 좋아요
 }
-
 
 enum Icon{
   A
@@ -77,7 +74,7 @@ model Comments {
   updatedAt DateTime @default(now())  @map("updatedAt")
   
   parentId  Int?     
-  parent    Comments? @relation("CommentHierarchy", fields: [parentId], references: [commentId])
+  parent    Comments? @relation("CommentHierarchy", fields: [parentId], references: [commentId]) // 댓글 계층
   children  Comments[] @relation("CommentHierarchy")
 
   authorId  Int
@@ -89,6 +86,7 @@ model Comments {
   likes      Likes[]
   present    Presents[]
 
+  // 해결된 답변
   solvingWorryId Int?
   solvingWorry Worries? @relation("SolvingComment")
 }
@@ -99,11 +97,12 @@ model Presents {
   createdAt DateTime @default(now()) @map("createdAt")
 
   senderId  Int      @map("senderId")
-  receiverId Int     @map("receiverId")
-  commentId Int      @map("commentId")
-  
   sender    Users    @relation("PresentSender", fields: [senderId], references: [userId])
+  
+  receiverId Int     @map("receiverId")
   receiver  Users    @relation("PresentReceiver", fields: [receiverId], references: [userId])
+  
+  commentId Int      @map("commentId")
   comment   Comments @relation(fields: [commentId], references: [commentId])
 }
 

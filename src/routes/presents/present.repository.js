@@ -1,7 +1,7 @@
 import { prisma } from '../../utils/prisma/index.js';
 
 // 해당 고민 게시글 가져오기
-export const getWorryById = async (worryId) => {
+export const findWorryById = async (worryId) => {
     const worry = await prisma.worries.findUnique({
         where: {
             worryId: parseInt(worryId),
@@ -44,7 +44,7 @@ export const findCommentById = async (commentId) => {
     });
 };
 
-//선물을 보낸 A유저의 해결된 고민 목록 조회
+// A유저가 선물을 보낸 '나의 해결된 고민' 목록 조회
 export const findSolvedWorriesByUserId = async (userId) => {
     return await prisma.worries.findMany({
         where: {
@@ -57,7 +57,7 @@ export const findSolvedWorriesByUserId = async (userId) => {
     });
 };
 
-// 선물을 받은 B유저가 해결한 고민 목록 조회
+// A유저가 선물을 받은 '나의 해결한 고민' 목록 조회
 export const findHelpedSolveWorriesByUserId = async (userId) => {
     return await prisma.worries.findMany({
         where: {
