@@ -22,7 +22,7 @@ export const sendPresent = async (req, res, next) => {
     }
 };
 
-// A유저가 선물을 보낸 '나의 해결된 고민' 목록 전체 조회
+// '나의 해결된 고민' 목록 전체 조회
 export const getSolvedWorries = async (req, res, next) => {
     try {
         const { userId } = req.body;
@@ -35,9 +35,23 @@ export const getSolvedWorries = async (req, res, next) => {
     }
 };
 
-// A유저가 선물을 보낸 '나의 해결된 고민' 상세 조회
+// '나의 해결된 고민' 상세 조회
+export const getSolvedWorryDetails = async (req, res, next) => {
+    try {
+        const { worryId } = req.params;
+        const worryDetails = await PresentService.getSolvedWorryDetailsById(parseInt(worryId));
+        if (!worryDetails) {
+            const err = new Error('해당하는 답변의 고민 게시글이 존재하지 않습니다.');
+            err.status = 404;
+            throw err;
+        }
+        return res.status(200).json(worryDetails);
+    } catch (error) {
+        next(error);
+    }
+};
 
-// A유저가 선물을 받은 '나의 해결한 고민' 목록 전체 조회
+// '내가 해결한 고민' 목록 전체 조회
 export const getHelpedSolveWorries = async (req, res, next) => {
     try {
         const { userId } = req.body;
@@ -50,4 +64,18 @@ export const getHelpedSolveWorries = async (req, res, next) => {
     }
 };
 
-// A유저가 선물을 받은 '나의 해결한 고민' 상세 조회
+// '내가 해결한 고민' 상세 조회
+export const getHelpedSolveWorryDetails = async (req, res, next) => {
+    try {
+        const { worryId } = req.params;
+        const worryDetails = await PresentService.getHelpedSolveWorryDetailsById(worryId);
+        if (!worryDetails) {
+            const err = new Error('해당하는 답변의 고민 게시글이 존재하지 않습니다.');
+            err.status = 404;
+            throw err;
+        }
+        return res.status(200).json(worryDetails);
+    } catch (error) {
+        next(error);
+    }
+};

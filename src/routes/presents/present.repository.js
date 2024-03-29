@@ -44,28 +44,108 @@ export const findCommentById = async (commentId) => {
     });
 };
 
-// A유저가 선물을 보낸 '나의 해결된 고민' 목록 조회
+// '나의 해결된 고민' 목록 전체 조회
 export const findSolvedWorriesByUserId = async (userId) => {
     return await prisma.worries.findMany({
         where: {
             solvedByUserId: userId,
             presentCheck: true,
         },
+        select: {
+            worryId: true,
+            icon: true,
+            createdAt: true,
+            isSolved: true,
+            presentCheck: true,
+            solvingCommentId: true,
+            helperUserId: true,
+            comments: {
+                select: {
+                    commentId: true,
+                    createdAt: true,
+                },
+            },
+        },
+        orderBy: {
+            createdAt: 'desc',
+        },
+    });
+    // return await prisma.worries.findMany({
+    //     where: {
+    //         solvedByUserId: userId,
+    //         presentCheck: true,
+    //     },
+    //     include: {
+    //         comments: true, // 필요한 경우 추가 정보를 포함
+    //     },
+    // });
+};
+
+// '나의 해결된 고민' 상세 조회
+export const findSolvedWorryDetailsById = async (worryId) => {
+    return await prisma.worries.findUnique({
+        where: {
+            worryId: worryId,
+        },
         include: {
-            comments: true, // 필요한 경우 추가 정보를 포함
+            comments: {
+                include: {
+                    children: true, // 'childComments'는 대댓글을 의미. 실제 필드명에 따라 조정하세요.
+                },
+            },
         },
     });
 };
 
-// A유저가 선물을 받은 '나의 해결한 고민' 목록 조회
+// '내가 해결한 고민' 목록 전체 조회
 export const findHelpedSolveWorriesByUserId = async (userId) => {
     return await prisma.worries.findMany({
         where: {
-            helperUserId: userId,
+            helperUserId: parseInt(userId),
             presentCheck: true,
         },
+        select: {
+            worryId: true,
+            icon: true,
+            createdAt: true,
+            isSolved: true,
+            presentCheck: true,
+            solvingCommentId: true,
+            helperUserId: true,
+            comments: {
+                select: {
+                    commentId: true,
+                    createdAt: true,
+                },
+            },
+        },
+        orderBy: {
+            createdAt: 'desc',
+        },
+    });
+    // return await prisma.worries.findMany({
+    //     where: {
+    //         helperUserId: userId,
+    //         presentCheck: true,
+    //     },
+    //     include: {
+    //         comments: true, // 필요한 경우 추가 정보를 포함
+    //     },
+    // });
+};
+
+// '내가 해결한 고민' 상세 조회
+export const findHelpedSolveWorryDetailsById = async (worryId) => {
+    return await prisma.worries.findUnique({
+        where: {
+            worryId: parseInt(worryId),
+        },
         include: {
-            comments: true, // 필요한 경우 추가 정보를 포함
+            comments: {
+                include: {
+                    children: true, // 'childComments'는 대댓글을 의미. 실제 필드명에 따라 조정하세요.
+                },
+            },
         },
     });
 };
