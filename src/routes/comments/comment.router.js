@@ -13,15 +13,15 @@ let router = express.Router({ mergeParams: true });
 router.post('/comments', createCommentController);
 
 // 대댓글 생성
-router.post('/comments/:commentId/replies', createCommentReplyController);
+// router.post('/comments/:commentId/replies', createCommentReplyController);
 
 // 댓글 조회
-router.get('/comments', readCommentController);
+// router.get('/comments', readCommentController);
 
 // 댓글 수정
-router.put('/comments/:commentId', updateCommentController);
+// router.put('/comments/:commentId', updateCommentController);
 
 // 댓글 삭제
-router.delete('/comments/:commentId', deleteCommentController);
+// router.delete('/comments/:commentId', deleteCommentController);
 
 export default router;

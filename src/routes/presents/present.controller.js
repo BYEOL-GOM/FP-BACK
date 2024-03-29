@@ -68,7 +68,7 @@ export const getHelpedSolveWorries = async (req, res, next) => {
 export const getHelpedSolveWorryDetails = async (req, res, next) => {
     try {
         const { worryId } = req.params;
-        const worryDetails = await PresentService.getHelpedSolveWorryDetailsById(worryId);
+        const worryDetails = await PresentService.getHelpedSolveWorryDetailsById(parseInt(worryId));
         if (!worryDetails) {
             const err = new Error('해당하는 답변의 고민 게시글이 존재하지 않습니다.');
             err.status = 404;
