@@ -12,7 +12,9 @@ datasource db {
 
 model Users {
   userId   Int    @id @default(autoincrement())
+  userChekId String 
   nickname String
+  email String
   fruit    Int    @default(0)
   authorId  Int?  
   worries  Worries[]

@@ -9,6 +9,7 @@
   "dependencies": {
     "@prisma/client": "^5.11.0",
     "argon2": "^0.40.1",
+    "axios": "^1.6.8",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -16,6 +17,7 @@
     "joi": "^17.12.2",
     "jsonwebtoken": "^9.0.2",
     "node-cron": "^3.0.3",
+    "passport-naver-v2": "^2.0.8",
     "prettier": "^3.2.5",
     "prisma": "^5.11.0",
     "winston": "^3.13.0",

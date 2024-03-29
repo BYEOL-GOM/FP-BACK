@@ -1,3 +1,69 @@
+
+{"level":"info","message":"Method: GET, URL: /userinfo, Status: 400, Duration: 21ms","timestamp":"2024-03-29T02:22:27.527Z"}
+{"level":"info","message":"Method: GET, URL: /userinfo?%20access_token=AAAAOi1W2o54MkAzo0gxf_6cuqJbLjKxjc5l0rnCxDIJSwovd-gGy4vkZVkUkInmJQTA0FRD6wzjkZ2TB7yDhmLsAXo%26state%3Db85ee270-58ab-4f39-85bc-eaf238d4cfad%26token_type%3Dbearer%26expires_in%3D3600, Status: 400, Duration: 1ms","timestamp":"2024-03-29T02:23:19.546Z"}
+{"level":"info","message":"Method: GET, URL: /userinfo?%20access_token=AAAAOi1W2o54MkAzo0gxf_6cuqJbLjKxjc5l0rnCxDIJSwovd-gGy4vkZVkUkInmJQTA0FRD6wzjkZ2TB7yDhmLsAXo%26state%3Db85ee270-58ab-4f39-85bc-eaf238d4cfad%26token_type%3Dbearer%26expires_in%3D3600, Status: 400, Duration: 1ms","timestamp":"2024-03-29T02:23:39.265Z"}
+{"level":"info","message":"Method: GET, URL: /userinfo?access_token=AAAAOi1W2o54MkAzo0gxf_6cuqJbLjKxjc5l0rnCxDIJSwovd-gGy4vkZVkUkInmJQTA0FRD6wzjkZ2TB7yDhmLsAXo%26state%3Db85ee270-58ab-4f39-85bc-eaf238d4cfad%26token_type%3Dbearer%26expires_in%3D3600, Status: 401, Duration: 300ms","timestamp":"2024-03-29T02:36:01.001Z"}
+{"level":"info","message":"Method: GET, URL: /api/naver, Status: 404, Duration: 10ms","timestamp":"2024-03-29T04:39:38.737Z"}
+{"level":"info","message":"Method: GET, URL: /naver, Status: 404, Duration: 1ms","timestamp":"2024-03-29T04:39:55.757Z"}
+{"level":"info","message":"Method: GET, URL: /api/naver, Status: 404, Duration: 1ms","timestamp":"2024-03-29T04:40:09.822Z"}
+{"level":"error","message":"Error Status: undefined, Message: Request failed with status code 401","timestamp":"2024-03-29T04:40:19.636Z"}
+{"level":"info","message":"Method: POST, URL: /api/naver, Status: 500, Duration: 236ms","timestamp":"2024-03-29T04:40:19.638Z"}
+{"level":"info","message":"Method: GET, URL: /api/naver, Status: 404, Duration: 1ms","timestamp":"2024-03-29T04:40:49.882Z"}
+{"level":"error","message":"Error Status: undefined, Message: Request failed with status code 401","timestamp":"2024-03-29T04:40:59.227Z"}
+{"level":"info","message":"Method: GET, URL: /api/naver, Status: 500, Duration: 188ms","timestamp":"2024-03-29T04:40:59.233Z"}
+{"level":"error","message":"Error Status: undefined, Message: Request failed with status code 401","timestamp":"2024-03-29T04:41:34.226Z"}
+{"level":"info","message":"Method: GET, URL: /api/naver?access_token=AAAAOi1W2o54MkAzo0gxf_6cuqJbLjKxjc5l0rnCxDIJSwovd-gGy4vkZVkUkInmJQTA0FRD6wzjkZ2TB7yDhmLsAXo, Status: 500, Duration: 107ms","timestamp":"2024-03-29T04:41:34.228Z"}
+{"level":"error","message":"Error Status: undefined, Message: Request failed with status code 401","timestamp":"2024-03-29T04:42:26.121Z"}
+{"level":"info","message":"Method: GET, URL: /api/naver?access_token=AAAAOi1W2o54MkAzo0gxf_6cuqJbLjKxjc5l0rnCxDIJSwovd-gGy4vkZVkUkInmJQTA0FRD6wzjkZ2TB7yDhmLsAXo, Status: 500, Duration: 188ms","timestamp":"2024-03-29T04:42:26.126Z"}
+{"level":"error","message":"Error Status: undefined, Message: Request failed with status code 401","timestamp":"2024-03-29T04:46:00.303Z"}
+{"level":"info","message":"Method: GET, URL: /api/naver?access_token=AAAAOi1W2o54MkAzo0gxf_6cuqJbLjKxjc5l0rnCxDIJSwovd-gGy4vkZVkUkInmJQTA0FRD6wzjkZ2TB7yDhmLsAXo, Status: 500, Duration: 193ms","timestamp":"2024-03-29T04:46:00.308Z"}
+{"level":"info","message":"Method: GET, URL: /naver?access_token=AAAAOi1W2o54MkAzo0gxf_6cuqJbLjKxjc5l0rnCxDIJSwovd-gGy4vkZVkUkInmJQTA0FRD6wzjkZ2TB7yDhmLsAXo, Status: 200, Duration: 219ms","timestamp":"2024-03-29T04:50:27.225Z"}
+{"level":"info","message":"Method: GET, URL: /naver?access_token=AAAAO3lx3AkX-eH092ftPITA9S9CkmSMfvABr1agd_uTCDwIr58WhlMT-pHQqydL9ViW06TGk-Djys_ElmApJ5uVsZM%26state%3Db85ee270-58ab-4f39-85bc-eaf238d4cfad%26token_type%3Dbearer%26expires_in%3D3600', Status: 200, Duration: 5ms","timestamp":"2024-03-29T04:54:15.018Z"}
+{"level":"info","message":"Method: GET, URL: /naver?access_token=AAAAO3lx3AkX-eH092ftPITA9S9CkmSMfvABr1agd_uTCDwIr58WhlMT-pHQqydL9ViW06TGk-Djys_ElmApJ5uVsZM%26state%3Db85ee270-58ab-4f39-85bc-eaf238d4cfad%26token_type%3Dbearer%26expires_in%3D3600', Status: 200, Duration: 5ms","timestamp":"2024-03-29T04:56:15.266Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot destructure property 'access_token' of 'req.headers.access_token' as it is undefined.","timestamp":"2024-03-29T04:57:21.187Z"}
+{"level":"info","message":"Method: GET, URL: /api/naver?access_token=AAAAO3lx3AkX-eH092ftPITA9S9CkmSMfvABr1agd_uTCDwIr58WhlMT-pHQqydL9ViW06TGk-Djys_ElmApJ5uVsZM%26state%3Db85ee270-58ab-4f39-85bc-eaf238d4cfad%26token_type%3Dbearer%26expires_in%3D3600', Status: 500, Duration: 13ms","timestamp":"2024-03-29T04:57:21.195Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot destructure property 'access_token' of 'req.headers.Access-Token' as it is undefined.","timestamp":"2024-03-29T04:57:54.655Z"}
+{"level":"info","message":"Method: GET, URL: /api/naver?access_token=AAAAO3lx3AkX-eH092ftPITA9S9CkmSMfvABr1agd_uTCDwIr58WhlMT-pHQqydL9ViW06TGk-Djys_ElmApJ5uVsZM%26state%3Db85ee270-58ab-4f39-85bc-eaf238d4cfad%26token_type%3Dbearer%26expires_in%3D3600', Status: 500, Duration: 13ms","timestamp":"2024-03-29T04:57:54.662Z"}
+{"level":"info","message":"Method: GET, URL: /naver?access_token=AAAAO3lx3AkX-eH092ftPITA9S9CkmSMfvABr1agd_uTCDwIr58WhlMT-pHQqydL9ViW06TGk-Djys_ElmApJ5uVsZM%26state%3Db85ee270-58ab-4f39-85bc-eaf238d4cfad%26token_type%3Dbearer%26expires_in%3D3600', Status: 200, Duration: 7ms","timestamp":"2024-03-29T04:58:22.703Z"}
+{"level":"info","message":"Method: GET, URL: /naver?access_token=AAAAO3lx3AkX-eH092ftPITA9S9CkmSMfvABr1agd_uTCDwIr58WhlMT-pHQqydL9ViW06TGk-Djys_ElmApJ5uVsZM%26state%3Db85ee270-58ab-4f39-85bc-eaf238d4cfad%26token_type%3Dbearer%26expires_in%3D3600', Status: 200, Duration: 5ms","timestamp":"2024-03-29T04:58:54.910Z"}
+{"level":"info","message":"Method: GET, URL: /naver, Status: 200, Duration: 2ms","timestamp":"2024-03-29T04:59:42.223Z"}
+{"level":"info","message":"Method: GET, URL: /naver, Status: 200, Duration: 1ms","timestamp":"2024-03-29T05:00:17.440Z"}
+{"level":"error","message":"Error Status: undefined, Message: Request failed with status code 401","timestamp":"2024-03-29T05:01:05.345Z"}
+{"level":"info","message":"Method: GET, URL: /api/naver, Status: 500, Duration: 202ms","timestamp":"2024-03-29T05:01:05.350Z"}
+{"level":"error","message":"Error Status: undefined, Message: Request failed with status code 401","timestamp":"2024-03-29T05:02:16.687Z"}
+{"level":"info","message":"Method: GET, URL: /api/naver, Status: 500, Duration: 208ms","timestamp":"2024-03-29T05:02:16.692Z"}
+{"level":"info","message":"Method: GET, URL: /naver, Status: 200, Duration: 285ms","timestamp":"2024-03-29T05:08:24.395Z"}
+{"level":"error","message":"Error Status: undefined, Message: Converting circular structure to JSON\n    --> starting at object with constructor 'ClientRequest'\n    |     property 'res' -> object with constructor 'IncomingMessage'\n    --- property 'req' closes the circle","timestamp":"2024-03-29T05:09:18.664Z"}
+{"level":"info","message":"Method: GET, URL: /api/naver, Status: 500, Duration: 220ms","timestamp":"2024-03-29T05:09:18.671Z"}
+{"level":"info","message":"Method: GET, URL: /naver, Status: 200, Duration: 210ms","timestamp":"2024-03-29T05:09:32.707Z"}
+{"level":"info","message":"Method: GET, URL: /api/naver, Status: 404, Duration: 7ms","timestamp":"2024-03-29T05:19:23.708Z"}
+{"level":"info","message":"Method: POST, URL: /naver, Status: 200, Duration: 177ms","timestamp":"2024-03-29T05:19:28.939Z"}
+{"level":"error","message":"Error Status: undefined, Message: Request failed with status code 401","timestamp":"2024-03-29T07:55:34.258Z"}
+{"level":"info","message":"Method: POST, URL: /api/naver, Status: 500, Duration: 298ms","timestamp":"2024-03-29T07:55:34.277Z"}
+{"level":"info","message":"Method: POST, URL: /naver, Status: 200, Duration: 1613ms","timestamp":"2024-03-29T07:57:29.656Z"}
+{"level":"error","message":"Error Status: undefined, Message: Invalid status code: []","timestamp":"2024-03-29T07:58:33.580Z"}
+{"level":"info","message":"Method: POST, URL: /api/naver, Status: 500, Duration: 351ms","timestamp":"2024-03-29T07:58:33.586Z"}
+{"level":"error","message":"Error Status: undefined, Message: Invalid status code: []","timestamp":"2024-03-29T07:59:12.018Z"}
+{"level":"info","message":"Method: POST, URL: /api/naver, Status: 500, Duration: 349ms","timestamp":"2024-03-29T07:59:12.023Z"}
+{"level":"info","message":"Method: POST, URL: /naver, Status: 200, Duration: 284ms","timestamp":"2024-03-29T07:59:43.428Z"}
+{"level":"info","message":"Method: POST, URL: /naver, Status: 200, Duration: 294ms","timestamp":"2024-03-29T08:00:03.300Z"}
+{"level":"info","message":"Method: POST, URL: /naver, Status: 200, Duration: 149ms","timestamp":"2024-03-29T08:00:20.104Z"}
+{"level":"error","message":"Error Status: undefined, Message: Converting circular structure to JSON\n    --> starting at object with constructor 'ClientRequest'\n    |     property 'res' -> object with constructor 'IncomingMessage'\n    --- property 'req' closes the circle","timestamp":"2024-03-29T08:00:36.447Z"}
+{"level":"info","message":"Method: POST, URL: /api/naver, Status: 500, Duration: 314ms","timestamp":"2024-03-29T08:00:36.455Z"}
+{"level":"info","message":"Method: POST, URL: /naver, Status: 200, Duration: 350ms","timestamp":"2024-03-29T08:01:03.206Z"}
+{"level":"info","message":"Method: POST, URL: /naver, Status: 200, Duration: 313ms","timestamp":"2024-03-29T08:06:05.473Z"}
+{"level":"info","message":"Method: POST, URL: /naver, Status: 200, Duration: 492ms","timestamp":"2024-03-29T08:06:31.674Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.users.create()` invocation:\n\n{\n+ data: UsersCreateInput | UsersUncheckedCreateInput\n}\n\nArgument `data` is missing.","timestamp":"2024-03-29T08:17:25.373Z"}
+{"level":"info","message":"Method: POST, URL: /api/naver, Status: 500, Duration: 632ms","timestamp":"2024-03-29T08:17:25.381Z"}
+{"level":"info","message":"Method: POST, URL: /naver, Status: 200, Duration: 270ms","timestamp":"2024-03-29T08:18:22.949Z"}
+{"level":"info","message":"Method: POST, URL: /naver, Status: 200, Duration: 1231ms","timestamp":"2024-03-29T08:38:25.197Z"}
+{"level":"info","message":"Method: POST, URL: /naver, Status: 200, Duration: 128ms","timestamp":"2024-03-29T08:38:33.687Z"}
+{"level":"info","message":"Method: POST, URL: /naver, Status: 200, Duration: 51ms","timestamp":"2024-03-29T08:38:34.973Z"}
+{"level":"info","message":"Method: POST, URL: /naver, Status: 200, Duration: 54ms","timestamp":"2024-03-29T08:38:36.170Z"}
+{"level":"info","message":"Method: POST, URL: /naver, Status: 200, Duration: 49ms","timestamp":"2024-03-29T08:38:37.406Z"}
+{"level":"info","message":"Method: POST, URL: /naver, Status: 200, Duration: 70ms","timestamp":"2024-03-29T08:38:38.389Z"}
+{"level":"info","message":"Method: POST, URL: /naver, Status: 200, Duration: 66ms","timestamp":"2024-03-29T08:38:40.086Z"}
+
 {"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 134ms","timestamp":"2024-03-28T15:01:01.328Z"}
 {"level":"error","message":"Error Status: undefined, Message: res is not defined","timestamp":"2024-03-28T15:02:57.351Z"}
 {"level":"info","message":"Method: DELETE, URL: /api/worry, Status: 500, Duration: 1004ms","timestamp":"2024-03-28T15:02:57.356Z"}
@@ -37,3 +103,4 @@
 {"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 13ms","timestamp":"2024-03-28T15:36:15.029Z"}
 {"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 175ms","timestamp":"2024-03-28T15:40:09.650Z"}
 {"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 16ms","timestamp":"2024-03-28T15:40:15.354Z"}
+
