@@ -36,12 +36,22 @@ export const sendPresent = async (worryId, commentId, userId, commentAuthorId) =
     return present;
 };
 
-// A유저가 선물을 보낸 '나의 해결된 고민' 목록 조회
+// '나의 해결된 고민' 목록 전체 조회
 export const getSolvedWorriesByUserId = async (userId) => {
     return PresentRepository.findSolvedWorriesByUserId(userId);
 };
 
-// A유저가 선물을 받은 '나의 해결한 고민' 목록 조회
+// '나의 해결된 고민' 상세 조회
+export const getSolvedWorryDetailsById = async (worryId) => {
+    return PresentRepository.findSolvedWorryDetailsById(worryId);
+};
+
+// '내가 해결한 고민' 목록 전체 조회
 export const getHelpedSolveWorriesByUserId = async (userId) => {
     return PresentRepository.findHelpedSolveWorriesByUserId(userId);
+};
+
+// '내가 해결한 고민' 상세 조회
+export const getHelpedSolveWorryDetailsById = async (worryId) => {
+    return PresentRepository.findHelpedSolveWorryDetailsById(worryId);
 };
