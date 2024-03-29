@@ -62,3 +62,12 @@
 {"level":"info","message":"Method: POST, URL: /naver, Status: 200, Duration: 49ms","timestamp":"2024-03-29T08:38:37.406Z"}
 {"level":"info","message":"Method: POST, URL: /naver, Status: 200, Duration: 70ms","timestamp":"2024-03-29T08:38:38.389Z"}
 {"level":"info","message":"Method: POST, URL: /naver, Status: 200, Duration: 66ms","timestamp":"2024-03-29T08:38:40.086Z"}
+{"level":"error","message":"Error Status: undefined, Message: Unknown authentication strategy \"kakao\"","timestamp":"2024-03-29T14:35:37.586Z"}
+{"level":"info","message":"Method: GET, URL: /api/kakao, Status: 500, Duration: 9ms","timestamp":"2024-03-29T14:35:37.593Z"}
+{"level":"error","message":"Error Status: undefined, Message: Unknown authentication strategy \"kakao\"","timestamp":"2024-03-29T14:36:22.197Z"}
+{"level":"info","message":"Method: GET, URL: /api/kakao, Status: 500, Duration: 21ms","timestamp":"2024-03-29T14:36:22.213Z"}
+{"level":"error","message":"Error Status: undefined, Message: Unknown authentication strategy \"kakao\"","timestamp":"2024-03-29T14:40:10.285Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 500, Duration: 12ms","timestamp":"2024-03-29T14:40:10.293Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 404, Duration: 15ms","timestamp":"2024-03-29T14:51:34.779Z"}
+{"level":"error","message":"Error Status: undefined, Message: Unknown authentication strategy \"kakao\"","timestamp":"2024-03-29T14:52:24.188Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 500, Duration: 24ms","timestamp":"2024-03-29T14:52:24.204Z"}

@@ -13,3 +13,7 @@
 {"level":"error","message":"Error Status: undefined, Message: Invalid status code: []","timestamp":"2024-03-29T07:59:12.018Z"}
 {"level":"error","message":"Error Status: undefined, Message: Converting circular structure to JSON\n    --> starting at object with constructor 'ClientRequest'\n    |     property 'res' -> object with constructor 'IncomingMessage'\n    --- property 'req' closes the circle","timestamp":"2024-03-29T08:00:36.447Z"}
 {"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.users.create()` invocation:\n\n{\n+ data: UsersCreateInput | UsersUncheckedCreateInput\n}\n\nArgument `data` is missing.","timestamp":"2024-03-29T08:17:25.373Z"}
+{"level":"error","message":"Error Status: undefined, Message: Unknown authentication strategy \"kakao\"","timestamp":"2024-03-29T14:35:37.586Z"}
+{"level":"error","message":"Error Status: undefined, Message: Unknown authentication strategy \"kakao\"","timestamp":"2024-03-29T14:36:22.197Z"}
+{"level":"error","message":"Error Status: undefined, Message: Unknown authentication strategy \"kakao\"","timestamp":"2024-03-29T14:40:10.285Z"}
+{"level":"error","message":"Error Status: undefined, Message: Unknown authentication strategy \"kakao\"","timestamp":"2024-03-29T14:52:24.188Z"}

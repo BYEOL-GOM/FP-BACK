@@ -17,6 +17,8 @@
     "joi": "^17.12.2",
     "jsonwebtoken": "^9.0.2",
     "node-cron": "^3.0.3",
+    "passport": "^0.7.0",
+    "passport-kakao": "^1.0.1",
     "passport-naver-v2": "^2.0.8",
     "prettier": "^3.2.5",
     "prisma": "^5.11.0",
