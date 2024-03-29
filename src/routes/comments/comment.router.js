@@ -2,26 +2,23 @@ import express from 'express';
 import {
     createCommentController,
     // createCommentReplyController,
-    // readCommentController,
-    // updateCommentController,
-    // deleteCommentController,
+    getCommentsByUserIdController,
+    getCommentDetailController,
+
 } from './comment.controller.js';
 
 let router = express.Router({ mergeParams: true });
 
 // 댓글(답변) 생성
-router.post('/comments', createCommentController);
+router.post('/:worryId', createCommentController);
 
-// 대댓글 생성
-router.post('/comments/:commentId/replies', createCommentReplyController);
+// // 대댓글 생성
+// router.post('/comments/reply', createCommentReplyController);
 
-// 댓글 조회
-router.get('/comments', readCommentController);
+// // 답변 조회 (고민작성자에 해당하는 답변 목록)
+router.get('/', getCommentsByUserIdController);
 
-// 댓글 수정
-router.put('/comments/:commentId', updateCommentController);
-
-// 댓글 삭제
-router.delete('/comments/:commentId', deleteCommentController);
-
+// 답변 상세 조회 (고민자에게 도착할 답변 상세 조회)
+router.get('/:commentId', getCommentDetailController);
 export default router;
+

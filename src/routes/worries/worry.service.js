@@ -49,3 +49,18 @@ export const deleteOldWorries = async () => {
         throw error;
     }
 };
+
+// 곤란한 질문 삭제하기
+export const deleteSelectedWorry = async (worryId, userId) => {
+    const commentAuthorId = await worryRepository.getCommentAuthorId(worryId);
+    if (!commentAuthorId) {
+        throw new Error('해당하는 고민이 존재하지 않습니다');
+    }
+
+    if (commentAuthorId !== userId) {
+        throw new Error('답변 대상자만 곤란한 고민을 삭제할 수 있습니다');
+    }
+
+    const deletedWorry = await worryRepository.deleteSelectedWorry(worryId);
+    return deletedWorry;
+};
