@@ -56,7 +56,7 @@ export const markWorryAsSolvedAndCreateLike = async (worryId, commentId, userId,
         }),
     ]);
 
-    return [worryUpdateResult]; // worry 업데이트 결과만 포함하는 배열 반환}
+    return [worryUpdateResult]; // worry 업데이트 결과만 포함하는 배열 반환
 };
 
 // commentId에 해당하는 댓글 찾기

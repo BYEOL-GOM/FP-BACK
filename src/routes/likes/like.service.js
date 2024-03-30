@@ -23,6 +23,13 @@ export const sendLike = async (worryId, commentId, userId, commentAuthorId) => {
         throw err;
     }
 
+    // 선물 보내는 유저가 고민 게시글의 작성자가 아니라면 에러
+    if (worry.userId !== userId) {
+        const err = new Error('선물을 보낼 권한이 없습니다. 게시글의 작성자만 선물을 보낼 수 있습니다.');
+        err.status = 403; // Forbidden access
+        throw err;
+    }
+
     // 선물을 이미 보냈다(고민 해결)면 에러 처리
     if (worry.isSolved) {
         const err = new Error('이미 선물이 전송되었습니다.');

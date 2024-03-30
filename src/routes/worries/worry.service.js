@@ -7,8 +7,12 @@ export const createWorry = async ({ content, icon, userId }) => {
         // 답변자 Id 랜덤으로 지정하기
         const randomAuthorId = await worryRepository.getRandomUser(userId);
 
+        const worry = await worryRepository.createWorry({ content, icon, userId, randomAuthorId });
+
+        // commentAuthorId도 함께 반환
+        return { ...worry, commentAuthorId: randomAuthorId };
         // 고민 등록할때 답변자id도 포함
-        return await worryRepository.createWorry({ content, icon, userId, randomAuthorId });
+        // return await worryRepository.createWorry({ content, icon, userId, randomAuthorId });
     } catch (error) {
         throw new Error('고민 등록 실패' + error.message);
     }
