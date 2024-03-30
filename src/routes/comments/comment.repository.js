@@ -11,7 +11,7 @@ export const createComment = async (data) => {
         data: {
             worryId: data.worryId,
             content: data.content,
-            authorId: data.authorId,
+            userId: data.userId,
         },
     });
 };
@@ -47,10 +47,10 @@ export const findCommentAuthorById = async (commentId) => {
                 commentId: commentId,
             },
             select: {
-                authorId: true,
+                userId: true,
             },
         });
-        return comment.authorId;
+        return comment.userId;
     } catch (error) {
         throw new Error('Failed to find comment author: ' + error.message);
     }
