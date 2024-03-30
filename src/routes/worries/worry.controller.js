@@ -10,7 +10,7 @@ export const createWorryController = async (req, res, next) => {
         const worry = await worryService.createWorry({ content, icon, userId });
         const commentAuthorId = worry.commentAuthorId; // commentAuthorId 추가
 
-        res.status(201).json({ message: '고민이 등록되었습니다', commentAuthorId });
+        res.status(201).json({ message: '고민이 등록되었습니다', worry });
     } catch (error) {
         console.error('고민 등록중 에러가 발생했어요! :', error);
         next(error);
@@ -83,5 +83,31 @@ export const deleteWorryByCommentAuthorController = async (req, res, next) => {
             return res.status(403).json({ error: error.message });
         }
         res.status(500).json({ error: error.message });
+    }
+};
+
+// 재고민 생성
+export const createReWorryController = async (req, res) => {
+    try {
+        const { worryId, commentId } = req.params;
+        const { content, userId } = req.body;
+        const reWorry = await worryService.createReWorry(+worryId, +commentId, content, +userId);
+        res.status(201).json({ message: '재고민이 등록되었습니다', reWorry });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
+// 재답변 생성
+export const createReAnswerController = async (req, res) => {
+    try {
+        const { worryId, reWorryId } = req.params;
+        const { content, userId } = req.body; // 실제 구현에서는 인증 미들웨어를 통해 userId를 가져옵니다.
+
+        const reAnswer = await worryService.createReAnswer(worryId, reWorryId, content, userId);
+        res.status(201).json({ message: '재답변이 등록되었습니다', reAnswer });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: '재답변 등록 중 에러가 발생했습니다' });
     }
 };

@@ -164,3 +164,29 @@ export const getCommentAuthorId = async (worryId) => {
     });
     return worry ? worry.commentAuthorId : null;
 };
+
+// 재고민 생성
+export const createComment = async ({ worryId, content, userId, parentId }) => {
+    console.log('콘솔 : Creating comment with:', { worryId, content, userId, parentId });
+
+    return await prisma.comments.create({
+        data: {
+            worryId: parseInt(worryId),
+            content,
+            userId: parseInt(userId), // 요청을 보낸 사용자의 ID
+            parentId: parseInt(parentId), // 이전 답변(또는 댓글)의 ID
+        },
+    });
+};
+
+//  재답변 생성
+export const createReAnswer = async ({ worryId, content, userId, parentId }) => {
+    return await prisma.comments.create({
+        data: {
+            worryId,
+            content,
+            userId,
+            parentId, // 재답변의 경우, 이전 댓글(재고민)의 ID가 parentId가 됩니다.
+        },
+    });
+};

@@ -1,5 +1,6 @@
 import * as worryRepository from './worry.repository.js';
 import { prisma } from '../../utils/prisma/index.js';
+import * as CommentRepository from '../comments/comment.repository.js';
 
 //고민 등록
 export const createWorry = async ({ content, icon, userId }) => {
@@ -67,4 +68,35 @@ export const deleteSelectedWorry = async (worryId, userId) => {
 
     const deletedWorry = await worryRepository.deleteSelectedWorry(worryId);
     return deletedWorry;
+};
+
+// 재고민 등록
+export const createReWorry = async (worryId, commentId, content, userId) => {
+    const originalWorry = await worryRepository.getWorryDetail(worryId);
+    if (!originalWorry) throw new Error('해당 고민이 존재하지 않습니다.');
+    if (originalWorry.userId !== userId) throw new Error('재고민을 작성할 권한이 없습니다.');
+
+    const originalComment = await CommentRepository.findCommentById(commentId);
+    if (!originalComment || originalComment.worryId !== worryId) {
+        throw new Error('적절하지 않은 요청입니다.');
+    }
+
+    const reWorry = await worryRepository.createComment({
+        worryId,
+        content,
+        userId,
+        parentId: commentId, // 이전 답변(댓글)의 ID
+    });
+
+    return reWorry;
+};
+
+//  재답변 생성
+export const createReAnswer = async (worryId, reWorryId, content, userId) => {
+    return await worryRepository.createComment({
+        worryId: parseInt(worryId),
+        content,
+        userId,
+        parentId: parseInt(reWorryId), // 재고민 ID를 parentId로 설정하여 재답변의 관계를 나타냅니다.
+    });
 };

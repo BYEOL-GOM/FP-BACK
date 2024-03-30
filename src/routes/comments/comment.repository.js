@@ -11,7 +11,7 @@ export const createComment = async (data) => {
         data: {
             worryId: data.worryId,
             content: data.content,
-            authorId: data.authorId,
+            userId: data.userId,
         },
     });
 };

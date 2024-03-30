@@ -5,6 +5,8 @@ import {
     getWorriesByCommentAuthorIdController,
     deleteWorryController,
     deleteWorryByCommentAuthorController,
+    createReWorryController,
+    createReAnswerController,
 } from '../worries/worry.controller.js';
 
 const router = express.Router();
@@ -23,4 +25,11 @@ router.delete('/', deleteWorryController);
 
 // 답변하지 못하거나, 불쾌한 내용의 고민 삭제 api  (답변자 id & 고민id)
 router.delete('/:worryId', deleteWorryByCommentAuthorController);
+
+// 재고민 생성 api (/:최초의 고민id/comments/이전단계 재고민/re-worries
+router.post('/:worryId/comments/:commentId/re-worries', createReWorryController);
+
+// 재고민에 대한 재답변 생성 API
+router.post('/:worryId/re-worries/:reWorryId/re-answers', createReAnswerController);
+
 export default router;
