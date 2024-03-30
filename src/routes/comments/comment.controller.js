@@ -7,10 +7,16 @@ export const createCommentController = async (req, res, next) => {
         const { worryId } = req.params;
         const { content, userId } = req.body;
 
-        console.log('🩵🩵🩵컨트롤러 : ', worryId, content, userId);
-
         const comment = await CommentService.createComment(worryId, content, userId);
-        return res.status(201).json({ message: '답변이 등록되었습니다' });
+
+        // 응답 객체에 필요한 정보 포함
+        const response = {
+            worryId: comment.worryId,
+            commentId: comment.id, // 생성된 댓글의 ID
+            authorId: comment.authorId,
+        };
+
+        return res.status(201).json({ response, message: '답변이 전송되었습니다.' });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
