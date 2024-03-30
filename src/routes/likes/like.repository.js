@@ -26,31 +26,28 @@ export const verifyCommentExists = async (commentId, worryId) => {
 export const markWorryAsSolvedAndCreateLike = async (worryId, commentId, userId, commentAuthorId) => {
     console.log('🩷🩷🩷레포지토리 : ', worryId, commentId, userId, commentAuthorId);
     // 고민을 업데이트하고, 선물을 생성하며, 사용자 엔티티를 업데이트하는 트랜잭션
-    const [worryUpdateResult] = await prisma.$transaction([
+    const [worryUpdateResult, likeCreationResult] = await prisma.$transaction([
         prisma.worries.update({
             where: { worryId: parseInt(worryId) },
             data: {
                 isSolved: true,
-                // presentCheck: true,
                 solvingCommentId: parseInt(commentId), // 해결을 위한 댓글 ID 업데이트
-                userId: userId, // 고민을 해결한 사용자 ID 업데이트
-                helperUserId: commentAuthorId, // 선물을 받는 사용자(답변자) ID 업데이트
+                // 'Worries' 모델에서 'userId'와 'helperUserId' 필드를 업데이트하는 부분이 불필요하거나 오류가 있는 경우, 여기서 조정 필요
             },
             select: {
                 worryId: true,
-                commentAuthorId: true,
-                content: true,
-                createdAt: true,
-                icon: true,
-                userId: true,
                 solvingCommentId: true,
+                content: true,
+                userId: true,
+                commentAuthorId: true,
+                icon: true,
+                createdAt: true,
             },
         }),
         prisma.likes.create({
             data: {
-                userId: parseInt(userId),
-                receiverId: parseInt(commentAuthorId),
-                commentId: parseInt(commentId),
+                userId: parseInt(userId), // 선물을 보내는 사람 (좋아요를 누른 사용자)
+                commentId: parseInt(commentId), // 좋아요가 적용되는 댓글 ID
             },
             // 선물 생성에 대한 필드를 선택하지 않아 최종 출력에서 제외
         }),
@@ -126,8 +123,7 @@ export const findHelpedSolveWorriesByUserId = async (userId) => {
     return await prisma.worries.findMany({
         where: {
             isSolved: true,
-            // presentCheck: true,
-            helperUserId: parseInt(userId),
+            commentAuthorId: userId,
         },
         select: {
             worryId: true,

@@ -13,7 +13,7 @@ export const createCommentController = async (req, res, next) => {
         const response = {
             worryId: comment.worryId,
             commentId: comment.commentId, // 생성된 댓글의 ID
-            authorId: comment.authorId,
+            userId: comment.userId,
         };
 
         return res.status(201).json({ response, message: '답변이 전송되었습니다.' });

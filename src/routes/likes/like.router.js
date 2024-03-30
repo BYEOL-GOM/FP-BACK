@@ -19,9 +19,9 @@ router.get('/mySolvedWorry', getSolvedWorries);
 router.get('/mySolvedWorry/:worryId', getSolvedWorryDetails);
 
 // '내가 해결한 고민' 목록 전체 조회
-router.get('/myHelpedSolveWorry', getHelpedSolveWorries);
+router.get('/myHelpedSolvedWorry', getHelpedSolveWorries);
 
 // '내가 해결한 고민' 상세 조회
-router.get('/myHelpedSolveWorry/:worryId', getHelpedSolveWorryDetails);
+router.get('/myHelpedSolvedWorry/:worryId', getHelpedSolveWorryDetails);
 
 export default router;
