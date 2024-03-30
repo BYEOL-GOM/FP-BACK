@@ -29,7 +29,15 @@ router.get(
         //res.header('Authorization', `Bearer ${token}`);
         //res.status(200).send({ message: '로그인이 성공하였습니다.' });
         //res.status(200).json({ token: token, message: '로그인이 성공하였습니다.' });
-        const redirectUrl = `http://13.209.77.101:3000/auth/kakao/callback#token=${token}`;
+        // const redirectUrl = `http://13.209.77.101:3000/auth/kakao/callback#token=${token}`;
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: false,//process.env.NODE_ENV !== 'development', // 개발 환경이 아닐 때만 secure 적용
+            //path: '/',
+            maxAge: 1000 * 60 * 60 * 24, // 쿠키 유효 시간 (예: 24시간)
+            //sameSite: 'strict',
+          });
+        const redirectUrl = `http://localhost:3000/auth/kakao/callback`
         res.redirect(redirectUrl);
     },
 );

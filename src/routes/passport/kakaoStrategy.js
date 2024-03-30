@@ -37,7 +37,7 @@ export default () => {
                     const token = jwt.sign(
                         { userId: user.userId },
                         process.env.JWT_SECRET, // JWT 비밀키
-                        { expiresIn: '2h' }, // 토큰 유효 시간
+                        { expiresIn: '24h' }, // 토큰 유효 시간
                     );
 
                     // done 함수를 통해 사용자 정보와 토큰을 다음 단계로 전달
