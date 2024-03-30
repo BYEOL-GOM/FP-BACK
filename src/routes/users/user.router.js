@@ -53,33 +53,12 @@ const generateTokens = (userId) => {
     const accessToken = jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: process.env.ACCESS_TOKEN_LIFE,
     });
-
     const refreshToken = jwt.sign({ userId }, process.env.REFRESH_TOKEN_SECRET, {
         expiresIn: process.env.REFRESH_TOKEN_LIFE,
     });
 
     return { accessToken, refreshToken };
 };
-
-router.post('/sign-up', async (req, res, next) => {
-    try {
-        const { nickname, userCheckId, email } = req.body;
-        // 비밀번호 해싱
-        const user = await prisma.users.create({
-            data: {
-                nickname,
-                userCheckId,
-                email,
-            },
-        });
-        // Use the newly created userId as authorId
-
-        return res.status(201).json({ user });
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: '서버 오류' });
-    }
-});
 
 router.post('/naver', async (req, res, next) => {
     try {
@@ -96,19 +75,18 @@ router.post('/naver', async (req, res, next) => {
         const userInfo = response.data.response;
 
         let user = await prisma.users.findFirst({
-            where: { userChekId: userInfo.id },
+            where: { userCheckId: userInfo.id },
         });
 
         if (!user) {
             user = await prisma.users.create({
                 data: {
-                    userChekId: userInfo.id,
+                    userCheckId: userInfo.id,
                     nickname: userInfo.nickname,
                     email: userInfo.email,
                 },
             });
         }
-
         // 사용자가 존재하든 새로 생성되었든, 토큰 발급
         const tokens = generateTokens(user.id);
 
@@ -126,4 +104,23 @@ router.post('/naver', async (req, res, next) => {
     }
 });
 
+// 임시 회원가입 API
+router.post('/sign-up', async (req, res, next) => {
+    try {
+        const { nickname, email, userCheckId } = req.body;
+        // 비밀번호 해싱
+        const user = await prisma.users.create({
+            data: {
+                nickname,
+                email,
+                userCheckId,
+            },
+        });
+
+        return res.status(201).json({ user });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: '서버 오류' });
+    }
+});
 export default router;

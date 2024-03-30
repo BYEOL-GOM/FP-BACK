@@ -5,16 +5,13 @@ export const createWorryController = async (req, res, next) => {
     try {
         const { content, icon, userId } = req.body; // 나중에 사용자 인증 미들웨어에서 userId로 변경하기
 
+        if (!content || !icon || !userId) return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
 
-        if (!content || !icon || !userId) return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' })
-  
         const worry = await worryService.createWorry({ content, icon, userId });
-        res.status(201).json(worry);
+        res.status(201).json({ message: '고민이 등록되었습니다' });
     } catch (error) {
         console.error('고민 등록중 에러가 발생했어요! :', error);
         next(error);
-
-       
     }
 };
 
