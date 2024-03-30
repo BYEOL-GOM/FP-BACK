@@ -18,7 +18,7 @@ const app = express();
 const PORT = 3000; // 환경 변수에서 포트를 설정할 수 있도록 변경
 
 app.use(LogMiddleware);
-
+app.use(cookieParser());
 app.use(
   cors({
     origin: '*', // 실제 배포시에는 허용할 도메인을 명시적으로 지정하는 것이 좋습니다.
@@ -27,7 +27,7 @@ app.use(
 );
 
 app.use(express.json());
-app.use(cookieParser());
+
 
 // Passport 초기화
 passport.initialize();

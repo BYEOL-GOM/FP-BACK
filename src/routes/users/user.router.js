@@ -37,7 +37,7 @@ router.get(
             maxAge: 1000 * 60 * 60 * 24, // 쿠키 유효 시간 (예: 24시간)
             //sameSite: 'strict',
           });
-        const redirectUrl = `https://localhost:3000/kakao/testpage`
+        const redirectUrl = `http://13.209.77.101:3000/auth/kakao/callback`
         res.redirect(redirectUrl);
     },
 );
