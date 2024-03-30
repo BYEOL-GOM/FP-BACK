@@ -7,14 +7,7 @@ export const sendLike = async (req, res, next) => {
         const { userId } = req.body; // 로그인한 유저. 선물 보낼 사람
         // const userId = res.locals.user.userId;
 
-        // // 해당 고민 게시글 가져오기
-        // const worry = await LikeService.getWorryById(worryId);
-        // // 고민 등록 시 답변한 유저 아이디 가져오기. 선물 받을 사람
-        // const commentAuthorId = worry.commentAuthorId;
-
         const result = await LikeService.sendLike(worryId, commentId, userId);
-
-        console.log('🩵🩵🩵컨트롤러 : ', worryId, commentId, userId);
 
         return res.status(201).json({ message: '선물을 성공적으로 전달했습니다.' });
     } catch (error) {

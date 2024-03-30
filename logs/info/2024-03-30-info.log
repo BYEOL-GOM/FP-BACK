@@ -443,3 +443,71 @@
 {"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 208ms","timestamp":"2024-03-30T09:42:19.062Z"}
 {"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 27ms","timestamp":"2024-03-30T09:42:38.121Z"}
 {"level":"info","message":"Method: POST, URL: /11, Status: 201, Duration: 49ms","timestamp":"2024-03-30T09:42:52.083Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 190ms","timestamp":"2024-03-30T09:56:12.711Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 48ms","timestamp":"2024-03-30T09:56:45.637Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 17ms","timestamp":"2024-03-30T09:56:52.490Z"}
+{"level":"info","message":"Method: POST, URL: /17, Status: 201, Duration: 61ms","timestamp":"2024-03-30T09:57:02.429Z"}
+{"level":"info","message":"Method: POST, URL: /worries/17/comments/16/sendLike, Status: 201, Duration: 92ms","timestamp":"2024-03-30T09:57:18.191Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T09:57:23.189Z"}
+{"level":"info","message":"Method: POST, URL: /worries/17/comments/16/sendLike, Status: 400, Duration: 12ms","timestamp":"2024-03-30T09:57:23.190Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T09:57:26.651Z"}
+{"level":"info","message":"Method: POST, URL: /worries/17/comments/16/sendLike, Status: 400, Duration: 11ms","timestamp":"2024-03-30T09:57:26.652Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 103ms","timestamp":"2024-03-30T09:59:36.474Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 61ms","timestamp":"2024-03-30T10:00:10.715Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 25ms","timestamp":"2024-03-30T10:00:25.902Z"}
+{"level":"info","message":"Method: POST, URL: /18, Status: 400, Duration: 22ms","timestamp":"2024-03-30T10:00:34.638Z"}
+{"level":"info","message":"Method: POST, URL: /18, Status: 201, Duration: 45ms","timestamp":"2024-03-30T10:00:38.467Z"}
+{"level":"info","message":"Method: POST, URL: /worries/18/comments/17/sendLike, Status: 201, Duration: 218ms","timestamp":"2024-03-30T10:01:01.548Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 153ms","timestamp":"2024-03-30T10:05:58.086Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 24ms","timestamp":"2024-03-30T10:06:03.660Z"}
+{"level":"info","message":"Method: POST, URL: /21, Status: 201, Duration: 69ms","timestamp":"2024-03-30T10:06:15.699Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.update()` invocation:\n\n\nForeign key constraint failed on the field: `userId`","timestamp":"2024-03-30T10:06:36.336Z"}
+{"level":"info","message":"Method: POST, URL: /worries/21/comments/20/sendLike, Status: 500, Duration: 77ms","timestamp":"2024-03-30T10:06:36.337Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.update()` invocation:\n\n\nForeign key constraint failed on the field: `userId`","timestamp":"2024-03-30T10:07:09.491Z"}
+{"level":"info","message":"Method: POST, URL: /worries/21/comments/20/sendLike, Status: 500, Duration: 161ms","timestamp":"2024-03-30T10:07:09.495Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 185ms","timestamp":"2024-03-30T10:09:33.066Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 18ms","timestamp":"2024-03-30T10:09:36.774Z"}
+{"level":"info","message":"Method: POST, URL: /22, Status: 201, Duration: 66ms","timestamp":"2024-03-30T10:09:48.723Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.update()` invocation:\n\n\nForeign key constraint failed on the field: `userId`","timestamp":"2024-03-30T10:09:59.293Z"}
+{"level":"info","message":"Method: POST, URL: /worries/22/comments/21/sendLike, Status: 500, Duration: 67ms","timestamp":"2024-03-30T10:09:59.295Z"}
+{"level":"info","message":"Method: POST, URL: /worries/22/comments/21/sendLike, Status: 201, Duration: 84ms","timestamp":"2024-03-30T10:10:03.794Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T10:10:14.068Z"}
+{"level":"info","message":"Method: POST, URL: /worries/22/comments/21/sendLike, Status: 400, Duration: 13ms","timestamp":"2024-03-30T10:10:14.070Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 42ms","timestamp":"2024-03-30T10:10:30.552Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 10ms","timestamp":"2024-03-30T10:10:37.669Z"}
+{"level":"info","message":"Method: POST, URL: /24, Status: 201, Duration: 41ms","timestamp":"2024-03-30T10:10:51.348Z"}
+{"level":"info","message":"Method: POST, URL: /worries/24/comments/23/sendLike, Status: 201, Duration: 57ms","timestamp":"2024-03-30T10:11:05.422Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 47ms","timestamp":"2024-03-30T10:11:22.122Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 9ms","timestamp":"2024-03-30T10:11:32.975Z"}
+{"level":"info","message":"Method: POST, URL: /26, Status: 201, Duration: 42ms","timestamp":"2024-03-30T10:11:40.519Z"}
+{"level":"info","message":"Method: POST, URL: /worries/26/comments/24/sendLike, Status: 201, Duration: 61ms","timestamp":"2024-03-30T10:12:01.106Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 33ms","timestamp":"2024-03-30T10:12:14.720Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 31ms","timestamp":"2024-03-30T10:12:19.045Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 33ms","timestamp":"2024-03-30T10:12:25.161Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 9ms","timestamp":"2024-03-30T10:12:30.781Z"}
+{"level":"info","message":"Method: POST, URL: /28, Status: 201, Duration: 63ms","timestamp":"2024-03-30T10:12:42.743Z"}
+{"level":"info","message":"Method: POST, URL: /worries/28/comments/25/sendLike, Status: 201, Duration: 61ms","timestamp":"2024-03-30T10:12:52.418Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 41ms","timestamp":"2024-03-30T10:12:56.569Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 24ms","timestamp":"2024-03-30T10:13:05.096Z"}
+{"level":"info","message":"Method: POST, URL: /29, Status: 201, Duration: 42ms","timestamp":"2024-03-30T10:13:28.230Z"}
+{"level":"info","message":"Method: POST, URL: /worries/29/comments/26/sendLike, Status: 201, Duration: 59ms","timestamp":"2024-03-30T10:13:38.887Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T10:13:40.569Z"}
+{"level":"info","message":"Method: POST, URL: /worries/29/comments/26/sendLike, Status: 400, Duration: 10ms","timestamp":"2024-03-30T10:13:40.569Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T10:13:41.382Z"}
+{"level":"info","message":"Method: POST, URL: /worries/29/comments/26/sendLike, Status: 400, Duration: 8ms","timestamp":"2024-03-30T10:13:41.382Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T10:13:41.798Z"}
+{"level":"info","message":"Method: POST, URL: /worries/29/comments/26/sendLike, Status: 400, Duration: 8ms","timestamp":"2024-03-30T10:13:41.799Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 24ms","timestamp":"2024-03-30T10:13:47.783Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 183ms","timestamp":"2024-03-30T10:22:13.894Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 20ms","timestamp":"2024-03-30T10:22:17.702Z"}
+{"level":"info","message":"Method: POST, URL: /30, Status: 201, Duration: 53ms","timestamp":"2024-03-30T10:22:27.337Z"}
+{"level":"error","message":"Error Status: 403, Message: 선물을 보낼 권한이 없습니다. 게시글의 작성자만 선물을 보낼 수 있습니다.","timestamp":"2024-03-30T10:22:42.392Z"}
+{"level":"info","message":"Method: POST, URL: /worries/30/comments/27/sendLike, Status: 403, Duration: 26ms","timestamp":"2024-03-30T10:22:42.393Z"}
+{"level":"error","message":"Error Status: 403, Message: 선물을 보낼 권한이 없습니다. 게시글의 작성자만 선물을 보낼 수 있습니다.","timestamp":"2024-03-30T10:22:45.884Z"}
+{"level":"info","message":"Method: POST, URL: /worries/30/comments/27/sendLike, Status: 403, Duration: 9ms","timestamp":"2024-03-30T10:22:45.885Z"}
+{"level":"info","message":"Method: POST, URL: /worries/30/comments/27/sendLike, Status: 201, Duration: 100ms","timestamp":"2024-03-30T10:22:49.042Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 16ms","timestamp":"2024-03-30T10:22:52.216Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/30, Status: 200, Duration: 38ms","timestamp":"2024-03-30T10:23:02.374Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry, Status: 200, Duration: 15ms","timestamp":"2024-03-30T10:23:10.289Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry/15, Status: 200, Duration: 17ms","timestamp":"2024-03-30T10:23:16.903Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry, Status: 200, Duration: 17ms","timestamp":"2024-03-30T10:23:23.632Z"}
