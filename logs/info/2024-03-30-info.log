@@ -1,3 +1,138 @@
+
+{"level":"error","message":"Error Status: undefined, Message: Login sessions require session support. Did you forget to use `express-session` middleware?","timestamp":"2024-03-29T16:19:46.579Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 500, Duration: 22ms","timestamp":"2024-03-29T16:19:46.599Z"}
+{"level":"error","message":"Error Status: undefined, Message: Login sessions require session support. Did you forget to use `express-session` middleware?","timestamp":"2024-03-29T23:53:27.029Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 500, Duration: 13ms","timestamp":"2024-03-29T23:53:27.037Z"}
+{"level":"error","message":"Error Status: undefined, Message: Login sessions require session support. Did you forget to use `express-session` middleware?","timestamp":"2024-03-29T23:53:27.556Z"}
+{"level":"info","message":"Method: GET, URL: /favicon.ico, Status: 500, Duration: 7ms","timestamp":"2024-03-29T23:53:27.563Z"}
+{"level":"info","message":"Method: GET, URL: /kakao, Status: 302, Duration: 7ms","timestamp":"2024-03-29T23:54:10.089Z"}
+{"level":"info","message":"Method: GET, URL: /kakao, Status: 302, Duration: 17ms","timestamp":"2024-03-29T23:56:37.653Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=dc0AYXVdloMvN2RlTkMvTlffYvYoigekFfH-DXVpN9ipvD445XgNnA7bSjoKKwynAAABjoyk6zZUdd9ffL_GXA, Status: 404, Duration: 4ms","timestamp":"2024-03-29T23:56:41.648Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 9ms","timestamp":"2024-03-29T23:57:53.371Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.users.findFirst()` invocation:\n\n{\n  where: {\n    userChekId: 3413556301\n                ~~~~~~~~~~\n  }\n}\n\nArgument `userChekId`: Invalid value provided. Expected StringFilter or String, provided Int.","timestamp":"2024-03-29T23:57:58.290Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=r9JR75yAxSE-WCSsUqKvkcrPsiC1U1166J5XvMEeJG8kCZM0f5Zhck9R1HIKKcjZAAABjoymEXGm1x-HnlkNwQ, Status: 500, Duration: 1337ms","timestamp":"2024-03-29T23:57:58.293Z"}
+{"level":"info","message":"Method: GET, URL: /favicon.ico, Status: 404, Duration: 9ms","timestamp":"2024-03-29T23:57:58.410Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 8ms","timestamp":"2024-03-30T00:01:05.566Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.users.create()` invocation:\n\n{\n  email: undefined,\n  nick: \"정재훈\",\n  ~~~~\n  snsId: 3413556301,\n  provider: \"kakao\",\n? data?: UsersCreateInput | UsersUncheckedCreateInput\n}\n\nUnknown argument `nick`. Available options are marked with ?.","timestamp":"2024-03-30T00:01:06.557Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=IbPXBVV335k2yZvrjphYuu1RCOY33VH47itYYspMuwp5dei6DArQwGRyQkIKPXNNAAABjoyo8pUq3eF1vjqPRg, Status: 500, Duration: 898ms","timestamp":"2024-03-30T00:01:06.559Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 9ms","timestamp":"2024-03-30T00:05:13.995Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 1ms","timestamp":"2024-03-30T00:05:15.287Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.users.create()` invocation:\n\n{\n  email: undefined,\n  nickname: \"정재훈\",\n  ~~~~~~~~\n  userChekId: \"3413556301\",\n? data?: UsersCreateInput | UsersUncheckedCreateInput\n}\n\nUnknown argument `nickname`. Available options are marked with ?.","timestamp":"2024-03-30T00:05:15.849Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=TI6Po58gkhNMHkw-OBIpGc2flc7Cmg_SJTSQkuzNvxMWYZ69xoz-bz67TXoKPXWaAAABjoyswhLMISgqRbFCUQ, Status: 500, Duration: 467ms","timestamp":"2024-03-30T00:05:15.854Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 5ms","timestamp":"2024-03-30T00:07:29.629Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 1ms","timestamp":"2024-03-30T00:07:31.065Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.users.create()` invocation:\n\n{\n  email: undefined,\n  nickname: undefined,\n  userChekId: \"3413556301\",\n  ~~~~~~~~~~\n? data?: UsersCreateInput | UsersUncheckedCreateInput\n}\n\nUnknown argument `userChekId`. Available options are marked with ?.","timestamp":"2024-03-30T00:07:31.788Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=MXGeC0rUOo9NuY3dIuY7ztm61WCYpfbKf3HUOGB39wB374xX-5ry4gkqukMKKiWRAAABjoyu1JHgLMgnBn6ZSw, Status: 500, Duration: 591ms","timestamp":"2024-03-30T00:07:31.790Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 5ms","timestamp":"2024-03-30T00:10:16.169Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.users.create()` invocation:\n\n{\n  email: undefined,\n  nickname: undefined,\n  userChekId: \"3413556301\",\n  ~~~~~~~~~~\n? data?: UsersCreateInput | UsersUncheckedCreateInput\n}\n\nUnknown argument `userChekId`. Available options are marked with ?.","timestamp":"2024-03-30T00:10:16.602Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=VAUxdPJ6kmWVU4vSR9NCkoWIxSBWTVEZEij4HI5mxje7bRLWMnW_fV4fMYYKKcjYAAABjoyxWVpONYg--5I0Sw, Status: 500, Duration: 351ms","timestamp":"2024-03-30T00:10:16.607Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 8ms","timestamp":"2024-03-30T00:15:23.659Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 2ms","timestamp":"2024-03-30T00:15:25.253Z"}
+{"level":"error","message":"Error Status: undefined, Message: kakaoProfile is not defined","timestamp":"2024-03-30T00:15:25.606Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=3diI5PAYKlH0tTA2y0aLwpZ69kaefrtYVDSk9NcD6nrwzrkrk67x74ZeAnMKKclgAAABjoy2ELjDukuslKNZWg, Status: 500, Duration: 268ms","timestamp":"2024-03-30T00:15:25.608Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 10ms","timestamp":"2024-03-30T02:01:06.124Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 1ms","timestamp":"2024-03-30T02:01:12.539Z"}
+{"level":"error","message":"Error Status: undefined, Message: kakaoProfile is not defined","timestamp":"2024-03-30T02:01:12.874Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=t62eAprCmoh3Xb0djLnpX7Y-bguUCIRnb2QQq_tzSS-i8qUBXzgMYW2dC5YKPXSXAAABjo0W6xQFVMIyByjmyg, Status: 500, Duration: 250ms","timestamp":"2024-03-30T02:01:12.876Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 9ms","timestamp":"2024-03-30T02:04:57.171Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.users.create()` invocation:\n\n{\n  email: \"01083066699a@gmail.com\",\n  ~~~~~\n  nickname: \"정재훈\",\n  userChekId: \"3413556301\",\n? data?: UsersCreateInput | UsersUncheckedCreateInput\n}\n\nUnknown argument `email`. Available options are marked with ?.","timestamp":"2024-03-30T02:05:35.015Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=PzAzt98x8iUrxfBHb4kcat_QXYW7scB0LHiY8E7yhsTrF69UuM3PMQ2qdDEKPXVcAAABjo0a6pJV7imzm104lw, Status: 500, Duration: 375ms","timestamp":"2024-03-30T02:05:35.017Z"}
+{"level":"info","message":"Method: GET, URL: /favicon.ico, Status: 404, Duration: 7ms","timestamp":"2024-03-30T02:05:35.122Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 8ms","timestamp":"2024-03-30T02:08:50.558Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.users.create()` invocation:\n\n{\n  email: \"01083066699a@gmail.com\",\n  ~~~~~\n  nickname: \"정재훈\",\n  userChekId: \"3413556301\",\n? data?: UsersCreateInput | UsersUncheckedCreateInput\n}\n\nUnknown argument `email`. Available options are marked with ?.","timestamp":"2024-03-30T02:08:52.342Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=LS3Qu0L4trQAN5IeYqnWkeun4jxl06FdKxpBhOd0UJnC2T0GjAfGKrzFWXQKKwymAAABjo0d6C-o9NUiJo7xnA, Status: 500, Duration: 1708ms","timestamp":"2024-03-30T02:08:52.347Z"}
+{"level":"info","message":"Method: GET, URL: /favicon.ico, Status: 404, Duration: 4ms","timestamp":"2024-03-30T02:08:52.449Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 1ms","timestamp":"2024-03-30T02:09:03.636Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.users.create()` invocation:\n\n{\n  email: \"01083066699a@gmail.com\",\n  ~~~~~\n  nickname: \"정재훈\",\n  userChekId: \"3413556301\",\n? data?: UsersCreateInput | UsersUncheckedCreateInput\n}\n\nUnknown argument `email`. Available options are marked with ?.","timestamp":"2024-03-30T02:09:03.859Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=eEiIOJVzxJf0ZrYh8ODA19_IOK8_dLG8Ty3Y8A7-T6N7wI56Hl_LOPpkMA0KKwymAAABjo0eGzX_A_o_BVb6-Q, Status: 500, Duration: 166ms","timestamp":"2024-03-30T02:09:03.860Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 8ms","timestamp":"2024-03-30T02:16:39.786Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 2ms","timestamp":"2024-03-30T02:16:42.514Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.users.create()` invocation:\n\n{\n  email: \"01083066699a@gmail.com\",\n  ~~~~~\n  nickname: \"정재훈\",\n  userChekId: \"3413556301\",\n? data?: UsersCreateInput | UsersUncheckedCreateInput\n}\n\nUnknown argument `email`. Available options are marked with ?.","timestamp":"2024-03-30T02:16:43.001Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=HbsEOxrEHHgSA0nWOdN2jMTAYWUfuWI_hhPsFbnjjPekkgVRHCHJrDdiftkKPXTaAAABjo0lG92oblpFv_zasg, Status: 500, Duration: 394ms","timestamp":"2024-03-30T02:16:43.003Z"}
+{"level":"info","message":"Method: GET, URL: /favicon.ico, Status: 404, Duration: 5ms","timestamp":"2024-03-30T02:16:43.103Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 11ms","timestamp":"2024-03-30T02:20:35.438Z"}
+{"level":"error","message":"Error Status: undefined, Message: Login sessions require session support. Did you forget to use `express-session` middleware?","timestamp":"2024-03-30T02:20:35.961Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=Uo8cIsEES6HtBpMQT_qDR4_LpYuDaYUX-MVgbzjPKJzce3y8qz8kpr0EuIQKPXQRAAABjo0oqbOt1856Xp2T3g, Status: 500, Duration: 437ms","timestamp":"2024-03-30T02:20:35.965Z"}
+{"level":"info","message":"Method: GET, URL: /favicon.ico, Status: 404, Duration: 6ms","timestamp":"2024-03-30T02:20:36.038Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 2ms","timestamp":"2024-03-30T02:31:34.328Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 2ms","timestamp":"2024-03-30T02:31:36.168Z"}
+{"level":"error","message":"Error Status: undefined, Message: Login sessions require session support. Did you forget to use `express-session` middleware?","timestamp":"2024-03-30T02:31:36.869Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=ON0MT1KNcXb51FObbUddKfJgnueF3sjE1g8_Ujw61wOSn-hs-4c4_-_G_5wKPXSYAAABjo0yvrUBl6J2VXah6g, Status: 500, Duration: 612ms","timestamp":"2024-03-30T02:31:36.870Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 1ms","timestamp":"2024-03-30T02:32:09.170Z"}
+{"level":"error","message":"Error Status: undefined, Message: Login sessions require session support. Did you forget to use `express-session` middleware?","timestamp":"2024-03-30T02:32:09.762Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=A9dXqvFTx5sotntdzoThGW_501g-vRnfzOVew9KykONCA3T4nZLuzZJWQ-MKPXRpAAABjo0zP8bSDh85zpcCzQ, Status: 500, Duration: 452ms","timestamp":"2024-03-30T02:32:09.763Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 9ms","timestamp":"2024-03-30T02:37:26.990Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 2ms","timestamp":"2024-03-30T02:37:28.663Z"}
+{"level":"error","message":"Error Status: undefined, Message: Login sessions require session support. Did you forget to use `express-session` middleware?","timestamp":"2024-03-30T02:37:29.137Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=Bffg8vKcE2J9NxC5Ui2O_tXyN6O6wC2X1JUwMsriYF7NzSnU5gPn6asXMywKKw0eAAABjo04H6VV7imzm104lw, Status: 500, Duration: 381ms","timestamp":"2024-03-30T02:37:29.139Z"}
+{"level":"info","message":"Method: GET, URL: /favicon.ico, Status: 404, Duration: 4ms","timestamp":"2024-03-30T02:37:29.179Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 8ms","timestamp":"2024-03-30T03:04:19.564Z"}
+{"level":"error","message":"Error Status: undefined, Message: secretOrPrivateKey must have a value","timestamp":"2024-03-30T03:04:20.066Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=Xtcs4X2_YGRM2EI-H7_5H76EzbY91Y5aOHD-itV1nYxoSYKVssmrHV-5iO4KKclgAAABjo1QtEvHP8VuE1ZNOQ, Status: 500, Duration: 417ms","timestamp":"2024-03-30T03:04:20.069Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 11ms","timestamp":"2024-03-30T03:16:05.680Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 1ms","timestamp":"2024-03-30T03:16:06.647Z"}
+{"level":"error","message":"Error Status: undefined, Message: Login sessions require session support. Did you forget to use `express-session` middleware?","timestamp":"2024-03-30T03:16:07.280Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=Rh03Knwd5GlJOLfYthKwjY05KKErPoDR0pfQrDlTdLudeofHcQqJMWTCIfcKPXPrAAABjo1bfpkp9hBbJybEWQ, Status: 500, Duration: 481ms","timestamp":"2024-03-30T03:16:07.283Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 10ms","timestamp":"2024-03-30T04:45:01.341Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 3ms","timestamp":"2024-03-30T04:45:02.564Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to serialize user into session","timestamp":"2024-03-30T04:45:03.130Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=CFi_ttSRhlyuy9kYqjTmv8KBl5xqn_EpYuIP77geS5sRT8OE1jw3E6j9b1wKKw0gAAABjo2s6hnUNEQ5evY1pg, Status: 500, Duration: 449ms","timestamp":"2024-03-30T04:45:03.133Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 13ms","timestamp":"2024-03-30T04:46:02.525Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 2ms","timestamp":"2024-03-30T04:46:04.409Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=LE7oqGCc9Rfa-WKYA105TdDcsJ_NtoShaHHHe5xSaIDj3QI4vKk_VZwbBmoKPXOaAAABjo2t25ge0jm_MNo9Pw, Status: 302, Duration: 447ms","timestamp":"2024-03-30T04:46:04.957Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to deserialize user out of session","timestamp":"2024-03-30T04:46:04.966Z"}
+{"level":"info","message":"Method: GET, URL: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMTc3Mzk2NH0.oTz8o27ZbJpxMUHV4RPg1vyA4m_6z7IF2OKCi59fmw0, Status: 500, Duration: 4ms","timestamp":"2024-03-30T04:46:04.969Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 12ms","timestamp":"2024-03-30T04:48:21.995Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 3ms","timestamp":"2024-03-30T04:48:23.519Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=Sd-tmlZHEb4hGAmFpjbGWQ-XylxEdw55SU58F2B-wFIlK4VcE_dVIo8gK_IKKiVOAAABjo2v-vKxu3fh8M0xkQ, Status: 302, Duration: 317ms","timestamp":"2024-03-30T04:48:23.917Z"}
+{"level":"error","message":"Error Status: undefined, Message: jwt is not defined","timestamp":"2024-03-30T04:48:23.926Z"}
+{"level":"info","message":"Method: GET, URL: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMTc3NDEwM30.1Q-OnnXWqErKlPqBGySmC2nTohSArfPhRZMnBzKv7J4, Status: 500, Duration: 8ms","timestamp":"2024-03-30T04:48:23.929Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 10ms","timestamp":"2024-03-30T04:49:49.730Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 4ms","timestamp":"2024-03-30T04:49:50.684Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=HXg3UWFbLyulRVO5sn1SJEfKOC1LWyKtsmxBXVLEb1MI6kXDchQw_dS7_lEKPXSYAAABjo2xT4RyxKx5jTsi9A, Status: 302, Duration: 534ms","timestamp":"2024-03-30T04:49:51.322Z"}
+{"level":"error","message":"Error Status: undefined, Message: Users is not defined","timestamp":"2024-03-30T04:49:51.328Z"}
+{"level":"info","message":"Method: GET, URL: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMTc3NDE5MX0.2ZNBuVzChZfWzQOhSySul6qY6w9pgzdaRT4XrG14yus, Status: 500, Duration: 8ms","timestamp":"2024-03-30T04:49:51.332Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 24ms","timestamp":"2024-03-30T05:18:46.425Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 3ms","timestamp":"2024-03-30T05:18:47.514Z"}
+{"level":"error","message":"Error Status: undefined, Message: secretOrPrivateKey must have a value","timestamp":"2024-03-30T05:18:48.808Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=NnkkxI18aIQNqX_zboN43j6CZzrHzmfkCLY_BCxkIj8FXV22QN-UWLrp8UUKKcjaAAABjo3L0BjmTYKY7N6ACw, Status: 500, Duration: 1195ms","timestamp":"2024-03-30T05:18:48.814Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 11ms","timestamp":"2024-03-30T05:19:59.890Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 2ms","timestamp":"2024-03-30T05:20:01.377Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=KREUWG18c4bn22uU6fVra7Gvd0qsKPT_7_nO_iFppRd56w8Bu1XbqjLIx5EKPXSZAAABjo3M8I9-jFVpBnvzXw, Status: 302, Duration: 397ms","timestamp":"2024-03-30T05:20:01.859Z"}
+{"level":"error","message":"Error Status: undefined, Message: jwt must be a string","timestamp":"2024-03-30T05:20:01.862Z"}
+{"level":"info","message":"Method: GET, URL: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMTc3NjAwMSwiZXhwIjoxNzExNzgzMjAxfQ.EgEkJHoP0IyzWSmpWxuegrfOh9C_zSrEnJfA_3RD-yU, Status: 500, Duration: 4ms","timestamp":"2024-03-30T05:20:01.865Z"}
+{"level":"error","message":"Error Status: undefined, Message: Unknown authentication strategy \"kakao\"","timestamp":"2024-03-30T05:21:03.757Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 500, Duration: 10ms","timestamp":"2024-03-30T05:21:03.764Z"}
+{"level":"error","message":"Error Status: undefined, Message: Unknown authentication strategy \"kakao\"","timestamp":"2024-03-30T05:21:04.870Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 500, Duration: 5ms","timestamp":"2024-03-30T05:21:04.874Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 6ms","timestamp":"2024-03-30T05:24:51.872Z"}
+{"level":"error","message":"Error Status: undefined, Message: Login sessions require session support. Did you forget to use `express-session` middleware?","timestamp":"2024-03-30T05:24:52.377Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=gT7bQDL0vZ-MQj-YKRWWSHDyMqWukAq8h1hRf2_nQhrdWQwcTh4NFFNsH28KPXNOAAABjo3RX0rOkqTnJF629A, Status: 500, Duration: 430ms","timestamp":"2024-03-30T05:24:52.380Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 8ms","timestamp":"2024-03-30T05:37:06.338Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 1ms","timestamp":"2024-03-30T05:37:07.896Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=-nkL2t8lkrwuqA4NDkQOvbAcLeOfrcHcR7Udr80jXbTde5Tztxt2DPM5tRYKKclgAAABjo3cmmqo9NUiJo7xnA, Status: 302, Duration: 440ms","timestamp":"2024-03-30T05:37:08.421Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/%ED%81%B4%EB%9D%BC%EC%9D%B4%EC%96%B8%ED%8A%B8_%EC%82%AC%EC%9D%B4%EB%93%9C_%EB%A6%AC%EB%94%94%EB%A0%89%EC%85%98_URL?token=[object%20Object], Status: 404, Duration: 7ms","timestamp":"2024-03-30T05:37:08.431Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 10ms","timestamp":"2024-03-30T05:40:19.534Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 2ms","timestamp":"2024-03-30T05:40:20.777Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=6F-GV4gnTr2DJnSzYuWn36glIMbYTLm3ydJjKCCs6fyeCDceZSIPDfUgPt8KKiWRAAABjo3fi_ZyxKx5jTsi9A, Status: 302, Duration: 458ms","timestamp":"2024-03-30T05:40:21.343Z"}
+{"level":"info","message":"Method: GET, URL: /?token=[object%20Object], Status: 404, Duration: 2ms","timestamp":"2024-03-30T05:40:21.347Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 5ms","timestamp":"2024-03-30T05:40:50.048Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 2ms","timestamp":"2024-03-30T05:40:51.247Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=CbkMwxfrdXGul3wQXguSoUAAN5nJQ-JmCK4IKTRGQkSInXZtOd8cGzBngYsKKiVPAAABjo3gAuJPBWDH3LuH7A, Status: 302, Duration: 525ms","timestamp":"2024-03-30T05:40:51.864Z"}
+{"level":"info","message":"Method: GET, URL: /?token=[object%20Object], Status: 404, Duration: 2ms","timestamp":"2024-03-30T05:40:51.868Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 13ms","timestamp":"2024-03-30T05:49:39.839Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 2ms","timestamp":"2024-03-30T05:49:41.643Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=og7Sv2oyg0XkTxeugGvji9shy2EOJbZU9uxpjq2Sne4tvmEcsYnB0OMfu9IKPXSYAAABjo3oGtIp9hBbJybEWQ, Status: 200, Duration: 1117ms","timestamp":"2024-03-30T05:49:42.862Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 9ms","timestamp":"2024-03-30T05:50:55.802Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 2ms","timestamp":"2024-03-30T05:50:57.523Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=_tTC56ZWkh5EZgt1vBw7R-nQru3NZqm02n-18hg6RI0dchgRN5lo9SeUVDIKKwynAAABjo3pQziBPKUF0hG4dQ, Status: 200, Duration: 432ms","timestamp":"2024-03-30T05:50:58.052Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 6ms","timestamp":"2024-03-30T06:00:04.529Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 3ms","timestamp":"2024-03-30T06:00:05.802Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=6bMMTdmkrb6zPTCE-ah-KYHlsl_IZTkxycplLAqwSx47WXp2UP2mJ_objToKPXVaAAABjo3xoPRONYg--5I0Sw, Status: 200, Duration: 372ms","timestamp":"2024-03-30T06:00:06.271Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 34ms","timestamp":"2024-03-30T06:28:00.221Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 3ms","timestamp":"2024-03-30T06:28:05.468Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=AKXy2LEuVtqeTcm0PbfTIHhVWzA6fAJk5jN5b1Ws4e8w1u9xFmZFmhPdq3AKPXLqAAABjo4LQlQFVMIyByjmyg, Status: 200, Duration: 1656ms","timestamp":"2024-03-30T06:28:07.385Z"}
+=======
 {"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 177ms","timestamp":"2024-03-29T15:19:50.893Z"}
 {"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 120ms","timestamp":"2024-03-29T15:20:05.494Z"}
 {"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 43ms","timestamp":"2024-03-29T15:20:19.555Z"}
@@ -295,3 +430,4 @@
 {"level":"info","message":"Method: POST, URL: /9, Status: 400, Duration: 90ms","timestamp":"2024-03-30T08:56:07.805Z"}
 {"level":"info","message":"Method: POST, URL: /9, Status: 201, Duration: 59ms","timestamp":"2024-03-30T08:56:10.924Z"}
 {"level":"info","message":"Method: POST, URL: /9, Status: 201, Duration: 360ms","timestamp":"2024-03-30T09:00:35.842Z"}
+
