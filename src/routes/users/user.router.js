@@ -53,7 +53,6 @@ const generateTokens = (userId) => {
     const accessToken = jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: process.env.ACCESS_TOKEN_LIFE,
     });
-
     const refreshToken = jwt.sign({ userId }, process.env.REFRESH_TOKEN_SECRET, {
         expiresIn: process.env.REFRESH_TOKEN_LIFE,
     });
@@ -76,19 +75,18 @@ router.post('/naver', async (req, res, next) => {
         const userInfo = response.data.response;
 
         let user = await prisma.users.findFirst({
-            where: { userChekId: userInfo.id },
+            where: { userCheckId: userInfo.id },
         });
 
         if (!user) {
             user = await prisma.users.create({
                 data: {
-                    userChekId: userInfo.id,
+                    userCheckId: userInfo.id,
                     nickname: userInfo.nickname,
                     email: userInfo.email,
                 },
             });
         }
-
         // 사용자가 존재하든 새로 생성되었든, 토큰 발급
         const tokens = generateTokens(user.id);
 
@@ -118,7 +116,6 @@ router.post('/sign-up', async (req, res, next) => {
                 userCheckId,
             },
         });
-        // Use the newly created userId as authorId
 
         return res.status(201).json({ user });
     } catch (error) {

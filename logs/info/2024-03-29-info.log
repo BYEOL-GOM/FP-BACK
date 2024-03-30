@@ -458,3 +458,12 @@
 {"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.findUnique()` invocation:\n\n{\n  where: {\n    worryId: \"24\"\n             ~~~~\n  },\n  include: {\n    comments: {\n      include: {\n        children: true\n      }\n    }\n  }\n}\n\nArgument `worryId`: Invalid value provided. Expected Int, provided String.","timestamp":"2024-03-29T14:14:54.294Z"}
 {"level":"info","message":"Method: GET, URL: /api/myHelpedSolveWorry/24, Status: 500, Duration: 148ms","timestamp":"2024-03-29T14:14:54.304Z"}
 {"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry/24, Status: 200, Duration: 108ms","timestamp":"2024-03-29T14:15:12.407Z"}
+{"level":"info","message":"Method: POST, URL: /naver, Status: 500, Duration: 149ms","timestamp":"2024-03-29T14:30:35.394Z"}
+{"level":"info","message":"Method: POST, URL: /naver, Status: 500, Duration: 6ms","timestamp":"2024-03-29T14:30:43.865Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 32ms","timestamp":"2024-03-29T14:32:20.369Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 3ms","timestamp":"2024-03-29T14:33:26.745Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 24ms","timestamp":"2024-03-29T14:34:38.063Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 36ms","timestamp":"2024-03-29T14:34:52.550Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 105ms","timestamp":"2024-03-29T14:35:19.552Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 20ms","timestamp":"2024-03-29T14:36:00.123Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 227ms","timestamp":"2024-03-29T14:38:42.648Z"}

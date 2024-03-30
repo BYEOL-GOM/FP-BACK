@@ -11,20 +11,19 @@ datasource db {
 }
 
 model Users {
-  userId   Int    @id @default(autoincrement())
-  userCheckId String 
-  nickname String
-  email String
-  fruit    Int    @default(0)
+  userId        Int      @id @default(autoincrement())
+  userCheckId   String
+  nickname      String
+  email         String
+  fruit         String?
 
   authorId  Int?  
 
-  worries  Worries[]
-  likes    Likes[]
-  comments Comments[]
+  comments  Comments[]
 
-  present    Presents[] @relation("PresentSender")              // 선물을 받은 사람 
-  presentReceived    Presents[] @relation("PresentReceiver")    // 선물을 보낸 사람
+  // 선물을 보낸 사람과 받은 사람에 대한 관계는 'Likes' 테이블을 통해 관리
+  likesSent     Likes[] @relation("LikeSender")     // 선물을 받은 사람 
+  likesReceived Likes[] @relation("LikeReceiver")   // 선물을 보낸 사람
 
   solvedWorries Worries[] @relation("SolvedWorries")            // 해결된 문제
   helpedSolveWorries Worries[] @relation("HelpedSolveWorries")  // 해결한 문제
@@ -38,28 +37,23 @@ model Worries {
   content               String    @db.Text @map("content")
   createdAt             DateTime  @default(now()) @map("createdAt")
   icon                  Icon?     @map("icon")
-  lastReplyTime         DateTime?                             //답변이 도착한 시간
-  deletedAt             DateTime? @map("deletedAt")           // 소프트 삭제를 위한  
-  isSolved     Boolean  @default(false)                       // 고민이 해결됐는지에 대한 여부 확인
-  presentCheck Boolean  @default(false) @map("presentCheck")  // 선물을 보냈는지에 대한 여부 확인
+  lastReplyTime         DateTime?                                      // 답변이 도착한 시간
+  deletedAt             DateTime? @map("deletedAt")                    // 소프트 삭제를 위한  
+  isSolved              Boolean   @default(false)                      // 고민이 해결됐는지에 대한 여부 확인
+  
+  // 고민을 등록한 유저(선물을 보냄)
+  userId      Int?       @map("userId")
+  user        Users?    @relation("SolvedWorries", fields: [userId], references: [userId], onDelete: Cascade)
 
-  userId      Int
-  user        Users    @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  // 고민을 해결한 유저(선물을 받음)
+  helperUserId Int?   @map("helperUserId")
+  helperUser   Users? @relation("HelpedSolveWorries", fields: [helperUserId], references: [userId])
+  
+  comments    Comments[] // 이 걱정에 달린 댓글들
   
   // 해결된 답변
   solvingCommentId Int?       @unique @map("solvingCommentId")
   solvingComment   Comments?  @relation("SolvingComment", fields: [solvingCommentId], references: [commentId])
-
-  // 고민을 등록한 유저(선물을 보냄)
-  solvedByUserId Int? @map("solvedByUserId")
-  solvedByUser   Users? @relation("SolvedWorries", fields: [solvedByUserId], references: [userId])
-
-  // 고민을 해결한 유저(선물을 받음)
-  helperUserId Int? @map("helperUserId")
-  helperUser   Users? @relation("HelpedSolveWorries", fields: [helperUserId], references: [userId])
-
-  comments    Comments[] // 이 걱정에 달린 댓글들
-  likes       Likes[]    // 이 걱정에 대한 좋아요
 }
 
 enum Icon{
@@ -82,11 +76,10 @@ model Comments {
   authorId  Int
   author    Users     @relation(fields: [authorId], references: [userId])
 
-  worryId    Int   @unique
+  worryId    Int
   worry      Worries  @relation(fields: [worryId], references: [worryId])
 
   likes      Likes[]
-  present    Presents[]
 
   // 해결된 답변
   solvingWorryId Int?
@@ -94,31 +87,18 @@ model Comments {
 }
 
 
-model Presents {
-  presentId    Int      @id @default(autoincrement()) @map("presentId")
-  createdAt DateTime @default(now()) @map("createdAt")
-
-  senderId  Int      @map("senderId")
-  sender    Users    @relation("PresentSender", fields: [senderId], references: [userId])
-  
-  receiverId Int     @map("receiverId")
-  receiver  Users    @relation("PresentReceiver", fields: [receiverId], references: [userId])
-  
-  commentId Int      @map("commentId")
-  comment   Comments @relation(fields: [commentId], references: [commentId])
-}
-
-
 model Likes {
-  likeId    Int       @id @default(autoincrement())  @map("likeId")
-  checkLike Boolean   @default(false)  @map("checkLike")
+  likeId      Int       @id @default(autoincrement())  @map("likeId")
 
-  userId    Int
-  user      Users     @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  // 선물 보낸 사람
+  userId      Int
+  user        Users     @relation("LikeSender", fields: [userId], references: [userId], onDelete: Cascade)
 
-  commentId Int
-  comment   Comments  @relation(fields: [commentId], references: [commentId], onDelete: Cascade)
-
-  worryId   Int
-  worry     Worries   @relation(fields: [worryId], references: [worryId])
+  // 선물 받은 사람
+  receiverId  Int?
+  receiver    Users?    @relation("LikeReceiver", fields: [receiverId], references: [userId])
+  
+  // 좋아요가 적용되는 대상 (댓글)
+  commentId   Int?
+  comment     Comments? @relation(fields: [commentId], references: [commentId], onDelete: Cascade)
 }
