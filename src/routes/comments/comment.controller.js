@@ -12,7 +12,7 @@ export const createCommentController = async (req, res, next) => {
         // 응답 객체에 필요한 정보 포함
         const response = {
             worryId: comment.worryId,
-            commentId: comment.id, // 생성된 댓글의 ID
+            commentId: comment.commentId, // 생성된 댓글의 ID
             authorId: comment.authorId,
         };
 
