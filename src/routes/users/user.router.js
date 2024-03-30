@@ -26,11 +26,17 @@ router.get(
         const token = req.user; // kakaoStrategy에서 done(null, token)으로 전달된 토큰
 
         // 클라이언트(예: 프론트엔드) 측에 토큰을 전달
-        res.header('Authorization', `Bearer ${token}`);
-        res.status(200).send({ message: '로그인이 성공하였습니다.' });
+        //res.header('Authorization', `Bearer ${token}`);
+        //res.status(200).send({ message: '로그인이 성공하였습니다.' });
         //res.status(200).json({ token: token, message: '로그인이 성공하였습니다.' });
+        const redirectUrl = `http://localhost:3000/auth/kakao/callback#token=${token}`;
+        res.redirect(redirectUrl);
     },
 );
 
 
 export default router;
+
+
+
+
