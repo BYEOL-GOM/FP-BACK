@@ -1,6 +1,7 @@
 import * as CommentService from './comment.service.js';
 
 // 고민에 대한 답변 생성
+
 export const createCommentController = async (req, res, next) => {
     try {
         const { worryId } = req.params;
@@ -10,7 +11,7 @@ export const createCommentController = async (req, res, next) => {
         console.log('🩵🩵🩵컨트롤러 : ', worryId, content, userId);
 
         const comment = await CommentService.createComment(worryId, content, userId);
-        return res.status(201).json({ message: '답변이 등록되었습니다.' });
+        return res.status(201).json(comment);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -39,6 +40,17 @@ export const getCommentDetailController = async (req, res, next) => {
         res.status(400).json({ error: error.message });
 
         next(error);
+    }
+};
+
+// 답변에 대한 재댓글 등록 api
+export const createReworryController = async (req, res, next) => {
+    try {
+        const { commentId, content, userId } = req.body;
+        const reWorry = await CommentService.createReworry(commentId, content, userId);
+        return res.status(201).json(reWorry);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
     }
 };
 

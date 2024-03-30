@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.use('/', userRouter);
 router.use('/worries', worryRouter);
-router.use('/worries/:worryId', commentRouter);
+router.use('/comments', commentRouter);
 router.use('/', likeRouter);
 
 export default router;

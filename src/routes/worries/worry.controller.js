@@ -8,7 +8,7 @@ export const createWorryController = async (req, res, next) => {
         if (!content || !icon || !userId) return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
 
         const worry = await worryService.createWorry({ content, icon, userId });
-        res.status(201).json({ message: '고민이 등록되었습니다' });
+        res.status(201).json({ message: '고민이 등록되었습니다', worry });
     } catch (error) {
         console.error('고민 등록중 에러가 발생했어요! :', error);
         next(error);

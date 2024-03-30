@@ -43,17 +43,32 @@ export const markWorryAsSolved = async (worryId, commentId, senderId, receiverId
     });
 };
 
-// 대댓글 생성
-export const createCommentReply = async (parentId, worryId, content, userId) => {
-    return await prisma.comments.create({
-        data: {
-            content,
-            worryId,
-            parentId, // 대댓글의 경우 부모 댓글의 ID를 설정합니다.
-            userId,
-        },
-    });
+// 재고민 등록
+export const createReworry = async (commentId, content, userId) => {
+    try {
+        return await prisma.worries.create({
+            data: {
+                commentId,
+                content,
+                userId,
+                isReWorry: true, // 재고민을 나타내는 필드 설정
+            },
+        });
+    } catch (error) {
+        throw new Error('Failed to create reWorry: ' + error.message);
+    }
 };
+// 대댓글 생성
+// export const createCommentReply = async (parentId, worryId, content, userId) => {
+//     return await prisma.comments.create({
+//         data: {
+//             content,
+//             worryId,
+//             parentId, // 대댓글의 경우 부모 댓글의 ID를 설정합니다.
+//             userId,
+//         },
+//     });
+// };
 
 // 대댓글 조회
 // export const comments = await prisma.comments.findMany({

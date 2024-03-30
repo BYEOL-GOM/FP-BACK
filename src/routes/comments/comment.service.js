@@ -44,3 +44,12 @@ export const getCommentDetail = async (commentId) => {
         throw new Error('Failed to fetch comments: ' + error.message);
     }
 };
+
+// 답변에 대한 재고민 등록
+export const createReworry = async (commentId, content, userId) => {
+    try {
+        return await CommentRepository.createReworry(commentId, content, userId);
+    } catch (error) {
+        throw new Error('Failed to create reWorry: ' + error.message);
+    }
+};
