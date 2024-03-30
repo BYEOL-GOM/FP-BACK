@@ -19,7 +19,7 @@ export const markWorryAsSolvedAndCreatePresent = async (worryId, commentId, user
             where: { worryId: parseInt(worryId) },
             data: {
                 isSolved: true,
-                presentCheck: true,
+                // presentCheck: true,
                 solvingCommentId: parseInt(commentId), // 해결을 위한 댓글 ID 업데이트
                 solvedByUserId: userId, // 고민을 해결한 사용자 ID 업데이트
                 helperUserId: commentAuthorId, // 선물을 받는 사용자(답변자) ID 업데이트
@@ -59,12 +59,14 @@ export const findCommentById = async (commentId) => {
 export const findSolvedWorriesByUserId = async (userId) => {
     return await prisma.worries.findMany({
         where: {
+            isSolved: true,
+            // presentCheck: true,
             solvedByUserId: userId,
-            presentCheck: true,
         },
         select: {
             worryId: true,
             icon: true,
+            content: true,
             createdAt: true,
         },
         orderBy: {
@@ -111,12 +113,14 @@ export const findSolvedWorryDetailsById = async (worryId) => {
 export const findHelpedSolveWorriesByUserId = async (userId) => {
     return await prisma.worries.findMany({
         where: {
+            isSolved: true,
+            // presentCheck: true,
             helperUserId: parseInt(userId),
-            presentCheck: true,
         },
         select: {
             worryId: true,
             icon: true,
+            content: true,
             createdAt: true,
         },
         orderBy: {
