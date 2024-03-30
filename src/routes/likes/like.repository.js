@@ -24,7 +24,6 @@ export const verifyCommentExists = async (commentId, worryId) => {
 
 // 선물 보내기
 export const markWorryAsSolvedAndCreateLike = async (worryId, commentId, userId, commentAuthorId) => {
-    console.log('🩷🩷🩷레포지토리 : ', worryId, commentId, userId, commentAuthorId);
     // 고민을 업데이트하고, 선물을 생성하며, 사용자 엔티티를 업데이트하는 트랜잭션
     const [worryUpdateResult, likeCreationResult] = await prisma.$transaction([
         prisma.worries.update({
@@ -69,7 +68,6 @@ export const findSolvedWorriesByUserId = async (userId) => {
     return await prisma.worries.findMany({
         where: {
             isSolved: true,
-            // presentCheck: true,
             userId: userId,
         },
         select: {
