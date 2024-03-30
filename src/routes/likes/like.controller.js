@@ -16,7 +16,7 @@ export const sendLike = async (req, res, next) => {
 
         console.log('🩵🩵🩵컨트롤러 : ', worryId, commentId, userId);
 
-        return res.status(201).json({ result, message: '선물을 성공적으로 전달했습니다.' });
+        return res.status(201).json({ message: '선물을 성공적으로 전달했습니다.' });
     } catch (error) {
         next(error);
     }
