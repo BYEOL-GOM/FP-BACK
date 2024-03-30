@@ -7,29 +7,35 @@ import LogMiddleware from './middlewares/logMiddleware.js';
 import generalErrorHandler from './middlewares/generalErrorMiddleware.js';
 import router from './routes/index.js';
 import passport from 'passport';
+// 세션 기반 인증이 아닌 JWT를 사용하므로 express-session은 주석 처리합니다.
+// import session from 'express-session';
+import jwt from 'jsonwebtoken';
+
+// 환경 변수 설정을 초기화합니다.
+dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = 3000; // 환경 변수에서 포트를 설정할 수 있도록 변경
 
 app.use(LogMiddleware);
+
 app.use(
-    cors({
-        origin: '*', // 허용할 도메인 목록
-        credentials: true, // 쿠키를 포함한 요청을 허용
-    }),
+  cors({
+    origin: '*', // 실제 배포시에는 허용할 도메인을 명시적으로 지정하는 것이 좋습니다.
+    credentials: true,
+  }),
 );
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(passport.initialize());
-app.use(passport.session());
-passportConfig(passport);
 
-app.use('/auth', router);
+// Passport 초기화
+passport.initialize();
+kakaoStrategy();
+
+app.use('/', router);
 app.use(generalErrorHandler);
 
-kakaoStrategy()
-
 app.listen(PORT, () => {
-    console.log(`${PORT} 포트로 서버가 열렸어요!`);
+  console.log(`${PORT} 포트로 서버가 열렸어요!`);
 });
