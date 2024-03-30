@@ -440,3 +440,6 @@
 {"level":"info","message":"Method: POST, URL: /11, Status: 201, Duration: 90ms","timestamp":"2024-03-30T09:09:02.646Z"}
 {"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 123ms","timestamp":"2024-03-30T09:12:48.450Z"}
 {"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 46ms","timestamp":"2024-03-30T09:12:50.531Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 208ms","timestamp":"2024-03-30T09:42:19.062Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 27ms","timestamp":"2024-03-30T09:42:38.121Z"}
+{"level":"info","message":"Method: POST, URL: /11, Status: 201, Duration: 49ms","timestamp":"2024-03-30T09:42:52.083Z"}
