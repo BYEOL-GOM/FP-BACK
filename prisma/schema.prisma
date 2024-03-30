@@ -90,6 +90,7 @@ model Comments {
   solvingWorry Worries? @relation("SolvingComment")
 }
 
+
 model Likes {
   likeId      Int       @id @default(autoincrement())  @map("likeId")
 

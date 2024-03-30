@@ -127,3 +127,19 @@
 {"level":"info","message":"Method: GET, URL: /mySolvedWorry/46, Status: 200, Duration: 183ms","timestamp":"2024-03-30T02:19:25.663Z"}
 {"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry, Status: 200, Duration: 13ms","timestamp":"2024-03-30T02:19:30.073Z"}
 {"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry/46, Status: 200, Duration: 18ms","timestamp":"2024-03-30T02:19:32.991Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.update()` invocation:\n\n\nForeign key constraint failed on the field: `solvingCommentId`","timestamp":"2024-03-30T02:30:01.493Z"}
+{"level":"info","message":"Method: POST, URL: /api/worries/10/comments/11/sendLike, Status: 500, Duration: 165ms","timestamp":"2024-03-30T02:30:01.497Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.update()` invocation:\n\n\nForeign key constraint failed on the field: `solvingCommentId`","timestamp":"2024-03-30T02:30:51.618Z"}
+{"level":"info","message":"Method: POST, URL: /api/worries/10/comments/11/sendLike, Status: 500, Duration: 118ms","timestamp":"2024-03-30T02:30:51.623Z"}
+{"level":"error","message":"Error Status: 400, Message: 유효하지 않은 댓글입니다.","timestamp":"2024-03-30T02:42:39.798Z"}
+{"level":"info","message":"Method: POST, URL: /api/worries/10/comments/11/sendLike, Status: 400, Duration: 151ms","timestamp":"2024-03-30T02:42:39.805Z"}
+{"level":"error","message":"Error Status: 400, Message: 유효하지 않은 댓글입니다.","timestamp":"2024-03-30T02:42:46.055Z"}
+{"level":"info","message":"Method: POST, URL: /api/worries/11/comments/12/sendLike, Status: 400, Duration: 19ms","timestamp":"2024-03-30T02:42:46.057Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry, Status: 404, Duration: 1ms","timestamp":"2024-03-30T02:43:04.007Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 64ms","timestamp":"2024-03-30T02:43:08.659Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/47/comments, Status: 404, Duration: 1ms","timestamp":"2024-03-30T02:43:17.640Z"}
+{"level":"info","message":"Method: POST, URL: /api/worries/47/comments, Status: 404, Duration: 1ms","timestamp":"2024-03-30T02:43:23.151Z"}
+{"level":"info","message":"Method: POST, URL: /api/worries/47/comments, Status: 404, Duration: 1ms","timestamp":"2024-03-30T02:43:51.459Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 400, Duration: 64ms","timestamp":"2024-03-30T02:45:53.080Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 400, Duration: 71ms","timestamp":"2024-03-30T02:46:56.202Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 400, Duration: 80ms","timestamp":"2024-03-30T02:47:25.135Z"}
