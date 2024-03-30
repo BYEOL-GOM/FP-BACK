@@ -1,3 +1,4 @@
+
 {"level":"error","message":"Error Status: undefined, Message: Login sessions require session support. Did you forget to use `express-session` middleware?","timestamp":"2024-03-29T16:19:46.579Z"}
 {"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 500, Duration: 22ms","timestamp":"2024-03-29T16:19:46.599Z"}
 {"level":"error","message":"Error Status: undefined, Message: Login sessions require session support. Did you forget to use `express-session` middleware?","timestamp":"2024-03-29T23:53:27.029Z"}
@@ -131,3 +132,225 @@
 {"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 34ms","timestamp":"2024-03-30T06:28:00.221Z"}
 {"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 302, Duration: 3ms","timestamp":"2024-03-30T06:28:05.468Z"}
 {"level":"info","message":"Method: GET, URL: /auth/kakao/callback?code=AKXy2LEuVtqeTcm0PbfTIHhVWzA6fAJk5jN5b1Ws4e8w1u9xFmZFmhPdq3AKPXLqAAABjo4LQlQFVMIyByjmyg, Status: 200, Duration: 1656ms","timestamp":"2024-03-30T06:28:07.385Z"}
+=======
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 177ms","timestamp":"2024-03-29T15:19:50.893Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 120ms","timestamp":"2024-03-29T15:20:05.494Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 43ms","timestamp":"2024-03-29T15:20:19.555Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 31ms","timestamp":"2024-03-29T15:20:25.941Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 21ms","timestamp":"2024-03-29T15:20:28.239Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 28ms","timestamp":"2024-03-29T15:20:30.530Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 22ms","timestamp":"2024-03-29T15:20:32.542Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 21ms","timestamp":"2024-03-29T15:20:39.000Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 33ms","timestamp":"2024-03-29T15:20:41.476Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 21ms","timestamp":"2024-03-29T15:20:44.220Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 32ms","timestamp":"2024-03-29T15:20:47.292Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 45ms","timestamp":"2024-03-29T15:21:11.784Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 30ms","timestamp":"2024-03-29T15:21:14.313Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 27ms","timestamp":"2024-03-29T15:21:20.437Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/3/comments, Status: 404, Duration: 1ms","timestamp":"2024-03-29T15:21:44.915Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/3/comments, Status: 404, Duration: 2ms","timestamp":"2024-03-29T15:23:21.450Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/3/comments, Status: 404, Duration: 1ms","timestamp":"2024-03-29T15:24:18.000Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 205ms","timestamp":"2024-03-29T15:28:23.550Z"}
+{"level":"info","message":"Method: POST, URL: /worry/3/comments/1/sendPresent, Status: 201, Duration: 97ms","timestamp":"2024-03-29T15:29:37.102Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 20ms","timestamp":"2024-03-29T15:30:02.074Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/3, Status: 200, Duration: 186ms","timestamp":"2024-03-29T15:35:21.256Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/3, Status: 200, Duration: 163ms","timestamp":"2024-03-29T15:46:12.866Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 152ms","timestamp":"2024-03-29T15:47:34.216Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 33ms","timestamp":"2024-03-29T15:47:46.332Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 33ms","timestamp":"2024-03-29T15:47:46.963Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 34ms","timestamp":"2024-03-29T15:47:47.718Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 35ms","timestamp":"2024-03-29T15:47:48.483Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 40ms","timestamp":"2024-03-29T15:47:49.190Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 30ms","timestamp":"2024-03-29T15:47:50.062Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 33ms","timestamp":"2024-03-29T15:47:50.779Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 33ms","timestamp":"2024-03-29T15:47:51.467Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 34ms","timestamp":"2024-03-29T15:47:52.317Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 42ms","timestamp":"2024-03-29T15:47:52.861Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 39ms","timestamp":"2024-03-29T15:47:53.452Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 46ms","timestamp":"2024-03-29T15:47:54.176Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 33ms","timestamp":"2024-03-29T15:47:54.715Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 35ms","timestamp":"2024-03-29T15:47:55.311Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 31ms","timestamp":"2024-03-29T15:47:55.904Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 31ms","timestamp":"2024-03-29T15:47:56.330Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 33ms","timestamp":"2024-03-29T15:47:56.886Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 33ms","timestamp":"2024-03-29T15:47:57.354Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 34ms","timestamp":"2024-03-29T15:47:57.897Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 31ms","timestamp":"2024-03-29T15:47:58.408Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 32ms","timestamp":"2024-03-29T15:47:58.928Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 32ms","timestamp":"2024-03-29T15:47:59.446Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 33ms","timestamp":"2024-03-29T15:47:59.966Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 31ms","timestamp":"2024-03-29T15:48:00.964Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 35ms","timestamp":"2024-03-29T15:48:01.412Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 30ms","timestamp":"2024-03-29T15:48:01.788Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 34ms","timestamp":"2024-03-29T15:48:02.146Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 33ms","timestamp":"2024-03-29T15:48:02.575Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 34ms","timestamp":"2024-03-29T15:48:03.047Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 33ms","timestamp":"2024-03-29T15:48:03.600Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 34ms","timestamp":"2024-03-29T15:48:04.142Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 39ms","timestamp":"2024-03-29T15:48:04.795Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 32ms","timestamp":"2024-03-29T15:48:05.348Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 41ms","timestamp":"2024-03-29T15:48:05.940Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 70ms","timestamp":"2024-03-29T15:48:06.882Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 41ms","timestamp":"2024-03-29T15:48:07.426Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 38ms","timestamp":"2024-03-29T15:48:08.036Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 34ms","timestamp":"2024-03-29T15:48:08.553Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 35ms","timestamp":"2024-03-29T15:48:09.369Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 33ms","timestamp":"2024-03-29T15:48:09.935Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 30ms","timestamp":"2024-03-29T15:48:10.513Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 34ms","timestamp":"2024-03-29T15:48:11.264Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 71ms","timestamp":"2024-03-29T15:48:29.100Z"}
+{"level":"info","message":"Method: POST, URL: /worry/46/comments/2/sendPresent, Status: 201, Duration: 135ms","timestamp":"2024-03-29T15:49:42.497Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 25ms","timestamp":"2024-03-29T15:49:59.520Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/46, Status: 200, Duration: 37ms","timestamp":"2024-03-29T15:50:06.785Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry, Status: 200, Duration: 18ms","timestamp":"2024-03-29T15:50:16.229Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.findUnique()` invocation:\n\n{\n  where: {\n    worryId: \"46\"\n             ~~~~\n  },\n  select: {\n    worryId: true,\n    content: true,\n    createdAt: true,\n    icon: true,\n    userId: true,\n    comments: {\n      select: {\n        commentId: true,\n        content: true,\n        createdAt: true,\n        updatedAt: true,\n        parentId: true,\n        children: {\n          select: {\n            commentId: true,\n            content: true,\n            createdAt: true,\n            updatedAt: true,\n            parentId: true\n          }\n        }\n      }\n    }\n  }\n}\n\nArgument `worryId`: Invalid value provided. Expected Int, provided String.","timestamp":"2024-03-29T15:50:24.522Z"}
+{"level":"info","message":"Method: GET, URL: /api/myHelpedSolveWorry/46, Status: 500, Duration: 10ms","timestamp":"2024-03-29T15:50:24.522Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry/46, Status: 200, Duration: 99ms","timestamp":"2024-03-29T15:50:57.534Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 192ms","timestamp":"2024-03-29T17:29:56.521Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 31ms","timestamp":"2024-03-29T17:30:09.178Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 31ms","timestamp":"2024-03-29T17:30:14.348Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-29T17:30:32.136Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/46/comments/2/sendPresent, Status: 400, Duration: 33ms","timestamp":"2024-03-29T17:30:32.138Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-29T17:30:37.050Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/46/comments/3/sendPresent, Status: 400, Duration: 19ms","timestamp":"2024-03-29T17:30:37.051Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-29T17:30:42.925Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/46/comments/5/sendPresent, Status: 400, Duration: 18ms","timestamp":"2024-03-29T17:30:42.926Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 53ms","timestamp":"2024-03-29T17:30:50.976Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.update()` invocation:\n\n\nForeign key constraint failed on the field: `solvingCommentId`","timestamp":"2024-03-29T17:30:57.190Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/2/comments/5/sendPresent, Status: 500, Duration: 79ms","timestamp":"2024-03-29T17:30:57.191Z"}
+{"level":"info","message":"Method: POST, URL: /worry/2/comments/3/sendPresent, Status: 201, Duration: 74ms","timestamp":"2024-03-29T17:31:04.857Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-29T17:32:42.003Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/2/comments/3/sendPresent, Status: 400, Duration: 24ms","timestamp":"2024-03-29T17:32:42.004Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-29T17:32:45.585Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/3/comments/3/sendPresent, Status: 400, Duration: 17ms","timestamp":"2024-03-29T17:32:45.586Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-29T17:32:49.877Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/3/comments/4/sendPresent, Status: 400, Duration: 17ms","timestamp":"2024-03-29T17:32:49.878Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 49ms","timestamp":"2024-03-29T17:33:01.719Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 33ms","timestamp":"2024-03-29T17:33:04.968Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 48ms","timestamp":"2024-03-29T17:33:08.537Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 33ms","timestamp":"2024-03-29T17:33:09.336Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 37ms","timestamp":"2024-03-29T17:33:11.412Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 34ms","timestamp":"2024-03-29T17:33:12.098Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 34ms","timestamp":"2024-03-29T17:33:12.663Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-29T17:33:22.144Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/3/comments/4/sendPresent, Status: 400, Duration: 23ms","timestamp":"2024-03-29T17:33:22.145Z"}
+{"level":"info","message":"Method: POST, URL: /worry/4/comments/5/sendPresent, Status: 201, Duration: 63ms","timestamp":"2024-03-29T17:33:27.625Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-29T17:38:29.538Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/4/comments/5/sendPresent, Status: 400, Duration: 196ms","timestamp":"2024-03-29T17:38:29.552Z"}
+{"level":"info","message":"Method: POST, URL: /worry/5/comments/6/sendPresent, Status: 201, Duration: 179ms","timestamp":"2024-03-29T17:39:11.278Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-29T17:39:39.166Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/5/comments/7/sendPresent, Status: 400, Duration: 86ms","timestamp":"2024-03-29T17:39:39.171Z"}
+{"level":"info","message":"Method: POST, URL: /worry/6/comments/7/sendPresent, Status: 201, Duration: 106ms","timestamp":"2024-03-29T17:39:43.340Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-29T17:40:29.586Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/6/comments/7/sendPresent, Status: 400, Duration: 96ms","timestamp":"2024-03-29T17:40:29.591Z"}
+{"level":"info","message":"Method: POST, URL: /worry/7/comments/8/sendPresent, Status: 201, Duration: 104ms","timestamp":"2024-03-29T17:40:35.676Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.update()` invocation:\n\n{\n  where: {\n    worryId: 8\n  },\n  data: {\n    isSolved: true,\n    solvingCommentId: 9,\n    solvedByUserId: 1,\n    helperUserId: 3,\n+   user: {\n+     create: UsersCreateWithoutLikesInput | UsersUncheckedCreateWithoutLikesInput,\n+     connectOrCreate: UsersCreateOrConnectWithoutLikesInput,\n+     connect: UsersWhereUniqueInput\n+   }\n  },\n  select: {\n    worryId: true,\n    commentAuthorId: true,\n    content: true,\n    createdAt: true,\n    icon: true,\n    userId: true,\n    solvingCommentId: true\n  }\n}\n\nArgument `user` is missing.","timestamp":"2024-03-30T02:09:23.908Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/8/comments/9/sendPresent, Status: 500, Duration: 152ms","timestamp":"2024-03-30T02:09:23.914Z"}
+{"level":"info","message":"Method: POST, URL: /worry/8/comments/9/sendPresent, Status: 201, Duration: 151ms","timestamp":"2024-03-30T02:10:56.387Z"}
+{"level":"info","message":"Method: POST, URL: /worry/8/comments/9/sendPresent, Status: 201, Duration: 196ms","timestamp":"2024-03-30T02:17:17.810Z"}
+{"level":"info","message":"Method: POST, URL: /worry/8/comments/9/sendPresent, Status: 201, Duration: 45ms","timestamp":"2024-03-30T02:17:22.989Z"}
+{"level":"info","message":"Method: POST, URL: /worry/8/comments/9/sendPresent, Status: 201, Duration: 47ms","timestamp":"2024-03-30T02:17:24.438Z"}
+{"level":"info","message":"Method: POST, URL: /worry/8/comments/9/sendPresent, Status: 201, Duration: 85ms","timestamp":"2024-03-30T02:17:25.102Z"}
+{"level":"info","message":"Method: POST, URL: /worry/8/comments/9/sendPresent, Status: 201, Duration: 45ms","timestamp":"2024-03-30T02:17:25.547Z"}
+{"level":"info","message":"Method: POST, URL: /worry/8/comments/9/sendPresent, Status: 201, Duration: 43ms","timestamp":"2024-03-30T02:17:26.758Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T02:18:05.276Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/8/comments/9/sendPresent, Status: 400, Duration: 84ms","timestamp":"2024-03-30T02:18:05.279Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T02:18:06.737Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/8/comments/9/sendPresent, Status: 400, Duration: 15ms","timestamp":"2024-03-30T02:18:06.738Z"}
+{"level":"info","message":"Method: POST, URL: /worry/9/comments/10/sendPresent, Status: 201, Duration: 81ms","timestamp":"2024-03-30T02:18:13.479Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 22ms","timestamp":"2024-03-30T02:18:19.022Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/46, Status: 200, Duration: 183ms","timestamp":"2024-03-30T02:19:25.663Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry, Status: 200, Duration: 13ms","timestamp":"2024-03-30T02:19:30.073Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry/46, Status: 200, Duration: 18ms","timestamp":"2024-03-30T02:19:32.991Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.update()` invocation:\n\n\nForeign key constraint failed on the field: `solvingCommentId`","timestamp":"2024-03-30T02:30:01.493Z"}
+{"level":"info","message":"Method: POST, URL: /api/worries/10/comments/11/sendLike, Status: 500, Duration: 165ms","timestamp":"2024-03-30T02:30:01.497Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.update()` invocation:\n\n\nForeign key constraint failed on the field: `solvingCommentId`","timestamp":"2024-03-30T02:30:51.618Z"}
+{"level":"info","message":"Method: POST, URL: /api/worries/10/comments/11/sendLike, Status: 500, Duration: 118ms","timestamp":"2024-03-30T02:30:51.623Z"}
+{"level":"error","message":"Error Status: 400, Message: 유효하지 않은 댓글입니다.","timestamp":"2024-03-30T02:42:39.798Z"}
+{"level":"info","message":"Method: POST, URL: /api/worries/10/comments/11/sendLike, Status: 400, Duration: 151ms","timestamp":"2024-03-30T02:42:39.805Z"}
+{"level":"error","message":"Error Status: 400, Message: 유효하지 않은 댓글입니다.","timestamp":"2024-03-30T02:42:46.055Z"}
+{"level":"info","message":"Method: POST, URL: /api/worries/11/comments/12/sendLike, Status: 400, Duration: 19ms","timestamp":"2024-03-30T02:42:46.057Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry, Status: 404, Duration: 1ms","timestamp":"2024-03-30T02:43:04.007Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 64ms","timestamp":"2024-03-30T02:43:08.659Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/47/comments, Status: 404, Duration: 1ms","timestamp":"2024-03-30T02:43:17.640Z"}
+{"level":"info","message":"Method: POST, URL: /api/worries/47/comments, Status: 404, Duration: 1ms","timestamp":"2024-03-30T02:43:23.151Z"}
+{"level":"info","message":"Method: POST, URL: /api/worries/47/comments, Status: 404, Duration: 1ms","timestamp":"2024-03-30T02:43:51.459Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 400, Duration: 64ms","timestamp":"2024-03-30T02:45:53.080Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 400, Duration: 71ms","timestamp":"2024-03-30T02:46:56.202Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 400, Duration: 80ms","timestamp":"2024-03-30T02:47:25.135Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 400, Duration: 126ms","timestamp":"2024-03-30T02:56:41.581Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 152ms","timestamp":"2024-03-30T03:00:36.357Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 400, Duration: 10ms","timestamp":"2024-03-30T03:00:49.516Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 89ms","timestamp":"2024-03-30T03:02:00.767Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 54ms","timestamp":"2024-03-30T03:02:05.076Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 24ms","timestamp":"2024-03-30T03:02:36.921Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 9ms","timestamp":"2024-03-30T03:02:37.616Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 9ms","timestamp":"2024-03-30T03:02:38.010Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 8ms","timestamp":"2024-03-30T03:02:38.943Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 8ms","timestamp":"2024-03-30T03:02:47.941Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 7ms","timestamp":"2024-03-30T03:02:48.544Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 7ms","timestamp":"2024-03-30T03:02:49.522Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 104ms","timestamp":"2024-03-30T03:03:11.746Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 37ms","timestamp":"2024-03-30T03:03:17.975Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 13ms","timestamp":"2024-03-30T03:03:25.976Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 400, Duration: 19ms","timestamp":"2024-03-30T03:03:37.353Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 400, Duration: 4ms","timestamp":"2024-03-30T03:03:43.393Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 13ms","timestamp":"2024-03-30T03:03:57.630Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 12ms","timestamp":"2024-03-30T03:04:01.237Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 400, Duration: 18ms","timestamp":"2024-03-30T03:04:15.218Z"}
+{"level":"info","message":"Method: POST, URL: /api/worries/41/comments, Status: 404, Duration: 21ms","timestamp":"2024-03-30T03:05:25.150Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 140ms","timestamp":"2024-03-30T03:11:11.849Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 177ms","timestamp":"2024-03-30T03:19:15.899Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 400, Duration: 16ms","timestamp":"2024-03-30T03:20:00.474Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch comments: \nInvalid `prisma.comments.findFirst()` invocation:\n\n{\n  where: {\n+   commentId: {\n+     equals: Int | IntFieldRefInput,\n+     in: Int[],\n+     notIn: Int[],\n+     lt: Int | IntFieldRefInput,\n+     lte: Int | IntFieldRefInput,\n+     gt: Int | IntFieldRefInput,\n+     gte: Int | IntFieldRefInput,\n+     not: Int | NestedIntFilter\n+   }\n  },\n  select: {\n    worryId: true,\n    commentId: true,\n    content: true,\n    createdAt: true\n  }\n}\n\nArgument `commentId` is missing.","timestamp":"2024-03-30T03:20:00.475Z"}
+{"level":"info","message":"Method: GET, URL: /worries/41/comments, Status: 400, Duration: 58ms","timestamp":"2024-03-30T03:20:21.718Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch comments: Failed to fetch comments from repository: \nInvalid `prisma.worries.findMany()` invocation:\n\n{\n  where: {\n+   userId: {\n+     equals: Int | IntFieldRefInput,\n+     in: Int[],\n+     notIn: Int[],\n+     lt: Int | IntFieldRefInput,\n+     lte: Int | IntFieldRefInput,\n+     gt: Int | IntFieldRefInput,\n+     gte: Int | IntFieldRefInput,\n+     not: Int | NestedIntFilter\n+   }\n  },\n  select: {\n    worryId: true\n  }\n}\n\nArgument `userId` is missing.","timestamp":"2024-03-30T03:20:21.722Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 32ms","timestamp":"2024-03-30T03:21:09.275Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 72ms","timestamp":"2024-03-30T03:21:19.424Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 149ms","timestamp":"2024-03-30T03:21:53.638Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 83ms","timestamp":"2024-03-30T03:21:56.398Z"}
+{"level":"info","message":"Method: POST, URL: /worries/41/comments/13/sendLike, Status: 201, Duration: 115ms","timestamp":"2024-03-30T03:22:13.084Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T03:22:36.000Z"}
+{"level":"info","message":"Method: POST, URL: /api/worries/41/comments/13/sendLike, Status: 400, Duration: 78ms","timestamp":"2024-03-30T03:22:36.004Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 44ms","timestamp":"2024-03-30T03:22:40.778Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 106ms","timestamp":"2024-03-30T03:22:42.645Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T03:22:50.904Z"}
+{"level":"info","message":"Method: POST, URL: /api/worries/41/comments/14/sendLike, Status: 400, Duration: 14ms","timestamp":"2024-03-30T03:22:50.905Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T03:22:53.783Z"}
+{"level":"info","message":"Method: POST, URL: /api/worries/41/comments/14/sendLike, Status: 400, Duration: 9ms","timestamp":"2024-03-30T03:22:53.784Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 55ms","timestamp":"2024-03-30T03:23:03.679Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 22ms","timestamp":"2024-03-30T03:23:07.196Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 45ms","timestamp":"2024-03-30T03:23:13.085Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 60ms","timestamp":"2024-03-30T03:23:17.869Z"}
+{"level":"info","message":"Method: POST, URL: /worries/48/comments/15/sendLike, Status: 201, Duration: 100ms","timestamp":"2024-03-30T03:23:27.789Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 24ms","timestamp":"2024-03-30T03:23:35.795Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/48, Status: 200, Duration: 36ms","timestamp":"2024-03-30T03:23:41.327Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry, Status: 200, Duration: 17ms","timestamp":"2024-03-30T03:23:47.920Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry, Status: 200, Duration: 3581ms","timestamp":"2024-03-30T03:23:55.889Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry, Status: 200, Duration: 7ms","timestamp":"2024-03-30T03:23:56.829Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry/48, Status: 200, Duration: 26ms","timestamp":"2024-03-30T03:24:03.087Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry/48, Status: 200, Duration: 21ms","timestamp":"2024-03-30T03:24:06.711Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 13ms","timestamp":"2024-03-30T03:24:26.395Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/48, Status: 200, Duration: 20ms","timestamp":"2024-03-30T03:24:31.070Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T04:31:36.533Z"}
+{"level":"info","message":"Method: POST, URL: /api/worries/48/comments/15/sendLike, Status: 400, Duration: 213ms","timestamp":"2024-03-30T04:31:36.537Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 58ms","timestamp":"2024-03-30T04:31:43.007Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 13ms","timestamp":"2024-03-30T04:31:45.193Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 38ms","timestamp":"2024-03-30T04:31:51.274Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 239ms","timestamp":"2024-03-30T04:31:54.918Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 10ms","timestamp":"2024-03-30T04:32:06.386Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 45ms","timestamp":"2024-03-30T04:32:10.929Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 9ms","timestamp":"2024-03-30T04:32:16.736Z"}
+{"level":"info","message":"Method: POST, URL: /comments, Status: 201, Duration: 46ms","timestamp":"2024-03-30T04:32:41.202Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 93ms","timestamp":"2024-03-30T04:32:46.137Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.update()` invocation:\n\n{\n  where: {\n    worryId: 49\n  },\n  data: {\n    isSolved: true,\n    solvingCommentId: 16,\n    ~~~~~~~~~~~~~~~~\n    solvedByUserId: 1,\n    helperUserId: 10,\n?   commentAuthorId?: Int | IntFieldUpdateOperationsInput,\n?   content?: String | StringFieldUpdateOperationsInput,\n?   createdAt?: DateTime | DateTimeFieldUpdateOperationsInput,\n?   icon?: Icon | NullableEnumIconFieldUpdateOperationsInput | Null,\n?   lastReplyTime?: DateTime | NullableDateTimeFieldUpdateOperationsInput | Null,\n?   deletedAt?: DateTime | NullableDateTimeFieldUpdateOperationsInput | Null,\n?   user?: UsersUpdateOneWithoutSolvedWorriesNestedInput,\n?   helperUser?: UsersUpdateOneWithoutHelpedSolveWorriesNestedInput,\n?   comments?: CommentsUpdateManyWithoutWorryNestedInput,\n?   solvingComment?: CommentsUpdateOneWithoutSolvingWorryNestedInput\n  },\n  select: {\n    worryId: true,\n    commentAuthorId: true,\n    content: true,\n    createdAt: true,\n    icon: true,\n    userId: true,\n    solvingCommentId: true\n  }\n}\n\nUnknown argument `solvingCommentId`. Did you mean `solvingComment`? Available options are marked with ?.","timestamp":"2024-03-30T04:33:01.477Z"}
+{"level":"info","message":"Method: POST, URL: /api/worries/49/comments/16/sendLike, Status: 500, Duration: 64ms","timestamp":"2024-03-30T04:33:01.479Z"}
+{"level":"info","message":"Method: POST, URL: /worries/49/comments/16/sendLike, Status: 201, Duration: 144ms","timestamp":"2024-03-30T04:34:34.404Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 14ms","timestamp":"2024-03-30T04:34:41.858Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/49, Status: 200, Duration: 41ms","timestamp":"2024-03-30T04:34:47.474Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry, Status: 200, Duration: 19ms","timestamp":"2024-03-30T04:36:21.308Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry, Status: 200, Duration: 12ms","timestamp":"2024-03-30T04:36:24.734Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry, Status: 200, Duration: 8ms","timestamp":"2024-03-30T04:36:28.684Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry/48, Status: 200, Duration: 20ms","timestamp":"2024-03-30T04:36:30.938Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry/49, Status: 200, Duration: 21ms","timestamp":"2024-03-30T04:36:34.797Z"}
+
