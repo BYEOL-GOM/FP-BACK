@@ -5,6 +5,7 @@ import {
     getCommentsByUserIdController,
     getCommentDetailController,
     createReworryController,
+    createRecommentController,
 } from './comment.controller.js';
 
 let router = express.Router({ mergeParams: true });
@@ -23,4 +24,7 @@ router.get('/:commentId', getCommentDetailController);
 
 // 답변에 대한 재고민 작성(대댓글 형식)
 router.post('/:commentId/reworry', createReworryController);
+
+// 재고민에 대한 재답변 생성
+router.post('/:reworryId/recomment', createRecommentController);
 export default router;

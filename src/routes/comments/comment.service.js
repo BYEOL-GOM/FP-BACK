@@ -1,9 +1,9 @@
 import * as CommentRepository from './comment.repository.js';
 
 // 답변 생성
+
 export const createComment = async (worryId, content, userId) => {
-    // worryId를 사용하여 고민의 authorId 찾기
-    const worry = await CommentRepository.findWorryById(worryId);
+    const worry = await findWorryById(worryId);
 
     if (!worry) {
         const err = new Error('해당하는 고민 게시글이 존재하지 않습니다.');
@@ -11,15 +11,24 @@ export const createComment = async (worryId, content, userId) => {
         throw err;
     }
 
-    // 찾아낸 authorId를 사용하여 댓글 생성
+    // 해당 댓글이 참조하는 고민의 작성자와 요청한 사용자의 ID 비교
+    if (worry.commentAuthorId !== userId) {
+        throw new Error('답변 작성 권한이 없습니다');
+    }
+
     const commentData = {
         worryId: parseInt(worryId),
         userId,
         content,
-        authorId: worry.commentAuthorId, // 고민 등록 시 랜덤으로 선택된 사용자 ID 사용
+        authorId: worry.commentAuthorId,
     };
 
     return await CommentRepository.createComment(commentData);
+};
+
+export const findWorryById = async (worryId) => {
+    // 이 함수가 정의된 곳
+    return await CommentRepository.findWorryById(worryId);
 };
 
 // 대댓글 생성
@@ -52,5 +61,14 @@ export const createReworry = async (commentId, content, userId) => {
         return await CommentRepository.createReworry(commentId, content, userId, commentAuthorId);
     } catch (error) {
         throw new Error('Failed to create reWorry: ' + error.message);
+    }
+};
+
+// 재고민에 대한 재답변 등록
+export const createRecomment = async (reworryId, content, userId) => {
+    try {
+        return await CommentRepository.createRecomment(reworryId, content, userId);
+    } catch (error) {
+        throw new Error('Failed to create reReply: ' + error.message);
     }
 };

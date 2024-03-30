@@ -1,11 +1,9 @@
 import { prisma } from '../../utils/prisma/index.js';
 
-// 해당 댓글이 참조하는 고민 찾기
 export const findWorryById = async (worryId) => {
     return await prisma.worries.findUnique({ where: { worryId: parseInt(worryId) } });
 };
 
-// 댓글 생성
 export const createComment = async (data) => {
     console.log('🩷🩷🩷컨트롤러 : ', data.worryId, data.content, data.userId, data.commentAuthorId);
 
@@ -14,12 +12,10 @@ export const createComment = async (data) => {
             worryId: data.worryId,
             content: data.content,
             authorId: data.authorId,
-            // 다른 필요한 필드들을 여기에 추가
         },
     });
 };
 
-// commentId에 해당하는 댓글 찾기
 export const findCommentById = async (commentId) => {
     return await prisma.comments.findUnique({
         where: { commentId: parseInt(commentId) },
@@ -76,18 +72,20 @@ export const createReworry = async (commentId, content, userId, commentAuthorId)
     }
 };
 
-// 대댓글 생성
-// export const createCommentReply = async (parentId, worryId, content, userId) => {
-//     return await prisma.comments.create({
-//         data: {
-//             content,
-//             worryId,
-//             parentId, // 대댓글의 경우 부모 댓글의 ID를 설정합니다.
-//             userId,
-//         },
-//     });
-// };
-
+// 재답변 등록
+export const createRecomment = async (reworryId, content, userId) => {
+    try {
+        return await prisma.worries.create({
+            data: {
+                reworryId,
+                content,
+                userId,
+            },
+        });
+    } catch (error) {
+        throw new Error('Failed to create reReply: ' + error.message);
+    }
+};
 // 대댓글 조회
 // export const comments = await prisma.comments.findMany({
 //     where: {
