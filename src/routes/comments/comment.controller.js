@@ -46,8 +46,9 @@ export const getCommentDetailController = async (req, res, next) => {
 // 답변에 대한 재댓글 등록 api
 export const createReworryController = async (req, res, next) => {
     try {
-        const { commentId, content, userId } = req.body;
-        const reWorry = await CommentService.createReworry(commentId, content, userId);
+        const { commentId } = req.params;
+        const { content, userId } = req.body;
+        const reWorry = await CommentService.createReworry(+commentId, content, userId);
         return res.status(201).json(reWorry);
     } catch (error) {
         res.status(400).json({ error: error.message });

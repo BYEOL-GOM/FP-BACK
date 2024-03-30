@@ -253,3 +253,26 @@
 {"level":"info","message":"Method: POST, URL: /7/reworry, Status: 400, Duration: 17ms","timestamp":"2024-03-30T07:13:41.816Z"}
 {"level":"info","message":"Method: POST, URL: /12/reworry, Status: 400, Duration: 3ms","timestamp":"2024-03-30T07:16:18.184Z"}
 {"level":"info","message":"Method: POST, URL: /7/reworry, Status: 201, Duration: 355ms","timestamp":"2024-03-30T07:23:35.898Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 838ms","timestamp":"2024-03-30T07:29:43.722Z"}
+{"level":"info","message":"Method: POST, URL: /21, Status: 201, Duration: 447ms","timestamp":"2024-03-30T07:30:18.019Z"}
+{"level":"info","message":"Method: POST, URL: /8/reworry, Status: 400, Duration: 25ms","timestamp":"2024-03-30T07:30:49.036Z"}
+{"level":"info","message":"Method: POST, URL: /8/reworry, Status: 400, Duration: 141ms","timestamp":"2024-03-30T07:31:30.778Z"}
+{"level":"info","message":"Method: POST, URL: /8/reworry, Status: 400, Duration: 88ms","timestamp":"2024-03-30T07:34:27.411Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패랜덤 답변자 선정 실패: 회원가입한 유저가 없습니다.","timestamp":"2024-03-30T07:38:42.157Z"}
+{"level":"info","message":"Method: POST, URL: /api/worries, Status: 500, Duration: 81ms","timestamp":"2024-03-30T07:38:42.161Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 73ms","timestamp":"2024-03-30T07:38:47.443Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 43ms","timestamp":"2024-03-30T07:38:51.493Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패고민등록에 실패하였습니다. \nInvalid `prisma.worries.create()` invocation:\n\n{\n  data: {\n    content: \"concern\",\n    icon: \"B\",\n    userId: 1,\n    commentAuthorId: 2,\n+   commentId: Int\n  }\n}\n\nArgument `commentId` is missing.","timestamp":"2024-03-30T07:38:56.008Z"}
+{"level":"info","message":"Method: POST, URL: /api/worries, Status: 500, Duration: 18ms","timestamp":"2024-03-30T07:38:56.009Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 143ms","timestamp":"2024-03-30T07:40:09.444Z"}
+{"level":"info","message":"Method: GET, URL: /1, Status: 200, Duration: 44ms","timestamp":"2024-03-30T07:40:26.117Z"}
+{"level":"info","message":"Method: POST, URL: /1, Status: 201, Duration: 90ms","timestamp":"2024-03-30T07:40:47.112Z"}
+{"level":"info","message":"Method: POST, URL: /1/reworry, Status: 201, Duration: 46ms","timestamp":"2024-03-30T07:41:03.061Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 53ms","timestamp":"2024-03-30T07:41:31.528Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 46ms","timestamp":"2024-03-30T07:41:38.794Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 86ms","timestamp":"2024-03-30T07:41:39.528Z"}
+{"level":"info","message":"Method: POST, URL: /4, Status: 201, Duration: 49ms","timestamp":"2024-03-30T07:42:00.504Z"}
+{"level":"info","message":"Method: POST, URL: /2/reworry, Status: 201, Duration: 64ms","timestamp":"2024-03-30T07:42:20.133Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 143ms","timestamp":"2024-03-30T07:46:04.242Z"}
+{"level":"info","message":"Method: POST, URL: /6, Status: 201, Duration: 76ms","timestamp":"2024-03-30T07:46:22.526Z"}
+{"level":"info","message":"Method: POST, URL: /3/reworry, Status: 201, Duration: 90ms","timestamp":"2024-03-30T07:46:47.295Z"}

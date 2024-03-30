@@ -27,3 +27,5 @@
 {"level":"error","message":"Error Status: undefined, Message: ReworryService is not defined","timestamp":"2024-03-30T07:03:00.555Z"}
 {"level":"error","message":"Error Status: undefined, Message: ReworryService is not defined","timestamp":"2024-03-30T07:03:04.108Z"}
 {"level":"error","message":"Error Status: undefined, Message: ReworryService is not defined","timestamp":"2024-03-30T07:04:10.113Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패랜덤 답변자 선정 실패: 회원가입한 유저가 없습니다.","timestamp":"2024-03-30T07:38:42.157Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패고민등록에 실패하였습니다. \nInvalid `prisma.worries.create()` invocation:\n\n{\n  data: {\n    content: \"concern\",\n    icon: \"B\",\n    userId: 1,\n    commentAuthorId: 2,\n+   commentId: Int\n  }\n}\n\nArgument `commentId` is missing.","timestamp":"2024-03-30T07:38:56.008Z"}

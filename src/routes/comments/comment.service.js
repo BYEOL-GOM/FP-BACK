@@ -48,7 +48,8 @@ export const getCommentDetail = async (commentId) => {
 // 답변에 대한 재고민 등록
 export const createReworry = async (commentId, content, userId) => {
     try {
-        return await CommentRepository.createReworry(commentId, content, userId);
+        const commentAuthorId = await CommentRepository.findCommentAuthorById(commentId);
+        return await CommentRepository.createReworry(commentId, content, userId, commentAuthorId);
     } catch (error) {
         throw new Error('Failed to create reWorry: ' + error.message);
     }

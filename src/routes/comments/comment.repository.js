@@ -44,20 +44,38 @@ export const markWorryAsSolved = async (worryId, commentId, senderId, receiverId
 };
 
 // 재고민 등록
-export const createReworry = async (commentId, content, userId) => {
+export const findCommentAuthorById = async (commentId) => {
+    try {
+        const comment = await prisma.comments.findUnique({
+            where: {
+                commentId: commentId,
+            },
+            select: {
+                authorId: true,
+            },
+        });
+        return comment.authorId;
+    } catch (error) {
+        throw new Error('Failed to find comment author: ' + error.message);
+    }
+};
+
+export const createReworry = async (commentId, content, userId, commentAuthorId) => {
     try {
         return await prisma.worries.create({
             data: {
                 commentId,
                 content,
                 userId,
-                isReWorry: true, // 재고민을 나타내는 필드 설정
+                commentAuthorId,
+                isReWorry: true,
             },
         });
     } catch (error) {
         throw new Error('Failed to create reWorry: ' + error.message);
     }
 };
+
 // 대댓글 생성
 // export const createCommentReply = async (parentId, worryId, content, userId) => {
 //     return await prisma.comments.create({
