@@ -431,3 +431,12 @@
 {"level":"info","message":"Method: POST, URL: /9, Status: 201, Duration: 59ms","timestamp":"2024-03-30T08:56:10.924Z"}
 {"level":"info","message":"Method: POST, URL: /9, Status: 201, Duration: 360ms","timestamp":"2024-03-30T09:00:35.842Z"}
 
+{"level":"info","message":"Method: POST, URL: /api/comments/9, Status: 404, Duration: 92ms","timestamp":"2024-03-30T09:07:35.650Z"}
+{"level":"info","message":"Method: POST, URL: /api/worries, Status: 404, Duration: 1ms","timestamp":"2024-03-30T09:07:46.963Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 424ms","timestamp":"2024-03-30T09:08:02.514Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 63ms","timestamp":"2024-03-30T09:08:25.937Z"}
+{"level":"info","message":"Method: POST, URL: /api/comments/11, Status: 404, Duration: 1ms","timestamp":"2024-03-30T09:08:52.003Z"}
+{"level":"info","message":"Method: POST, URL: /11, Status: 400, Duration: 132ms","timestamp":"2024-03-30T09:08:58.055Z"}
+{"level":"info","message":"Method: POST, URL: /11, Status: 201, Duration: 90ms","timestamp":"2024-03-30T09:09:02.646Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 123ms","timestamp":"2024-03-30T09:12:48.450Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 46ms","timestamp":"2024-03-30T09:12:50.531Z"}
