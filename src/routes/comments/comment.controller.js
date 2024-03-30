@@ -1,16 +1,16 @@
 import * as CommentService from './comment.service.js';
 
 // 고민에 대한 답변 생성
+
 export const createCommentController = async (req, res, next) => {
     try {
         const { worryId } = req.params;
         const { content, userId } = req.body;
-        // const userId = res.locals.user.id;
 
         console.log('🩵🩵🩵컨트롤러 : ', worryId, content, userId);
 
         const comment = await CommentService.createComment(worryId, content, userId);
-        return res.status(201).json({ message: '답변이 등록되었습니다.' });
+        return res.status(201).json({ message: '답변이 등록되었습니다' });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -42,20 +42,27 @@ export const getCommentDetailController = async (req, res, next) => {
     }
 };
 
-// // 댓글에 대한 대댓글 생성
-// export const createCommentReplyController = async (req, res, next) => {
-//     try {
-//         const { worryId, parentId } = req.params;
-//         const { content, userId } = req.body;
-//         // const userId = res.locals.user.id;
+// 답변에 대한 재댓글 등록 api
+export const createReworryController = async (req, res, next) => {
+    try {
+        const { commentId } = req.params;
+        const { content, userId } = req.body;
+        const reWorry = await CommentService.createReworry(+commentId, content, userId);
+        return res.status(201).json(reWorry);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
 
-//         const reply = await CommentService.createReply(worryId, parentId, content, userId);
-
-//         return res.status(201).json(reply);
-//     } catch (error) {
-//         res.status(400).json({ error: error.message });
-//     }
-// };
-
-// // 답변 삭제
-// export const deleteCommentController = async (req, res, next) => {};
+// 재고민에 대한 재답변 등록 api
+export const createRecommentController = async (req, res, next) => {
+    try {
+        const { reworryId } = req.params;
+        const { content, userId } = req.body;
+        const reply = await CommentService.createRecomment(+reworryId, content, +userId);
+        return res.status(201).json(reply);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+    CommentService;
+};

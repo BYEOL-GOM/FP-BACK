@@ -32,7 +32,8 @@ model Users {
 
 model Worries {
   worryId               Int       @id @default(autoincrement()) @map("worryId")
-  commentAuthorId       Int       @map("commentAuthorId")
+  commentAuthorId       Int?       @map("commentAuthorId")
+  commentId     Int?      // 최초의 답변(댓글)의 ID
 
   content               String    @db.Text @map("content")
   createdAt             DateTime  @default(now()) @map("createdAt")
@@ -41,6 +42,8 @@ model Worries {
   deletedAt             DateTime? @map("deletedAt")                    // 소프트 삭제를 위한  
   isSolved              Boolean   @default(false)                      // 고민이 해결됐는지에 대한 여부 확인
   
+    isReWorry            Boolean   @default(false)                       // 재고민 여부 확인
+
   // 고민을 등록한 유저(선물을 보냄)
   userId      Int?       @map("userId")
   user        Users?    @relation("SolvedWorries", fields: [userId], references: [userId], onDelete: Cascade)
@@ -54,6 +57,8 @@ model Worries {
   // 해결된 답변
   solvingCommentId Int?       @unique @map("solvingCommentId")
   solvingComment   Comments?  @relation("SolvingComment", fields: [solvingCommentId], references: [commentId])
+
+
 }
 
 enum Icon{
