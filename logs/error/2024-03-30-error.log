@@ -10,3 +10,6 @@
 {"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-29T17:38:29.538Z"}
 {"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-29T17:39:39.166Z"}
 {"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-29T17:40:29.586Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.update()` invocation:\n\n{\n  where: {\n    worryId: 8\n  },\n  data: {\n    isSolved: true,\n    solvingCommentId: 9,\n    solvedByUserId: 1,\n    helperUserId: 3,\n+   user: {\n+     create: UsersCreateWithoutLikesInput | UsersUncheckedCreateWithoutLikesInput,\n+     connectOrCreate: UsersCreateOrConnectWithoutLikesInput,\n+     connect: UsersWhereUniqueInput\n+   }\n  },\n  select: {\n    worryId: true,\n    commentAuthorId: true,\n    content: true,\n    createdAt: true,\n    icon: true,\n    userId: true,\n    solvingCommentId: true\n  }\n}\n\nArgument `user` is missing.","timestamp":"2024-03-30T02:09:23.908Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T02:18:05.276Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T02:18:06.737Z"}

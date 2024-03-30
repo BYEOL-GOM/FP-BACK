@@ -19,7 +19,7 @@ export const sendPresent = async (worryId, commentId, userId, commentAuthorId) =
     const worry = await PresentRepository.findWorryById(worryId);
 
     // 고민이 해결되었거나 선물을 이미 보냈다면 에러 처리
-    if (worry.isSolved && worry.presentCheck) {
+    if (worry.isSolved) {
         const err = new Error('이미 선물이 전송되었습니다.');
         err.status = 400;
         throw err;

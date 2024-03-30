@@ -20,10 +20,8 @@ model Users {
   authorId  Int?  
 
   worries   Worries[]
-  likes     Likes[]
   comments  Comments[]
 
-  // 'likes' 관계는 선물 보내기와 받기 기능.
   // 선물을 보낸 사람과 받은 사람에 대한 관계는 'Likes' 테이블을 통해 관리
   likesSent     Likes[] @relation("LikeSender")     // 선물을 받은 사람 
   likesReceived Likes[] @relation("LikeReceiver")   // 선물을 보낸 사람
@@ -60,7 +58,6 @@ model Worries {
   helperUser   Users? @relation("HelpedSolveWorries", fields: [helperUserId], references: [userId])
 
   comments    Comments[] // 이 걱정에 달린 댓글들
-  likes       Likes[]    // 이 걱정에 대한 좋아요
 }
 
 enum Icon{
@@ -96,22 +93,15 @@ model Comments {
 model Likes {
   likeId      Int       @id @default(autoincrement())  @map("likeId")
 
-  // 좋아요를 누른 사용자
+  // 선물 보낸 사람
   userId      Int
-  user        Users     @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  user        Users     @relation("LikeSender", fields: [userId], references: [userId], onDelete: Cascade)
 
-  // 선물 보내기 기능을 위해 추가된 필드
-  senderId    Int? // 선물 보낸 사람
-  sender      Users?    @relation("LikeSender", fields: [senderId], references: [userId])
-  
   // 선물 받은 사람
   receiverId  Int?
   receiver    Users?    @relation("LikeReceiver", fields: [receiverId], references: [userId])
   
+  // 좋아요가 적용되는 대상 (댓글)
   commentId   Int?
   comment     Comments? @relation(fields: [commentId], references: [commentId], onDelete: Cascade)
-
-  // 좋아요가 적용되는 대상 (댓글 또는 고민)
-  worryId     Int?
-  worry       Worries?  @relation(fields: [worryId], references: [worryId])
 }

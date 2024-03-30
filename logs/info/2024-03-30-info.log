@@ -109,3 +109,21 @@
 {"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-29T17:40:29.586Z"}
 {"level":"info","message":"Method: POST, URL: /api/worry/6/comments/7/sendPresent, Status: 400, Duration: 96ms","timestamp":"2024-03-29T17:40:29.591Z"}
 {"level":"info","message":"Method: POST, URL: /worry/7/comments/8/sendPresent, Status: 201, Duration: 104ms","timestamp":"2024-03-29T17:40:35.676Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.update()` invocation:\n\n{\n  where: {\n    worryId: 8\n  },\n  data: {\n    isSolved: true,\n    solvingCommentId: 9,\n    solvedByUserId: 1,\n    helperUserId: 3,\n+   user: {\n+     create: UsersCreateWithoutLikesInput | UsersUncheckedCreateWithoutLikesInput,\n+     connectOrCreate: UsersCreateOrConnectWithoutLikesInput,\n+     connect: UsersWhereUniqueInput\n+   }\n  },\n  select: {\n    worryId: true,\n    commentAuthorId: true,\n    content: true,\n    createdAt: true,\n    icon: true,\n    userId: true,\n    solvingCommentId: true\n  }\n}\n\nArgument `user` is missing.","timestamp":"2024-03-30T02:09:23.908Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/8/comments/9/sendPresent, Status: 500, Duration: 152ms","timestamp":"2024-03-30T02:09:23.914Z"}
+{"level":"info","message":"Method: POST, URL: /worry/8/comments/9/sendPresent, Status: 201, Duration: 151ms","timestamp":"2024-03-30T02:10:56.387Z"}
+{"level":"info","message":"Method: POST, URL: /worry/8/comments/9/sendPresent, Status: 201, Duration: 196ms","timestamp":"2024-03-30T02:17:17.810Z"}
+{"level":"info","message":"Method: POST, URL: /worry/8/comments/9/sendPresent, Status: 201, Duration: 45ms","timestamp":"2024-03-30T02:17:22.989Z"}
+{"level":"info","message":"Method: POST, URL: /worry/8/comments/9/sendPresent, Status: 201, Duration: 47ms","timestamp":"2024-03-30T02:17:24.438Z"}
+{"level":"info","message":"Method: POST, URL: /worry/8/comments/9/sendPresent, Status: 201, Duration: 85ms","timestamp":"2024-03-30T02:17:25.102Z"}
+{"level":"info","message":"Method: POST, URL: /worry/8/comments/9/sendPresent, Status: 201, Duration: 45ms","timestamp":"2024-03-30T02:17:25.547Z"}
+{"level":"info","message":"Method: POST, URL: /worry/8/comments/9/sendPresent, Status: 201, Duration: 43ms","timestamp":"2024-03-30T02:17:26.758Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T02:18:05.276Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/8/comments/9/sendPresent, Status: 400, Duration: 84ms","timestamp":"2024-03-30T02:18:05.279Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T02:18:06.737Z"}
+{"level":"info","message":"Method: POST, URL: /api/worry/8/comments/9/sendPresent, Status: 400, Duration: 15ms","timestamp":"2024-03-30T02:18:06.738Z"}
+{"level":"info","message":"Method: POST, URL: /worry/9/comments/10/sendPresent, Status: 201, Duration: 81ms","timestamp":"2024-03-30T02:18:13.479Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 22ms","timestamp":"2024-03-30T02:18:19.022Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/46, Status: 200, Duration: 183ms","timestamp":"2024-03-30T02:19:25.663Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry, Status: 200, Duration: 13ms","timestamp":"2024-03-30T02:19:30.073Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry/46, Status: 200, Duration: 18ms","timestamp":"2024-03-30T02:19:32.991Z"}

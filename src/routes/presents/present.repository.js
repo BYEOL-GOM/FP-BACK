@@ -34,9 +34,9 @@ export const markWorryAsSolvedAndCreatePresent = async (worryId, commentId, user
                 solvingCommentId: true,
             },
         }),
-        prisma.presents.create({
+        prisma.likes.create({
             data: {
-                senderId: parseInt(userId),
+                userId: parseInt(userId),
                 receiverId: parseInt(commentAuthorId),
                 commentId: parseInt(commentId),
             },
