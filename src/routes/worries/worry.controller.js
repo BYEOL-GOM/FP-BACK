@@ -101,13 +101,16 @@ export const createReWorryController = async (req, res) => {
 // 재답변 생성
 export const createReAnswerController = async (req, res) => {
     try {
-        const { worryId, reWorryId } = req.params;
+        const { worryId, commentId } = req.params;
         const { content, userId } = req.body; // 실제 구현에서는 인증 미들웨어를 통해 userId를 가져옵니다.
 
-        const reAnswer = await worryService.createReAnswer(worryId, reWorryId, content, userId);
-        res.status(201).json({ message: '재답변이 등록되었습니다', reAnswer });
+        const reAnswer = await worryService.createReAnswer(+worryId, +commentId, content, +userId);
+        res.status(201).json({
+            message: '재답변이 등록되었습니다',
+            reAnswer,
+        });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: '재답변 등록 중 에러가 발생했습니다' });
+        // 에러 메시지를 포함하여 응답을 전달
+        res.status(500).json({ error: error.message });
     }
 };

@@ -92,11 +92,31 @@ export const createReWorry = async (worryId, commentId, content, userId) => {
 };
 
 //  재답변 생성
-export const createReAnswer = async (worryId, reWorryId, content, userId) => {
-    return await worryRepository.createComment({
-        worryId: parseInt(worryId),
+export const createReAnswer = async (worryId, commentId, content, userId) => {
+    // 최초의 답변(또는 재고민)의 작성자 ID 조회
+    const originalComment = await CommentRepository.findCommentById(commentId);
+    if (!originalComment) {
+        throw new Error('해당하는 고민 또는 답변이 존재하지 않습니다.');
+    }
+
+    // 최초의 고민을 조회하여, 고민의 작성자가 요청자와 일치하는지 확인
+    const originalWorry = await worryRepository.getWorryDetail(worryId);
+    if (!originalWorry) {
+        throw new Error('해당 고민이 존재하지 않습니다.');
+    }
+
+    // 요청으로 들어온 userId가 최초의 답변자 ID와 일치하는지 확인
+    if (originalComment.userId !== userId) {
+        throw new Error('재답변을 작성할 권한이 없습니다.');
+    }
+
+    // 재답변 생성
+    const reAnswer = await worryRepository.createComment({
+        worryId,
         content,
         userId,
-        parentId: parseInt(reWorryId), // 재고민 ID를 parentId로 설정하여 재답변의 관계를 나타냅니다.
+        parentId: commentId,
     });
+
+    return reAnswer;
 };
