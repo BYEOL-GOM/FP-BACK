@@ -61,3 +61,14 @@
 {"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패랜덤 답변자 선정 실패: 회원가입한 유저가 없습니다.","timestamp":"2024-03-30T07:38:42.157Z"}
 {"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패고민등록에 실패하였습니다. \nInvalid `prisma.worries.create()` invocation:\n\n{\n  data: {\n    content: \"concern\",\n    icon: \"B\",\n    userId: 1,\n    commentAuthorId: 2,\n+   commentId: Int\n  }\n}\n\nArgument `commentId` is missing.","timestamp":"2024-03-30T07:38:56.008Z"}
 
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T09:57:23.189Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T09:57:26.651Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.update()` invocation:\n\n\nForeign key constraint failed on the field: `userId`","timestamp":"2024-03-30T10:06:36.336Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.update()` invocation:\n\n\nForeign key constraint failed on the field: `userId`","timestamp":"2024-03-30T10:07:09.491Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.update()` invocation:\n\n\nForeign key constraint failed on the field: `userId`","timestamp":"2024-03-30T10:09:59.293Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T10:10:14.068Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T10:13:40.569Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T10:13:41.382Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T10:13:41.798Z"}
+{"level":"error","message":"Error Status: 403, Message: 선물을 보낼 권한이 없습니다. 게시글의 작성자만 선물을 보낼 수 있습니다.","timestamp":"2024-03-30T10:22:42.392Z"}
+{"level":"error","message":"Error Status: 403, Message: 선물을 보낼 권한이 없습니다. 게시글의 작성자만 선물을 보낼 수 있습니다.","timestamp":"2024-03-30T10:22:45.884Z"}
