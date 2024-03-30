@@ -39,68 +39,6 @@ export const markWorryAsSolved = async (worryId, commentId, senderId, receiverId
     });
 };
 
-// 재고민 등록
-export const findCommentAuthorById = async (commentId) => {
-    try {
-        const comment = await prisma.comments.findUnique({
-            where: {
-                commentId: commentId,
-            },
-            select: {
-                authorId: true,
-            },
-        });
-        return comment.authorId;
-    } catch (error) {
-        throw new Error('Failed to find comment author: ' + error.message);
-    }
-};
-
-export const createReworry = async (commentId, content, userId, commentAuthorId) => {
-    try {
-        return await prisma.worries.create({
-            data: {
-                commentId,
-                content,
-                userId,
-                commentAuthorId,
-                isReWorry: true,
-            },
-        });
-    } catch (error) {
-        throw new Error('Failed to create reWorry: ' + error.message);
-    }
-};
-
-// 재답변 등록
-export const createRecomment = async (reworryId, content, userId) => {
-    try {
-        return await prisma.worries.create({
-            data: {
-                reworryId,
-                content,
-                userId,
-            },
-        });
-    } catch (error) {
-        throw new Error('Failed to create reReply: ' + error.message);
-    }
-};
-// 대댓글 조회
-// export const comments = await prisma.comments.findMany({
-//     where: {
-//         worryId: 1, // 예시로 1번 고민에 대한 댓글을 조회합니다.
-//         parentId: null, // 루트 댓글만 조회
-//     },
-//     include: {
-//         children: {
-//             include: {
-//                 children: true, // 필요한 만큼 계층을 확장할 수 있습니다.
-//             },
-//         },
-//     },
-// });
-
 // 고민작성자Id가 보낸 고민의 응답 전체 조회
 
 export const getCommentsByUserId = async (userId) => {

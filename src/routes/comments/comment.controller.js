@@ -1,5 +1,4 @@
 import * as CommentService from './comment.service.js';
-
 // 고민에 대한 답변 생성
 
 export const createCommentController = async (req, res, next) => {
@@ -9,14 +8,10 @@ export const createCommentController = async (req, res, next) => {
 
         const comment = await CommentService.createComment(worryId, content, userId);
 
-        // 응답 객체에 필요한 정보 포함
-        const response = {
-            worryId: comment.worryId,
-            commentId: comment.commentId, // 생성된 댓글의 ID
-            userId: comment.userId,
-        };
-
-        return res.status(201).json({ response, message: '답변이 전송되었습니다.' });
+        res.status(201).json({
+            message: '답변이 전송되었습니다.',
+            comment,
+        });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -46,29 +41,4 @@ export const getCommentDetailController = async (req, res, next) => {
 
         next(error);
     }
-};
-
-// 답변에 대한 재댓글 등록 api
-export const createReworryController = async (req, res, next) => {
-    try {
-        const { commentId } = req.params;
-        const { content, userId } = req.body;
-        const reWorry = await CommentService.createReworry(+commentId, content, userId);
-        return res.status(201).json(reWorry);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-};
-
-// 재고민에 대한 재답변 등록 api
-export const createRecommentController = async (req, res, next) => {
-    try {
-        const { reworryId } = req.params;
-        const { content, userId } = req.body;
-        const reply = await CommentService.createRecomment(+reworryId, content, +userId);
-        return res.status(201).json(reply);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-    CommentService;
 };
