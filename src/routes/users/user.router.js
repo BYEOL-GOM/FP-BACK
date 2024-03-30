@@ -29,7 +29,7 @@ router.get(
         //res.header('Authorization', `Bearer ${token}`);
         //res.status(200).send({ message: '로그인이 성공하였습니다.' });
         //res.status(200).json({ token: token, message: '로그인이 성공하였습니다.' });
-        const redirectUrl = `http://localhost:3000/auth/kakao/callback#token=${token}`;
+        const redirectUrl = `http://13.209.77.101:3000/auth/kakao/callback#token=${token}`;
         res.redirect(redirectUrl);
     },
 );
