@@ -7,7 +7,8 @@ export default () => {
     passport.use(
         new KakaoStrategy(
             {
-                clientID: process.env.KAKAO_REST_API_KEY, // 카카오 로그인에서 발급받은 REST API 키
+                clientID: process.env.KAKAO_REST_API_KEY,
+                //clientSecret: process.env.CLIENT_SECRET, // 카카오 로그인에서 발급받은 REST API 키
                 callbackURL: process.env.KAKAO_REDIRECT_URI, // 카카오 로그인 Redirect URI 경로
             },
             async (accessToken, refreshToken, profile, done) => {
@@ -34,11 +35,11 @@ export default () => {
                     }
 
                     // JWT 토큰 생성
-                    const token = jwt.sign(
-                        { userId: user.userId },
-                        process.env.JWT_SECRET, // JWT 비밀키
-                        { expiresIn: '24h' }, // 토큰 유효 시간
-                    );
+                    // const token = jwt.sign(
+                    //     { userId: user.userId },
+                    //     process.env.JWT_SECRET, // JWT 비밀키
+                    //     { expiresIn: '24h' }, // 토큰 유효 시간
+                    // );
 
                     // done 함수를 통해 사용자 정보와 토큰을 다음 단계로 전달
                     done(null, token);
