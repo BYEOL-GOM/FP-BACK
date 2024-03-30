@@ -72,3 +72,6 @@
 {"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T10:13:41.798Z"}
 {"level":"error","message":"Error Status: 403, Message: 선물을 보낼 권한이 없습니다. 게시글의 작성자만 선물을 보낼 수 있습니다.","timestamp":"2024-03-30T10:22:42.392Z"}
 {"level":"error","message":"Error Status: 403, Message: 선물을 보낼 권한이 없습니다. 게시글의 작성자만 선물을 보낼 수 있습니다.","timestamp":"2024-03-30T10:22:45.884Z"}
+{"level":"error","message":"Error Status: 400, Message: Expected ',' or '}' after property value in JSON at position 19","timestamp":"2024-03-30T10:32:16.887Z"}
+{"level":"error","message":"Error Status: 400, Message: Expected ',' or '}' after property value in JSON at position 19","timestamp":"2024-03-30T10:37:01.245Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패랜덤 답변자 선정 실패: 회원가입한 유저가 없습니다.","timestamp":"2024-03-30T14:21:33.134Z"}
