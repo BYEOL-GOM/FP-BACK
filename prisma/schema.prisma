@@ -17,12 +17,9 @@ model Users {
   email         String
   fruit         String?
 
-  comments  Comments[]
-
-  // 선물을 보낸 사람과 받은 사람에 대한 관계는 'Likes' 테이블을 통해 관리
-  likesSent     Likes[] @relation("LikeSender")     // 선물을 보낸 사람 
-  
   worry Worries[]
+  comments  Comments[]
+  likesSent     Likes[] @relation("LikeSender")     // 선물을 보낸 사람 
 }
 
 

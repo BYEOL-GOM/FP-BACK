@@ -43,3 +43,13 @@
 {"level":"info","message":"Method: POST, URL: /worries/28/comments/4/sendLike, Status: 403, Duration: 16ms","timestamp":"2024-03-30T15:27:12.656Z"}
 {"level":"error","message":"Error Status: 403, Message: 선물을 보낼 권한이 없습니다. 게시글의 작성자만 선물을 보낼 수 있습니다.","timestamp":"2024-03-30T15:28:18.683Z"}
 {"level":"info","message":"Method: POST, URL: /worries/28/comments/4/sendLike, Status: 403, Duration: 12ms","timestamp":"2024-03-30T15:28:18.683Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 163ms","timestamp":"2024-03-30T16:35:34.169Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 12ms","timestamp":"2024-03-30T16:35:37.746Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry, Status: 200, Duration: 19ms","timestamp":"2024-03-30T16:35:45.718Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry, Status: 200, Duration: 16ms","timestamp":"2024-03-30T16:35:49.837Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 117ms","timestamp":"2024-03-30T16:36:11.700Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry, Status: 200, Duration: 13ms","timestamp":"2024-03-30T16:36:13.921Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 10ms","timestamp":"2024-03-30T16:36:19.791Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 15ms","timestamp":"2024-03-30T16:37:15.410Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry, Status: 200, Duration: 8ms","timestamp":"2024-03-30T16:37:24.673Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 111ms","timestamp":"2024-03-30T16:37:54.017Z"}
