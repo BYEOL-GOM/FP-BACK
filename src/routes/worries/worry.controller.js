@@ -10,7 +10,7 @@ export const createWorryController = async (req, res, next) => {
         const worry = await worryService.createWorry({ content, icon, userId });
         const commentAuthorId = worry.commentAuthorId; // commentAuthorId 추가
 
-        res.status(201).json({ message: '고민이 등록되었습니다', commentAuthorId });
+        res.status(201).json({ message: '고민이 등록되었습니다' });
     } catch (error) {
         console.error('고민 등록중 에러가 발생했어요! :', error);
         next(error);
@@ -85,3 +85,48 @@ export const deleteWorryByCommentAuthorController = async (req, res, next) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+// 재고민 및 재 답변 생성 api
+export const createReplyController = async (req, res) => {
+    try {
+        const { worryId, commentId } = req.params;
+        const { content, userId, type } = req.body; // 'reWorry' 또는 'reAnswer'를 결정하는 'type' 필드 추가
+
+        // Service 계층의 함수 호출
+        const reply = await worryService.createReply(worryId, commentId, content, userId, type);
+
+        res.status(201).json({
+            message: '답장이 전송되었습니다',
+        });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+// // 재고민 생성
+// export const createReWorryController = async (req, res) => {
+//     try {
+//         const { worryId, commentId } = req.params;
+//         const { content, userId } = req.body;
+//         const reWorry = await worryService.createReWorry(+worryId, +commentId, content, +userId);
+//         res.status(201).json({ message: '재고민이 등록되었습니다', reWorry });
+//     } catch (error) {
+//         res.status(400).json({ error: error.message });
+//     }
+// };
+
+// // 재답변 생성
+// export const createReAnswerController = async (req, res) => {
+//     try {
+//         const { worryId, commentId } = req.params;
+//         const { content, userId } = req.body; // 실제 구현에서는 인증 미들웨어를 통해 userId를 가져옵니다.
+
+//         const reAnswer = await worryService.createReAnswer(+worryId, +commentId, content, +userId);
+//         res.status(201).json({
+//             message: '재답변이 등록되었습니다',
+//             reAnswer,
+//         });
+//     } catch (error) {
+//         // 에러 메시지를 포함하여 응답을 전달
+//         res.status(500).json({ error: error.message });
+//     }
+// };

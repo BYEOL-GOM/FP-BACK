@@ -1,0 +1,6 @@
+{"level":"info","message":"Method: GET, URL: /worries/35, Status: 200, Duration: 52ms","timestamp":"2024-03-31T15:01:15.313Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot set headers after they are sent to the client","timestamp":"2024-03-31T15:01:15.318Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 24ms","timestamp":"2024-03-31T15:02:03.905Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 176ms","timestamp":"2024-03-31T15:03:02.963Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 132ms","timestamp":"2024-03-31T15:06:14.870Z"}
+{"level":"info","message":"Method: POST, URL: /9/comments/21/replies, Status: 201, Duration: 96ms","timestamp":"2024-03-31T15:06:23.890Z"}

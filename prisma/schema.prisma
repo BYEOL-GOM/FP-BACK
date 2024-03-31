@@ -25,8 +25,7 @@ model Users {
 
 model Worries {
   worryId               Int       @id @default(autoincrement()) @map("worryId")
-  commentAuthorId       Int?       @map("commentAuthorId")
-  commentId     Int?      // 최초의 답변(댓글)의 ID
+  commentAuthorId       Int       @map("commentAuthorId")
 
   content               String    @db.Text @map("content")
   createdAt             DateTime  @default(now()) @map("createdAt")
