@@ -96,8 +96,7 @@ export const createReplyController = async (req, res) => {
         const reply = await worryService.createReply(worryId, commentId, content, userId, type);
 
         res.status(201).json({
-            message: `${type} has been successfully posted`,
-            reply,
+            message: '답장이 전송되었습니다',
         });
     } catch (error) {
         res.status(400).json({ error: error.message });

@@ -84,13 +84,13 @@ export const createReply = async (worryId, commentId, content, userId, type) => 
 
     // 재고민 생성 시 권한 검증
     if (type === 'reWorry' && commentOrWorry.worry.userId !== userId) {
-        throw new Error('재고민을 작성할 권한이 없습니다.');
+        throw new Error('답장을 작성할 권한이 없습니다.');
     }
 
     // 재답변 생성 시 권한 검증
     // 여기서는 연관된 고민의 최초 답변자 ID와 현재 userId를 비교합니다.
     if (type === 'reAnswer' && commentOrWorry.worry.commentAuthorId !== userId) {
-        throw new Error('재답변을 작성할 권한이 없습니다.');
+        throw new Error('답장을 작성할 권한이 없습니다.');
     }
 
     const reply = await prisma.comments.create({

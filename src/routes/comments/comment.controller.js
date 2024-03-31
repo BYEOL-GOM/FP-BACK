@@ -10,7 +10,6 @@ export const createCommentController = async (req, res, next) => {
 
         res.status(201).json({
             message: '답변이 전송되었습니다.',
-            comment,
         });
     } catch (error) {
         res.status(400).json({ error: error.message });

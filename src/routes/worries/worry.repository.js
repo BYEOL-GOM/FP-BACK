@@ -91,7 +91,7 @@ export const findOldWorriesWithoutComments = async () => {
                     lt: twentyFourHoursAgo,
                 },
                 comments: {
-                    is: null,
+                    none: {},
                 },
                 deletedAt: null, // deletedAt이 null인 레코드만 선택
             },
