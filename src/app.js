@@ -1,6 +1,6 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import kakaoStrategy from './routes/passport/kakaoStrategy.js';
+//import kakaoStrategy from './routes/passport/kakaoStrategy.js';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import LogMiddleware from './middlewares/logMiddleware.js';
@@ -11,8 +11,7 @@ import passport from 'passport';
 // import session from 'express-session';
 import jwt from 'jsonwebtoken';
 
-// 환경 변수 설정을 초기화합니다.
-dotenv.config();
+
 
 const app = express();
 const PORT = 3000; // 환경 변수에서 포트를 설정할 수 있도록 변경
@@ -30,8 +29,7 @@ app.use(express.json());
 
 
 // Passport 초기화
-passport.initialize();
-kakaoStrategy();
+
 
 app.use('/', router);
 app.use(generalErrorHandler);
