@@ -4,7 +4,7 @@ import axios from 'axios';
 export const kakaoLoginController = async (req, res) => {
     const ID = process.env.KAKAO_REST_API_KEY;
     const redirect = process.env.KAKAO_REDIRECT_URI;
-    const CODE = req.boy.code;
+    const CODE = req.body.code;
 
     const getToken = () => {
         try {
