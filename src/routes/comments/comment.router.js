@@ -15,6 +15,6 @@ router.post('/worries/:worryId/comments', createCommentController);
 router.get('/comments', getCommentsByUserIdController);
 
 // 답변 or 재고민, 재답변 상세 조회 (고민자에게 도착할 답변 상세 조회)
-router.get('/:commentId', getCommentDetailController);
+router.get('/comments/:commentId', getCommentDetailController);
 
 export default router;

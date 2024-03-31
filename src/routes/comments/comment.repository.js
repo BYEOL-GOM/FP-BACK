@@ -39,18 +39,14 @@ export const markWorryAsSolved = async (worryId, commentId, senderId, receiverId
     });
 };
 
-// 고민작성자Id가 보낸 고민의 응답 전체 조회
+// 고민 작성자에 해당하는 전체 답변 조회
 
 export const getCommentsByUserId = async (userId) => {
     try {
         // 특정 사용자가 작성한 고민들을 가져옵니다.
         const worries = await prisma.worries.findMany({
-            where: {
-                userId,
-            },
-            select: {
-                worryId: true,
-            },
+            where: { userId },
+            select: { worryId: true },
         });
 
         // 고민들의 ID를 추출
@@ -64,7 +60,7 @@ export const getCommentsByUserId = async (userId) => {
                     select: {
                         worryId: true,
                         commentId: true,
-                        // content: true,
+                        createdAt: true,
                     },
                 });
                 return commentsForWorry;
@@ -79,15 +75,33 @@ export const getCommentsByUserId = async (userId) => {
     }
 };
 
-// 답변 메세지 상세조회
+// 답변 상세조회(답변, 재고민, 재답변)
 export const getCommentDetail = async (commentId) => {
-    return await prisma.comments.findFirst({
+    const comment = await prisma.comments.findUnique({
         where: { commentId },
-        select: {
-            worryId: true,
-            commentId: true,
-            content: true,
-            createdAt: true,
+        include: {
+            parent: true,
+            children: true,
         },
     });
+
+    // 필요한 정보만 추출하여 응답 객체 생성
+    const response = {
+        parentId: comment.parentId,
+        commentId: comment.commentId,
+        content: comment.content,
+        createdAt: comment.createdAt,
+        // parent: comment.parent
+        //     ? {
+        //           commentId: comment.parent.commentId,
+        //           content: comment.parent.content,
+        //           createdAt: comment.parent.createdAt,
+        //           userId: comment.parent.userId,
+        //           worryId: comment.parent.worryId,
+        //       }
+        //     : null, // 부모 정보 나중에 필요하다면 추가
+        // children 정보는 아직 필요하지 않아서 미포함
+    };
+
+    return response;
 };

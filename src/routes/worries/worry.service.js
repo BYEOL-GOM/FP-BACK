@@ -1,6 +1,6 @@
 import * as worryRepository from './worry.repository.js';
-import { prisma } from '../../utils/prisma/index.js';
 import * as CommentRepository from '../comments/comment.repository.js';
+import { prisma } from '../../utils/prisma/index.js';
 
 //고민 등록
 export const createWorry = async ({ content, icon, userId }) => {
@@ -70,53 +70,86 @@ export const deleteSelectedWorry = async (worryId, userId) => {
     return deletedWorry;
 };
 
-// 재고민 등록
-export const createReWorry = async (worryId, commentId, content, userId) => {
-    const originalWorry = await worryRepository.getWorryDetail(worryId);
-    if (!originalWorry) throw new Error('해당 고민이 존재하지 않습니다.');
-    if (originalWorry.userId !== userId) throw new Error('재고민을 작성할 권한이 없습니다.');
-
-    const originalComment = await CommentRepository.findCommentById(commentId);
-    if (!originalComment || originalComment.worryId !== worryId) {
-        throw new Error('적절하지 않은 요청입니다.');
-    }
-
-    const reWorry = await worryRepository.createComment({
-        worryId,
-        content,
-        userId,
-        parentId: commentId, // 이전 답변(댓글)의 ID
+// 재고민 & 재답변 등록
+export const createReply = async (worryId, commentId, content, userId, type) => {
+    // 댓글(답변) 또는 고민을 가져옵니다.
+    const commentOrWorry = await prisma.comments.findUnique({
+        where: { commentId: parseInt(commentId) },
+        include: {
+            worry: true, // 연관된 고민 정보 포함
+        },
     });
 
-    return reWorry;
-};
+    if (!commentOrWorry) throw new Error('해당하는 답변 또는 고민이 존재하지 않습니다.');
 
-//  재답변 생성
-export const createReAnswer = async (worryId, commentId, content, userId) => {
-    // 최초의 답변(또는 재고민)의 작성자 ID 조회
-    const originalComment = await CommentRepository.findCommentById(commentId);
-    if (!originalComment) {
-        throw new Error('해당하는 고민 또는 답변이 존재하지 않습니다.');
+    // 재고민 생성 시 권한 검증
+    if (type === 'reWorry' && commentOrWorry.worry.userId !== userId) {
+        throw new Error('재고민을 작성할 권한이 없습니다.');
     }
 
-    // 최초의 고민을 조회하여, 고민의 작성자가 요청자와 일치하는지 확인
-    const originalWorry = await worryRepository.getWorryDetail(worryId);
-    if (!originalWorry) {
-        throw new Error('해당 고민이 존재하지 않습니다.');
-    }
-
-    // 요청으로 들어온 userId가 최초의 답변자 ID와 일치하는지 확인
-    if (originalComment.userId !== userId) {
+    // 재답변 생성 시 권한 검증
+    // 여기서는 연관된 고민의 최초 답변자 ID와 현재 userId를 비교합니다.
+    if (type === 'reAnswer' && commentOrWorry.worry.commentAuthorId !== userId) {
         throw new Error('재답변을 작성할 권한이 없습니다.');
     }
 
-    // 재답변 생성
-    const reAnswer = await worryRepository.createComment({
-        worryId,
-        content,
-        userId,
-        parentId: commentId,
+    const reply = await prisma.comments.create({
+        data: {
+            worryId: parseInt(worryId),
+            content,
+            userId: parseInt(userId),
+            parentId: parseInt(commentId),
+        },
     });
 
-    return reAnswer;
+    return reply;
 };
+// // 재고민 등록
+// export const createReWorry = async (worryId, commentId, content, userId) => {
+//     const originalWorry = await worryRepository.getWorryDetail(worryId);
+//     if (!originalWorry) throw new Error('해당 고민이 존재하지 않습니다.');
+//     if (originalWorry.userId !== userId) throw new Error('재고민을 작성할 권한이 없습니다.');
+
+//     const originalComment = await CommentRepository.findCommentById(commentId);
+//     if (!originalComment || originalComment.worryId !== worryId) {
+//         throw new Error('적절하지 않은 요청입니다.');
+//     }
+
+//     const reWorry = await worryRepository.createComment({
+//         worryId,
+//         content,
+//         userId,
+//         parentId: commentId, // 이전 답변(댓글)의 ID
+//     });
+
+//     return reWorry;
+// };
+
+// //  재답변 생성
+// export const createReAnswer = async (worryId, commentId, content, userId) => {
+//     // 최초의 답변(또는 재고민)의 작성자 ID 조회
+//     const originalComment = await CommentRepository.findCommentById(commentId);
+//     if (!originalComment) {
+//         throw new Error('해당하는 고민 또는 답변이 존재하지 않습니다.');
+//     }
+
+//     // 최초의 고민을 조회하여, 고민의 작성자가 요청자와 일치하는지 확인
+//     const originalWorry = await worryRepository.getWorryDetail(worryId);
+//     if (!originalWorry) {
+//         throw new Error('해당 고민이 존재하지 않습니다.');
+//     }
+
+//     // 요청으로 들어온 userId가 최초의 답변자 ID와 일치하는지 확인
+//     if (originalComment.userId !== userId) {
+//         throw new Error('재답변을 작성할 권한이 없습니다.');
+//     }
+
+//     // 재답변 생성
+//     const reAnswer = await worryRepository.createComment({
+//         worryId,
+//         content,
+//         userId,
+//         parentId: commentId,
+//     });
+
+//     return reAnswer;
