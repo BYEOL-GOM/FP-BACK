@@ -51,7 +51,6 @@ router.post('/sign-up', async (req, res, next) => {
 
 // 카카오 로그인
 router.post('/kakao', kakaoLoginController)
->>>>>>> 49896ae99dc491bbe2c91a713394587df1961ce5
 
 // 임시 회원가입 API
 router.post('/sign-up', async (req, res, next) => {
