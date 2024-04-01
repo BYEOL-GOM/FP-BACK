@@ -3,14 +3,22 @@ import * as worryService from './worry.service.js';
 // 고민 등록
 export const createWorryController = async (req, res, next) => {
     try {
-        const { content, icon, userId } = req.body; // 나중에 사용자 인증 미들웨어에서 userId로 변경하기
+        const { content, icon, userId, fontColor } = req.body; // 나중에 사용자 인증 미들웨어에서 userId로 변경하기
 
-        if (!content || !icon || !userId) return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
+        if (!content || !icon || !userId || !fontColor)
+            return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
 
-        const worry = await worryService.createWorry({ content, icon, userId });
-        const commentAuthorId = worry.commentAuthorId; // commentAuthorId 추가
+        const worry = await worryService.createWorry({ content, icon, userId, fontColor });
+        // 필요한 속성만 선택하여 응답 객체 구성
+        const responsedWorry = {
+            worryId: worry.worryId,
+            userId: worry.userId,
+            commentAuthorId: worry.commentAuthorId,
+            createdAt: worry.createdAt,
+            // fontfontColor: worry.fontColor,
+        };
 
-        res.status(201).json({ message: '고민이 등록되었습니다' });
+        res.status(201).json({ message: '고민 생성이 완료되었습니다', worry: responsedWorry });
     } catch (error) {
         console.error('고민 등록중 에러가 발생했어요! :', error);
         next(error);
@@ -90,13 +98,25 @@ export const deleteWorryByCommentAuthorController = async (req, res, next) => {
 export const createReplyController = async (req, res) => {
     try {
         const { worryId, commentId } = req.params;
-        const { content, userId, type } = req.body; // 'reWorry' 또는 'reAnswer'를 결정하는 'type' 필드 추가
+        const { content, userId, type, fontColor } = req.body; // 'reWorry' 또는 'reAnswer'를 결정하는 'type' 필드 추가
+
+        if (!worryId || !commentId || !content || !userId || !type || !fontColor)
+            return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
 
         // Service 계층의 함수 호출
-        const reply = await worryService.createReply(worryId, commentId, content, userId, type);
+        const reply = await worryService.createReply(worryId, commentId, content, userId, type, fontColor);
 
+        const response = {
+            worryId: reply.worryId,
+            userId: reply.userId,
+            parentId: reply.parentId,
+            commentId: reply.commentId,
+            createdAt: reply.createdAt,
+            fontColor: reply.fontColor,
+        };
         res.status(201).json({
             message: '답장이 전송되었습니다',
+            reply: response,
         });
     } catch (error) {
         res.status(400).json({ error: error.message });

@@ -3,18 +3,24 @@ import * as CommentService from './comment.service.js';
 export const createCommentController = async (req, res, next) => {
     try {
         const { worryId } = req.params;
-        const { content, userId } = req.body;
+        const { content, userId, fontColor } = req.body;
 
-        const comment = await CommentService.createComment(worryId, content, userId);
+        if (!worryId || !content || !userId || !fontColor) {
+            return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
+        }
+
+        const comment = await CommentService.createComment(worryId, content, userId, fontColor);
 
         // 응답 객체에 필요한 정보 포함
-        const response = {
+        const InitialComment = {
             worryId: comment.worryId,
             commentId: comment.commentId, // 생성된 댓글의 ID
-            userId: comment.userId,
+            commentAuthor: comment.userId,
+            createdAt: comment.createdAt,
+            // fontColor: comment.fontColor,
         };
 
-        return res.status(201).json({ response, message: '답변이 전송되었습니다.' });
+        return res.status(201).json({ message: '답변이 전송되었습니다.', InitialComment });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }

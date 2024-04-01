@@ -1,10 +1,10 @@
 import { prisma } from '../../utils/prisma/index.js';
-
+// worryId로 고민 찾기
 export const findWorryById = async (worryId) => {
     return await prisma.worries.findUnique({ where: { worryId: parseInt(worryId) } });
 };
 
-// 고민에 대한 답변 생성
+// 답변 생성
 export const createComment = async (data) => {
     console.log('🩷🩷🩷레포지토리 : ', data.worryId, data.content, data.userId, data.authorId);
 
@@ -14,6 +14,8 @@ export const createComment = async (data) => {
             content: data.content,
             userId: data.userId,
             authorId: data.commentAuthorId,
+            fontColor: data.fontColor,
+
         },
     });
 };
@@ -93,6 +95,7 @@ export const getCommentDetail = async (commentId) => {
         commentId: comment.commentId,
         content: comment.content,
         createdAt: comment.createdAt,
+        fontColor: comment.fontColor,
         // parent: comment.parent
         //     ? {
         //           commentId: comment.parent.commentId,

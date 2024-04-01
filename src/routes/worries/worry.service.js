@@ -3,12 +3,12 @@ import * as CommentRepository from '../comments/comment.repository.js';
 import { prisma } from '../../utils/prisma/index.js';
 
 //고민 등록
-export const createWorry = async ({ content, icon, userId }) => {
+export const createWorry = async ({ content, icon, userId, fontColor }) => {
     try {
         // 답변자 Id 랜덤으로 지정하기
         const randomAuthorId = await worryRepository.getRandomUser(userId);
 
-        const worry = await worryRepository.createWorry({ content, icon, userId, randomAuthorId });
+        const worry = await worryRepository.createWorry({ content, icon, userId, randomAuthorId, fontColor });
 
         // commentAuthorId도 함께 반환
         return { ...worry, worryId: worry.worryId, commentAuthorId: randomAuthorId };
@@ -71,7 +71,7 @@ export const deleteSelectedWorry = async (worryId, userId) => {
 };
 
 // 재고민 & 재답변 등록
-export const createReply = async (worryId, commentId, content, userId, type) => {
+export const createReply = async (worryId, commentId, content, userId, type, fontColor) => {
     // 댓글(답변) 또는 고민을 가져옵니다.
     const commentOrWorry = await prisma.comments.findUnique({
         where: { commentId: parseInt(commentId) },
@@ -96,6 +96,7 @@ export const createReply = async (worryId, commentId, content, userId, type) => 
     const reply = await prisma.comments.create({
         data: {
             worryId: parseInt(worryId),
+            fontColor,
             content,
             userId: parseInt(userId),
             parentId: parseInt(commentId),
