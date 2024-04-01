@@ -238,31 +238,20 @@ export const findTopLikedCommentAuthors = async () => {
     });
 
     // 좋아요 받은 commentAuthorId 별로 집계합니다.
-    const authorLikesCount = likes.reduce((acc, like) => {
-        const authorId = like.comment.worry.commentAuthorId;
-        if (!acc[authorId]) {
-            acc[authorId] = 0;
+    const commentAuthorLikesCount = likes.reduce((acc, like) => {
+        const commentAuthorId = like.comment.worry.commentAuthorId;
+        if (!acc[commentAuthorId]) {
+            acc[commentAuthorId] = 0;
         }
-        acc[authorId]++;
+        acc[commentAuthorId]++;
         return acc;
     }, {});
 
     // 집계된 데이터를 배열로 변환하고 좋아요 수에 따라 정렬합니다.
-    const sortedAuthors = Object.entries(authorLikesCount)
-        .map(([authorId, likes]) => ({ authorId: parseInt(authorId), likes }))
+    const sortedAuthors = Object.entries(commentAuthorLikesCount)
+        .map(([commentAuthorId, likes]) => ({ commentAuthorId: parseInt(commentAuthorId), likes }))
         .sort((a, b) => b.likes - a.likes)
         .slice(0, 5); // 상위 5명만 추출
 
     return sortedAuthors;
-    // const topUsers = await prisma.likes.groupBy({
-    //     by: ['userId'],
-    //     _count: true,
-    //     orderBy: {
-    //         _count: {
-    //             userId: 'desc',
-    //         },
-    //     },
-    //     take: 5,
-    // });
-    // return topUsers;
 };

@@ -11,3 +11,5 @@
 {"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 103ms","timestamp":"2024-04-01T16:00:07.223Z"}
 {"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 115ms","timestamp":"2024-04-01T16:00:18.829Z"}
 {"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 92ms","timestamp":"2024-04-01T16:09:11.036Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 162ms","timestamp":"2024-04-01T16:14:25.427Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 120ms","timestamp":"2024-04-01T16:14:48.278Z"}
