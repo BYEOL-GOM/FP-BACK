@@ -12,7 +12,7 @@ const router = express.Router();
 
 
 // 카카오 로그인
-router.post('/login-kakao', kakaoLoginController)
+router.post('/kakao', kakaoLoginController)
 
 // 임시 회원가입 API
 router.post('/sign-up', async (req, res, next) => {
