@@ -19,11 +19,8 @@ export const sendLike = async (req, res, next) => {
 export const getSolvedWorries = async (req, res, next) => {
     try {
         const { userId } = req.params; // 로그인한 유저
-        // const userId = req.params.userId; // 로그인한 유저
-
-        // const { userId } = req.body; // 로그인한 유저
         // const { userId } = res.locals.user.userId;
-        console.log('🩵🩵🩵userId : ', userId);
+        console.log('🩵🩵🩵컨트롤러 userId : ', userId);
 
         // 페이지네이션
         const page = parseInt(req.query.page) || 1; // 페이지 번호, 기본값은 1
@@ -60,7 +57,7 @@ export const getSolvedWorryDetails = async (req, res, next) => {
 // '내가 해결한 고민' 목록 전체 조회
 export const getHelpedSolveWorries = async (req, res, next) => {
     try {
-        const { userId } = req.body;
+        const { userId } = req.params;
         // const { userId } = res.locals.user.userId;
 
         const helpedSolveWorries = await LikeService.getHelpedSolveWorriesByUserId(userId);

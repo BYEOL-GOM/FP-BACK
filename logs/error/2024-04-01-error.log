@@ -33,3 +33,4 @@
 {"level":"error","message":"Error Status: 403, Message: 선물을 보낼 권한이 없습니다. 게시글의 작성자만 선물을 보낼 수 있습니다.","timestamp":"2024-04-01T11:42:25.698Z"}
 {"level":"error","message":"Error Status: 403, Message: 선물을 보낼 권한이 없습니다. 게시글의 작성자만 선물을 보낼 수 있습니다.","timestamp":"2024-04-01T11:42:34.572Z"}
 {"level":"error","message":"Error Status: 403, Message: 선물을 보낼 권한이 없습니다. 게시글의 작성자만 선물을 보낼 수 있습니다.","timestamp":"2024-04-01T11:47:04.805Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot set headers after they are sent to the client","timestamp":"2024-04-01T12:27:53.153Z"}
