@@ -64,8 +64,9 @@ export const findCommentById = async (commentId) => {
 };
 
 // '나의 해결된 고민' 목록 전체 조회
-export const findSolvedWorriesByUserId = async (userId) => {
-    return await prisma.worries.findMany({
+export const findSolvedWorriesByUserId = async (userId, page, limit) => {
+    const skip = (page - 1) * limit;
+    const worries = await prisma.worries.findMany({
         where: {
             isSolved: true,
             userId: userId,
@@ -80,12 +81,27 @@ export const findSolvedWorriesByUserId = async (userId) => {
         orderBy: {
             createdAt: 'desc',
         },
+        skip: skip,
+        take: limit,
     });
+    // 전체 항목 수를 조회합니다.
+    const totalCount = await prisma.worries.count({
+        where: {
+            isSolved: true,
+            userId: userId,
+        },
+    });
+
+    return {
+        totalCount,
+        worries,
+    };
 };
 
 // '내가 해결한 고민' 목록 전체 조회
-export const findHelpedSolveWorriesByUserId = async (userId) => {
-    return await prisma.worries.findMany({
+export const findHelpedSolveWorriesByUserId = async (userId, page, limit) => {
+    const skip = (page - 1) * limit;
+    const worries = await prisma.worries.findMany({
         where: {
             isSolved: true,
             commentAuthorId: userId,
@@ -100,7 +116,21 @@ export const findHelpedSolveWorriesByUserId = async (userId) => {
         orderBy: {
             createdAt: 'desc',
         },
+        skip: skip,
+        take: limit,
     });
+    // 전체 항목 수를 조회합니다.
+    const totalCount = await prisma.worries.count({
+        where: {
+            isSolved: true,
+            userId: userId,
+        },
+    });
+
+    return {
+        totalCount,
+        worries,
+    };
 };
 
 // '나의 해결된 고민' 상세 조회
