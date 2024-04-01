@@ -86,34 +86,45 @@ export const deleteSelectedWorry = async (worryId, userId) => {
 // 재고민 & 재답변 등록
 export const createReply = async (worryId, commentId, content, userId, type, fontColor) => {
     // 댓글(답변) 또는 고민을 가져옵니다.
-    const commentOrWorry = await prisma.comments.findUnique({
+    const parentComment = await prisma.comments.findUnique({
         where: { commentId: parseInt(commentId) },
         include: {
             worry: true, // 연관된 고민 정보 포함
         },
     });
+    if (!parentComment) throw new Error('해당하는 답변 또는 고민이 존재하지 않습니다.');
 
-    if (!commentOrWorry) throw new Error('해당하는 답변 또는 고민이 존재하지 않습니다.');
+    const parentId = parseInt(commentId);
+
+    // 재고민 또는 재답변이 이미 존재하는지 확인
+    const existingReply = await prisma.comments.findFirst({
+        where: {
+            parentId: parseInt(commentId),
+            userId: parseInt(userId),
+        },
+    });
+
+    if (existingReply) {
+        throw new Error('이미 답장을 보냈습니다.');
+    }
 
     // 재고민 생성 시 권한 검증
-    if (type === 'reWorry' && commentOrWorry.worry.userId !== userId) {
+    if (type === 'reWorry' && parentComment.worry.userId !== userId) {
         throw new Error('답장을 작성할 권한이 없습니다.');
     }
 
     // 재답변 생성 시 권한 검증
-    // 여기서는 연관된 고민의 최초 답변자 ID와 현재 userId를 비교합니다.
-    if (type === 'reAnswer' && commentOrWorry.worry.commentAuthorId !== userId) {
+    //연관된 고민의 최초 답변자 ID와 현재 userId를 비교
+    if (type === 'reAnswer' && parentComment.worry.commentAuthorId !== userId) {
         throw new Error('답장을 작성할 권한이 없습니다.');
     }
 
-    const reply = await prisma.comments.create({
-        data: {
-            worryId: parseInt(worryId),
-            fontColor,
-            content,
-            userId: parseInt(userId),
-            parentId: parseInt(commentId),
-        },
+    const reply = await worryRepository.createComment({
+        worryId: parseInt(worryId),
+        content,
+        userId: parseInt(userId),
+        parentId, // 부모 댓글 ID 사용
+        fontColor,
     });
 
     return reply;

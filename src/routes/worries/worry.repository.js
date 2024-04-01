@@ -19,7 +19,7 @@ export const getRandomUser = async (userId) => {
         const randomIndex = Math.floor(Math.random() * potentialResponders.length);
         return potentialResponders[randomIndex].userId;
     } catch (error) {
-        throw new Error('랜덤 답변자 선정 실패: ' + error.message);
+        throw new Error(error.message);
     }
 };
 
@@ -201,16 +201,14 @@ export const getCommentAuthorId = async (worryId) => {
 };
 
 // 재고민 & 재답변 생성
-export const createComment = async ({ worryId, content, userId, parentId, type }) => {
-    // 데이터베이스에 댓글 생성
+export const createComment = async ({ worryId, content, userId, parentId, fontColor }) => {
     return await prisma.comments.create({
         data: {
             worryId: parseInt(worryId),
-            fontColor,
             content,
-            userId: parseInt(userId),
-            parentId: parseInt(parentId),
-            // 추가적으로 type 필드가 모델에 정의되어 있다면 여기에 포함시킬 수 있습니다.
+            userId,
+            parentId,
+            fontColor,
         },
     });
 };
