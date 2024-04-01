@@ -23,3 +23,8 @@
 {"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-04-01T08:02:50.776Z"}
 {"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-04-01T08:12:42.366Z"}
 {"level":"error","message":"Error Status: undefined, Message: Cannot access 'worryUpdateResult' before initialization","timestamp":"2024-04-01T08:13:27.545Z"}
+{"level":"error","message":"Error Status: 400, Message: 유효하지 않은 댓글입니다.","timestamp":"2024-04-01T08:34:42.353Z"}
+{"level":"error","message":"Error Status: 403, Message: 선물을 보낼 권한이 없습니다. 게시글의 작성자만 선물을 보낼 수 있습니다.","timestamp":"2024-04-01T08:34:50.360Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-04-01T08:36:28.948Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-04-01T08:36:52.011Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-04-01T08:37:01.835Z"}

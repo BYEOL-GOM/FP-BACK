@@ -56,8 +56,8 @@ export const sendLike = async (worryId, commentId, userId, commentAuthorId) => {
 };
 
 // '나의 해결된 고민' 목록 전체 조회
-export const getSolvedWorriesByUserId = async (userId) => {
-    return LikeRepository.findSolvedWorriesByUserId(userId);
+export const getSolvedWorriesByUserId = async (userId, page, limit) => {
+    return LikeRepository.findSolvedWorriesByUserId(userId, page, limit);
 };
 
 // '나의 해결된 고민' 상세 조회
