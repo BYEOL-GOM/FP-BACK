@@ -1,21 +1,32 @@
 import * as worryRepository from './worry.repository.js';
-import * as CommentRepository from '../comments/comment.repository.js';
 import { prisma } from '../../utils/prisma/index.js';
 
 //고민 등록
 export const createWorry = async ({ content, icon, userId, fontColor }) => {
     try {
+        // 사용자 정보와 남은 고민 횟수를 확인합니다.
+        const user = await worryRepository.getUserById(userId);
+        if (!user || user.remainingWorries <= 0) {
+            throw new Error('최대 고민 작성수를 초과하였습니다');
+        }
+
         // 답변자 Id 랜덤으로 지정하기
         const randomAuthorId = await worryRepository.getRandomUser(userId);
 
         const worry = await worryRepository.createWorry({ content, icon, userId, randomAuthorId, fontColor });
 
+        // 사용자의 remainingWorries 값을 감소시킵니다.
+        await worryRepository.decreaseRemainingWorries(userId);
+
+        // 수정된 사용자 정보를 다시 가져와서 현재 남은 고민 횟수를 확인합니다.
+        const updatedUser = await worryRepository.getUserById(userId);
+
         // commentAuthorId도 함께 반환
-        return { ...worry, commentAuthorId: randomAuthorId };
+        return { ...worry, commentAuthorId: randomAuthorId, remainingWorries: updatedUser.remainingWorries };
         // 고민 등록할때 답변자id도 포함
         // return await worryRepository.createWorry({ content, icon, userId, randomAuthorId });
     } catch (error) {
-        throw new Error('고민 등록 실패' + error.message);
+        throw new Error(error.message);
     }
 };
 

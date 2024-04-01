@@ -23,36 +23,42 @@ export const verifyCommentExists = async (commentId, worryId) => {
 };
 
 // 선물 보내기
-export const markWorryAsSolvedAndCreateLike = async (worryId, commentId, userId, commentAuthorId) => {
-    // 고민을 업데이트하고, 선물을 생성하며, 사용자 엔티티를 업데이트하는 트랜잭션
-    const [worryUpdateResult, likeCreationResult] = await prisma.$transaction([
-        prisma.worries.update({
-            where: { worryId: parseInt(worryId) },
-            data: {
-                isSolved: true,
-                solvingCommentId: parseInt(commentId), // 해결을 위한 댓글 ID 업데이트
-                // 'Worries' 모델에서 'userId'와 'helperUserId' 필드를 업데이트하는 부분이 불필요하거나 오류가 있는 경우, 여기서 조정 필요
-            },
-            select: {
-                worryId: true,
-                solvingCommentId: true,
-                content: true,
-                userId: true,
-                commentAuthorId: true,
-                icon: true,
-                createdAt: true,
-            },
-        }),
-        prisma.likes.create({
-            data: {
-                userId: parseInt(userId), // 선물을 보내는 사람 (좋아요를 누른 사용자)
-                commentId: parseInt(commentId), // 좋아요가 적용되는 댓글 ID
-            },
-            // 선물 생성에 대한 필드를 선택하지 않아 최종 출력에서 제외
-        }),
-    ]);
+export const markWorryAsSolvedAndCreateLike = async (worryId, commentId, userId) => {
+    try {
+        // 고민을 업데이트하고, 선물을 생성하며, 사용자 엔티티를 업데이트하는 트랜잭션
+        const transactionResults = await prisma.$transaction([
+            prisma.worries.update({
+                where: { worryId: parseInt(worryId) },
+                data: {
+                    isSolved: true,
+                    solvingCommentId: parseInt(commentId),
+                },
+                select: {
+                    userId: true, // 업데이트된 worry에서 userId 추출
+                },
+            }),
+            prisma.likes.create({
+                data: {
+                    userId: parseInt(userId),
+                    commentId: parseInt(commentId),
+                },
+            }),
+        ]);
 
-    return [worryUpdateResult]; // worry 업데이트 결과만 포함하는 배열 반환
+        const worryUpdateResult = transactionResults[0]; // 업데이트된 worry의 결과
+        const likeCreationResult = transactionResults[1]; // 생성된 like의 결과
+
+        // 사용자의 remainingWorries를 증가시킵니다.
+        const userUpdateResult = await prisma.users.update({
+            where: { userId: worryUpdateResult.userId },
+            data: { remainingWorries: { increment: 1 } },
+        });
+
+        return { worryUpdateResult, likeCreationResult, userUpdateResult };
+    } catch (error) {
+        console.error('Error during transaction:', error);
+        throw error;
+    }
 };
 
 // commentId에 해당하는 댓글 찾기

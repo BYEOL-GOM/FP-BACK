@@ -22,10 +22,22 @@ export const getRandomUser = async (userId) => {
     }
 };
 
+//userId 로 user 찾기
+export const getUserById = async (userId) => {
+    return await prisma.users.findUnique({ where: { userId } });
+};
+// 고민등록시, 해당 userId 의 remainingWorries -1 하기
+export const decreaseRemainingWorries = async (userId) => {
+    await prisma.users.update({
+        where: { userId },
+        data: { remainingWorries: { decrement: 1 } },
+    });
+};
+
 // 고민 등록
 export const createWorry = async ({ content, icon, userId, randomAuthorId, fontColor }) => {
     try {
-        return await prisma.worries.create({
+        const createdWorry = await prisma.worries.create({
             data: {
                 content,
                 icon,
@@ -33,12 +45,23 @@ export const createWorry = async ({ content, icon, userId, randomAuthorId, fontC
                 commentAuthorId: randomAuthorId,
                 fontColor,
             },
+            select: {
+                // 생성된 고민의 상세 정보를 선택적으로 반환
+                worryId: true,
+                userId: true,
+                commentAuthorId: true,
+                content: true,
+                createdAt: true,
+                icon: true,
+                fontColor: true,
+                // 여기에 더 필요한 필드가 있다면 추가
+            },
         });
+        return createdWorry;
     } catch (error) {
         throw new Error('고민등록에 실패하였습니다. ' + error.message);
     }
 };
-
 // 고민답변자Id기준으로 보는 고민 전체 조회
 export const getWorriesByCommentAuthorId = async (userId) => {
     try {

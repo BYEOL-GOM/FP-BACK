@@ -16,6 +16,8 @@ model Users {
   nickname      String
   email         String
   fruit         String?
+  remainingWorries Int @default(5) //  최대 고민작성 가능 개수 5
+
 
   worry Worries[]
   comments  Comments[]

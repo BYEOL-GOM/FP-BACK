@@ -1,6 +1,6 @@
 import * as LikeRepository from './like.repository.js';
 
-// 해당 고민 게시글 가져오기
+// // 해당 고민 게시글 가져오기
 export const getWorryById = async (worryId) => {
     const worry = await LikeRepository.findWorryById(worryId);
     if (!worry) {

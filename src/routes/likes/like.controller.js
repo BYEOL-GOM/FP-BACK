@@ -9,7 +9,7 @@ export const sendLike = async (req, res, next) => {
 
         const result = await LikeService.sendLike(worryId, commentId, userId);
 
-        return res.status(201).json({ message: '선물을 성공적으로 전달했습니다.' });
+        return res.status(201).json({ message: '선물을 성공적으로 전달했습니다.', result });
     } catch (error) {
         next(error);
     }

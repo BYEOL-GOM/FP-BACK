@@ -8,20 +8,22 @@ export const createWorryController = async (req, res, next) => {
         if (!content || !icon || !userId || !fontColor)
             return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
 
-        const worry = await worryService.createWorry({ content, icon, userId, fontColor });
-        // 필요한 속성만 선택하여 응답 객체 구성
-        const responsedWorry = {
-            worryId: worry.worryId,
-            userId: worry.userId,
-            commentAuthorId: worry.commentAuthorId,
-            createdAt: worry.createdAt,
-            // fontfontColor: worry.fontColor,
-        };
+        const worry = await worryService.createWorry({ content, icon, userId: +userId, fontColor });
 
-        res.status(201).json({ message: '고민 생성이 완료되었습니다', worry: responsedWorry });
+        res.status(201).json({
+            message: '고민 생성이 완료되었습니다',
+            worry: {
+                worryId: worry.worryId,
+                userId: worry.userId,
+                commentAuthorId: worry.commentAuthorId,
+                createdAt: worry.createdAt,
+                fontColor: worry.fontColor,
+                remainingWorries: worry.remainingWorries,
+            },
+        });
     } catch (error) {
-        console.error('고민 등록중 에러가 발생했어요! :', error);
-        next(error);
+        console.error('고민 등록 중 에러가 발생했어요! :', error);
+        res.status(400).json({ error: error.message });
     }
 };
 
