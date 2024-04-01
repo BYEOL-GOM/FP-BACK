@@ -93,8 +93,10 @@ export const findSolvedWorriesByUserId = async (userId, page, limit) => {
     });
 
     return {
-        totalCount,
-        worries,
+        page, // 현재 페이지 번호 추가
+        limit, // 페이지당 항목 수 추가
+        totalCount, // 전체 항목 수
+        worries, // 현재 페이지의 데이터
     };
 };
 
@@ -128,8 +130,10 @@ export const findHelpedSolveWorriesByUserId = async (userId, page, limit) => {
     });
 
     return {
-        totalCount,
-        worries,
+        page, // 현재 페이지 번호 추가
+        limit, // 페이지당 항목 수 추가
+        totalCount, // 전체 항목 수
+        worries, // 현재 페이지의 데이터
     };
 };
 
