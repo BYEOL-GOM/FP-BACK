@@ -31,28 +31,28 @@ export const kakaoLoginController = async (req, res) => {
 
         const userInfo = userInfoResponse.data;
 
-        const { id, kakao_account: { email, profile: { nickname } } } = userInfoResponse.data;
+        // const { id, kakao_account: { email, profile: { nickname } } } = userInfoResponse.data;
 
-        const user = {
-            id,
-            email,
-            nickname
-        };
+        // const user = {
+        //     id,
+        //     email,
+        //     nickname
+        // };
 
-        const findUser = await prisma.users.findFirst({
-            where: {userCheckId : id}
-        })
+        // const findUser = await prisma.users.findFirst({
+        //     where: {userCheckId : id}
+        // })
 
-        if (!findUser){
-            const createUser = await prisma.users.create({
-                data: {
-                    userCheckId: user.id,
-                    nickname: user.nickname,
-                    email: user.email,
-                }
-            })
-            return res.status(200).json({ accessToken})
-        }
+        // if (!findUser){
+        //     const createUser = await prisma.users.create({
+        //         data: {
+        //             userCheckId: user.id,
+        //             nickname: user.nickname,
+        //             email: user.email,
+        //         }
+        //     })
+        //     return res.status(200).json({ accessToken})
+        // }
 
 
 
@@ -61,10 +61,10 @@ export const kakaoLoginController = async (req, res) => {
 
         console.log(accessToken);
         console.log(userInfo);
-        console.log(findUser);
-        console.log(createUser);
-        // return res.status(200).json({ accessToken, userInfo }); 유저정보 포함
-        return res.status(200).json({ accessToken}); // 유저정보 제외
+        //console.log(findUser);
+        //console.log(createUser);
+         return res.status(200).json({ accessToken, userInfo });// 유저정보 포함
+        //return res.status(200).json({ accessToken}); // 유저정보 제외
     } catch (error) {
         console.error(error);
         return res.status(405).json({ message: '카카오 인증 및 사용자 정보 가져오기 오류' });
