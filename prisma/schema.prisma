@@ -28,6 +28,7 @@ model Worries {
   commentAuthorId       Int       @map("commentAuthorId")
 
   content               String    @db.Text @map("content")
+  fontColor             String?   @map("fontColor")
   createdAt             DateTime  @default(now()) @map("createdAt")
   icon                  Icon?     @map("icon")
   lastReplyTime         DateTime?                                      // 답변이 도착한 시간
@@ -38,7 +39,7 @@ model Worries {
   // 고민을 등록한 유저(선물을 보냄)
   userId      Int?       @map("userId")
   user        Users?    @relation(fields: [userId], references: [userId], onDelete: Cascade)
-
+  
   comments    Comments[] // 이 걱정에 달린 댓글들
   
   // 해결된 답변
@@ -58,6 +59,8 @@ model Comments {
   content   String   @db.Text  @map("content")
   createdAt DateTime @default(now())  @map("createdAt")
   updatedAt DateTime @default(now())  @map("updatedAt")
+  fontColor             String?   @map("fontColor")
+
   
   parentId  Int?     
   parent    Comments? @relation("CommentHierarchy", fields: [parentId], references: [commentId]) // 댓글 계층

@@ -1,7 +1,7 @@
 import * as CommentRepository from './comment.repository.js';
 // 답변 생성
 
-export const createComment = async (worryId, content, userId) => {
+export const createComment = async (worryId, content, userId, fontColor) => {
     const worry = await findWorryById(worryId);
 
     if (!worry) {
@@ -20,6 +20,7 @@ export const createComment = async (worryId, content, userId) => {
         userId,
         content,
         authorId: worry.commentAuthorId,
+        fontColor,
     };
 
     return await CommentRepository.createComment(commentData);

@@ -23,7 +23,7 @@ export const getRandomUser = async (userId) => {
 };
 
 // 고민 등록
-export const createWorry = async ({ content, icon, userId, randomAuthorId }) => {
+export const createWorry = async ({ content, icon, userId, randomAuthorId, fontColor }) => {
     try {
         return await prisma.worries.create({
             data: {
@@ -31,6 +31,7 @@ export const createWorry = async ({ content, icon, userId, randomAuthorId }) => 
                 icon,
                 userId,
                 commentAuthorId: randomAuthorId,
+                fontColor,
             },
         });
     } catch (error) {
@@ -50,6 +51,7 @@ export const getWorriesByCommentAuthorId = async (userId) => {
                 worryId: true,
                 // userId: true,
                 icon: true,
+                createdAt: true,
             },
         });
         return worries;
@@ -69,9 +71,11 @@ export const getWorryDetail = async (worryId) => {
             select: {
                 worryId: true,
                 userId: true,
-                commentAuthorId: true,
-                content: true,
                 createdAt: true,
+                content: true,
+                // icon: true,
+                fontColor: true,
+                commentAuthorId: true,
             },
         });
     } catch (error) {
@@ -170,6 +174,7 @@ export const createComment = async ({ worryId, content, userId, parentId, type }
     return await prisma.comments.create({
         data: {
             worryId: parseInt(worryId),
+            fontColor,
             content,
             userId: parseInt(userId),
             parentId: parseInt(parentId),
