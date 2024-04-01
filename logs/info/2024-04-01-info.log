@@ -234,3 +234,5 @@
 {"level":"info","message":"Method: POST, URL: /worries/69/comments, Status: 201, Duration: 347ms","timestamp":"2024-04-01T08:39:02.356Z"}
 {"level":"info","message":"Method: POST, URL: /worries/69/comments/71/sendLike, Status: 201, Duration: 150ms","timestamp":"2024-04-01T08:39:25.407Z"}
 {"level":"info","message":"Method: GET, URL: /mySolvedWorry?page=1&limit=10, Status: 200, Duration: 34ms","timestamp":"2024-04-01T08:39:31.556Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 323ms","timestamp":"2024-04-01T08:58:32.899Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 138ms","timestamp":"2024-04-01T08:58:34.601Z"}
