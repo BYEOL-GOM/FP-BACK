@@ -35,6 +35,7 @@ export const getSolvedWorries = async (req, res, next) => {
         }
 
         const solvedWorries = await LikeService.getSolvedWorriesByUserId(parseInt(userId), page, limit);
+
         return res.status(200).json(solvedWorries);
     } catch (error) {
         next(error);
@@ -58,6 +59,8 @@ export const getHelpedSolveWorries = async (req, res, next) => {
         }
 
         const helpedSolveWorries = await LikeService.getHelpedSolveWorriesByUserId(parseInt(userId), page, limit);
+        // const helpedSolveWorries = await LikeService.getHelpedSolveWorriesByUserId(commentAuthorId);
+
         res.status(200).json(helpedSolveWorries);
     } catch (error) {
         next(error);

@@ -60,9 +60,7 @@ model Comments {
   commentId Int      @id @default(autoincrement()) @map("commentId")
   content   String   @db.Text  @map("content")
   createdAt DateTime @default(now())  @map("createdAt")
-  updatedAt DateTime @default(now())  @map("updatedAt")
   fontColor             String?   @map("fontColor")
-
   
   parentId  Int?     
   parent    Comments? @relation("CommentHierarchy", fields: [parentId], references: [commentId]) // 댓글 계층
@@ -76,10 +74,11 @@ model Comments {
 
   likes      Likes[]
 
-  // 해결된 답변
+  // 해결된 고민
   solvingWorryId Int?
   solvingWorry Worries? @relation("SolvingComment")
 }
+
 
 model Likes {
   likeId      Int       @id @default(autoincrement())  @map("likeId")

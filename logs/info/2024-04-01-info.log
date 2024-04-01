@@ -4,6 +4,131 @@
 {"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 176ms","timestamp":"2024-03-31T15:03:02.963Z"}
 {"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 132ms","timestamp":"2024-03-31T15:06:14.870Z"}
 {"level":"info","message":"Method: POST, URL: /9/comments/21/replies, Status: 201, Duration: 96ms","timestamp":"2024-03-31T15:06:23.890Z"}
+
+{"level":"error","message":"Error Status: 400, Message: 선택한 댓글은 이 고민에 대한 지정된 답변자의 것이 아닙니다.","timestamp":"2024-03-31T15:00:48.083Z"}
+{"level":"info","message":"Method: POST, URL: /worries/96/comments/18/sendLike, Status: 400, Duration: 142ms","timestamp":"2024-03-31T15:00:48.088Z"}
+{"level":"error","message":"Error Status: undefined, Message: commentExists is not defined","timestamp":"2024-03-31T15:04:54.443Z"}
+{"level":"info","message":"Method: POST, URL: /worries/96/comments/18/sendLike, Status: 500, Duration: 94ms","timestamp":"2024-03-31T15:04:54.448Z"}
+{"level":"info","message":"Method: POST, URL: /worries/96/comments/18/sendLike, Status: 201, Duration: 197ms","timestamp":"2024-03-31T15:05:35.263Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 159ms","timestamp":"2024-03-31T15:07:28.149Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 16ms","timestamp":"2024-03-31T15:07:32.725Z"}
+{"level":"info","message":"Method: POST, URL: /97, Status: 201, Duration: 68ms","timestamp":"2024-03-31T15:07:44.498Z"}
+{"level":"info","message":"Method: POST, URL: /worries/97/comments/19/sendLike, Status: 201, Duration: 113ms","timestamp":"2024-03-31T15:07:52.611Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 96ms","timestamp":"2024-03-31T15:09:45.381Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 21ms","timestamp":"2024-03-31T15:09:52.970Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 답변의 고민 게시글이 존재하지 않습니다.","timestamp":"2024-03-31T15:09:58.384Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/37, Status: 404, Duration: 24ms","timestamp":"2024-03-31T15:09:58.385Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/96, Status: 200, Duration: 273ms","timestamp":"2024-03-31T15:10:04.964Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry, Status: 200, Duration: 39ms","timestamp":"2024-03-31T15:10:09.488Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 421ms","timestamp":"2024-04-01T00:50:28.063Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 23ms","timestamp":"2024-04-01T00:51:42.306Z"}
+{"level":"info","message":"Method: POST, URL: /98, Status: 400, Duration: 24ms","timestamp":"2024-04-01T00:51:56.449Z"}
+{"level":"info","message":"Method: POST, URL: /98, Status: 201, Duration: 58ms","timestamp":"2024-04-01T00:51:59.716Z"}
+{"level":"info","message":"Method: POST, URL: /worries/98/comments/20/sendLike, Status: 201, Duration: 106ms","timestamp":"2024-04-01T00:52:09.460Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-04-01T01:06:57.515Z"}
+{"level":"info","message":"Method: POST, URL: /worries/98/comments/20/sendLike, Status: 400, Duration: 82ms","timestamp":"2024-04-01T01:06:57.520Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 212ms","timestamp":"2024-04-01T01:07:00.867Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/96, Status: 200, Duration: 33ms","timestamp":"2024-04-01T01:07:18.888Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry, Status: 200, Duration: 37ms","timestamp":"2024-04-01T01:07:23.832Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 111ms","timestamp":"2024-04-01T01:09:19.135Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry, Status: 200, Duration: 35ms","timestamp":"2024-04-01T01:09:34.957Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry, Status: 200, Duration: 93ms","timestamp":"2024-04-01T01:10:42.349Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry, Status: 200, Duration: 29ms","timestamp":"2024-04-01T01:12:02.478Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T01:14:10.998Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry, Status: 500, Duration: 25ms","timestamp":"2024-04-01T01:14:11.003Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T01:18:13.195Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry, Status: 500, Duration: 17ms","timestamp":"2024-04-01T01:18:13.199Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry, Status: 200, Duration: 97ms","timestamp":"2024-04-01T01:18:21.448Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry, Status: 200, Duration: 83ms","timestamp":"2024-04-01T01:19:06.779Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry, Status: 200, Duration: 19ms","timestamp":"2024-04-01T01:19:20.958Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry, Status: 200, Duration: 25ms","timestamp":"2024-04-01T01:24:02.792Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry, Status: 200, Duration: 80ms","timestamp":"2024-04-01T01:24:52.146Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry, Status: 200, Duration: 108ms","timestamp":"2024-04-01T01:27:14.445Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry, Status: 200, Duration: 26ms","timestamp":"2024-04-01T01:31:48.321Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 96ms","timestamp":"2024-04-01T01:34:39.835Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 답변의 고민 게시글이 존재하지 않습니다.","timestamp":"2024-04-01T01:36:17.764Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1, Status: 404, Duration: 33ms","timestamp":"2024-04-01T01:36:17.766Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 64ms","timestamp":"2024-04-01T01:36:25.319Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 38ms","timestamp":"2024-04-01T01:36:51.058Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/, Status: 200, Duration: 22ms","timestamp":"2024-04-01T01:37:11.914Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry/1, Status: 200, Duration: 91ms","timestamp":"2024-04-01T01:42:04.091Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry/1, Status: 200, Duration: 25ms","timestamp":"2024-04-01T01:43:53.611Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry/1, Status: 200, Duration: 23ms","timestamp":"2024-04-01T01:45:08.660Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1, Status: 200, Duration: 16ms","timestamp":"2024-04-01T01:45:12.310Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1, Status: 200, Duration: 9ms","timestamp":"2024-04-01T01:45:16.968Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T02:01:36.620Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry/1, Status: 500, Duration: 7ms","timestamp":"2024-04-01T02:01:36.625Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T02:01:53.773Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry/1, Status: 500, Duration: 7ms","timestamp":"2024-04-01T02:01:53.778Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T02:01:54.581Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry/1, Status: 500, Duration: 3ms","timestamp":"2024-04-01T02:01:54.583Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T02:02:39.711Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry/1, Status: 500, Duration: 2ms","timestamp":"2024-04-01T02:02:39.712Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T02:03:14.800Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1, Status: 500, Duration: 2ms","timestamp":"2024-04-01T02:03:14.801Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T05:34:32.162Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1?page=1&limit=10, Status: 500, Duration: 9ms","timestamp":"2024-04-01T05:34:32.169Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T05:35:56.140Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1?page=1&limit=10, Status: 500, Duration: 11ms","timestamp":"2024-04-01T05:35:56.148Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T05:36:40.861Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1?page=1&limit=10, Status: 500, Duration: 6ms","timestamp":"2024-04-01T05:36:40.865Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T05:39:16.465Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1?page=1&limit=10, Status: 500, Duration: 6ms","timestamp":"2024-04-01T05:39:16.469Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T05:39:17.236Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1?page=1&limit=10, Status: 500, Duration: 2ms","timestamp":"2024-04-01T05:39:17.237Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T05:40:53.108Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1?page=1&limit=10, Status: 500, Duration: 6ms","timestamp":"2024-04-01T05:40:53.112Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T05:41:39.217Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1?page=1&limit=10, Status: 500, Duration: 2ms","timestamp":"2024-04-01T05:41:39.218Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T05:43:07.456Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1?page=1&limit=10, Status: 500, Duration: 8ms","timestamp":"2024-04-01T05:43:07.462Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T05:51:33.688Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1?page=1&limit=10, Status: 500, Duration: 7ms","timestamp":"2024-04-01T05:51:33.693Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T05:52:01.369Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1?page=1&limit=10, Status: 500, Duration: 6ms","timestamp":"2024-04-01T05:52:01.373Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T05:52:11.990Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/?page=1&limit=10, Status: 500, Duration: 2ms","timestamp":"2024-04-01T05:52:11.991Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T05:55:44.631Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/?page=1&limit=10, Status: 500, Duration: 8ms","timestamp":"2024-04-01T05:55:44.636Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T05:55:45.569Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/?page=1&limit=10, Status: 500, Duration: 2ms","timestamp":"2024-04-01T05:55:45.570Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T05:55:45.916Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/?page=1&limit=10, Status: 500, Duration: 2ms","timestamp":"2024-04-01T05:55:45.917Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T05:55:57.940Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/?page=1&limit=10, Status: 500, Duration: 2ms","timestamp":"2024-04-01T05:55:57.941Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T05:56:03.605Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/?page=1&limit=10, Status: 500, Duration: 2ms","timestamp":"2024-04-01T05:56:03.606Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T05:58:57.751Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/?page=1&limit=10, Status: 500, Duration: 8ms","timestamp":"2024-04-01T05:58:57.756Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T06:00:23.433Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/?page=1&limit=10, Status: 500, Duration: 8ms","timestamp":"2024-04-01T06:00:23.439Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T06:04:03.709Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/?page=1&limit=10, Status: 500, Duration: 3ms","timestamp":"2024-04-01T06:04:03.711Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T06:04:24.986Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 500, Duration: 3ms","timestamp":"2024-04-01T06:04:24.988Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T06:11:01.610Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 500, Duration: 8ms","timestamp":"2024-04-01T06:11:01.615Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T06:11:32.183Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 500, Duration: 4ms","timestamp":"2024-04-01T06:11:32.184Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T06:11:51.878Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 500, Duration: 7ms","timestamp":"2024-04-01T06:11:51.883Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T06:11:57.379Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 500, Duration: 3ms","timestamp":"2024-04-01T06:11:57.380Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T06:13:50.184Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 500, Duration: 7ms","timestamp":"2024-04-01T06:13:50.189Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T06:13:58.704Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 5ms","timestamp":"2024-04-01T06:13:58.706Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T06:15:46.028Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 500, Duration: 7ms","timestamp":"2024-04-01T06:15:46.034Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T06:16:14.202Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 2ms","timestamp":"2024-04-01T06:16:14.203Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T06:16:39.250Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 500, Duration: 4ms","timestamp":"2024-04-01T06:16:39.252Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T06:16:46.358Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 500, Duration: 2ms","timestamp":"2024-04-01T06:16:46.359Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-01T06:16:53.706Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 500, Duration: 2ms","timestamp":"2024-04-01T06:16:53.707Z"}
+
 {"level":"info","message":"Method: POST, URL: /9/comments/21/replies, Status: 201, Duration: 135ms","timestamp":"2024-03-31T15:19:32.785Z"}
 {"level":"info","message":"Method: GET, URL: /mySolvedWorry, Status: 200, Duration: 131ms","timestamp":"2024-04-01T00:45:08.061Z"}
 {"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 148ms","timestamp":"2024-04-01T00:47:43.129Z"}
@@ -101,10 +226,10 @@
 {"level":"info","message":"Method: POST, URL: /34/comments/40/replies, Status: 201, Duration: 466ms","timestamp":"2024-04-01T03:13:09.988Z"}
 {"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 111ms","timestamp":"2024-04-01T03:13:56.164Z"}
 {"level":"info","message":"Method: GET, URL: /comments/41, Status: 200, Duration: 71ms","timestamp":"2024-04-01T03:15:17.087Z"}
-<<<<<<< HEAD
+
 {"level":"info","message":"Method: POST, URL: /kakao, Status: 405, Duration: 345ms","timestamp":"2024-04-01T03:42:29.788Z"}
 {"level":"info","message":"Method: GET, URL: /kakao, Status: 404, Duration: 7ms","timestamp":"2024-04-01T03:51:43.099Z"}
-=======
+
 {"level":"info","message":"Method: GET, URL: /comments/41, Status: 200, Duration: 103ms","timestamp":"2024-04-01T03:17:39.080Z"}
 {"level":"info","message":"Method: GET, URL: /comments/41, Status: 200, Duration: 30ms","timestamp":"2024-04-01T03:17:40.013Z"}
 {"level":"info","message":"Method: POST, URL: /34/comments/40/replies, Status: 201, Duration: 95ms","timestamp":"2024-04-01T03:17:43.669Z"}
@@ -125,7 +250,7 @@
 {"level":"info","message":"Method: POST, URL: /worries/36/comments, Status: 201, Duration: 52ms","timestamp":"2024-04-01T03:41:18.145Z"}
 {"level":"info","message":"Method: POST, URL: /worries/36/comments, Status: 201, Duration: 146ms","timestamp":"2024-04-01T03:41:40.460Z"}
 {"level":"info","message":"Method: POST, URL: /worries/36/comments, Status: 201, Duration: 58ms","timestamp":"2024-04-01T03:41:41.608Z"}
->>>>>>> 0552449b73cc453207f899e1e112284543247f42
+
 {"level":"info","message":"Method: POST, URL: /comments, Status: 404, Duration: 13ms","timestamp":"2024-04-01T05:15:21.464Z"}
 {"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패worryRepository.checkExistingWorry is not a function","timestamp":"2024-04-01T05:15:28.757Z"}
 {"level":"info","message":"Method: POST, URL: /worries, Status: 500, Duration: 13ms","timestamp":"2024-04-01T05:15:28.762Z"}

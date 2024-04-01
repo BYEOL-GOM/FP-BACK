@@ -23,6 +23,7 @@ export const createWorry = async ({ content, icon, userId, fontColor }) => {
 
         // commentAuthorId도 함께 반환
         return { ...worry, commentAuthorId: randomAuthorId, remainingWorries: updatedUser.remainingWorries };
+
         // 고민 등록할때 답변자id도 포함
         // return await worryRepository.createWorry({ content, icon, userId, randomAuthorId });
     } catch (error) {

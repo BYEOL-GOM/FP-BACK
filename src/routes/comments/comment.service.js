@@ -1,6 +1,6 @@
 import * as CommentRepository from './comment.repository.js';
-// 답변 생성
 
+// 답변 생성
 export const createComment = async (worryId, content, userId, fontColor) => {
     const worry = await findWorryById(worryId);
 
@@ -28,6 +28,7 @@ export const createComment = async (worryId, content, userId, fontColor) => {
         authorId: worry.commentAuthorId,
         fontColor,
     };
+    console.log('💛💛💛서비스 : ', commentData);
 
     return await CommentRepository.createComment(commentData);
 };

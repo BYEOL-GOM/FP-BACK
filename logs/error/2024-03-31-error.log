@@ -5,3 +5,34 @@
 {"level":"error","message":"Error Status: 400, Message: Expected ',' or '}' after property value in JSON at position 18","timestamp":"2024-03-30T15:20:17.501Z"}
 {"level":"error","message":"Error Status: 403, Message: 선물을 보낼 권한이 없습니다. 게시글의 작성자만 선물을 보낼 수 있습니다.","timestamp":"2024-03-30T15:27:12.655Z"}
 {"level":"error","message":"Error Status: 403, Message: 선물을 보낼 권한이 없습니다. 게시글의 작성자만 선물을 보낼 수 있습니다.","timestamp":"2024-03-30T15:28:18.683Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패고민등록에 실패하였습니다. \nInvalid `prisma.worries.create()` invocation:\n\n\nForeign key constraint failed on the field: `userId`","timestamp":"2024-03-30T18:04:40.637Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패고민등록에 실패하였습니다. \nInvalid `prisma.worries.create()` invocation:\n\n\nForeign key constraint failed on the field: `userId`","timestamp":"2024-03-30T18:08:00.560Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패고민등록에 실패하였습니다. \nInvalid `prisma.worries.create()` invocation:\n\n\nForeign key constraint failed on the field: `userId`","timestamp":"2024-03-30T18:10:07.333Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패고민등록에 실패하였습니다. \nInvalid `prisma.worries.create()` invocation:\n\n\nForeign key constraint failed on the field: `userId`","timestamp":"2024-03-30T18:15:15.268Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패고민등록에 실패하였습니다. \nInvalid `prisma.worries.create()` invocation:\n\n\nForeign key constraint failed on the field: `userId`","timestamp":"2024-03-30T18:18:22.469Z"}
+{"level":"error","message":"Error Status: undefined, Message: solvingCommentId is not defined","timestamp":"2024-03-30T18:27:44.178Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.findUnique()` invocation:\n\n\nUnknown nested field 'children' for operation comments does not match any query.","timestamp":"2024-03-30T18:28:40.176Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.findUnique()` invocation:\n\n\nUnknown nested field 'children' for operation comments does not match any query.","timestamp":"2024-03-30T18:29:10.735Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.findUnique()` invocation:\n\n\nUnknown nested field 'children' for operation comments does not match any query.","timestamp":"2024-03-30T18:29:11.970Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T18:31:36.400Z"}
+{"level":"error","message":"Error Status: undefined, Message: solvingCommentId is not defined","timestamp":"2024-03-30T18:36:04.346Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T18:39:24.586Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T18:41:52.539Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-03-30T18:42:34.461Z"}
+{"level":"error","message":"Error Status: 400, Message: Expected ',' or '}' after property value in JSON at position 19","timestamp":"2024-03-30T18:55:34.307Z"}
+{"level":"error","message":"Error Status: undefined, Message: commentAuthorId is not defined","timestamp":"2024-03-30T19:34:21.092Z"}
+{"level":"error","message":"Error Status: undefined, Message: commentId is not defined","timestamp":"2024-03-30T19:37:06.935Z"}
+{"level":"error","message":"Error Status: undefined, Message: commentId is not defined","timestamp":"2024-03-30T19:41:35.352Z"}
+{"level":"error","message":"Error Status: undefined, Message: commentId is not defined","timestamp":"2024-03-30T21:19:19.335Z"}
+{"level":"error","message":"Error Status: 403, Message: 선물을 보낼 권한이 없습니다. 게시글의 작성자만 선물을 보낼 수 있습니다.","timestamp":"2024-03-31T13:58:51.628Z"}
+{"level":"error","message":"Error Status: 403, Message: 선물을 보낼 권한이 없습니다. 게시글의 작성자만 선물을 보낼 수 있습니다.","timestamp":"2024-03-31T14:02:25.120Z"}
+{"level":"error","message":"Error Status: 400, Message: 선택한 댓글은 이 고민에 대한 지정된 답변자의 것이 아닙니다.","timestamp":"2024-03-31T14:03:05.886Z"}
+{"level":"error","message":"Error Status: 403, Message: 선물을 보낼 권한이 없습니다. 게시글의 작성자만 선물을 보낼 수 있습니다.","timestamp":"2024-03-31T14:03:30.471Z"}
+{"level":"error","message":"Error Status: 400, Message: 선택한 댓글은 이 고민에 대한 지정된 답변자의 것이 아닙니다.","timestamp":"2024-03-31T14:03:39.484Z"}
+{"level":"error","message":"Error Status: 400, Message: 선택한 댓글은 이 고민에 대한 지정된 답변자의 것이 아닙니다.","timestamp":"2024-03-31T14:04:25.561Z"}
+{"level":"error","message":"Error Status: 403, Message: 선물을 보낼 권한이 없습니다. 게시글의 작성자만 선물을 보낼 수 있습니다.","timestamp":"2024-03-31T14:45:18.338Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당 고민 게시글을 찾을 수 없습니다.","timestamp":"2024-03-31T14:49:01.210Z"}
+{"level":"error","message":"Error Status: 400, Message: 유효하지 않은 댓글입니다.","timestamp":"2024-03-31T14:49:08.033Z"}
+{"level":"error","message":"Error Status: 400, Message: 유효하지 않은 댓글입니다.","timestamp":"2024-03-31T14:49:12.721Z"}
+{"level":"error","message":"Error Status: 400, Message: 선택한 댓글은 이 고민에 대한 지정된 답변자의 것이 아닙니다.","timestamp":"2024-03-31T14:49:16.690Z"}
+{"level":"error","message":"Error Status: 400, Message: 선택한 댓글은 이 고민에 대한 지정된 답변자의 것이 아닙니다.","timestamp":"2024-03-31T14:53:24.557Z"}
