@@ -1,4 +1,5 @@
 import { prisma } from '../../utils/prisma/index.js';
+
 // worryId로 해당하는 고민찾기
 export const findWorryById = async (worryId) => {
     return await prisma.worries.findUnique({ where: { worryId: parseInt(worryId) } });
