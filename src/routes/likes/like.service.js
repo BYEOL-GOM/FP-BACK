@@ -74,3 +74,8 @@ export const getHelpedSolveWorriesByUserId = async (userId, page, limit) => {
 export const getHelpedSolveWorryDetailsById = async (worryId) => {
     return LikeRepository.findHelpedSolveWorryDetailsById(worryId);
 };
+
+// 좋아요를 가장 많이 받은 탑 5위 댓글 조회
+export const getTopLikedCommentAuthors = async () => {
+    return await LikeRepository.findTopLikedCommentAuthors();
+};

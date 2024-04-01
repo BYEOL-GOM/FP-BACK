@@ -1,2 +1,13 @@
 {"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry/1?page=1&limit=10, Status: 200, Duration: 26ms","timestamp":"2024-04-01T15:00:29.456Z"}
 {"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry/2?page=1&limit=10, Status: 200, Duration: 100ms","timestamp":"2024-04-01T15:00:53.969Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.comments.findMany()` invocation:\n\n{\n  where: {\n    commentId: {\n+     not: Int\n    }\n  },\n  include: {\n    likes: true\n  },\n  orderBy: {\n    likes: {\n      _count: \"desc\"\n    }\n  },\n  take: 5\n}\n\nArgument `not` must not be null.","timestamp":"2024-04-01T15:33:09.937Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 101ms","timestamp":"2024-04-01T15:33:09.942Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 126ms","timestamp":"2024-04-01T15:39:55.190Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 69ms","timestamp":"2024-04-01T15:44:34.722Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.$queryRaw()` invocation:\n\n\nRaw query failed. Code: `1054`. Message: `Unknown column 'c.commentAuthorId' in 'field list'`","timestamp":"2024-04-01T15:58:09.962Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 150ms","timestamp":"2024-04-01T15:58:09.974Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 111ms","timestamp":"2024-04-01T15:59:05.435Z"}
+{"level":"error","message":"Error Status: undefined, Message: commentAuthorId is not defined","timestamp":"2024-04-01T16:00:07.219Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 103ms","timestamp":"2024-04-01T16:00:07.223Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 115ms","timestamp":"2024-04-01T16:00:18.829Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 92ms","timestamp":"2024-04-01T16:09:11.036Z"}

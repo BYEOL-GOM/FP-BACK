@@ -5,6 +5,7 @@ import {
     getHelpedSolveWorries,
     getSolvedWorryDetails,
     getHelpedSolveWorryDetails,
+    getTopLikedCommentAuthors,
 } from './like.controller.js';
 
 let router = express.Router({ mergeParams: true });
@@ -23,5 +24,8 @@ router.get('/myHelpedSolvedWorry/:userId', getHelpedSolveWorries);
 
 // '내가 해결한 고민' 상세 조회
 router.get('/myHelpedSolvedWorry/:worryId', getHelpedSolveWorryDetails);
+
+// 좋아요를 가장 많이 받은 탑 5위 댓글 조회
+router.get('/top-likes', getTopLikedCommentAuthors);
 
 export default router;

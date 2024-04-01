@@ -223,3 +223,46 @@ export const findHelpedSolveWorryDetailsById = async (worryId) => {
         },
     });
 };
+
+// 좋아요를 가장 많이 받은 탑 5위 댓글 조회
+export const findTopLikedCommentAuthors = async () => {
+    // 모든 좋아요와 관련된 댓글과 고민 정보를 가져옵니다.
+    const likes = await prisma.likes.findMany({
+        include: {
+            comment: {
+                include: {
+                    worry: true, // 이 댓글이 속한 고민 정보를 포함합니다.
+                },
+            },
+        },
+    });
+
+    // 좋아요 받은 commentAuthorId 별로 집계합니다.
+    const authorLikesCount = likes.reduce((acc, like) => {
+        const authorId = like.comment.worry.commentAuthorId;
+        if (!acc[authorId]) {
+            acc[authorId] = 0;
+        }
+        acc[authorId]++;
+        return acc;
+    }, {});
+
+    // 집계된 데이터를 배열로 변환하고 좋아요 수에 따라 정렬합니다.
+    const sortedAuthors = Object.entries(authorLikesCount)
+        .map(([authorId, likes]) => ({ authorId: parseInt(authorId), likes }))
+        .sort((a, b) => b.likes - a.likes)
+        .slice(0, 5); // 상위 5명만 추출
+
+    return sortedAuthors;
+    // const topUsers = await prisma.likes.groupBy({
+    //     by: ['userId'],
+    //     _count: true,
+    //     orderBy: {
+    //         _count: {
+    //             userId: 'desc',
+    //         },
+    //     },
+    //     take: 5,
+    // });
+    // return topUsers;
+};

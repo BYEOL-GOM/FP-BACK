@@ -91,3 +91,13 @@ export const getHelpedSolveWorryDetails = async (req, res, next) => {
         next(error);
     }
 };
+
+// 좋아요를 가장 많이 받은 탑 5위 댓글 조회
+export const getTopLikedCommentAuthors = async (req, res, next) => {
+    try {
+        const topUsers = await LikeService.getTopLikedCommentAuthors();
+        return res.json(topUsers);
+    } catch (error) {
+        next(error);
+    }
+};
