@@ -141,9 +141,10 @@ export const findHelpedSolveWorriesByUserId = async (userId, page, limit) => {
     const totalCount = await prisma.worries.count({
         where: {
             isSolved: true,
-            solvingComment: {
-                commentAuthorId: userId,
-            },
+            commentAuthorId: userId,
+            // solvingComment: {
+            //     commentAuthorId: userId,
+            // },
         },
     });
 

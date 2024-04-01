@@ -34,3 +34,10 @@
 {"level":"error","message":"Error Status: 403, Message: 선물을 보낼 권한이 없습니다. 게시글의 작성자만 선물을 보낼 수 있습니다.","timestamp":"2024-04-01T11:42:34.572Z"}
 {"level":"error","message":"Error Status: 403, Message: 선물을 보낼 권한이 없습니다. 게시글의 작성자만 선물을 보낼 수 있습니다.","timestamp":"2024-04-01T11:47:04.805Z"}
 {"level":"error","message":"Error Status: undefined, Message: Cannot set headers after they are sent to the client","timestamp":"2024-04-01T12:27:53.153Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 답변의 고민 게시글이 존재하지 않습니다.","timestamp":"2024-04-01T14:42:44.231Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 답변의 고민 게시글이 존재하지 않습니다.","timestamp":"2024-04-01T14:42:47.319Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 답변의 고민 게시글이 존재하지 않습니다.","timestamp":"2024-04-01T14:42:50.976Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 답변의 고민 게시글이 존재하지 않습니다.","timestamp":"2024-04-01T14:42:55.620Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.findMany()` invocation:\n\n{\n  where: {\n    isSolved: true,\n    userId: \"1\"\n            ~~~\n  },\n  select: {\n    worryId: true,\n    userId: true,\n    icon: true,\n    content: true,\n    createdAt: true\n  },\n  orderBy: {\n    createdAt: \"desc\"\n  },\n  skip: 0,\n  take: 10\n}\n\nArgument `userId`: Invalid value provided. Expected IntNullableFilter, Int or Null, provided String.","timestamp":"2024-04-01T14:43:18.832Z"}
+{"level":"error","message":"Error Status: undefined, Message: page is not defined","timestamp":"2024-04-01T14:48:08.796Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.count()` invocation:\n\n{\n  select: {\n    _count: {\n      select: {\n        _all: true\n      }\n    }\n  },\n  where: {\n    isSolved: true,\n    solvingComment: {\n      commentAuthorId: 1,\n      ~~~~~~~~~~~~~~~\n?     is?: CommentsWhereInput | Null,\n?     isNot?: CommentsWhereInput | Null\n    }\n  }\n}\n\nUnknown argument `commentAuthorId`. Available options are marked with ?.","timestamp":"2024-04-01T14:48:27.511Z"}

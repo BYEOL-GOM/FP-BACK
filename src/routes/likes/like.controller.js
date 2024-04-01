@@ -31,8 +31,30 @@ export const getSolvedWorries = async (req, res, next) => {
             return res.status(400).json({ error: '유효하지 않은 페이지 번호입니다.' });
         }
 
-        const solvedWorries = await LikeService.getSolvedWorriesByUserId(userId, page, limit);
+        const solvedWorries = await LikeService.getSolvedWorriesByUserId(parseInt(userId), page, limit);
         return res.status(200).json(solvedWorries);
+    } catch (error) {
+        next(error);
+    }
+};
+
+// '내가 해결한 고민' 목록 전체 조회
+export const getHelpedSolveWorries = async (req, res, next) => {
+    try {
+        const { userId } = req.params;
+        // const { userId } = res.locals.user.userId;
+
+        // 페이지네이션
+        const page = parseInt(req.query.page) || 1; // 페이지 번호, 기본값은 1
+        const limit = parseInt(req.query.limit) || 10; // 페이지당 항목 수, 기본값은 10
+
+        // 페이지 번호 유효성 검사
+        if (isNaN(page) || page < 1) {
+            return res.status(400).json({ error: '유효하지 않은 페이지 번호입니다.' });
+        }
+
+        const helpedSolveWorries = await LikeService.getHelpedSolveWorriesByUserId(parseInt(userId), page, limit);
+        res.status(200).json(helpedSolveWorries);
     } catch (error) {
         next(error);
     }
@@ -49,19 +71,6 @@ export const getSolvedWorryDetails = async (req, res, next) => {
             throw err;
         }
         return res.status(200).json(worryDetails);
-    } catch (error) {
-        next(error);
-    }
-};
-
-// '내가 해결한 고민' 목록 전체 조회
-export const getHelpedSolveWorries = async (req, res, next) => {
-    try {
-        const { userId } = req.params;
-        // const { userId } = res.locals.user.userId;
-
-        const helpedSolveWorries = await LikeService.getHelpedSolveWorriesByUserId(userId);
-        res.status(200).json(helpedSolveWorries);
     } catch (error) {
         next(error);
     }
