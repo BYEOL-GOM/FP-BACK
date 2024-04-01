@@ -99,14 +99,17 @@ export const findSolvedWorriesByUserId = async (userId, page, limit) => {
     });
 
     return {
-        totalCount,
-        worries,
+        page, // 현재 페이지 번호 추가
+        limit, // 페이지당 항목 수 추가
+        totalCount, // 전체 항목 수
+        worries, // 현재 페이지의 데이터
     };
 };
 
 // '내가 해결한 고민' 목록 전체 조회
-export const findHelpedSolveWorriesByUserId = async (userId) => {
-    return await prisma.worries.findMany({
+export const findHelpedSolveWorriesByUserId = async (userId, page, limit) => {
+    const skip = (page - 1) * limit;
+    const worries = await prisma.worries.findMany({
         where: {
             isSolved: true,
             commentAuthorId: userId,
@@ -117,11 +120,28 @@ export const findHelpedSolveWorriesByUserId = async (userId) => {
             icon: true,
             content: true,
             createdAt: true,
+            userId: true,
         },
         orderBy: {
             createdAt: 'desc',
         },
+        skip: skip,
+        take: limit,
     });
+    // 전체 항목 수를 조회합니다.
+    const totalCount = await prisma.worries.count({
+        where: {
+            isSolved: true,
+            userId: userId,
+        },
+    });
+
+    return {
+        page, // 현재 페이지 번호 추가
+        limit, // 페이지당 항목 수 추가
+        totalCount, // 전체 항목 수
+        worries, // 현재 페이지의 데이터
+    };
 };
 
 // '나의 해결된 고민' 상세 조회
