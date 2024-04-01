@@ -328,3 +328,9 @@
 {"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 154ms","timestamp":"2024-04-01T11:51:16.859Z"}
 {"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 183ms","timestamp":"2024-04-01T11:51:17.931Z"}
 {"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 242ms","timestamp":"2024-04-01T11:51:19.611Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 1764ms","timestamp":"2024-04-01T12:11:12.813Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 65ms","timestamp":"2024-04-01T12:11:21.922Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 1465ms","timestamp":"2024-04-01T12:11:49.171Z"}
+{"level":"info","message":"Method: POST, URL: /worries/1/comments, Status: 201, Duration: 165ms","timestamp":"2024-04-01T12:13:00.480Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 429ms","timestamp":"2024-04-01T12:18:48.685Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 392ms","timestamp":"2024-04-01T12:19:05.518Z"}
