@@ -40,13 +40,13 @@ export const kakaoLoginController = async (req, res) => {
          };
 
         const findUser = await prisma.users.findFirst({
-            where: {userCheckId : user.id}
+            where: {userCheckId : user.id.toString()}
         })
 
         if (!findUser){
             const createUser = await prisma.users.create({
                 data: {
-                    userCheckId: user.id,
+                    userCheckId: user.id.toString(),
                     nickname: user.nickname,
                     email: user.email,
                 }
