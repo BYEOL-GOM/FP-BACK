@@ -106,7 +106,7 @@ export const createReplyController = async (req, res) => {
             return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
 
         // Service 계층의 함수 호출
-        const reply = await worryService.createReply(worryId, commentId, content, userId, type, fontColor);
+        const reply = await worryService.createReply(+worryId, +commentId, content, +userId, type, fontColor);
 
         const response = {
             worryId: reply.worryId,
