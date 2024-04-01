@@ -35,6 +35,7 @@ export const markWorryAsSolvedAndCreateLike = async (worryId, commentId, userId)
                 },
                 select: {
                     userId: true, // 업데이트된 worry에서 userId 추출
+                    commentAuthorId: true, // 여기에 추가
                 },
             }),
             prisma.likes.create({
@@ -49,12 +50,18 @@ export const markWorryAsSolvedAndCreateLike = async (worryId, commentId, userId)
         const likeCreationResult = transactionResults[1]; // 생성된 like의 결과
 
         // 사용자의 remainingWorries를 증가시킵니다.
-        const userUpdateResult = await prisma.users.update({
+        await prisma.users.update({
             where: { userId: worryUpdateResult.userId },
             data: { remainingWorries: { increment: 1 } },
         });
 
-        return { worryUpdateResult, likeCreationResult, userUpdateResult };
+        // 답변자의 remainingAnswers 증가시키기
+        await prisma.users.update({
+            where: { userId: worryUpdateResult.commentAuthorId },
+            data: { remainingAnswers: { increment: 1 } },
+        });
+
+        return { worryUpdateResult, likeCreationResult };
     } catch (error) {
         console.error('Error during transaction:', error);
         throw error;

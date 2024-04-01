@@ -3,20 +3,21 @@ import { prisma } from '../../utils/prisma/index.js';
 // 답변자 랜덤으로 선택
 export const getRandomUser = async (userId) => {
     try {
-        const users = await prisma.users.findMany({
+        // 답변 가능한 사용자 조회 (remainingAnswers가 0보다 큰 사용자)
+        const potentialResponders = await prisma.users.findMany({
             where: {
-                NOT: {
-                    userId: userId, // 작성자 제외
-                },
+                userId: { not: userId },
+                remainingAnswers: { gt: 0 },
             },
         });
 
-        if (users.length === 0) {
-            throw new Error('회원가입한 유저가 없습니다.');
+        // 사용 가능한 답변자가 없는 경우 에러 처리
+        if (potentialResponders.length === 0) {
+            throw new Error('모든 답변자가 답장을 작성중입니다');
         }
-
-        const randomIndex = Math.floor(Math.random() * users.length);
-        return users[randomIndex].userId;
+        // 랜덤 답변자 선택
+        const randomIndex = Math.floor(Math.random() * potentialResponders.length);
+        return potentialResponders[randomIndex].userId;
     } catch (error) {
         throw new Error('랜덤 답변자 선정 실패: ' + error.message);
     }
@@ -31,6 +32,14 @@ export const decreaseRemainingWorries = async (userId) => {
     await prisma.users.update({
         where: { userId },
         data: { remainingWorries: { decrement: 1 } },
+    });
+};
+
+// 답변자의 remainingAnswers 감소
+export const decreaseRemainingAnswers = async (userId) => {
+    await prisma.users.update({
+        where: { userId },
+        data: { remainingAnswers: { decrement: 1 } },
     });
 };
 

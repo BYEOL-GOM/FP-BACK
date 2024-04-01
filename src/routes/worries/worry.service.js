@@ -10,21 +10,23 @@ export const createWorry = async ({ content, icon, userId, fontColor }) => {
             throw new Error('최대 고민 작성수를 초과하였습니다');
         }
 
-        // 답변자 Id 랜덤으로 지정하기
+        // 답변자 Id 랜덤으로 지정하기 및 답변 가능 여부 확인
         const randomAuthorId = await worryRepository.getRandomUser(userId);
 
+        // 고민 생성
         const worry = await worryRepository.createWorry({ content, icon, userId, randomAuthorId, fontColor });
 
-        // 사용자의 remainingWorries 값을 감소시킵니다.
+        // 사용자의 remainingWorries 값을 감소
         await worryRepository.decreaseRemainingWorries(userId);
 
-        // 수정된 사용자 정보를 다시 가져와서 현재 남은 고민 횟수를 확인합니다.
+        // 답변자의 remainingAnswers 값을 감소 (중요)
+        await worryRepository.decreaseRemainingAnswers(randomAuthorId);
+
+        // 수정된 사용자 정보를 다시 가져와서 현재 남은 고민 횟수를 확인
         const updatedUser = await worryRepository.getUserById(userId);
 
-        // commentAuthorId도 함께 반환
+        // 반환 값에 commentAuthorId와 remainingWorries 포함
         return { ...worry, commentAuthorId: randomAuthorId, remainingWorries: updatedUser.remainingWorries };
-        // 고민 등록할때 답변자id도 포함
-        // return await worryRepository.createWorry({ content, icon, userId, randomAuthorId });
     } catch (error) {
         throw new Error(error.message);
     }

@@ -17,6 +17,7 @@ model Users {
   email         String
   fruit         String?
   remainingWorries Int @default(5) //  최대 고민작성 가능 개수 5
+  remainingAnswers Int @default(10) // 답변 가능 개수 10개
 
 
   worry Worries[]
