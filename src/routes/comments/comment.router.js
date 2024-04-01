@@ -8,7 +8,7 @@ import {
 
 let router = express.Router({ mergeParams: true });
 
-// 댓글(답변) 생성
+// 최초 답변 생성
 router.post('/worries/:worryId/comments', createCommentController);
 
 // // 답변 조회 (고민작성자에 해당하는 답변 목록)

@@ -4,3 +4,4 @@
 {"level":"error","message":"Error Status: undefined, Message: Invalid status code: { message: '고민이 등록되었습니다' }","timestamp":"2024-04-01T01:50:43.931Z"}
 {"level":"error","message":"Error Status: undefined, Message: Invalid status code: { message: '고민이 등록되었습니다' }","timestamp":"2024-04-01T01:50:48.881Z"}
 {"level":"error","message":"Error Status: undefined, Message: Cannot set headers after they are sent to the client","timestamp":"2024-04-01T02:32:09.084Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패worryRepository.checkExistingWorry is not a function","timestamp":"2024-04-01T05:15:28.757Z"}

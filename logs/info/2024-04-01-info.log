@@ -126,3 +126,14 @@
 {"level":"info","message":"Method: POST, URL: /worries/36/comments, Status: 201, Duration: 146ms","timestamp":"2024-04-01T03:41:40.460Z"}
 {"level":"info","message":"Method: POST, URL: /worries/36/comments, Status: 201, Duration: 58ms","timestamp":"2024-04-01T03:41:41.608Z"}
 >>>>>>> 0552449b73cc453207f899e1e112284543247f42
+{"level":"info","message":"Method: POST, URL: /comments, Status: 404, Duration: 13ms","timestamp":"2024-04-01T05:15:21.464Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패worryRepository.checkExistingWorry is not a function","timestamp":"2024-04-01T05:15:28.757Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 500, Duration: 13ms","timestamp":"2024-04-01T05:15:28.762Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 163ms","timestamp":"2024-04-01T05:15:47.000Z"}
+{"level":"info","message":"Method: POST, URL: /worries/38/comments, Status: 400, Duration: 85ms","timestamp":"2024-04-01T05:23:24.439Z"}
+{"level":"info","message":"Method: POST, URL: /worries/38/comments, Status: 201, Duration: 128ms","timestamp":"2024-04-01T05:23:29.621Z"}
+{"level":"info","message":"Method: POST, URL: /worries/38/comments, Status: 201, Duration: 52ms","timestamp":"2024-04-01T05:23:36.874Z"}
+{"level":"info","message":"Method: POST, URL: /worries/38/comments, Status: 400, Duration: 105ms","timestamp":"2024-04-01T05:27:09.535Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 103ms","timestamp":"2024-04-01T05:28:49.407Z"}
+{"level":"info","message":"Method: POST, URL: /worries/39/comments, Status: 201, Duration: 123ms","timestamp":"2024-04-01T05:29:08.153Z"}
+{"level":"info","message":"Method: POST, URL: /worries/39/comments, Status: 400, Duration: 18ms","timestamp":"2024-04-01T05:29:14.594Z"}

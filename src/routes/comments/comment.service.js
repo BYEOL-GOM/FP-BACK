@@ -15,6 +15,12 @@ export const createComment = async (worryId, content, userId, fontColor) => {
         throw new Error('답변 작성 권한이 없습니다');
     }
 
+    // 답변을 이미 작성했으면 오류 메세지
+    const existingComment = await CommentRepository.findCommentByWorryId(worryId);
+    if (existingComment) {
+        throw new Error('이미 답변을 작성했습니다');
+    }
+
     const commentData = {
         worryId: parseInt(worryId),
         userId,

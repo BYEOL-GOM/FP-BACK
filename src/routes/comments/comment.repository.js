@@ -1,7 +1,16 @@
 import { prisma } from '../../utils/prisma/index.js';
-// worryId로 고민 찾기
+// worryId로 해당하는 고민찾기
 export const findWorryById = async (worryId) => {
     return await prisma.worries.findUnique({ where: { worryId: parseInt(worryId) } });
+};
+
+//worryId로 해당하는 답변 찾기
+export const findCommentByWorryId = async (worryId) => {
+    return await prisma.comments.findFirst({
+        where: {
+            worryId: parseInt(worryId),
+        },
+    });
 };
 
 // 답변 생성
