@@ -17,7 +17,8 @@ export const createCommentController = async (req, res, next) => {
             worryId: comment.worryId,
             commentId: comment.commentId, // 생성된 댓글의 ID
             commentAuthor: comment.userId,
-            fontColor: comment.fontColor,
+            createdAt: comment.createdAt,
+            // fontColor: comment.fontColor,
         };
 
         return res.status(201).json({ message: '답변이 전송되었습니다.', InitialComment });
