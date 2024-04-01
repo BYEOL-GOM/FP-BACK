@@ -10,7 +10,7 @@ export const createWorry = async ({ content, icon, userId }) => {
         const worry = await worryRepository.createWorry({ content, icon, userId, randomAuthorId });
 
         // commentAuthorId도 함께 반환
-        return { ...worry, commentAuthorId: randomAuthorId };
+        return { ...worry, worryId: worry.worryId, commentAuthorId: randomAuthorId };
         // 고민 등록할때 답변자id도 포함
         // return await worryRepository.createWorry({ content, icon, userId, randomAuthorId });
     } catch (error) {

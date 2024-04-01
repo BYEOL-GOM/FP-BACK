@@ -4,14 +4,16 @@ export const findWorryById = async (worryId) => {
     return await prisma.worries.findUnique({ where: { worryId: parseInt(worryId) } });
 };
 
+// 고민에 대한 답변 생성
 export const createComment = async (data) => {
-    console.log('🩷🩷🩷컨트롤러 : ', data.worryId, data.content, data.userId, data.commentAuthorId);
+    console.log('🩷🩷🩷레포지토리 : ', data.worryId, data.content, data.userId, data.authorId);
 
     return await prisma.comments.create({
         data: {
             worryId: data.worryId,
             content: data.content,
             userId: data.userId,
+            authorId: data.commentAuthorId,
         },
     });
 };
@@ -24,20 +26,20 @@ export const findCommentById = async (commentId) => {
 };
 
 // 고민을 해결된 상태로 변경
-export const markWorryAsSolved = async (worryId, commentId, senderId, receiverId) => {
-    return prisma.worries.update({
-        where: { worryId },
-        data: {
-            isSolved: true,
-            solvingCommentId: parseInt(commentId),
-            solvedByUserId: senderId,
-            helperUserId: receiverId,
-            // commentId: solvingCommentId,
-            // senderId: solvedByUserId,
-            // receiverId: helperUserId,
-        },
-    });
-};
+// export const markWorryAsSolved = async (worryId, commentId, senderId, receiverId) => {
+//     return prisma.worries.update({
+//         where: { worryId },
+//         data: {
+//             isSolved: true,
+//             solvingCommentId: parseInt(commentId),
+//             solvedByUserId: senderId,
+//             helperUserId: receiverId,
+//             // commentId: solvingCommentId,
+//             // senderId: solvedByUserId,
+//             // receiverId: helperUserId,
+//         },
+//     });
+// };
 
 // 재고민 등록
 export const findCommentAuthorById = async (commentId) => {

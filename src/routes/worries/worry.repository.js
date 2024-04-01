@@ -39,7 +39,6 @@ export const createWorry = async ({ content, icon, userId, randomAuthorId }) => 
 };
 
 // 고민답변자Id기준으로 보는 고민 전체 조회
-
 export const getWorriesByCommentAuthorId = async (userId) => {
     try {
         const worries = await prisma.worries.findMany({

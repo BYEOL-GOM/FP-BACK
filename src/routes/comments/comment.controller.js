@@ -1,7 +1,6 @@
 import * as CommentService from './comment.service.js';
 
 // 고민에 대한 답변 생성
-
 export const createCommentController = async (req, res, next) => {
     try {
         const { worryId } = req.params;

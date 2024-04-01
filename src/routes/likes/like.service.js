@@ -12,8 +12,8 @@ export const getWorryById = async (worryId) => {
 };
 
 // 선물 보내기
-export const sendLike = async (worryId, commentId, userId, commentAuthorId) => {
-    console.log('💛💛💛서비스 : ', worryId, commentId, userId, commentAuthorId);
+export const sendLike = async (worryId, commentId, userId) => {
+    console.log('💛💛💛서비스 : ', worryId, commentId, userId);
 
     // 해당 고민 게시글 가져오기 및 유효성 검사
     const worry = await LikeRepository.findWorryById(worryId);
@@ -22,6 +22,7 @@ export const sendLike = async (worryId, commentId, userId, commentAuthorId) => {
         err.status = 404;
         throw err;
     }
+    const commentAuthorId = worry.commentAuthorId;
 
     // 선물 보내는 유저가 고민 게시글의 작성자가 아니라면 에러
     if (worry.userId !== userId) {
@@ -38,19 +39,23 @@ export const sendLike = async (worryId, commentId, userId, commentAuthorId) => {
     }
 
     // commentId 유효성 검사
-    const commentExists = await LikeRepository.verifyCommentExists(commentId, worryId);
-    if (!commentExists) {
+    const comment = await LikeRepository.verifyCommentExists(commentId, worryId);
+    if (!comment) {
         const err = new Error('유효하지 않은 댓글입니다.');
         err.status = 400;
         throw err;
     }
+    console.log('🥕🥕🥕서비스 worry.commentAuthorId, commentExists.userId', worry.commentAuthorId, comment.userId);
+    // commentAuthorId 체크
+    if (worry.commentAuthorId !== comment.userId) {
+        const err = new Error('선택한 댓글은 이 고민에 대한 지정된 답변자의 것이 아닙니다.');
+        err.status = 400;
+        throw err;
+    }
+
     // 좋아요(답례) 보내기. (고민(worry)을 해결된 상태로 변경)
-    const present = await LikeRepository.markWorryAsSolvedAndCreateLike(
-        worryId,
-        commentId,
-        userId,
-        worry.commentAuthorId,
-    );
+    const present = await LikeRepository.markWorryAsSolvedAndCreateLike(worryId, commentId, userId, commentAuthorId);
+    console.log('🩵🩵🩵서비스-worryId, commentId, userId : ', worryId, commentId, userId, commentAuthorId);
 
     return present;
 };
@@ -60,14 +65,14 @@ export const getSolvedWorriesByUserId = async (userId) => {
     return LikeRepository.findSolvedWorriesByUserId(userId);
 };
 
-// '나의 해결된 고민' 상세 조회
-export const getSolvedWorryDetailsById = async (worryId) => {
-    return LikeRepository.findSolvedWorryDetailsById(worryId);
-};
-
 // '내가 해결한 고민' 목록 전체 조회
 export const getHelpedSolveWorriesByUserId = async (userId) => {
     return LikeRepository.findHelpedSolveWorriesByUserId(userId);
+};
+
+// '나의 해결된 고민' 상세 조회
+export const getSolvedWorryDetailsById = async (worryId) => {
+    return LikeRepository.findSolvedWorryDetailsById(worryId);
 };
 
 // '내가 해결한 고민' 상세 조회
