@@ -1,6 +1,6 @@
 import { prisma } from '../../utils/prisma/index.js';
 
-// 랜덤으로 답변자 지정하기
+// 답변자 랜덤으로 선택
 export const getRandomUser = async (userId) => {
     try {
         const users = await prisma.users.findMany({
@@ -48,7 +48,7 @@ export const getWorriesByCommentAuthorId = async (userId) => {
             },
             select: {
                 worryId: true,
-                userId: true,
+                // userId: true,
                 icon: true,
             },
         });
@@ -91,7 +91,7 @@ export const findOldWorriesWithoutComments = async () => {
                     lt: twentyFourHoursAgo,
                 },
                 comments: {
-                    is: null,
+                    none: {},
                 },
                 deletedAt: null, // deletedAt이 null인 레코드만 선택
             },
@@ -163,3 +163,31 @@ export const getCommentAuthorId = async (worryId) => {
     });
     return worry ? worry.commentAuthorId : null;
 };
+
+// 재고민 & 재답변 생성
+export const createComment = async ({ worryId, content, userId, parentId, type }) => {
+    // 데이터베이스에 댓글 생성
+    return await prisma.comments.create({
+        data: {
+            worryId: parseInt(worryId),
+            content,
+            userId: parseInt(userId),
+            parentId: parseInt(parentId),
+            // 추가적으로 type 필드가 모델에 정의되어 있다면 여기에 포함시킬 수 있습니다.
+        },
+    });
+};
+
+// // 재고민 & 재답변 생성
+// export const createComment = async ({ worryId, content, userId, parentId }) => {
+//     console.log('콘솔 : Creating comment with:', { worryId, content, userId, parentId });
+
+//     return await prisma.comments.create({
+//         data: {
+//             worryId: parseInt(worryId),
+//             content,
+//             userId: parseInt(userId), // 요청을 보낸 사용자의 ID
+//             parentId: parseInt(parentId), // 이전 답변(또는 댓글)의 ID
+//         },
+//     });
+// };

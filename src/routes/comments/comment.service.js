@@ -1,5 +1,4 @@
 import * as CommentRepository from './comment.repository.js';
-
 // 답변 생성
 export const createComment = async (worryId, content, userId) => {
     const worry = await findWorryById(worryId);
@@ -27,13 +26,7 @@ export const createComment = async (worryId, content, userId) => {
 };
 
 export const findWorryById = async (worryId) => {
-    // 이 함수가 정의된 곳
     return await CommentRepository.findWorryById(worryId);
-};
-
-// 대댓글 생성
-export const createReply = async (worryId, parentId, content, userId) => {
-    return CommentRepository.createCommentReply({ worryId, parentId, content, userId });
 };
 
 //  답변 메세지 전체 조회 (고민작성자에게 도착할 댓글 목록)
@@ -51,24 +44,5 @@ export const getCommentDetail = async (commentId) => {
         return await CommentRepository.getCommentDetail(commentId);
     } catch (error) {
         throw new Error('Failed to fetch comments: ' + error.message);
-    }
-};
-
-// 답변에 대한 재고민 등록
-export const createReworry = async (commentId, content, userId) => {
-    try {
-        const commentAuthorId = await CommentRepository.findCommentAuthorById(commentId);
-        return await CommentRepository.createReworry(commentId, content, userId, commentAuthorId);
-    } catch (error) {
-        throw new Error('Failed to create reWorry: ' + error.message);
-    }
-};
-
-// 재고민에 대한 재답변 등록
-export const createRecomment = async (reworryId, content, userId) => {
-    try {
-        return await CommentRepository.createRecomment(reworryId, content, userId);
-    } catch (error) {
-        throw new Error('Failed to create reReply: ' + error.message);
     }
 };
