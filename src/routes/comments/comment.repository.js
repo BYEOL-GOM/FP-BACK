@@ -13,7 +13,7 @@ export const createComment = async (data) => {
             worryId: data.worryId,
             content: data.content,
             userId: data.userId,
-            // fontColor: data.fontColor,
+            fontColor: data.fontColor,
         },
     });
 };
