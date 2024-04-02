@@ -2,7 +2,7 @@ import express from 'express';
 import {
     createCommentController,
     // createCommentReplyController,
-    getCommentsByUserIdController,
+    getLatestCommentForUserWorriesController,
     getCommentDetailController,
 } from './comment.controller.js';
 
@@ -12,7 +12,7 @@ let router = express.Router({ mergeParams: true });
 router.post('/worries/:worryId/comments', createCommentController);
 
 //  모든 답장 전체 조회
-router.get('/comments', getCommentsByUserIdController);
+router.get('/comments', getLatestCommentForUserWorriesController);
 
 // 답변 or 재고민, 재답변 상세 조회 (고민자에게 도착할 답변 상세 조회)
 router.get('/comments/:commentId', getCommentDetailController);

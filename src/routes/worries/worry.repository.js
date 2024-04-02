@@ -71,6 +71,7 @@ export const createWorry = async ({ content, icon, userId, randomAuthorId, fontC
         throw new Error('고민등록에 실패하였습니다. ' + error.message);
     }
 };
+
 // 고민답변자Id기준으로 보는 고민 전체 조회
 export const getWorriesByCommentAuthorId = async (userId) => {
     try {
@@ -84,6 +85,9 @@ export const getWorriesByCommentAuthorId = async (userId) => {
                 // userId: true,
                 icon: true,
                 createdAt: true,
+            },
+            orderBy: {
+                createdAt: 'desc',
             },
         });
         return worries;
@@ -212,17 +216,3 @@ export const createComment = async ({ worryId, content, userId, parentId, fontCo
         },
     });
 };
-
-// // 재고민 & 재답변 생성
-// export const createComment = async ({ worryId, content, userId, parentId }) => {
-//     console.log('콘솔 : Creating comment with:', { worryId, content, userId, parentId });
-
-//     return await prisma.comments.create({
-//         data: {
-//             worryId: parseInt(worryId),
-//             content,
-//             userId: parseInt(userId), // 요청을 보낸 사용자의 ID
-//             parentId: parseInt(parentId), // 이전 답변(또는 댓글)의 ID
-//         },
-//     });
-// };

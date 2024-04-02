@@ -37,14 +37,10 @@ export const findWorryById = async (worryId) => {
 };
 
 //  답변 메세지 전체 조회
-export const getCommentsByUserId = async (userId) => {
-    try {
-        return await CommentRepository.getCommentsByUserId(userId);
-    } catch (error) {
-        throw new Error('Failed to fetch comments: ' + error.message);
-    }
-};
 
+export const getLatestCommentForUserWorries = async (userId) => {
+    return await CommentRepository.findLatestCommentsForUserWorries(userId);
+};
 // 답변 메세지 상세 조회
 export const getCommentDetail = async (commentId) => {
     try {

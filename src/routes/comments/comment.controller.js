@@ -28,17 +28,21 @@ export const createCommentController = async (req, res, next) => {
 };
 
 // 답변 전체 조회
-export const getCommentsByUserIdController = async (req, res, next) => {
+export const getLatestCommentForUserWorriesController = async (req, res) => {
     try {
-        const { userId } = req.body; // 나중에 사용자 인증미들웨어로 받아오는것으로 변경 = 로그인한 유저(=고민작성자)
-        const comments = await CommentService.getCommentsByUserId(+userId);
-        res.status(200).json(comments);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
+        const userId = parseInt(req.body.userId);
+        if (!userId) {
+            return res.status(400).json({ error: '사용자 ID가 제공되지 않았습니다.' });
+        }
 
-        next(error);
+        const latestComments = await CommentService.getLatestCommentForUserWorries(userId);
+        return res.json(latestComments);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: error.message });
     }
 };
+
 // 답변 상세 메세지 조회
 export const getCommentDetailController = async (req, res, next) => {
     try {

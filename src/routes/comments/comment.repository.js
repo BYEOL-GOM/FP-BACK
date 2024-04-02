@@ -51,40 +51,41 @@ export const markWorryAsSolved = async (worryId, commentId, senderId, receiverId
 };
 
 // 모든 답변 전체 조회
-export const getCommentsByUserId = async (userId) => {
-    try {
-        // 특정 사용자가 작성한 고민들을 가져옵니다.
-        const worries = await prisma.worries.findMany({
-            where: { userId },
-            select: { worryId: true },
-        });
+export const findLatestCommentsForUserWorries = async (userId) => {
+    // 사용자가 고민자로서 참여한 모든 고민 조회
+    const userWorries = await prisma.worries.findMany({
+        where: {
+            OR: [
+                { userId }, // 고민자로서의 참여
+                { comments: { some: { userId } } }, // 답변자로서의 참여
+            ],
+        },
+        include: {
+            comments: {
+                where: {
+                    userId: { not: userId }, // 사용자가 작성한 답변 제외
+                },
+                orderBy: {
+                    createdAt: 'desc',
+                },
+                take: 1, // 각 고민에 대한 최신 답변만 선택
+            },
+        },
+    });
 
-        // 고민들의 ID를 추출
-        const worryIds = worries.map((worry) => worry.worryId);
+    // 필요한 정보만 추출하여 배열로 반환
+    const latestCommentsInfo = userWorries.map((worry) => {
+        const latestComment = worry.comments[0] || null;
+        return {
+            worryId: worry.worryId,
+            latestCommentId: latestComment ? latestComment.commentId : null,
+            replyUserId: latestComment ? latestComment.userId : null,
+            createdAt: latestComment ? latestComment.createdAt : null,
+        };
+    });
 
-        // 각 고민에 대한 답변들 가져옴
-        const comments = await Promise.all(
-            worryIds.map(async (worryId) => {
-                const commentsForWorry = await prisma.comments.findMany({
-                    where: { worryId },
-                    select: {
-                        worryId: true,
-                        commentId: true,
-                        createdAt: true,
-                    },
-                });
-                return commentsForWorry;
-            }),
-        );
-
-        const flatComments = comments.flat();
-
-        return flatComments;
-    } catch (error) {
-        throw new Error('Failed to fetch comments from repository: ' + error.message);
-    }
+    return latestCommentsInfo.filter((commentInfo) => commentInfo.latestCommentId !== null);
 };
-
 // 답변 상세조회(답변, 재고민, 재답변)
 export const getCommentDetail = async (commentId) => {
     const comment = await prisma.comments.findUnique({
