@@ -134,13 +134,13 @@ export const naverLoginController = async (req, res) => {
         };
 
         const findUser = await prisma.users.findFirst({
-            where: { userCheckId: user.id.toString() },
+            where: { userCheckId: user.id },
         });
 
         if (!findUser) {
             const createUser = await prisma.users.create({
                 data: {
-                    userCheckId: user.id.toString(),
+                    userCheckId: user.id,
                     nickname: user.nickname,
                     email: user.email,
                 },
@@ -149,7 +149,7 @@ export const naverLoginController = async (req, res) => {
             const accessToken = jwt.sign({ userId: createUser.userId }, process.env.ACCESS_TOKEN_SECRET, {
                 expiresIn: process.env.ACCESS_TOKEN_LIFE,
             });
-            const refreshToken = jwt.sign({},process.env.REFRESH_TOKEN_SECRET, {
+            const refreshToken = jwt.sign({userId: createUser.userId},process.env.REFRESH_TOKEN_SECRET, {
                 expiresIn: process.env.REFRESH_TOKEN_LIFE,
             });
             return res.status(200).json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken} `});
@@ -159,14 +159,14 @@ export const naverLoginController = async (req, res) => {
         const accessToken = jwt.sign({ userId: findUser.userId }, process.env.ACCESS_TOKEN_SECRET, {
             expiresIn: process.env.ACCESS_TOKEN_LIFE,
         });
-        const refreshToken = jwt.sign({},process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.REFRESH_TOKEN_LIFE });
+        const refreshToken = jwt.sign({userId: findUser.userId},process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.REFRESH_TOKEN_LIFE });
 
 
         return res.status(200).json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken} `});
         //return res.status(200).json(user);
     } catch (error) {
         console.error(error);
-        return res.status(405).json({ message: '카카오 인증 및 사용자 정보 가져오기 오류' });
+        return res.status(405).json({ message: '네이버 인증 및 사용자 정보 가져오기 오류' });
     }
 };
 
