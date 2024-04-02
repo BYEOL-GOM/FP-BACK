@@ -35,7 +35,7 @@ export const decreaseRemainingWorries = async (userId) => {
     });
 };
 
-// 답변자의 remainingAnswers 감소
+// 답변자의 remainingAnswers -1하기
 export const decreaseRemainingAnswers = async (userId) => {
     await prisma.users.update({
         where: { userId },
@@ -55,7 +55,6 @@ export const createWorry = async ({ content, icon, userId, randomAuthorId, fontC
                 fontColor,
             },
             select: {
-                // 생성된 고민의 상세 정보를 선택적으로 반환
                 worryId: true,
                 userId: true,
                 commentAuthorId: true,
@@ -63,7 +62,6 @@ export const createWorry = async ({ content, icon, userId, randomAuthorId, fontC
                 createdAt: true,
                 icon: true,
                 fontColor: true,
-                // 여기에 더 필요한 필드가 있다면 추가
             },
         });
         return createdWorry;
@@ -163,13 +161,13 @@ export const softDeleteWorryById = async (worryId) => {
             });
             console.log(`오래된 고민 ${worryId}번 삭제 성공`);
 
-            // 사용자의 remainingWorries 증가
+            // 사용자의 remainingWorries +1
             await prisma.users.update({
                 where: { userId: existingWorry.userId },
                 data: { remainingWorries: { increment: 1 } },
             });
 
-            // 답변자의 remainingAnswers 증가
+            // 답변자의 remainingAnswers +1
             if (existingWorry.commentAuthorId) {
                 await prisma.users.update({
                     where: { userId: existingWorry.commentAuthorId },
@@ -197,7 +195,7 @@ export const deleteSelectedWorry = async (worryId) => {
             return;
         }
 
-        // 삭제된 고민의 정보 가져오기
+        // 삭제된 고민의 정보
         const worryUpdateResult = await prisma.worries.update({
             where: { worryId },
             data: { deletedAt: new Date() },
@@ -228,15 +226,15 @@ export const getCommentAuthorId = async (worryId) => {
     return worry ? worry.commentAuthorId : null;
 };
 
-// 재고민 & 재답변 생성
-export const createComment = async ({ worryId, content, userId, parentId, fontColor }) => {
-    return await prisma.comments.create({
-        data: {
-            worryId: parseInt(worryId),
-            content,
-            userId,
-            parentId,
-            fontColor,
-        },
-    });
-};
+// // 재고민 & 재답변 생성
+// export const createComment = async ({ worryId, content, userId, parentId, fontColor }) => {
+//     return await prisma.comments.create({
+//         data: {
+//             worryId: parseInt(worryId),
+//             content,
+//             userId,
+//             parentId,
+//             fontColor,
+//         },
+//     });
+// };

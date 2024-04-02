@@ -27,7 +27,7 @@ export const createWorryController = async (req, res, next) => {
     }
 };
 
-// 답변자Id에게 해당하는 전체 고민 조회
+// 전체 고민 조회 by 답변자id
 export const getWorriesByCommentAuthorIdController = async (req, res) => {
     try {
         const { userId } = req.body; // 나중에 사용자 인증 미들웨어에서 userId 가져오는것으로 변경
@@ -96,59 +96,31 @@ export const deleteWorryByCommentAuthorController = async (req, res, next) => {
     }
 };
 
-// 재고민 및 재 답변 생성 api
-export const createReplyController = async (req, res) => {
-    try {
-        const { worryId, commentId } = req.params;
-        const { content, userId, type, fontColor } = req.body; // 'reWorry' 또는 'reAnswer'를 결정하는 'type' 필드 추가
-
-        if (!worryId || !commentId || !content || !userId || !type || !fontColor)
-            return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
-
-        // Service 계층의 함수 호출
-        const reply = await worryService.createReply(+worryId, +commentId, content, +userId, type, fontColor);
-
-        const response = {
-            worryId: reply.worryId,
-            userId: reply.userId,
-            parentId: reply.parentId,
-            commentId: reply.commentId,
-            createdAt: reply.createdAt,
-            fontColor: reply.fontColor,
-        };
-        res.status(201).json({
-            message: '답장이 전송되었습니다',
-            reply: response,
-        });
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-};
-// // 재고민 생성
-// export const createReWorryController = async (req, res) => {
+// // 재고민 및 재 답변 생성 api
+// export const createReplyController = async (req, res) => {
 //     try {
 //         const { worryId, commentId } = req.params;
-//         const { content, userId } = req.body;
-//         const reWorry = await worryService.createReWorry(+worryId, +commentId, content, +userId);
-//         res.status(201).json({ message: '재고민이 등록되었습니다', reWorry });
-//     } catch (error) {
-//         res.status(400).json({ error: error.message });
-//     }
-// };
+//         const { content, userId, type, fontColor } = req.body; // 'reWorry' 또는 'reAnswer'를 결정하는 'type' 필드 추가
 
-// // 재답변 생성
-// export const createReAnswerController = async (req, res) => {
-//     try {
-//         const { worryId, commentId } = req.params;
-//         const { content, userId } = req.body; // 실제 구현에서는 인증 미들웨어를 통해 userId를 가져옵니다.
+//         if (!worryId || !commentId || !content || !userId || !type || !fontColor)
+//             return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
 
-//         const reAnswer = await worryService.createReAnswer(+worryId, +commentId, content, +userId);
+//         // Service 계층의 함수 호출
+//         const reply = await worryService.createReply(+worryId, +commentId, content, +userId, type, fontColor);
+
+//         const response = {
+//             worryId: reply.worryId,
+//             userId: reply.userId,
+//             parentId: reply.parentId,
+//             commentId: reply.commentId,
+//             createdAt: reply.createdAt,
+//             fontColor: reply.fontColor,
+//         };
 //         res.status(201).json({
-//             message: '재답변이 등록되었습니다',
-//             reAnswer,
+//             message: '답장이 전송되었습니다',
+//             reply: response,
 //         });
 //     } catch (error) {
-//         // 에러 메시지를 포함하여 응답을 전달
-//         res.status(500).json({ error: error.message });
+//         res.status(400).json({ error: error.message });
 //     }
 // };
