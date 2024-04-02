@@ -179,3 +179,8 @@
 {"level":"info","message":"Method: GET, URL: /mySolvedWorry/10, Status: 200, Duration: 101ms","timestamp":"2024-04-02T06:08:15.246Z"}
 {"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry/10, Status: 400, Duration: 3ms","timestamp":"2024-04-02T06:18:16.848Z"}
 {"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry/10, Status: 200, Duration: 239ms","timestamp":"2024-04-02T06:18:29.619Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry/10, Status: 200, Duration: 286ms","timestamp":"2024-04-02T06:34:51.654Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/10, Status: 200, Duration: 105ms","timestamp":"2024-04-02T06:34:57.071Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry/10, Status: 200, Duration: 229ms","timestamp":"2024-04-02T06:35:46.519Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry/10, Status: 200, Duration: 98ms","timestamp":"2024-04-02T06:35:47.596Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry/10, Status: 200, Duration: 233ms","timestamp":"2024-04-02T06:36:02.223Z"}
