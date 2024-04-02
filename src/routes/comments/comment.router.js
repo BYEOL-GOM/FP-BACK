@@ -1,9 +1,9 @@
 import express from 'express';
 import {
     createCommentController,
-    // createCommentReplyController,
     findLatestCommentsAndWorriesForUserController,
-    getDiscussionDetailsController,
+    getCommentDetailController,
+    createReplyController,
 } from './comment.controller.js';
 
 let router = express.Router({ mergeParams: true });
@@ -14,8 +14,10 @@ router.post('/worries/:worryId/comments', createCommentController);
 //  모든 답장 전체 조회
 router.get('/comments', findLatestCommentsAndWorriesForUserController);
 
-// 답변 or 재고민, 재답변 상세 조회 (고민자에게 도착할 답변 상세 조회)
-// router.get('/comments/:commentId', getDiscussionDetailsController);
-router.get('/comments/detail', getDiscussionDetailsController);
+// 답장 상세조회
+router.get('/comments/detail', getCommentDetailController);
+
+// 답장 보내기
+router.post('/worries/:worryId/comments/:commentId?', createReplyController);
 
 export default router;

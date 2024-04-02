@@ -48,25 +48,34 @@ export const findLatestCommentsAndWorriesForUserController = async (req, res) =>
 };
 
 // 답변 상세 메세지 조회
-// export const getCommentDetailController = async (req, res, next) => {
-//     try {
-//         const { commentId } = req.params;
-//         const comment = await CommentService.getCommentDetail(+commentId);
-//         res.status(200).json(comment);
-//     } catch (error) {
-//         res.status(400).json({ error: error.message });
-
-//         next(error);
-//     }
-// };
-
-export const getDiscussionDetailsController = async (req, res) => {
-    const { worryId, commentId } = req.query;
+export const getCommentDetailController = async (req, res, next) => {
     try {
-        const details = await CommentService.getDiscussionDetails(+worryId, +commentId);
-        res.json(details);
+        const { commentId } = req.params;
+        const comment = await CommentService.getCommentDetail(+commentId);
+        res.status(200).json(comment);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: '서버 에러 발생' });
+        res.status(400).json({ error: error.message });
+
+        next(error);
+    }
+};
+
+// 답장보내기
+export const createReplyController = async (req, res, next) => {
+    try {
+        const { worryId, commentId } = req.params; // commentId 추가
+        const { content, userId, fontColor } = req.body;
+
+        // 필수 데이터 검증
+        if (!worryId || !content || !userId || !fontColor) {
+            return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
+        }
+
+        // 서비스 함수 호출 시 commentId 전달 (이 값은 undefined일 수도 있음)
+        const comment = await CommentService.createReply(+worryId, +commentId, content, +userId, fontColor);
+
+        return res.status(201).json({ message: '답변이 전송되었습니다.', comment });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
     }
 };
