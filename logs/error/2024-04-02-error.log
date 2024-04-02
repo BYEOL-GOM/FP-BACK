@@ -17,3 +17,5 @@
 {"level":"error","message":"Error Status: undefined, Message: getLatestCommentsForUserWorries is not defined","timestamp":"2024-04-01T17:30:41.082Z"}
 {"level":"error","message":"Error Status: undefined, Message: getLatestCommentsForUserWorries is not defined","timestamp":"2024-04-01T17:30:47.588Z"}
 {"level":"error","message":"Error Status: undefined, Message: Failed to fetch comments: CommentRepository.getLatestRepliesForUser is not a function","timestamp":"2024-04-01T17:30:53.758Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 답변의 고민 게시글이 존재하지 않습니다.","timestamp":"2024-04-02T04:38:13.095Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 답변의 고민 게시글이 존재하지 않습니다.","timestamp":"2024-04-02T04:38:15.198Z"}

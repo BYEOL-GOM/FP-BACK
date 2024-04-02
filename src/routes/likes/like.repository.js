@@ -131,11 +131,37 @@ export const findHelpedSolveWorriesByUserId = async (userId) => {
     });
 };
 
-// '나의 해결된 고민' 상세 조회
+// 재귀함수(나의 해결된 고민 상세)
+async function fetchCommentsRecursively(commentId) {
+    const comment = await prisma.comments.findUnique({
+        where: { commentId },
+        select: {
+            commentId: true,
+            content: true,
+            createdAt: true,
+            updatedAt: true,
+            userId: true, // 댓글 작성자 ID
+            parentId: true, // 부모 댓글 ID
+            children: true, // 자식 댓글 선택
+        },
+    });
+
+    if (comment && comment.children && comment.children.length > 0) {
+        for (let i = 0; i < comment.children.length; i++) {
+            // 각 자식 댓글에 대해 재귀적으로 처리
+            comment.children[i] = await fetchCommentsRecursively(comment.children[i].commentId);
+        }
+    }
+
+    return comment;
+}
+
+// 나의 해결된 고민 상세조회
 export const findSolvedWorryDetailsById = async (worryId) => {
-    return await prisma.worries.findUnique({
+    const worryDetails = await prisma.worries.findUnique({
         where: {
             worryId: worryId,
+            isSolved: true,
         },
         select: {
             worryId: true,
@@ -144,26 +170,73 @@ export const findSolvedWorryDetailsById = async (worryId) => {
             icon: true,
             userId: true,
             comments: {
+                where: { parentId: null }, // 최초 댓글만 선택
                 select: {
                     commentId: true,
                     content: true,
                     createdAt: true,
                     updatedAt: true,
-                    parentId: true,
-                    children: {
-                        select: {
-                            commentId: true,
-                            content: true,
-                            createdAt: true,
-                            updatedAt: true,
-                            parentId: true,
-                        },
-                    },
+                    userId: true, // 댓글 작성자 ID
                 },
+                orderBy: { createdAt: 'asc' },
             },
         },
     });
+
+    // 각 최초 댓글에 대해 대댓글을 재귀적으로 조회
+    if (worryDetails && worryDetails.comments) {
+        for (let i = 0; i < worryDetails.comments.length; i++) {
+            worryDetails.comments[i] = await fetchCommentsRecursively(worryDetails.comments[i].commentId);
+        }
+    }
+
+    return worryDetails;
 };
+
+// // '나의 해결된 고민' 상세 조회
+// export const findSolvedWorryDetailsById = async (worryId) => {
+//     return await prisma.worries.findUnique({
+//         where: {
+//             worryId: worryId,
+//             isSolved: true, // 해결된 고민만 조회하도록 조건 추가해야함 => 선물받은 대화만 보여주게 나중에 살리기
+//         },
+//         select: {
+//             worryId: true,
+//             content: true,
+//             createdAt: true,
+//             icon: true,
+//             userId: true,
+//             comments: {
+//                 where: {
+//                     parentId: null, // 최초 댓글만 선택
+//                 },
+//                 select: {
+//                     commentId: true,
+//                     content: true,
+//                     createdAt: true,
+//                     updatedAt: true,
+//                     userId: true, // 댓글 작성자 ID 추가
+//                     children: {
+//                         select: {
+//                             commentId: true,
+//                             content: true,
+//                             createdAt: true,
+//                             updatedAt: true,
+//                             parentId: true, // 대댓글의 부모 댓글 ID
+//                             userId: true, // 대댓글 작성자 ID 추가
+//                         },
+//                         orderBy: {
+//                             createdAt: 'asc', // 대댓글의 생성 순서대로 정렬
+//                         },
+//                     },
+//                 },
+//                 orderBy: {
+//                     createdAt: 'asc', // 댓글의 생성 순서대로 정렬
+//                 },
+//             },
+//         },
+//     });
+// };
 
 // '내가 해결한 고민' 상세 조회
 export const findHelpedSolveWorryDetailsById = async (worryId) => {
