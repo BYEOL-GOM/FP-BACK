@@ -157,10 +157,12 @@ export const findHelpedSolveWorriesByUserId = async (userId, page, limit) => {
 };
 
 // '나의 해결된 고민' 상세 조회
-export const findSolvedWorryDetailsById = async (worryId) => {
+export const findSolvedWorryDetailsById = async (worryId, userId) => {
     return await prisma.worries.findUnique({
         where: {
             worryId: worryId,
+            userId: userId,
+            isSolved: true,
         },
         select: {
             worryId: true,
@@ -191,10 +193,12 @@ export const findSolvedWorryDetailsById = async (worryId) => {
 };
 
 // '내가 해결한 고민' 상세 조회
-export const findHelpedSolveWorryDetailsById = async (worryId) => {
+export const findHelpedSolveWorryDetailsById = async (worryId, userId) => {
     return await prisma.worries.findUnique({
         where: {
             worryId: worryId,
+            commentAuthorId: userId,
+            isSolved: true,
         },
         select: {
             worryId: true,

@@ -64,7 +64,9 @@ export const getHelpedSolveWorries = async (req, res, next) => {
 export const getSolvedWorryDetails = async (req, res, next) => {
     try {
         const { worryId } = req.params;
-        const worryDetails = await LikeService.getSolvedWorryDetailsById(parseInt(worryId));
+        const { userId } = req.body; // 로그인 완료되면 res.locals.user.userId로 수정
+
+        const worryDetails = await LikeService.getSolvedWorryDetailsById(parseInt(worryId, userId));
         if (!worryDetails) {
             const err = new Error('해당하는 답변의 고민 게시글이 존재하지 않습니다.');
             err.status = 404;
@@ -80,7 +82,9 @@ export const getSolvedWorryDetails = async (req, res, next) => {
 export const getHelpedSolveWorryDetails = async (req, res, next) => {
     try {
         const { worryId } = req.params;
-        const worryDetails = await LikeService.getHelpedSolveWorryDetailsById(parseInt(worryId));
+        const { userId } = req.body; // 로그인 완료되면 res.locals.user.userId로 수정
+
+        const worryDetails = await LikeService.getHelpedSolveWorryDetailsById(parseInt(worryId, userId));
         if (!worryDetails) {
             const err = new Error('해당하는 답변의 고민 게시글이 존재하지 않습니다.');
             err.status = 404;

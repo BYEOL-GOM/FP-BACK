@@ -61,8 +61,8 @@ export const getSolvedWorriesByUserId = async (userId, page, limit) => {
 };
 
 // '나의 해결된 고민' 상세 조회
-export const getSolvedWorryDetailsById = async (worryId) => {
-    return LikeRepository.findSolvedWorryDetailsById(worryId);
+export const getSolvedWorryDetailsById = async (worryId, userId) => {
+    return LikeRepository.findSolvedWorryDetailsById(worryId, userId);
 };
 
 // '내가 해결한 고민' 목록 전체 조회
@@ -71,8 +71,8 @@ export const getHelpedSolveWorriesByUserId = async (userId, page, limit) => {
 };
 
 // '내가 해결한 고민' 상세 조회
-export const getHelpedSolveWorryDetailsById = async (worryId) => {
-    return LikeRepository.findHelpedSolveWorryDetailsById(worryId);
+export const getHelpedSolveWorryDetailsById = async (worryId, userId) => {
+    return LikeRepository.findHelpedSolveWorryDetailsById(worryId, userId);
 };
 
 // 좋아요를 가장 많이 받은 탑 5위 댓글 조회
