@@ -131,7 +131,7 @@ export const findHelpedSolveWorriesByUserId = async (userId) => {
     });
 };
 
-// 재귀함수(나의 해결된 고민 상세)
+// 재귀함수
 async function fetchCommentsRecursively(commentId) {
     const comment = await prisma.comments.findUnique({
         where: { commentId },
@@ -157,10 +157,11 @@ async function fetchCommentsRecursively(commentId) {
 }
 
 // 나의 해결된 고민 상세조회
-export const findSolvedWorryDetailsById = async (worryId) => {
+export const findSolvedWorryDetailsById = async (worryId, userId) => {
     const worryDetails = await prisma.worries.findUnique({
         where: {
             worryId: worryId,
+            userId: userId,
             isSolved: true,
         },
         select: {
@@ -239,10 +240,11 @@ export const findSolvedWorryDetailsById = async (worryId) => {
 // };
 
 // '내가 해결한 고민' 상세 조회
-export const findHelpedSolveWorryDetailsById = async (worryId) => {
-    return await prisma.worries.findUnique({
+export const findHelpedSolveWorryDetailsById = async (worryId, userId) => {
+    const worryDetails = await prisma.worries.findUnique({
         where: {
             worryId: worryId,
+            commentAuthorId: userId,
         },
         select: {
             worryId: true,
@@ -250,24 +252,31 @@ export const findHelpedSolveWorryDetailsById = async (worryId) => {
             createdAt: true,
             icon: true,
             userId: true,
+            commentAuthorId: true, // 답변 작성자 ID
             comments: {
+                where: { parentId: null }, // 최초 답변만 선택
                 select: {
                     commentId: true,
                     content: true,
                     createdAt: true,
                     updatedAt: true,
-                    parentId: true,
-                    children: {
-                        select: {
-                            commentId: true,
-                            content: true,
-                            createdAt: true,
-                            updatedAt: true,
-                            parentId: true,
-                        },
-                    },
+                    userId: true, // 답변 작성자 ID
                 },
+                orderBy: { createdAt: 'asc' },
             },
         },
     });
+
+    // 각 최초 댓글에 대해 대댓글을 재귀적으로 조회
+    if (worryDetails && worryDetails.comments) {
+        for (let i = 0; i < worryDetails.comments.length; i++) {
+            worryDetails.comments[i] = await fetchCommentsRecursively(worryDetails.comments[i].commentId);
+        }
+    }
+
+    if (worryDetails && worryDetails.commentAuthorId !== userId) {
+        throw new Error("Access denied. You're not the solver of this worry.");
+    }
+
+    return worryDetails;
 };

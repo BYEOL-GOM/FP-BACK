@@ -153,3 +153,29 @@
 {"level":"info","message":"Method: POST, URL: /worries/10/comments/40/sendLike, Status: 201, Duration: 465ms","timestamp":"2024-04-02T05:38:49.558Z"}
 {"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry/10, Status: 200, Duration: 55ms","timestamp":"2024-04-02T05:39:10.387Z"}
 {"level":"info","message":"Method: GET, URL: /mySolvedWorry/10, Status: 200, Duration: 558ms","timestamp":"2024-04-02T05:40:00.355Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/10, Status: 200, Duration: 218ms","timestamp":"2024-04-02T05:57:56.832Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/10, Status: 400, Duration: 3ms","timestamp":"2024-04-02T05:59:26.034Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 답변의 고민 게시글이 존재하지 않습니다.","timestamp":"2024-04-02T05:59:44.220Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/10, Status: 404, Duration: 83ms","timestamp":"2024-04-02T05:59:44.221Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.findUnique()` invocation:\n\n{\n  where: {\n    userId: undefined,\n    isSolved: true,\n+   worryId: Int\n  },\n  select: {\n    worryId: true,\n    content: true,\n    createdAt: true,\n    icon: true,\n    userId: true,\n    comments: {\n      where: {\n        parentId: null\n      },\n      select: {\n        commentId: true,\n        content: true,\n        createdAt: true,\n        updatedAt: true,\n        userId: true\n      },\n      orderBy: {\n        createdAt: \"asc\"\n      }\n    }\n  }\n}\n\nArgument `worryId` is missing.","timestamp":"2024-04-02T05:59:58.855Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/10, Status: 500, Duration: 25ms","timestamp":"2024-04-02T05:59:58.856Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.findUnique()` invocation:\n\n{\n  where: {\n    isSolved: true,\n+   worryId: Int\n  },\n  select: {\n    worryId: true,\n    content: true,\n    createdAt: true,\n    icon: true,\n    userId: true,\n    comments: {\n      where: {\n        parentId: null\n      },\n      select: {\n        commentId: true,\n        content: true,\n        createdAt: true,\n        updatedAt: true,\n        userId: true\n      },\n      orderBy: {\n        createdAt: \"asc\"\n      }\n    }\n  }\n}\n\nArgument `worryId` is missing.","timestamp":"2024-04-02T06:00:38.837Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/10, Status: 500, Duration: 118ms","timestamp":"2024-04-02T06:00:38.846Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/10, Status: 200, Duration: 136ms","timestamp":"2024-04-02T06:00:42.829Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/10, Status: 200, Duration: 119ms","timestamp":"2024-04-02T06:00:44.615Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/10, Status: 200, Duration: 117ms","timestamp":"2024-04-02T06:02:15.550Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/10, Status: 200, Duration: 29ms","timestamp":"2024-04-02T06:02:30.264Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/10, Status: 200, Duration: 195ms","timestamp":"2024-04-02T06:03:37.706Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/10, Status: 400, Duration: 3ms","timestamp":"2024-04-02T06:04:42.157Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 답변의 고민 게시글이 존재하지 않습니다.","timestamp":"2024-04-02T06:04:49.793Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/10, Status: 404, Duration: 100ms","timestamp":"2024-04-02T06:04:49.795Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.findUnique()` invocation:\n\n{\n  where: {\n    userId: undefined,\n    isSolved: true,\n+   worryId: Int\n  },\n  select: {\n    worryId: true,\n    content: true,\n    createdAt: true,\n    icon: true,\n    userId: true,\n    comments: {\n      where: {\n        parentId: null\n      },\n      select: {\n        commentId: true,\n        content: true,\n        createdAt: true,\n        updatedAt: true,\n        userId: true\n      },\n      orderBy: {\n        createdAt: \"asc\"\n      }\n    }\n  }\n}\n\nArgument `worryId` is missing.","timestamp":"2024-04-02T06:05:02.599Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/10, Status: 500, Duration: 8ms","timestamp":"2024-04-02T06:05:02.600Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 답변의 고민 게시글이 존재하지 않습니다.","timestamp":"2024-04-02T06:05:08.381Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/10, Status: 404, Duration: 22ms","timestamp":"2024-04-02T06:05:08.383Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 답변의 고민 게시글이 존재하지 않습니다.","timestamp":"2024-04-02T06:06:22.051Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/10, Status: 404, Duration: 22ms","timestamp":"2024-04-02T06:06:22.053Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/10, Status: 200, Duration: 232ms","timestamp":"2024-04-02T06:08:13.729Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/10, Status: 200, Duration: 101ms","timestamp":"2024-04-02T06:08:15.246Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry/10, Status: 400, Duration: 3ms","timestamp":"2024-04-02T06:18:16.848Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry/10, Status: 200, Duration: 239ms","timestamp":"2024-04-02T06:18:29.619Z"}
