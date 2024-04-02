@@ -1,0 +1,19 @@
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch latest comments by user ID: CommentRepository.getLatestCommentsForUserWorries is not a function","timestamp":"2024-04-01T16:31:46.450Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch latest comments by user ID: CommentRepository.getLatestCommentsForUserWorries is not a function","timestamp":"2024-04-01T16:31:48.003Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch latest comments by user ID: CommentRepository.getLatestCommentsForUserWorries is not a function","timestamp":"2024-04-01T16:37:55.658Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch latest comments by user ID: CommentRepository.getLatestCommentsForUserWorries is not a function","timestamp":"2024-04-01T16:37:56.939Z"}
+{"level":"error","message":"Error Status: undefined, Message: CommentService.getLatestCommentsForUser is not a function","timestamp":"2024-04-01T16:38:43.039Z"}
+{"level":"error","message":"Error Status: undefined, Message: CommentService.getLatestCommentsForUser is not a function","timestamp":"2024-04-01T16:38:44.446Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch latest comments by user ID: CommentRepository.getLatestCommentsForUser is not a function","timestamp":"2024-04-01T16:45:40.566Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch latest comments by user ID: CommentRepository.getLatestCommentsForUser is not a function","timestamp":"2024-04-01T16:45:43.361Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch latest comments by user ID: Cannot read properties of undefined (reading 'findMany')","timestamp":"2024-04-01T16:46:04.500Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch latest comments by user ID: Cannot read properties of undefined (reading 'findMany')","timestamp":"2024-04-01T16:46:08.259Z"}
+{"level":"error","message":"Error Status: undefined, Message: CommentService.getLatestRepliesToUserWorries is not a function","timestamp":"2024-04-01T16:47:25.336Z"}
+{"level":"error","message":"Error Status: undefined, Message: CommentService.getLatestRepliesFromOthers is not a function","timestamp":"2024-04-01T17:29:08.387Z"}
+{"level":"error","message":"Error Status: undefined, Message: CommentService.getLatestRepliesFromOthers is not a function","timestamp":"2024-04-01T17:29:09.561Z"}
+{"level":"error","message":"Error Status: undefined, Message: getLatestCommentsForUserWorries is not defined","timestamp":"2024-04-01T17:29:27.672Z"}
+{"level":"error","message":"Error Status: undefined, Message: getLatestCommentsForUserWorries is not defined","timestamp":"2024-04-01T17:29:28.608Z"}
+{"level":"error","message":"Error Status: undefined, Message: getLatestCommentsForUserWorries is not defined","timestamp":"2024-04-01T17:29:33.867Z"}
+{"level":"error","message":"Error Status: undefined, Message: getLatestCommentsForUserWorries is not defined","timestamp":"2024-04-01T17:30:41.082Z"}
+{"level":"error","message":"Error Status: undefined, Message: getLatestCommentsForUserWorries is not defined","timestamp":"2024-04-01T17:30:47.588Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch comments: CommentRepository.getLatestRepliesForUser is not a function","timestamp":"2024-04-01T17:30:53.758Z"}

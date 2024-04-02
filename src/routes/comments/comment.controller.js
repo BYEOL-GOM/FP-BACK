@@ -27,7 +27,7 @@ export const createCommentController = async (req, res, next) => {
     }
 };
 
-// 답변 전체 조회 (고민작성자(=로그인유저) 도착할 댓글 목록)
+// 답변 전체 조회
 export const getCommentsByUserIdController = async (req, res, next) => {
     try {
         const { userId } = req.body; // 나중에 사용자 인증미들웨어로 받아오는것으로 변경 = 로그인한 유저(=고민작성자)
@@ -39,7 +39,6 @@ export const getCommentsByUserIdController = async (req, res, next) => {
         next(error);
     }
 };
-
 // 답변 상세 메세지 조회
 export const getCommentDetailController = async (req, res, next) => {
     try {

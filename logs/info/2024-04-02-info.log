@@ -30,3 +30,87 @@
 {"level":"info","message":"Method: POST, URL: /6/comments/28/replies, Status: 400, Duration: 37ms","timestamp":"2024-04-01T15:19:49.136Z"}
 {"level":"info","message":"Method: POST, URL: /6/comments/28/replies, Status: 201, Duration: 72ms","timestamp":"2024-04-01T15:19:54.815Z"}
 {"level":"info","message":"Method: POST, URL: /6/comments/28/replies, Status: 400, Duration: 32ms","timestamp":"2024-04-01T15:20:02.951Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 129ms","timestamp":"2024-04-01T15:24:57.673Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 156ms","timestamp":"2024-04-01T16:04:41.986Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 142ms","timestamp":"2024-04-01T16:22:05.580Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 39ms","timestamp":"2024-04-01T16:23:05.132Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 250ms","timestamp":"2024-04-01T16:23:28.638Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 400, Duration: 18ms","timestamp":"2024-04-01T16:23:33.582Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 400, Duration: 16ms","timestamp":"2024-04-01T16:23:38.685Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 400, Duration: 13ms","timestamp":"2024-04-01T16:23:42.390Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 400, Duration: 24ms","timestamp":"2024-04-01T16:23:45.837Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 400, Duration: 15ms","timestamp":"2024-04-01T16:23:51.812Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 400, Duration: 13ms","timestamp":"2024-04-01T16:23:56.267Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 58ms","timestamp":"2024-04-01T16:24:22.543Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 140ms","timestamp":"2024-04-01T16:24:32.640Z"}
+{"level":"info","message":"Method: POST, URL: /worries/8/comments, Status: 201, Duration: 573ms","timestamp":"2024-04-01T16:25:03.420Z"}
+{"level":"info","message":"Method: POST, URL: /8/comments/30/replies, Status: 201, Duration: 109ms","timestamp":"2024-04-01T16:25:30.450Z"}
+{"level":"info","message":"Method: POST, URL: /8/comments/31/replies, Status: 201, Duration: 107ms","timestamp":"2024-04-01T16:25:42.490Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 20ms","timestamp":"2024-04-01T16:25:53.252Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 21ms","timestamp":"2024-04-01T16:26:05.801Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 19ms","timestamp":"2024-04-01T16:29:21.850Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 400, Duration: 12ms","timestamp":"2024-04-01T16:31:46.448Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch latest comments by user ID: CommentRepository.getLatestCommentsForUserWorries is not a function","timestamp":"2024-04-01T16:31:46.450Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 400, Duration: 1ms","timestamp":"2024-04-01T16:31:48.002Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch latest comments by user ID: CommentRepository.getLatestCommentsForUserWorries is not a function","timestamp":"2024-04-01T16:31:48.003Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 90ms","timestamp":"2024-04-01T16:32:51.792Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 20ms","timestamp":"2024-04-01T16:32:52.943Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 400, Duration: 11ms","timestamp":"2024-04-01T16:37:55.656Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch latest comments by user ID: CommentRepository.getLatestCommentsForUserWorries is not a function","timestamp":"2024-04-01T16:37:55.658Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 400, Duration: 1ms","timestamp":"2024-04-01T16:37:56.938Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch latest comments by user ID: CommentRepository.getLatestCommentsForUserWorries is not a function","timestamp":"2024-04-01T16:37:56.939Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 400, Duration: 12ms","timestamp":"2024-04-01T16:38:43.037Z"}
+{"level":"error","message":"Error Status: undefined, Message: CommentService.getLatestCommentsForUser is not a function","timestamp":"2024-04-01T16:38:43.039Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 400, Duration: 2ms","timestamp":"2024-04-01T16:38:44.446Z"}
+{"level":"error","message":"Error Status: undefined, Message: CommentService.getLatestCommentsForUser is not a function","timestamp":"2024-04-01T16:38:44.446Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 141ms","timestamp":"2024-04-01T16:39:47.313Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 400, Duration: 11ms","timestamp":"2024-04-01T16:45:40.565Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch latest comments by user ID: CommentRepository.getLatestCommentsForUser is not a function","timestamp":"2024-04-01T16:45:40.566Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 400, Duration: 2ms","timestamp":"2024-04-01T16:45:43.360Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch latest comments by user ID: CommentRepository.getLatestCommentsForUser is not a function","timestamp":"2024-04-01T16:45:43.361Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 400, Duration: 12ms","timestamp":"2024-04-01T16:46:04.499Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch latest comments by user ID: Cannot read properties of undefined (reading 'findMany')","timestamp":"2024-04-01T16:46:04.500Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 400, Duration: 2ms","timestamp":"2024-04-01T16:46:08.258Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch latest comments by user ID: Cannot read properties of undefined (reading 'findMany')","timestamp":"2024-04-01T16:46:08.259Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 400, Duration: 12ms","timestamp":"2024-04-01T16:47:25.333Z"}
+{"level":"error","message":"Error Status: undefined, Message: CommentService.getLatestRepliesToUserWorries is not a function","timestamp":"2024-04-01T16:47:25.336Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 78ms","timestamp":"2024-04-01T16:48:00.947Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 88ms","timestamp":"2024-04-01T16:53:35.234Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 11ms","timestamp":"2024-04-01T16:53:36.231Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 79ms","timestamp":"2024-04-01T16:54:01.757Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 96ms","timestamp":"2024-04-01T16:55:19.467Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 12ms","timestamp":"2024-04-01T16:55:22.203Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 79ms","timestamp":"2024-04-01T16:58:11.768Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 9ms","timestamp":"2024-04-01T16:58:13.570Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 88ms","timestamp":"2024-04-01T17:06:21.993Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 10ms","timestamp":"2024-04-01T17:06:23.159Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 68ms","timestamp":"2024-04-01T17:10:35.653Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 11ms","timestamp":"2024-04-01T17:10:36.524Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 127ms","timestamp":"2024-04-01T17:23:31.838Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 60ms","timestamp":"2024-04-01T17:24:15.022Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 400, Duration: 11ms","timestamp":"2024-04-01T17:29:08.385Z"}
+{"level":"error","message":"Error Status: undefined, Message: CommentService.getLatestRepliesFromOthers is not a function","timestamp":"2024-04-01T17:29:08.387Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 400, Duration: 1ms","timestamp":"2024-04-01T17:29:09.560Z"}
+{"level":"error","message":"Error Status: undefined, Message: CommentService.getLatestRepliesFromOthers is not a function","timestamp":"2024-04-01T17:29:09.561Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 400, Duration: 18ms","timestamp":"2024-04-01T17:29:27.670Z"}
+{"level":"error","message":"Error Status: undefined, Message: getLatestCommentsForUserWorries is not defined","timestamp":"2024-04-01T17:29:27.672Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 400, Duration: 2ms","timestamp":"2024-04-01T17:29:28.607Z"}
+{"level":"error","message":"Error Status: undefined, Message: getLatestCommentsForUserWorries is not defined","timestamp":"2024-04-01T17:29:28.608Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 400, Duration: 1ms","timestamp":"2024-04-01T17:29:33.867Z"}
+{"level":"error","message":"Error Status: undefined, Message: getLatestCommentsForUserWorries is not defined","timestamp":"2024-04-01T17:29:33.867Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 400, Duration: 11ms","timestamp":"2024-04-01T17:30:41.080Z"}
+{"level":"error","message":"Error Status: undefined, Message: getLatestCommentsForUserWorries is not defined","timestamp":"2024-04-01T17:30:41.082Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 400, Duration: 11ms","timestamp":"2024-04-01T17:30:47.587Z"}
+{"level":"error","message":"Error Status: undefined, Message: getLatestCommentsForUserWorries is not defined","timestamp":"2024-04-01T17:30:47.588Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 400, Duration: 13ms","timestamp":"2024-04-01T17:30:53.756Z"}
+{"level":"error","message":"Error Status: undefined, Message: Failed to fetch comments: CommentRepository.getLatestRepliesForUser is not a function","timestamp":"2024-04-01T17:30:53.758Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 110ms","timestamp":"2024-04-01T17:31:00.553Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 55ms","timestamp":"2024-04-01T17:31:02.244Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 110ms","timestamp":"2024-04-01T17:35:00.441Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 19ms","timestamp":"2024-04-01T17:35:01.826Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 19ms","timestamp":"2024-04-01T17:36:22.868Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 12ms","timestamp":"2024-04-01T17:36:24.680Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 266ms","timestamp":"2024-04-02T01:40:19.363Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 35ms","timestamp":"2024-04-02T01:40:24.104Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 62ms","timestamp":"2024-04-02T01:48:22.133Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 30ms","timestamp":"2024-04-02T01:49:30.436Z"}

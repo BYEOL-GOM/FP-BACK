@@ -36,7 +36,7 @@ export const findWorryById = async (worryId) => {
     return await CommentRepository.findWorryById(worryId);
 };
 
-//  답변 메세지 전체 조회 (고민작성자에게 도착할 댓글 목록)
+//  답변 메세지 전체 조회
 export const getCommentsByUserId = async (userId) => {
     try {
         return await CommentRepository.getCommentsByUserId(userId);

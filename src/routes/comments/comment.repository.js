@@ -50,8 +50,7 @@ export const markWorryAsSolved = async (worryId, commentId, senderId, receiverId
     });
 };
 
-// 고민 작성자에 해당하는 전체 답변 조회
-
+// 모든 답변 전체 조회
 export const getCommentsByUserId = async (userId) => {
     try {
         // 특정 사용자가 작성한 고민들을 가져옵니다.
