@@ -2,7 +2,7 @@ import axios from 'axios';
 import { prisma } from '../../utils/prisma/index.js';
 import jwt from 'jsonwebtoken';
 
-
+// 카카오
 export const kakaoLoginController = async (req, res) => {
     try {
         const ID = process.env.KAKAO_REST_API_KEY;
@@ -59,27 +59,23 @@ export const kakaoLoginController = async (req, res) => {
             const accessToken = jwt.sign({ userId: createUser.userId }, process.env.ACCESS_TOKEN_SECRET, {
                 expiresIn: process.env.ACCESS_TOKEN_LIFE,
             });
-            const refreshToken = jwt.sign({},process.env.REFRESH_TOKEN_SECRET, {
+            const refreshToken = jwt.sign({}, process.env.REFRESH_TOKEN_SECRET, {
                 expiresIn: process.env.REFRESH_TOKEN_LIFE,
             });
-            return res.status(200).json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken} `});
+            return res
+                .status(200)
+                .json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken} ` });
             //return res.status(200).json(userInfo);
         }
 
         const accessToken = jwt.sign({ userId: findUser.userId }, process.env.ACCESS_TOKEN_SECRET, {
             expiresIn: process.env.ACCESS_TOKEN_LIFE,
         });
-        const refreshToken = jwt.sign({},process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.REFRESH_TOKEN_LIFE });
+        const refreshToken = jwt.sign({}, process.env.REFRESH_TOKEN_SECRET, {
+            expiresIn: process.env.REFRESH_TOKEN_LIFE,
+        });
 
-        // console.log(accessToken);
-        // console.log(refreshToken);
-        // console.log(createUser.data);
-        // console.log(findUser.data);
-        // console.log('손흥민 봉준호 페이커 BTS');
-        // console.log(createUser);
-        // console.log(findUser);
-
-        return res.status(200).json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken} `});
+        return res.status(200).json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken} ` });
         //return res.status(200).json(ID);
     } catch (error) {
         console.error(error);
@@ -90,14 +86,7 @@ export const kakaoLoginController = async (req, res) => {
 
 
 
-
-
-
-
-
-
-
-
+// 네이버
 export const naverLoginController = async (req, res) => {
     try {
         const ID = process.env.NAVER_REST_API_ID;
@@ -149,20 +138,23 @@ export const naverLoginController = async (req, res) => {
             const accessToken = jwt.sign({ userId: createUser.userId }, process.env.ACCESS_TOKEN_SECRET, {
                 expiresIn: process.env.ACCESS_TOKEN_LIFE,
             });
-            const refreshToken = jwt.sign({userId: createUser.userId},process.env.REFRESH_TOKEN_SECRET, {
+            const refreshToken = jwt.sign({ userId: createUser.userId }, process.env.REFRESH_TOKEN_SECRET, {
                 expiresIn: process.env.REFRESH_TOKEN_LIFE,
             });
-            return res.status(200).json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken} `});
+            return res
+                .status(200)
+                .json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken} ` });
             //return res.status(200).json(userInfo);
         }
 
         const accessToken = jwt.sign({ userId: findUser.userId }, process.env.ACCESS_TOKEN_SECRET, {
             expiresIn: process.env.ACCESS_TOKEN_LIFE,
         });
-        const refreshToken = jwt.sign({userId: findUser.userId},process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.REFRESH_TOKEN_LIFE });
+        const refreshToken = jwt.sign({ userId: findUser.userId }, process.env.REFRESH_TOKEN_SECRET, {
+            expiresIn: process.env.REFRESH_TOKEN_LIFE,
+        });
 
-
-        return res.status(200).json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken} `});
+        return res.status(200).json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken} ` });
         //return res.status(200).json(user);
     } catch (error) {
         console.error(error);
@@ -170,3 +162,49 @@ export const naverLoginController = async (req, res) => {
     }
 };
 
+
+
+
+
+// 리프레쉬
+// 리프레시 토큰 검증 및 재발급 로직
+export const refreshController = async (req, res, next) => {
+    try {
+        const { authorization } = req.headers;
+        if (!authorization) {
+            return res.status(401).json({ message: 'Refresh Token을 전달받지 못했습니다.' });
+        }
+
+        const [bearer, refreshToken] = authorization.split(' ');
+        if (bearer !== 'Bearer') {
+            const err = new Error('토큰 타입이 Bearer 형식이 아닙니다.');
+            err.status = 401;
+            throw err;
+        }
+
+        const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+        const user = await prisma.users.findFirst({
+            where: {
+                userId: decoded.userId
+            }
+        });
+
+        if (!user) {
+            const err = new Error('토큰의 사용자를 찾을 수 없습니다.');
+            err.status = 404;
+            throw err;
+        }
+
+        const newAccessToken = jwt.sign({ userId: user.userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_LIFE });
+        const newRefreshToken = jwt.sign({ userId: user.userId }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.REFRESH_TOKEN_LIFE });
+
+        return res.status(200).json({
+            message: '토큰이 재발급 되었습니다',
+            accessToken: `Bearer ${newAccessToken}`,
+            refreshToken: `Bearer ${newRefreshToken}`,
+        });
+
+    } catch (error) {
+        next(error);
+    }
+};
