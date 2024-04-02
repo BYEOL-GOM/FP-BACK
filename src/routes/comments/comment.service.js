@@ -46,10 +46,20 @@ export const findLatestCommentsAndWorriesForUser = async (userId) => {
     }
 };
 // 답변 메세지 상세 조회
-export const getCommentDetail = async (commentId) => {
-    try {
-        return await CommentRepository.getCommentDetail(commentId);
-    } catch (error) {
-        throw new Error('Failed to fetch comments: ' + error.message);
+// export const getCommentDetail = async (commentId) => {
+//     try {
+//         return await CommentRepository.getCommentDetail(commentId);
+//     } catch (error) {
+//         throw new Error('Failed to fetch comments: ' + error.message);
+//     }
+// };
+
+export const getDiscussionDetails = async (worryId, commentId) => {
+    if (worryId) {
+        return await CommentRepository.getWorryDetails(worryId);
+    } else if (commentId) {
+        return await CommentRepository.getCommentDetails(commentId);
+    } else {
+        throw new Error('worryId 또는 commentId가 필요합니다.');
     }
 };

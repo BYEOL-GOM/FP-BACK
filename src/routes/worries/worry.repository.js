@@ -119,7 +119,7 @@ export const getWorryDetail = async (worryId) => {
     }
 };
 
-// 오래된 고민 소프트 삭제
+// 생성된지 24시간 이상이 된 고민중 답변이 없는 고민 찾기
 export const findOldWorriesWithoutComments = async () => {
     try {
         const twentyFourHoursAgo = new Date();
@@ -147,12 +147,12 @@ export const findOldWorriesWithoutComments = async () => {
     }
 };
 
+// 오래된 고민 소프트 삭제
 export const softDeleteWorryById = async (worryId) => {
     try {
-        // 해당 고민이 이미 삭제되었는지 확인
         const existingWorry = await prisma.worries.findUnique({
             where: { worryId },
-            select: { deletedAt: true },
+            select: { deletedAt: true, userId: true, commentAuthorId: true },
         });
 
         // 이미 삭제된 경우에는 더 이상 업데이트하지 않음
@@ -162,6 +162,20 @@ export const softDeleteWorryById = async (worryId) => {
                 data: { deletedAt: new Date() },
             });
             console.log(`오래된 고민 ${worryId}번 삭제 성공`);
+
+            // 사용자의 remainingWorries 증가
+            await prisma.users.update({
+                where: { userId: existingWorry.userId },
+                data: { remainingWorries: { increment: 1 } },
+            });
+
+            // 답변자의 remainingAnswers 증가
+            if (existingWorry.commentAuthorId) {
+                await prisma.users.update({
+                    where: { userId: existingWorry.commentAuthorId },
+                    data: { remainingAnswers: { increment: 1 } },
+                });
+            }
         } else {
             console.log(`오래된 고민 ${worryId}번은 이미 삭제되었습니다.`);
         }
@@ -179,18 +193,28 @@ export const deleteSelectedWorry = async (worryId) => {
         });
 
         if (existingWorry.deletedAt !== null) {
-            console.log(`오래된 고민 ${worryId}번은 이미 삭제되었습니다.`);
+            console.log(`해당 고민 ${worryId}번은 이미 삭제되었습니다.`);
             return;
         }
 
-        await prisma.worries.update({
+        // 삭제된 고민의 정보 가져오기
+        const worryUpdateResult = await prisma.worries.update({
             where: { worryId },
             data: { deletedAt: new Date() },
         });
 
-        console.log(`오래된 고민 ${worryId}번 삭제 성공`);
+        // 사용자의 remainingWorries +1 증가
+        await prisma.users.update({
+            where: { userId: worryUpdateResult.userId },
+            data: { remainingWorries: { increment: 1 } },
+        });
+
+        // 답변자의 remainingAnswers +1 증가
+        await prisma.users.update({
+            where: { userId: worryUpdateResult.commentAuthorId },
+            data: { remainingAnswers: { increment: 1 } },
+        });
     } catch (error) {
-        console.error(`오래된 고민 ${worryId}번 삭제 실패:`, error);
         throw error;
     }
 };

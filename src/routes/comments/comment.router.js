@@ -3,7 +3,7 @@ import {
     createCommentController,
     // createCommentReplyController,
     findLatestCommentsAndWorriesForUserController,
-    getCommentDetailController,
+    getDiscussionDetailsController,
 } from './comment.controller.js';
 
 let router = express.Router({ mergeParams: true });
@@ -15,6 +15,7 @@ router.post('/worries/:worryId/comments', createCommentController);
 router.get('/comments', findLatestCommentsAndWorriesForUserController);
 
 // 답변 or 재고민, 재답변 상세 조회 (고민자에게 도착할 답변 상세 조회)
-router.get('/comments/:commentId', getCommentDetailController);
+// router.get('/comments/:commentId', getDiscussionDetailsController);
+router.get('/comments/detail', getDiscussionDetailsController);
 
 export default router;

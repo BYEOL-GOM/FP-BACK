@@ -48,14 +48,25 @@ export const findLatestCommentsAndWorriesForUserController = async (req, res) =>
 };
 
 // 답변 상세 메세지 조회
-export const getCommentDetailController = async (req, res, next) => {
-    try {
-        const { commentId } = req.params;
-        const comment = await CommentService.getCommentDetail(+commentId);
-        res.status(200).json(comment);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
+// export const getCommentDetailController = async (req, res, next) => {
+//     try {
+//         const { commentId } = req.params;
+//         const comment = await CommentService.getCommentDetail(+commentId);
+//         res.status(200).json(comment);
+//     } catch (error) {
+//         res.status(400).json({ error: error.message });
 
-        next(error);
+//         next(error);
+//     }
+// };
+
+export const getDiscussionDetailsController = async (req, res) => {
+    const { worryId, commentId } = req.query;
+    try {
+        const details = await CommentService.getDiscussionDetails(+worryId, +commentId);
+        res.json(details);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: '서버 에러 발생' });
     }
 };

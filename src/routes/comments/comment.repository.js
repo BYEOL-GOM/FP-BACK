@@ -88,33 +88,51 @@ export const findLatestCommentsAndWorriesForUser = async (userId) => {
     return latestCommentsAndWorriesInfo;
 };
 // 답변 상세조회(답변, 재고민, 재답변)
-export const getCommentDetail = async (commentId) => {
-    const comment = await prisma.comments.findUnique({
-        where: { commentId },
+// export const getCommentDetail = async (commentId) => {
+//     const comment = await prisma.comments.findUnique({
+//         where: { commentId },
+//         include: {
+//             parent: true,
+//             children: true,
+//         },
+//     });
+
+//     // 필요한 정보만 추출하여 응답 객체 생성
+//     const response = {
+//         parentId: comment.parentId,
+//         commentId: comment.commentId,
+//         content: comment.content,
+//         createdAt: comment.createdAt,
+//         fontColor: comment.fontColor,
+//         // parent: comment.parent
+//         //     ? {
+//         //           commentId: comment.parent.commentId,
+//         //           content: comment.parent.content,
+//         //           createdAt: comment.parent.createdAt,
+//         //           userId: comment.parent.userId,
+//         //           worryId: comment.parent.worryId,
+//         //       }
+//         //     : null, // 부모 정보 나중에 필요하다면 추가
+//         // children 정보는 아직 필요하지 않아서 미포함
+//     };
+
+//     return response;
+// };
+
+export const getWorryDetails = async (worryId) => {
+    return await prisma.worries.findUnique({
+        where: { userId: parseInt(worryId) },
         include: {
-            parent: true,
-            children: true,
+            comments: true, // 또는 필요한 조건에 맞게 데이터를 가져옵니다.
         },
     });
+};
 
-    // 필요한 정보만 추출하여 응답 객체 생성
-    const response = {
-        parentId: comment.parentId,
-        commentId: comment.commentId,
-        content: comment.content,
-        createdAt: comment.createdAt,
-        fontColor: comment.fontColor,
-        // parent: comment.parent
-        //     ? {
-        //           commentId: comment.parent.commentId,
-        //           content: comment.parent.content,
-        //           createdAt: comment.parent.createdAt,
-        //           userId: comment.parent.userId,
-        //           worryId: comment.parent.worryId,
-        //       }
-        //     : null, // 부모 정보 나중에 필요하다면 추가
-        // children 정보는 아직 필요하지 않아서 미포함
-    };
-
-    return response;
+export const getCommentDetails = async (commentId) => {
+    return await prisma.comments.findUnique({
+        where: { userId: parseInt(commentId) },
+        include: {
+            // 필요에 따라 다른 관계도 포함할 수 있습니다.
+        },
+    });
 };

@@ -1,0 +1,25 @@
+{"level":"info","message":"Method: DELETE, URL: /6, Status: 403, Duration: 153ms","timestamp":"2024-04-02T15:01:09.455Z"}
+{"level":"info","message":"Method: DELETE, URL: /6, Status: 500, Duration: 113ms","timestamp":"2024-04-02T15:01:13.939Z"}
+{"level":"info","message":"Method: DELETE, URL: /6, Status: 200, Duration: 103ms","timestamp":"2024-04-02T15:05:54.913Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 203ms","timestamp":"2024-04-02T15:06:02.802Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 45ms","timestamp":"2024-04-02T15:06:26.695Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 138ms","timestamp":"2024-04-02T15:06:41.598Z"}
+{"level":"info","message":"Method: DELETE, URL: /8, Status: 403, Duration: 21ms","timestamp":"2024-04-02T15:06:56.893Z"}
+{"level":"info","message":"Method: DELETE, URL: /8, Status: 200, Duration: 167ms","timestamp":"2024-04-02T15:07:00.573Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 148ms","timestamp":"2024-04-02T15:07:10.395Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 139ms","timestamp":"2024-04-02T15:07:12.819Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 327ms","timestamp":"2024-04-02T15:32:34.326Z"}
+{"level":"error","message":"Error Status: undefined, Message: worryRepository.findOldWorriesWithoutComments is not a function","timestamp":"2024-04-02T15:32:58.850Z"}
+{"level":"info","message":"Method: DELETE, URL: /worries, Status: 500, Duration: 22ms","timestamp":"2024-04-02T15:32:58.854Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.findUnique()` invocation:\n\n{\n  where: {\n    worryId: undefined,\n?   solvingCommentId?: Int,\n?   AND?: WorriesWhereInput | WorriesWhereInput[],\n?   OR?: WorriesWhereInput[],\n?   NOT?: WorriesWhereInput | WorriesWhereInput[],\n?   commentAuthorId?: IntFilter | Int,\n?   content?: StringFilter | String,\n?   fontColor?: StringNullableFilter | String | Null,\n?   createdAt?: DateTimeFilter | DateTime,\n?   icon?: EnumIconNullableFilter | Icon | Null,\n?   lastReplyTime?: DateTimeNullableFilter | DateTime | Null,\n?   deletedAt?: DateTimeNullableFilter | DateTime | Null,\n?   isSolved?: BoolFilter | Boolean,\n?   isReWorry?: BoolFilter | Boolean,\n?   userId?: IntNullableFilter | Int | Null,\n?   user?: UsersNullableRelationFilter | UsersWhereInput | Null,\n?   comments?: CommentsListRelationFilter,\n?   solvingComment?: CommentsNullableRelationFilter | CommentsWhereInput | Null\n  },\n  select: {\n    deletedAt: true,\n    userId: true,\n    commentAuthorId: true\n  }\n}\n\nArgument `where` of type WorriesWhereUniqueInput needs at least one of `worryId` or `solvingCommentId` arguments. Available options are marked with ?.","timestamp":"2024-04-02T15:33:51.574Z"}
+{"level":"info","message":"Method: DELETE, URL: /worries, Status: 500, Duration: 68ms","timestamp":"2024-04-02T15:33:51.579Z"}
+{"level":"info","message":"Method: DELETE, URL: /3, Status: 200, Duration: 262ms","timestamp":"2024-04-02T15:37:27.504Z"}
+{"level":"error","message":"Error Status: undefined, Message: worryRepository.findOldWorriesWithoutComments is not a function","timestamp":"2024-04-02T15:39:48.487Z"}
+{"level":"info","message":"Method: DELETE, URL: /worries, Status: 500, Duration: 22ms","timestamp":"2024-04-02T15:39:48.496Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 108ms","timestamp":"2024-04-02T15:51:52.346Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 18ms","timestamp":"2024-04-02T15:52:32.145Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 400, Duration: 141ms","timestamp":"2024-04-02T15:55:26.026Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 49ms","timestamp":"2024-04-02T15:55:31.292Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 180ms","timestamp":"2024-04-02T15:55:34.842Z"}
+{"level":"info","message":"Method: DELETE, URL: /, Status: 200, Duration: 754ms","timestamp":"2024-04-02T15:55:51.450Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 155ms","timestamp":"2024-04-02T15:56:29.871Z"}
