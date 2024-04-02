@@ -44,8 +44,14 @@ export const getSolvedWorries = async (req, res, next) => {
 // '나의 해결된 고민' 상세 조회
 export const getSolvedWorryDetails = async (req, res, next) => {
     try {
+        const { userId } = req.body;
         const { worryId } = req.params;
-        const worryDetails = await LikeService.getSolvedWorryDetailsById(parseInt(worryId));
+
+        if (!worryId || !userId) {
+            return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다.' });
+        }
+
+        const worryDetails = await LikeService.getSolvedWorryDetailsById(+worryId, +userId);
         if (!worryDetails) {
             const err = new Error('해당하는 답변의 고민 게시글이 존재하지 않습니다.');
             err.status = 404;
@@ -74,7 +80,14 @@ export const getHelpedSolveWorries = async (req, res, next) => {
 export const getHelpedSolveWorryDetails = async (req, res, next) => {
     try {
         const { worryId } = req.params;
-        const worryDetails = await LikeService.getHelpedSolveWorryDetailsById(parseInt(worryId));
+        const { userId } = req.body;
+
+        if (!worryId || !userId) {
+            return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다.' });
+        }
+
+        const worryDetails = await LikeService.getHelpedSolveWorryDetailsById(+worryId, +userId);
+
         if (!worryDetails) {
             const err = new Error('해당하는 답변의 고민 게시글이 존재하지 않습니다.');
             err.status = 404;
