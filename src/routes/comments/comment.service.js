@@ -38,8 +38,12 @@ export const findWorryById = async (worryId) => {
 
 //  답변 메세지 전체 조회
 
-export const getLatestCommentForUserWorries = async (userId) => {
-    return await CommentRepository.findLatestCommentsForUserWorries(userId);
+export const findLatestCommentsAndWorriesForUser = async (userId) => {
+    try {
+        return await CommentRepository.findLatestCommentsAndWorriesForUser(userId);
+    } catch (error) {
+        throw new Error('데이터를 조회하는 도중 오류가 발생했습니다.');
+    }
 };
 // 답변 메세지 상세 조회
 export const getCommentDetail = async (commentId) => {

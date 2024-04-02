@@ -28,14 +28,18 @@ export const createCommentController = async (req, res, next) => {
 };
 
 // 답변 전체 조회
-export const getLatestCommentForUserWorriesController = async (req, res) => {
+export const findLatestCommentsAndWorriesForUserController = async (req, res) => {
     try {
         const userId = parseInt(req.body.userId);
-        if (!userId) {
-            return res.status(400).json({ error: '사용자 ID가 제공되지 않았습니다.' });
+        // if (!userId) {
+        //     return res.status(400).json({ error: '사용자 ID가 제공되지 않았습니다.' });
+        // } // 사용자인증 미들웨어로 처리
+
+        const latestComments = await CommentService.findLatestCommentsAndWorriesForUser(+userId);
+        if (latestComments.length === 0) {
+            return res.status(404).json({ error: '아직 답변이 도착하지 않았습니다' });
         }
 
-        const latestComments = await CommentService.getLatestCommentForUserWorries(userId);
         return res.json(latestComments);
     } catch (error) {
         console.error(error);

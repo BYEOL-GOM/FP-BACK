@@ -51,13 +51,13 @@ export const markWorryAsSolved = async (worryId, commentId, senderId, receiverId
 };
 
 // 모든 답변 전체 조회
-export const findLatestCommentsForUserWorries = async (userId) => {
-    // 사용자가 고민자로서 참여한 모든 고민 조회
+export const findLatestCommentsAndWorriesForUser = async (userId) => {
+    // 사용자가 고민자 혹은 답변자로 참여한 모든 고민 조회
     const userWorries = await prisma.worries.findMany({
         where: {
             OR: [
                 { userId }, // 고민자로서의 참여
-                { comments: { some: { userId } } }, // 답변자로서의 참여
+                { commentAuthorId: userId }, // 답변자로 매칭된 경우
             ],
         },
         include: {
@@ -74,17 +74,18 @@ export const findLatestCommentsForUserWorries = async (userId) => {
     });
 
     // 필요한 정보만 추출하여 배열로 반환
-    const latestCommentsInfo = userWorries.map((worry) => {
+    const latestCommentsAndWorriesInfo = userWorries.map((worry) => {
         const latestComment = worry.comments[0] || null;
         return {
             worryId: worry.worryId,
-            latestCommentId: latestComment ? latestComment.commentId : null,
-            replyUserId: latestComment ? latestComment.userId : null,
-            createdAt: latestComment ? latestComment.createdAt : null,
+            icon: worry.icon, // 각 worry에 해당하는 icon 정보 추가
+            commentId: latestComment ? latestComment.commentId : worry.worryId, // 답변이 없으면 worryId 반환
+            // replyUserId: latestComment ? latestComment.userId : worry.userId, // 답변이 없으면 고민 작성자의 userId 반환
+            createdAt: latestComment ? latestComment.createdAt : worry.createdAt, // 답변이 없으면 worry의 생성 시간 반환
         };
     });
 
-    return latestCommentsInfo.filter((commentInfo) => commentInfo.latestCommentId !== null);
+    return latestCommentsAndWorriesInfo;
 };
 // 답변 상세조회(답변, 재고민, 재답변)
 export const getCommentDetail = async (commentId) => {
