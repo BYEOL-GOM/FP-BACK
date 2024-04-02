@@ -194,57 +194,13 @@ export const findSolvedWorryDetailsById = async (worryId, userId) => {
     return worryDetails;
 };
 
-// // '나의 해결된 고민' 상세 조회
-// export const findSolvedWorryDetailsById = async (worryId) => {
-//     return await prisma.worries.findUnique({
-//         where: {
-//             worryId: worryId,
-//             isSolved: true, // 해결된 고민만 조회하도록 조건 추가해야함 => 선물받은 대화만 보여주게 나중에 살리기
-//         },
-//         select: {
-//             worryId: true,
-//             content: true,
-//             createdAt: true,
-//             icon: true,
-//             userId: true,
-//             comments: {
-//                 where: {
-//                     parentId: null, // 최초 댓글만 선택
-//                 },
-//                 select: {
-//                     commentId: true,
-//                     content: true,
-//                     createdAt: true,
-//                     updatedAt: true,
-//                     userId: true, // 댓글 작성자 ID 추가
-//                     children: {
-//                         select: {
-//                             commentId: true,
-//                             content: true,
-//                             createdAt: true,
-//                             updatedAt: true,
-//                             parentId: true, // 대댓글의 부모 댓글 ID
-//                             userId: true, // 대댓글 작성자 ID 추가
-//                         },
-//                         orderBy: {
-//                             createdAt: 'asc', // 대댓글의 생성 순서대로 정렬
-//                         },
-//                     },
-//                 },
-//                 orderBy: {
-//                     createdAt: 'asc', // 댓글의 생성 순서대로 정렬
-//                 },
-//             },
-//         },
-//     });
-// };
-
 // '내가 해결한 고민' 상세 조회
 export const findHelpedSolveWorryDetailsById = async (worryId, userId) => {
     const worryDetails = await prisma.worries.findUnique({
         where: {
             worryId: worryId,
             commentAuthorId: userId,
+            isSolved: true,
         },
         select: {
             worryId: true,
