@@ -1,4 +1,5 @@
 import * as LikeService from './like.service.js';
+import { prisma } from '../../utils/prisma/index.js';
 
 // 마음에 드는 댓글에 선물 보내기
 export const sendLike = async (req, res, next) => {
@@ -101,6 +102,14 @@ export const getTopLikedCommentAuthors = async (req, res, next) => {
     try {
         const topUsers = await LikeService.getTopLikedCommentAuthors();
         return res.json(topUsers);
+    } catch (error) {
+        next(error);
+    }
+};
+
+// 메인 전체 조회
+export const getMain = async (req, res, next) => {
+    try {
     } catch (error) {
         next(error);
     }

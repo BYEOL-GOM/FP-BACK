@@ -13,3 +13,7 @@
 {"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 92ms","timestamp":"2024-04-01T16:09:11.036Z"}
 {"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 162ms","timestamp":"2024-04-01T16:14:25.427Z"}
 {"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 120ms","timestamp":"2024-04-01T16:14:48.278Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/122, Status: 200, Duration: 144ms","timestamp":"2024-04-02T06:52:21.615Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry/11, Status: 200, Duration: 41ms","timestamp":"2024-04-02T06:52:31.622Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry/122, Status: 200, Duration: 19ms","timestamp":"2024-04-02T06:52:38.380Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 135ms","timestamp":"2024-04-02T07:10:34.459Z"}
