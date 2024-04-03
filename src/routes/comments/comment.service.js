@@ -1,49 +1,60 @@
 import * as CommentRepository from './comment.repository.js';
 
-// 답변 생성
-export const createComment = async (worryId, content, userId) => {
-    console.log('💛💛💛서비스 : ', worryId, content, userId);
-
-    // worryId를 사용하여 고민의 authorId 찾기
-    const worry = await CommentRepository.findWorryById(worryId);
-
-    if (!worry) {
-        const err = new Error('해당하는 고민 게시글이 존재하지 않습니다.');
-        err.status = 404;
-        throw err;
-    }
-
-    // 찾아낸 authorId를 사용하여 댓글 생성
-    const commentData = {
-        worryId: parseInt(worryId),
-        userId,
-        content,
-        authorId: worry.commentAuthorId, // 고민 등록 시 랜덤으로 선택된 사용자 ID 사용
-    };
-    console.log('💚💚💚서비스 : ', worry.commentAuthorId);
-
-    return await CommentRepository.createComment(commentData);
-};
-
-// 대댓글 생성
-export const createReply = async (worryId, parentId, content, userId) => {
-    return CommentRepository.createCommentReply({ worryId, parentId, content, userId });
-};
-
-//  답변 메세지 전체 조회 (고민작성자에게 도착할 댓글 목록)
-export const getCommentsByUserId = async (userId) => {
+//  답변 메세지 전체 조회
+export const findLatestCommentsAndWorriesForUser = async (userId) => {
     try {
-        return await CommentRepository.getCommentsByUserId(userId);
+        return await CommentRepository.findLatestCommentsAndWorriesForUser(userId);
     } catch (error) {
-        throw new Error('Failed to fetch comments: ' + error.message);
+        throw new Error('데이터를 조회하는 도중 오류가 발생했습니다.');
     }
 };
 
-// 답변 메세지 상세 조회
+// 답장 상세조회
 export const getCommentDetail = async (commentId) => {
-    try {
-        return await CommentRepository.getCommentDetail(commentId);
-    } catch (error) {
-        throw new Error('Failed to fetch comments: ' + error.message);
+    return await CommentRepository.getCommentDetails(commentId);
+};
+
+// 답장보내기
+export const createReply = async (worryId, commentId, content, userId, fontColor) => {
+    let parentId = commentId ? parseInt(commentId) : null;
+
+    // 중복 답변 검증
+    const existingReply = await CommentRepository.checkForExistingReply(worryId, userId, parentId);
+    if (existingReply) {
+        throw new Error('이미 답변을 작성했습니다.');
     }
+
+    // 최초 답변 권한 검증
+    if (!parentId) {
+        const worry = await CommentRepository.findWorryById(worryId);
+        if (worry.commentAuthorId !== userId) {
+            throw new Error('답변 작성 권한이 없습니다.');
+        }
+    } else {
+        // 이후 답변(재답변) 권한 검증
+        const lastReply = await CommentRepository.findLastReplyByWorryId(worryId, parentId);
+        if (!lastReply || lastReply.userId === userId) {
+            throw new Error('답변 작성 권한이 없습니다.');
+        }
+    }
+
+    // 댓글(답변) 생성
+    const comment = await CommentRepository.createReply({
+        worryId,
+        content,
+        userId,
+        parentId,
+        fontColor,
+    });
+
+    // 클라이언트에 반환할 때는 필요한 정보만 포함시키도록 구성
+    return {
+        commentId: comment.commentId,
+        content: comment.content,
+        createdAt: comment.createdAt,
+        fontColor: comment.fontColor,
+        parentId: comment.parentId,
+        // userId: comment.userId,
+        worryId: comment.worryId,
+    };
 };

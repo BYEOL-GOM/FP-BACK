@@ -63,6 +63,17 @@
 {"level":"info","message":"Method: POST, URL: /naver, Status: 200, Duration: 70ms","timestamp":"2024-03-29T08:38:38.389Z"}
 {"level":"info","message":"Method: POST, URL: /naver, Status: 200, Duration: 66ms","timestamp":"2024-03-29T08:38:40.086Z"}
 
+{"level":"error","message":"Error Status: undefined, Message: Unknown authentication strategy \"kakao\"","timestamp":"2024-03-29T14:35:37.586Z"}
+{"level":"info","message":"Method: GET, URL: /api/kakao, Status: 500, Duration: 9ms","timestamp":"2024-03-29T14:35:37.593Z"}
+{"level":"error","message":"Error Status: undefined, Message: Unknown authentication strategy \"kakao\"","timestamp":"2024-03-29T14:36:22.197Z"}
+{"level":"info","message":"Method: GET, URL: /api/kakao, Status: 500, Duration: 21ms","timestamp":"2024-03-29T14:36:22.213Z"}
+{"level":"error","message":"Error Status: undefined, Message: Unknown authentication strategy \"kakao\"","timestamp":"2024-03-29T14:40:10.285Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 500, Duration: 12ms","timestamp":"2024-03-29T14:40:10.293Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 404, Duration: 15ms","timestamp":"2024-03-29T14:51:34.779Z"}
+{"level":"error","message":"Error Status: undefined, Message: Unknown authentication strategy \"kakao\"","timestamp":"2024-03-29T14:52:24.188Z"}
+{"level":"info","message":"Method: GET, URL: /auth/kakao, Status: 500, Duration: 24ms","timestamp":"2024-03-29T14:52:24.204Z"}
+
+
 
 {"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 134ms","timestamp":"2024-03-28T15:01:01.328Z"}
 {"level":"error","message":"Error Status: undefined, Message: res is not defined","timestamp":"2024-03-28T15:02:57.351Z"}
@@ -458,3 +469,13 @@
 {"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.findUnique()` invocation:\n\n{\n  where: {\n    worryId: \"24\"\n             ~~~~\n  },\n  include: {\n    comments: {\n      include: {\n        children: true\n      }\n    }\n  }\n}\n\nArgument `worryId`: Invalid value provided. Expected Int, provided String.","timestamp":"2024-03-29T14:14:54.294Z"}
 {"level":"info","message":"Method: GET, URL: /api/myHelpedSolveWorry/24, Status: 500, Duration: 148ms","timestamp":"2024-03-29T14:14:54.304Z"}
 {"level":"info","message":"Method: GET, URL: /myHelpedSolveWorry/24, Status: 200, Duration: 108ms","timestamp":"2024-03-29T14:15:12.407Z"}
+{"level":"info","message":"Method: POST, URL: /naver, Status: 500, Duration: 149ms","timestamp":"2024-03-29T14:30:35.394Z"}
+{"level":"info","message":"Method: POST, URL: /naver, Status: 500, Duration: 6ms","timestamp":"2024-03-29T14:30:43.865Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 32ms","timestamp":"2024-03-29T14:32:20.369Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 3ms","timestamp":"2024-03-29T14:33:26.745Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 24ms","timestamp":"2024-03-29T14:34:38.063Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 36ms","timestamp":"2024-03-29T14:34:52.550Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 105ms","timestamp":"2024-03-29T14:35:19.552Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 500, Duration: 20ms","timestamp":"2024-03-29T14:36:00.123Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 227ms","timestamp":"2024-03-29T14:38:42.648Z"}
+
