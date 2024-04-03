@@ -200,7 +200,7 @@ export const deleteSelectedWorry = async (worryId) => {
         });
 
         if (existingWorry.deletedAt !== null) {
-            throw new Error(`이미 삭제되었습니다`);
+            throw new Error('이미 삭제되었습니다');
         }
 
         // 삭제된 고민의 정보

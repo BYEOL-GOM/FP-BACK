@@ -91,7 +91,7 @@ export const deleteWorryByCommentAuthorController = async (req, res, next) => {
             return res.status(404).json({ error: '해당하는 고민이 존재하지 않습니다' });
         } else if (error.message === '답변 대상자만 곤란한 고민을 삭제할 수 있습니다') {
             return res.status(403).json({ error: error.message });
-        } else if (error.message === '이미 삭제 되었습니다') {
+        } else if (error.message === '이미 삭제되었습니다') {
             return res.status(409).json({ error: error.message });
         }
         res.status(500).json({ error: error.message });

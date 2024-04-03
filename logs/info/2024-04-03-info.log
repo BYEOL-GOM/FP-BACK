@@ -185,3 +185,12 @@
 {"level":"info","message":"Method: DELETE, URL: /3, Status: 409, Duration: 111ms","timestamp":"2024-04-03T02:09:36.458Z"}
 {"level":"info","message":"Method: DELETE, URL: /3, Status: 409, Duration: 21ms","timestamp":"2024-04-03T02:09:37.242Z"}
 {"level":"info","message":"Method: DELETE, URL: /3, Status: 409, Duration: 26ms","timestamp":"2024-04-03T02:09:54.426Z"}
+{"level":"info","message":"Method: DELETE, URL: /3, Status: 500, Duration: 99ms","timestamp":"2024-04-03T02:11:10.387Z"}
+{"level":"info","message":"Method: DELETE, URL: /3, Status: 500, Duration: 21ms","timestamp":"2024-04-03T02:11:11.277Z"}
+{"level":"info","message":"Method: DELETE, URL: /3, Status: 500, Duration: 18ms","timestamp":"2024-04-03T02:11:18.291Z"}
+{"level":"info","message":"Method: DELETE, URL: /3, Status: 409, Duration: 88ms","timestamp":"2024-04-03T02:11:43.790Z"}
+{"level":"info","message":"Method: DELETE, URL: /3, Status: 500, Duration: 113ms","timestamp":"2024-04-03T02:12:03.828Z"}
+{"level":"info","message":"Method: DELETE, URL: /3, Status: 409, Duration: 101ms","timestamp":"2024-04-03T02:12:04.891Z"}
+{"level":"info","message":"Method: DELETE, URL: /3, Status: 409, Duration: 28ms","timestamp":"2024-04-03T02:12:22.255Z"}
+{"level":"info","message":"Method: GET, URL: /comments/33, Status: 200, Duration: 77ms","timestamp":"2024-04-03T02:33:31.792Z"}
+{"level":"info","message":"Method: GET, URL: /comments/33, Status: 200, Duration: 14ms","timestamp":"2024-04-03T02:33:32.660Z"}
