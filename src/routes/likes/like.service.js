@@ -66,11 +66,16 @@ export const getSolvedWorryDetailsById = async (worryId, userId) => {
 };
 
 // '내가 해결한 고민' 목록 전체 조회
-export const getHelpedSolveWorriesByUserId = async (userId) => {
-    return LikeRepository.findHelpedSolveWorriesByUserId(userId);
+export const getHelpedSolveWorriesByUserId = async (userId, page, limit) => {
+    return LikeRepository.findHelpedSolveWorriesByUserId(userId, page, limit);
 };
 
 // '내가 해결한 고민' 상세 조회
 export const getHelpedSolveWorryDetailsById = async (worryId, userId) => {
     return LikeRepository.findHelpedSolveWorryDetailsById(worryId, userId);
+};
+
+// 좋아요를 가장 많이 받은 탑 5위 댓글 조회
+export const getTopLikedCommentAuthors = async () => {
+    return await LikeRepository.findTopLikedCommentAuthors();
 };

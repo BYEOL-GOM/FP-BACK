@@ -106,17 +106,23 @@ export const findSolvedWorriesByUserId = async (userId, page, limit) => {
     });
 
     return {
-        totalCount,
-        worries,
+        page, // 현재 페이지 번호 추가
+        limit, // 페이지당 항목 수 추가
+        totalCount, // 전체 항목 수
+        worries, // 현재 페이지의 데이터
     };
 };
 
 // '내가 해결한 고민' 목록 전체 조회
-export const findHelpedSolveWorriesByUserId = async (userId) => {
-    return await prisma.worries.findMany({
+export const findHelpedSolveWorriesByUserId = async (userId, page, limit) => {
+    const skip = (page - 1) * limit;
+    const worries = await prisma.worries.findMany({
         where: {
             isSolved: true,
             commentAuthorId: userId,
+            solvingComment: {
+                userId: userId,
+            },
         },
         select: {
             worryId: true,
@@ -128,7 +134,26 @@ export const findHelpedSolveWorriesByUserId = async (userId) => {
         orderBy: {
             createdAt: 'desc',
         },
+        skip: skip,
+        take: limit,
     });
+    // 전체 항목 수를 조회합니다.
+    const totalCount = await prisma.worries.count({
+        where: {
+            isSolved: true,
+            commentAuthorId: userId,
+            // solvingComment: {
+            //     commentAuthorId: userId,
+            // },
+        },
+    });
+
+    return {
+        page, // 현재 페이지 번호 추가
+        limit, // 페이지당 항목 수 추가
+        totalCount, // 전체 항목 수
+        worries, // 현재 페이지의 데이터
+    };
 };
 
 // 재귀함수
@@ -235,4 +260,36 @@ export const findHelpedSolveWorryDetailsById = async (worryId, userId) => {
     }
 
     return worryDetails;
+};
+
+// 좋아요를 가장 많이 받은 탑 5위 댓글 조회
+export const findTopLikedCommentAuthors = async () => {
+    // 모든 좋아요와 관련된 댓글과 고민 정보를 가져옵니다.
+    const likes = await prisma.likes.findMany({
+        include: {
+            comment: {
+                include: {
+                    worry: true, // 이 댓글이 속한 고민 정보를 포함합니다.
+                },
+            },
+        },
+    });
+
+    // 좋아요 받은 commentAuthorId 별로 집계합니다.
+    const commentAuthorLikesCount = likes.reduce((acc, like) => {
+        const commentAuthorId = like.comment.worry.commentAuthorId;
+        if (!acc[commentAuthorId]) {
+            acc[commentAuthorId] = 0;
+        }
+        acc[commentAuthorId]++;
+        return acc;
+    }, {});
+
+    // 집계된 데이터를 배열로 변환하고 좋아요 수에 따라 정렬합니다.
+    const sortedAuthors = Object.entries(commentAuthorLikesCount)
+        .map(([commentAuthorId, likes]) => ({ commentAuthorId: parseInt(commentAuthorId), likes }))
+        .sort((a, b) => b.likes - a.likes)
+        .slice(0, 5); // 상위 5명만 추출
+
+    return sortedAuthors;
 };
