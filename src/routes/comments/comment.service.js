@@ -16,6 +16,12 @@ export const getCommentDetail = async (commentId) => {
 
 // 답장보내기
 export const createReply = async (worryId, commentId, content, userId, fontColor) => {
+    // 금지어 포함 여부 확인
+    const isBannedWordIncluded = global.bannedWords.some((word) => content.includes(word));
+    if (isBannedWordIncluded) {
+        throw new Error('금지어가 포함된 내용은 등록할 수 없습니다.');
+    }
+
     let parentId = commentId ? parseInt(commentId) : null;
 
     // 중복 답변 검증
