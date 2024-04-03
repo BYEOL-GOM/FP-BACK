@@ -200,3 +200,5 @@
 {"level":"info","message":"Method: POST, URL: /worries/19/comments/39, Status: 400, Duration: 133ms","timestamp":"2024-04-03T02:52:34.500Z"}
 {"level":"info","message":"Method: POST, URL: /worries/19/comments/39, Status: 201, Duration: 173ms","timestamp":"2024-04-03T02:54:21.509Z"}
 {"level":"info","message":"Method: POST, URL: /worries/19/comments/40, Status: 201, Duration: 171ms","timestamp":"2024-04-03T02:55:55.404Z"}
+{"level":"info","message":"Method: POST, URL: /worries/19/comments/40, Status: 400, Duration: 72ms","timestamp":"2024-04-03T03:11:39.644Z"}
+{"level":"info","message":"Method: POST, URL: /worries/19/comments/41, Status: 201, Duration: 83ms","timestamp":"2024-04-03T03:11:45.834Z"}
