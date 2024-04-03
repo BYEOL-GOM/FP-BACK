@@ -27,6 +27,7 @@ export const getRandomUser = async (userId) => {
 export const getUserById = async (userId) => {
     return await prisma.users.findUnique({ where: { userId } });
 };
+
 // 고민등록시, 해당 userId 의 remainingWorries -1 하기
 export const decreaseRemainingWorries = async (userId) => {
     await prisma.users.update({

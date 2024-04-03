@@ -92,3 +92,11 @@ model Likes {
   commentId   Int?
   comment     Comments? @relation(fields: [commentId], references: [commentId], onDelete: Cascade)
 }
+
+
+// 금지어
+model BannedWords {
+  bannedWordId         Int      @id @default(autoincrement()) @map("bannedWordId")
+  word       String   @unique  @map("word")
+  createdAt  DateTime @default(now())  @map("createdAt")
+}

@@ -3,3 +3,8 @@
 {"level":"error","message":"Error Status: undefined, Message: worryRepository.findOldWorriesWithoutComments is not a function","timestamp":"2024-04-02T15:39:48.487Z"}
 {"level":"error","message":"Error Status: 404, Message: 해당하는 답변의 고민 게시글이 존재하지 않습니다.","timestamp":"2024-04-02T18:36:48.587Z"}
 {"level":"error","message":"Error Status: 404, Message: 해당하는 답변의 고민 게시글이 존재하지 않습니다.","timestamp":"2024-04-02T18:37:10.005Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 답변의 고민 게시글이 존재하지 않습니다.","timestamp":"2024-04-03T04:43:16.983Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 답변의 고민 게시글이 존재하지 않습니다.","timestamp":"2024-04-03T04:43:22.409Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 답변의 고민 게시글이 존재하지 않습니다.","timestamp":"2024-04-03T04:43:42.632Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 답변의 고민 게시글이 존재하지 않습니다.","timestamp":"2024-04-03T04:44:09.687Z"}
+{"level":"error","message":"Error Status: 400, Message: Unexpected token ',', ...\"\"userId\" :,\r\n    \"co\"... is not valid JSON","timestamp":"2024-04-03T04:58:30.686Z"}

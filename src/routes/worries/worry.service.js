@@ -12,6 +12,13 @@ export const createWorry = async ({ content, icon, userId, fontColor }) => {
         // 답변자 Id 랜덤 지정 & 답변 가능 여부 확인
         const randomAuthorId = await worryRepository.getRandomUser(userId);
 
+        // 금지어 포함 여부 확인
+        const isBannedWordIncluded = global.bannedWords.some((word) => content.includes(word));
+
+        if (isBannedWordIncluded) {
+            throw new Error('금지어가 포함된 내용은 등록할 수 없습니다.');
+        }
+
         // 고민 생성
         const worry = await worryRepository.createWorry({ content, icon, userId, randomAuthorId, fontColor });
 
