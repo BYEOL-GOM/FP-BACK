@@ -182,7 +182,7 @@ async function fetchCommentsRecursively(commentId) {
 }
 
 // 나의 해결된 고민 상세조회
-export const findSolvedWorryDetailsById = async (worryId, userId, userId) => {
+export const findSolvedWorryDetailsById = async (worryId, userId) => {
     const worryDetails = await prisma.worries.findUnique({
         where: {
             worryId: worryId,
