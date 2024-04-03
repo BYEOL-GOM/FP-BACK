@@ -156,9 +156,34 @@ export const findHelpedSolveWorriesByUserId = async (userId, page, limit) => {
     };
 };
 
-// '나의 해결된 고민' 상세 조회
-export const findSolvedWorryDetailsById = async (worryId, userId) => {
-    return await prisma.worries.findUnique({
+// 재귀함수
+async function fetchCommentsRecursively(commentId) {
+    const comment = await prisma.comments.findUnique({
+        where: { commentId },
+        select: {
+            commentId: true,
+            content: true,
+            createdAt: true,
+            updatedAt: true,
+            userId: true, // 댓글 작성자 ID
+            parentId: true, // 부모 댓글 ID
+            children: true, // 자식 댓글 선택
+        },
+    });
+
+    if (comment && comment.children && comment.children.length > 0) {
+        for (let i = 0; i < comment.children.length; i++) {
+            // 각 자식 댓글에 대해 재귀적으로 처리
+            comment.children[i] = await fetchCommentsRecursively(comment.children[i].commentId);
+        }
+    }
+
+    return comment;
+}
+
+// 나의 해결된 고민 상세조회
+export const findSolvedWorryDetailsById = async (worryId, userId, userId) => {
+    const worryDetails = await prisma.worries.findUnique({
         where: {
             worryId: worryId,
             userId: userId,
@@ -171,30 +196,32 @@ export const findSolvedWorryDetailsById = async (worryId, userId) => {
             icon: true,
             userId: true,
             comments: {
+                where: { parentId: null }, // 최초 댓글만 선택
                 select: {
                     commentId: true,
                     content: true,
                     createdAt: true,
                     updatedAt: true,
-                    parentId: true,
-                    children: {
-                        select: {
-                            commentId: true,
-                            content: true,
-                            createdAt: true,
-                            updatedAt: true,
-                            parentId: true,
-                        },
-                    },
+                    userId: true, // 댓글 작성자 ID
                 },
+                orderBy: { createdAt: 'asc' },
             },
         },
     });
+
+    // 각 최초 댓글에 대해 대댓글을 재귀적으로 조회
+    if (worryDetails && worryDetails.comments) {
+        for (let i = 0; i < worryDetails.comments.length; i++) {
+            worryDetails.comments[i] = await fetchCommentsRecursively(worryDetails.comments[i].commentId);
+        }
+    }
+
+    return worryDetails;
 };
 
 // '내가 해결한 고민' 상세 조회
 export const findHelpedSolveWorryDetailsById = async (worryId, userId) => {
-    return await prisma.worries.findUnique({
+    const worryDetails = await prisma.worries.findUnique({
         where: {
             worryId: worryId,
             commentAuthorId: userId,
@@ -206,26 +233,33 @@ export const findHelpedSolveWorryDetailsById = async (worryId, userId) => {
             createdAt: true,
             icon: true,
             userId: true,
+            commentAuthorId: true, // 답변 작성자 ID
             comments: {
+                where: { parentId: null }, // 최초 답변만 선택
                 select: {
                     commentId: true,
                     content: true,
                     createdAt: true,
                     updatedAt: true,
-                    parentId: true,
-                    children: {
-                        select: {
-                            commentId: true,
-                            content: true,
-                            createdAt: true,
-                            updatedAt: true,
-                            parentId: true,
-                        },
-                    },
+                    userId: true, // 답변 작성자 ID
                 },
+                orderBy: { createdAt: 'asc' },
             },
         },
     });
+
+    // 각 최초 댓글에 대해 대댓글을 재귀적으로 조회
+    if (worryDetails && worryDetails.comments) {
+        for (let i = 0; i < worryDetails.comments.length; i++) {
+            worryDetails.comments[i] = await fetchCommentsRecursively(worryDetails.comments[i].commentId);
+        }
+    }
+
+    if (worryDetails && worryDetails.commentAuthorId !== userId) {
+        throw new Error("Access denied. You're not the solver of this worry.");
+    }
+
+    return worryDetails;
 };
 
 // 좋아요를 가장 많이 받은 탑 5위 댓글 조회
