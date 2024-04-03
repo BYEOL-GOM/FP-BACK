@@ -47,5 +47,14 @@ export const createReply = async (worryId, commentId, content, userId, fontColor
         fontColor,
     });
 
-    return comment;
+    // 클라이언트에 반환할 때는 필요한 정보만 포함시키도록 구성
+    return {
+        commentId: comment.id,
+        content: comment.content,
+        createdAt: comment.createdAt,
+        fontColor: comment.fontColor,
+        parentId: comment.parentId,
+        // userId: comment.userId,
+        worryId: comment.worryId,
+    };
 };

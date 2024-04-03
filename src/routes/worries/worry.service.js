@@ -79,6 +79,7 @@ export const deleteSelectedWorry = async (worryId, userId) => {
     }
 
     const deletedWorry = await worryRepository.deleteSelectedWorry(worryId);
+
     return deletedWorry;
 };
 
