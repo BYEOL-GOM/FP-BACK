@@ -21,8 +21,6 @@ export const getSolvedWorries = async (req, res, next) => {
         const { userId } = req.params; // 로그인한 유저
         // const userId = req.params.userId; // 로그인한 유저
 
-        // const { userId } = req.body; // 로그인한 유저
-        // const { userId } = res.locals.user.userId;
         console.log('🩵🩵🩵userId : ', userId);
 
         // 페이지네이션
