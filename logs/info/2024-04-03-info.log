@@ -335,3 +335,11 @@
 {"level":"info","message":"Method: GET, URL: /swagger-ui-bundle.js, Status: 304, Duration: 16ms","timestamp":"2024-04-03T11:46:32.003Z"}
 {"level":"info","message":"Method: GET, URL: /swagger-ui-standalone-preset.js, Status: 304, Duration: 16ms","timestamp":"2024-04-03T11:46:32.005Z"}
 {"level":"info","message":"Method: GET, URL: /favicon-32x32.png, Status: 304, Duration: 25ms","timestamp":"2024-04-03T11:46:32.772Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 116ms","timestamp":"2024-04-03T02:49:31.575Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 225ms","timestamp":"2024-04-03T02:49:39.679Z"}
+{"level":"info","message":"Method: POST, URL: /worries/19/comments, Status: 201, Duration: 95ms","timestamp":"2024-04-03T02:50:09.072Z"}
+{"level":"info","message":"Method: POST, URL: /worries/19/comments/39, Status: 400, Duration: 133ms","timestamp":"2024-04-03T02:52:34.500Z"}
+{"level":"info","message":"Method: POST, URL: /worries/19/comments/39, Status: 201, Duration: 173ms","timestamp":"2024-04-03T02:54:21.509Z"}
+{"level":"info","message":"Method: POST, URL: /worries/19/comments/40, Status: 201, Duration: 171ms","timestamp":"2024-04-03T02:55:55.404Z"}
+{"level":"info","message":"Method: POST, URL: /worries/19/comments/40, Status: 400, Duration: 72ms","timestamp":"2024-04-03T03:11:39.644Z"}
+{"level":"info","message":"Method: POST, URL: /worries/19/comments/41, Status: 201, Duration: 83ms","timestamp":"2024-04-03T03:11:45.834Z"

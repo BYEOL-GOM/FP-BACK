@@ -18,7 +18,8 @@ const app = express();
 const PORT = 3000; // 환경 변수에서 포트를 설정할 수 있도록 변경
 
 // CORS 미들웨어 설정
-app.use(cors({
+app.use(
+  cors({
   origin: '*', // 실제 배포 환경에서는 이 값을 구체적인 출처로 변경하세요.
   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization'], // 'Authorization' 헤더 허용
@@ -56,4 +57,3 @@ app.use(generalErrorHandler);
 
 app.listen(PORT, () => {
     console.log(`${PORT} 포트로 서버가 열렸어요!`);
-});
