@@ -1,5 +1,5 @@
 import express from 'express';
-import {kakaoLoginController ,naverLoginController,refreshController} from './user.controller.js'
+import { kakaoLoginController, naverLoginController, refreshController } from './user.controller.js';
 import { prisma } from '../../utils/prisma/index.js';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
@@ -10,15 +10,14 @@ dotenv.config();
 
 const router = express.Router();
 
-
 // 카카오 로그인
-router.post('/kakao', kakaoLoginController)
+router.post('/kakao', kakaoLoginController);
 
 // 네이버 로그인
-router.post('/naver', naverLoginController)
+router.post('/naver', naverLoginController);
 
 // 엑세스 토큰 재발급
-router.post('/refresh', refreshController)
+router.post('/refresh', refreshController);
 
 // 임시 회원가입 API
 router.post('/sign-up', async (req, res, next) => {
@@ -42,7 +41,3 @@ router.post('/sign-up', async (req, res, next) => {
 });
 
 export default router;
-
-
-
-
