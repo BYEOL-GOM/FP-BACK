@@ -290,3 +290,4 @@
 {"level":"info","message":"Method: POST, URL: /worries/3/comments, Status: 400, Duration: 4ms","timestamp":"2024-04-03T09:54:01.645Z"}
 {"level":"info","message":"Method: POST, URL: /worries/3/comments, Status: 400, Duration: 1ms","timestamp":"2024-04-03T09:56:44.379Z"}
 {"level":"info","message":"Method: POST, URL: /worries/3/comments, Status: 201, Duration: 103ms","timestamp":"2024-04-03T09:56:51.878Z"}
+{"level":"info","message":"Method: DELETE, URL: /3, Status: 400, Duration: 6ms","timestamp":"2024-04-03T12:08:43.714Z"}

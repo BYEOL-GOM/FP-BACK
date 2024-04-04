@@ -95,7 +95,19 @@ export const getWorriesByCommentAuthorId = async (userId) => {
     }
 };
 
-// 고민 상세조회
+// 고민 선택 조회(삭제/미삭제 모두 포함)
+export const getWorry = async (worryId) => {
+    return await prisma.worries.findUnique({
+        where: { worryId },
+        select: {
+            worryId: true,
+            commentAuthorId: true,
+            deletedAt: true,
+        },
+    });
+};
+
+// 고민 상세조회(삭제된 고민 제외)
 export const getWorryDetail = async (worryId) => {
     try {
         return await prisma.worries.findUnique({
@@ -188,53 +200,65 @@ export const softDeleteWorryById = async (worryId) => {
 export const getCommentAuthorId = async (worryId) => {
     const worry = await prisma.worries.findUnique({
         where: { worryId },
-        select: { commentAuthorId: true },
+        select: { commentAuthorId: true, deletedAt: true },
     });
     return worry ? worry.commentAuthorId : null;
 };
 
-// 답변하기 곤란한 고민 선택 삭제
-export const deleteSelectedWorry = async (worryId) => {
+// 고민 선택 삭제
+export const deleteSelectedWorry = async (worryId, deleteReason) => {
     try {
-        const existingWorry = await prisma.worries.findUnique({
-            where: { worryId },
-        });
-
-        if (existingWorry.deletedAt !== null) {
-            throw new Error('이미 삭제되었습니다');
-        }
-
-        // 삭제된 고민의 정보
+        // 해당고민 소프트 삭제하기
         const worryUpdateResult = await prisma.worries.update({
             where: { worryId },
             data: { deletedAt: new Date() },
         });
 
-        // 사용자의 remainingWorries +1 증가
-        await prisma.users.update({
-            where: { userId: worryUpdateResult.userId },
-            data: { remainingWorries: { increment: 1 } },
-        });
+        // 삭제 이유가 답변의 어려움일 경우
+        if (deleteReason === 'DIFFICULT_TO_ANSWER') {
+            // 고민자의 remainingWorries +1 증가
+            await prisma.users.update({
+                where: { userId: worryUpdateResult.userId },
+                data: { remainingWorries: { increment: 1 } },
+            });
 
-        // 답변자의 remainingAnswers +1 증가
-        await prisma.users.update({
-            where: { userId: worryUpdateResult.commentAuthorId },
-            data: { remainingAnswers: { increment: 1 } },
-        });
+            // 답변자의 remainingAnswers +1 증가
+            await prisma.users.update({
+                where: { userId: worryUpdateResult.commentAuthorId },
+                data: { remainingAnswers: { increment: 1 } },
+            });
+        } else if (deleteReason === 'OFFENSIVE_CONTENT') {
+            await prisma.users.update({
+                where: { userId: worryUpdateResult.userId },
+                data: { remainingWorries: { increment: 1 } },
+            });
+            // 신고 db 에 저장
+            await prisma.reports.create({
+                data: {
+                    reason: deleteReason,
+                    userId: worryUpdateResult.userId,
+                    worryId,
+                },
+            });
+        }
     } catch (error) {
         throw error;
     }
 };
 
-// // 재고민 & 재답변 생성
-// export const createComment = async ({ worryId, content, userId, parentId, fontColor }) => {
-//     return await prisma.comments.create({
-//         data: {
-//             worryId: parseInt(worryId),
-//             content,
-//             userId,
-//             parentId,
-//             fontColor,
-//         },
-//     });
-// };
+// 신고하기
+export const reportWorry = async ({ worryId, commentId, userId, deleteReason }) => {
+    try {
+        const report = await prisma.reports.create({
+            data: {
+                reason: deleteReason,
+                userId,
+                ...(worryId && { worryId }),
+                ...(commentId && { commentId }),
+            },
+        });
+        return report;
+    } catch (error) {
+        throw new Error('신고 처리 중 에러가 발생했습니다: ' + error.message);
+    }
+};
