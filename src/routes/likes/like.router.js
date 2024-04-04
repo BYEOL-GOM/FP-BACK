@@ -30,6 +30,6 @@ router.get('/myHelpedSolvedWorry/:worryId', authMiddleware, getHelpedSolveWorryD
 router.get('/top-likes', getTopLikedCommentAuthors);
 
 // 메인 전체 조회
-router.get('/main', authMiddleware, getMain);
+//router.get('/main', authMiddleware, getMain);
 
 export default router;
