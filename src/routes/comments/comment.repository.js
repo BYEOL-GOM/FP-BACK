@@ -5,13 +5,6 @@ export const findWorryById = async (worryId) => {
     return await prisma.worries.findUnique({ where: { worryId: parseInt(worryId) } });
 };
 
-// export const findCommentById = async (commentId) => {
-//     return await prisma.comments.findUnique({
-//         where: { commentId: parseInt(commentId) },
-//         include: { worry: true },
-//     });
-// };
-
 // 고민을 해결된 상태로 변경
 export const markWorryAsSolved = async (worryId, commentId, senderId, receiverId) => {
     return prisma.worries.update({
@@ -122,6 +115,52 @@ export const createReply = async ({ worryId, content, userId, parentId, fontColo
             userId: parseInt(userId),
             parentId,
             fontColor,
+        },
+    });
+};
+
+//commentId로 해당하는 답장 가져오기
+export const getComment = async (commentId) => {
+    return await prisma.comments.findUnique({
+        where: { commentId },
+        select: {
+            deletedAt: true,
+            worry: { select: { userId: true } },
+        },
+    });
+};
+
+// commentId에 해당하는 답장 삭제하기
+export const deleteComment = async (commentId) => {
+    await prisma.comments.update({
+        where: { commentId },
+        data: { deletedAt: new Date() },
+    });
+};
+
+//
+export const updateUserCounts = async (userId) => {
+    await prisma.$transaction([
+        prisma.users.update({
+            where: { userId },
+            data: { remainingWorries: { increment: 1 }, remainingAnswers: { increment: 1 } },
+        }),
+    ]);
+};
+
+export const updateUserWorryCount = async (userId) => {
+    await prisma.users.update({
+        where: { userId },
+        data: { remainingWorries: { increment: 1 } },
+    });
+};
+
+export const reportComment = async (commentId, userId, reason) => {
+    await prisma.reports.create({
+        data: {
+            reason,
+            userId,
+            commentId,
         },
     });
 };

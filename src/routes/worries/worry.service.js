@@ -74,7 +74,7 @@ export const deleteOldWorries = async () => {
     }
 };
 
-// 곤란한 질문 삭제 및 신고하기
+// 질문 삭제 및 신고하기
 export const deleteSelectedWorry = async (worryId, userId, deleteReason) => {
     const selectedWorry = await worryRepository.getWorry(worryId);
     if (!selectedWorry) {

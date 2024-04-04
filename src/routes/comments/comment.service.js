@@ -64,3 +64,25 @@ export const createReply = async (worryId, commentId, content, userId, fontColor
         worryId: comment.worryId,
     };
 };
+
+// 답장 삭제 또는 신고하기
+export const deleteComment = async ({ commentId, userId, deleteReason }) => {
+    const comment = await CommentRepository.getComment(commentId);
+    if (!comment) {
+        throw new Error('해당하는 답변이 존재하지 않습니다');
+    }
+    if (comment.worry.userId !== userId) {
+        throw new Error('답장을 삭제할 권한이 없습니다.');
+    }
+    if (comment.deletedAt !== null) {
+        throw new Error('해당 답장은 이미 삭제되었습니다');
+    }
+    await CommentRepository.deleteComment(commentId);
+
+    if (deleteReason === 'DIFFICULT_TO_ANSWER') {
+        await CommentRepository.updateUserCounts(userId);
+    } else if (deleteReason === 'OFFENSIVE_CONTENT') {
+        await CommentRepository.updateUserWorryCount(userId);
+        await CommentRepository.reportComment(commentId, userId, deleteReason);
+    }
+};

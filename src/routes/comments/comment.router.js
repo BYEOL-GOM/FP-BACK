@@ -3,6 +3,7 @@ import {
     createReplyController,
     findLatestCommentsAndWorriesForUserController,
     getCommentDetailController,
+    deleteCommentController,
 } from './comment.controller.js';
 
 let router = express.Router({ mergeParams: true });
@@ -15,5 +16,8 @@ router.get('/comments', findLatestCommentsAndWorriesForUserController);
 
 // 답장 상세조회
 router.get('/comments/:commentId', getCommentDetailController);
+
+// 답장 삭제 또는 신고하기
+router.delete('/comments/:commentId', deleteCommentController);
 
 export default router;
