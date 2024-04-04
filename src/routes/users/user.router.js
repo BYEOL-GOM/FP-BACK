@@ -39,5 +39,55 @@ router.post('/sign-up', async (req, res, next) => {
         return res.status(500).json({ message: '서버 오류' });
     }
 });
+/**
+ * @swagger
+  /posts:
+    post:
+      summary: 새 게시물 등록
+      tags:
+        - Posts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostRequest'
+      responses:
+        '201':
+          description: 게시물이 성공적으로 등록되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 게시물이 성공적으로 등록되었습니다.
+        '400':
+          description: 데이터 형식이 올바르지 않음
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 데이터 형식이 올바르지 않습니다.
+    get:
+      summary: 게시물 전체 조회
+      tags:
+        - Posts
+      responses:
+        '200':
+          description: 게시물 전체 목록 조회 성공.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 게시물 전체 목록 조회 성공하였습니다.
+ */
 
 export default router;
