@@ -19,7 +19,7 @@ export const getRandomUser = async (userId) => {
         const randomIndex = Math.floor(Math.random() * potentialResponders.length);
         return potentialResponders[randomIndex].userId;
     } catch (error) {
-        throw new Error('랜덤 답변자 선정 실패: ' + error.message);
+        throw new Error(error.message);
     }
 };
 
@@ -35,7 +35,7 @@ export const decreaseRemainingWorries = async (userId) => {
     });
 };
 
-// 답변자의 remainingAnswers 감소
+// 답변자의 remainingAnswers -1하기
 export const decreaseRemainingAnswers = async (userId) => {
     await prisma.users.update({
         where: { userId },
@@ -55,7 +55,6 @@ export const createWorry = async ({ content, icon, userId, randomAuthorId, fontC
                 fontColor,
             },
             select: {
-                // 생성된 고민의 상세 정보를 선택적으로 반환
                 worryId: true,
                 userId: true,
                 commentAuthorId: true,
@@ -63,7 +62,6 @@ export const createWorry = async ({ content, icon, userId, randomAuthorId, fontC
                 createdAt: true,
                 icon: true,
                 fontColor: true,
-                // 여기에 더 필요한 필드가 있다면 추가
             },
         });
         return createdWorry;
@@ -71,6 +69,7 @@ export const createWorry = async ({ content, icon, userId, randomAuthorId, fontC
         throw new Error('고민등록에 실패하였습니다. ' + error.message);
     }
 };
+
 // 고민답변자Id기준으로 보는 고민 전체 조회
 export const getWorriesByCommentAuthorId = async (userId) => {
     try {
@@ -84,6 +83,9 @@ export const getWorriesByCommentAuthorId = async (userId) => {
                 // userId: true,
                 icon: true,
                 createdAt: true,
+            },
+            orderBy: {
+                createdAt: 'desc',
             },
         });
         return worries;
@@ -115,7 +117,7 @@ export const getWorryDetail = async (worryId) => {
     }
 };
 
-// 오래된 고민 소프트 삭제
+// 생성된지 24시간 이상이 된 고민중 답변이 없는 고민 찾기
 export const findOldWorriesWithoutComments = async () => {
     try {
         const twentyFourHoursAgo = new Date();
@@ -143,12 +145,12 @@ export const findOldWorriesWithoutComments = async () => {
     }
 };
 
+// 오래된 고민 소프트 삭제
 export const softDeleteWorryById = async (worryId) => {
     try {
-        // 해당 고민이 이미 삭제되었는지 확인
         const existingWorry = await prisma.worries.findUnique({
             where: { worryId },
-            select: { deletedAt: true },
+            select: { deletedAt: true, userId: true, commentAuthorId: true },
         });
 
         // 이미 삭제된 경우에는 더 이상 업데이트하지 않음
@@ -158,33 +160,23 @@ export const softDeleteWorryById = async (worryId) => {
                 data: { deletedAt: new Date() },
             });
             console.log(`오래된 고민 ${worryId}번 삭제 성공`);
+
+            // 사용자의 remainingWorries +1
+            await prisma.users.update({
+                where: { userId: existingWorry.userId },
+                data: { remainingWorries: { increment: 1 } },
+            });
+
+            // 답변자의 remainingAnswers +1
+            if (existingWorry.commentAuthorId) {
+                await prisma.users.update({
+                    where: { userId: existingWorry.commentAuthorId },
+                    data: { remainingAnswers: { increment: 1 } },
+                });
+            }
         } else {
             console.log(`오래된 고민 ${worryId}번은 이미 삭제되었습니다.`);
         }
-    } catch (error) {
-        console.error(`오래된 고민 ${worryId}번 삭제 실패:`, error);
-        throw error;
-    }
-};
-
-// 답변하기 곤란한 고민 선택 삭제
-export const deleteSelectedWorry = async (worryId) => {
-    try {
-        const existingWorry = await prisma.worries.findUnique({
-            where: { worryId },
-        });
-
-        if (existingWorry.deletedAt !== null) {
-            console.log(`오래된 고민 ${worryId}번은 이미 삭제되었습니다.`);
-            return;
-        }
-
-        await prisma.worries.update({
-            where: { worryId },
-            data: { deletedAt: new Date() },
-        });
-
-        console.log(`오래된 고민 ${worryId}번 삭제 성공`);
     } catch (error) {
         console.error(`오래된 고민 ${worryId}번 삭제 실패:`, error);
         throw error;
@@ -200,31 +192,48 @@ export const getCommentAuthorId = async (worryId) => {
     return worry ? worry.commentAuthorId : null;
 };
 
-// 재고민 & 재답변 생성
-export const createComment = async ({ worryId, content, userId, parentId, type }) => {
-    // 데이터베이스에 댓글 생성
-    return await prisma.comments.create({
-        data: {
-            worryId: parseInt(worryId),
-            fontColor,
-            content,
-            userId: parseInt(userId),
-            parentId: parseInt(parentId),
-            // 추가적으로 type 필드가 모델에 정의되어 있다면 여기에 포함시킬 수 있습니다.
-        },
-    });
+// 답변하기 곤란한 고민 선택 삭제
+export const deleteSelectedWorry = async (worryId) => {
+    try {
+        const existingWorry = await prisma.worries.findUnique({
+            where: { worryId },
+        });
+
+        if (existingWorry.deletedAt !== null) {
+            throw new Error('이미 삭제되었습니다');
+        }
+
+        // 삭제된 고민의 정보
+        const worryUpdateResult = await prisma.worries.update({
+            where: { worryId },
+            data: { deletedAt: new Date() },
+        });
+
+        // 사용자의 remainingWorries +1 증가
+        await prisma.users.update({
+            where: { userId: worryUpdateResult.userId },
+            data: { remainingWorries: { increment: 1 } },
+        });
+
+        // 답변자의 remainingAnswers +1 증가
+        await prisma.users.update({
+            where: { userId: worryUpdateResult.commentAuthorId },
+            data: { remainingAnswers: { increment: 1 } },
+        });
+    } catch (error) {
+        throw error;
+    }
 };
 
 // // 재고민 & 재답변 생성
-// export const createComment = async ({ worryId, content, userId, parentId }) => {
-//     console.log('콘솔 : Creating comment with:', { worryId, content, userId, parentId });
-
+// export const createComment = async ({ worryId, content, userId, parentId, fontColor }) => {
 //     return await prisma.comments.create({
 //         data: {
 //             worryId: parseInt(worryId),
 //             content,
-//             userId: parseInt(userId), // 요청을 보낸 사용자의 ID
-//             parentId: parseInt(parentId), // 이전 답변(또는 댓글)의 ID
+//             userId,
+//             parentId,
+//             fontColor,
 //         },
 //     });
 // };

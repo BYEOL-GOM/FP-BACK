@@ -2,7 +2,7 @@ import express from 'express';
 import { Server as HttpServer } from 'http';
 import { Server as SocketIOServer } from 'socket.io';
 import cookieParser from 'cookie-parser';
-//import kakaoStrategy from './routes/passport/kakaoStrategy.js';
+// import kakaoStrategy from './routes/passport/kakaoStrategy.js';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import LogMiddleware from './middlewares/logMiddleware.js';
@@ -11,12 +11,14 @@ import router from './routes/index.js';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
 import { prisma } from './utils/prisma/index.js';
+import bodyParser from 'body-parser';
+import { swaggerUi, specs } from './swagger/swaggerOptions.js';
 
 // 환경 변수 설정 로드
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = 3000; // 환경 변수에서 포트를 설정할 수 있도록 변경
 
 const httpServer = new HttpServer(app);
 const io = new SocketIOServer(httpServer, {
@@ -26,20 +28,43 @@ const io = new SocketIOServer(httpServer, {
     },
 });
 
-app.use(LogMiddleware);
-app.use(cookieParser());
+// CORS 미들웨어 설정
 app.use(
     cors({
         origin: '*', // 실제 배포시에는 허용할 도메인을 명시적으로 지정하는 것이 좋습니다.
+        methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+        allowedHeaders: ['Content-Type', 'Authorization'], // 'Authorization' 헤더 허용
         credentials: true,
     }),
 );
 
+// CORS Preflight 요청에 대한 처리를 위한 미들웨어 추가
+app.use((req, res, next) => {
+    if (req.method === 'OPTIONS') {
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+        return res.status(204).json({});
+    }
+    next();
+});
+
+// bodyParser와 express.json()은 CORS 설정 바로 다음에 위치해야 합니다.
+app.use(bodyParser.json());
 app.use(express.json());
 
-// Passport 초기화
+// 로깅 및 쿠키 파서 미들웨어
+app.use(LogMiddleware);
+app.use(cookieParser());
 
+// Passport 초기화 및 라우팅 설정
+// app.use(passport.initialize()); // Passport를 사용하는 경우 초기화 필요
 app.use('/', router);
+
+// 스웨거 설정
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+
+// 에러 핸들링 미들웨어는 가장 마지막에 위치
 app.use(generalErrorHandler);
 
 // app.listen 대신 server.listen을 사용.

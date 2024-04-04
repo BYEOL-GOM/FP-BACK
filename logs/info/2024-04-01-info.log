@@ -101,10 +101,10 @@
 {"level":"info","message":"Method: POST, URL: /34/comments/40/replies, Status: 201, Duration: 466ms","timestamp":"2024-04-01T03:13:09.988Z"}
 {"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 111ms","timestamp":"2024-04-01T03:13:56.164Z"}
 {"level":"info","message":"Method: GET, URL: /comments/41, Status: 200, Duration: 71ms","timestamp":"2024-04-01T03:15:17.087Z"}
-<<<<<<< HEAD
 {"level":"info","message":"Method: POST, URL: /kakao, Status: 405, Duration: 345ms","timestamp":"2024-04-01T03:42:29.788Z"}
 {"level":"info","message":"Method: GET, URL: /kakao, Status: 404, Duration: 7ms","timestamp":"2024-04-01T03:51:43.099Z"}
-=======
+{"level":"info","message":"Method: POST, URL: /kakao, Status: 405, Duration: 345ms","timestamp":"2024-04-01T03:42:29.788Z"}
+{"level":"info","message":"Method: GET, URL: /kakao, Status: 404, Duration: 7ms","timestamp":"2024-04-01T03:51:43.099Z"}
 {"level":"info","message":"Method: GET, URL: /comments/41, Status: 200, Duration: 103ms","timestamp":"2024-04-01T03:17:39.080Z"}
 {"level":"info","message":"Method: GET, URL: /comments/41, Status: 200, Duration: 30ms","timestamp":"2024-04-01T03:17:40.013Z"}
 {"level":"info","message":"Method: POST, URL: /34/comments/40/replies, Status: 201, Duration: 95ms","timestamp":"2024-04-01T03:17:43.669Z"}
@@ -125,7 +125,6 @@
 {"level":"info","message":"Method: POST, URL: /worries/36/comments, Status: 201, Duration: 52ms","timestamp":"2024-04-01T03:41:18.145Z"}
 {"level":"info","message":"Method: POST, URL: /worries/36/comments, Status: 201, Duration: 146ms","timestamp":"2024-04-01T03:41:40.460Z"}
 {"level":"info","message":"Method: POST, URL: /worries/36/comments, Status: 201, Duration: 58ms","timestamp":"2024-04-01T03:41:41.608Z"}
->>>>>>> 0552449b73cc453207f899e1e112284543247f42
 {"level":"info","message":"Method: POST, URL: /comments, Status: 404, Duration: 13ms","timestamp":"2024-04-01T05:15:21.464Z"}
 {"level":"error","message":"Error Status: undefined, Message: 고민 등록 실패worryRepository.checkExistingWorry is not a function","timestamp":"2024-04-01T05:15:28.757Z"}
 {"level":"info","message":"Method: POST, URL: /worries, Status: 500, Duration: 13ms","timestamp":"2024-04-01T05:15:28.762Z"}
@@ -328,55 +327,9 @@
 {"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 154ms","timestamp":"2024-04-01T11:51:16.859Z"}
 {"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 183ms","timestamp":"2024-04-01T11:51:17.931Z"}
 {"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 242ms","timestamp":"2024-04-01T11:51:19.611Z"}
-{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 233ms","timestamp":"2024-04-01T12:10:33.120Z"}
-{"level":"info","message":"Method: POST, URL: /worries/127/comments, Status: 400, Duration: 2ms","timestamp":"2024-04-01T12:10:41.348Z"}
-{"level":"info","message":"Method: POST, URL: /worries/127/comments, Status: 400, Duration: 1ms","timestamp":"2024-04-01T12:13:07.822Z"}
-{"level":"info","message":"Method: POST, URL: /worries/127/comments, Status: 400, Duration: 4ms","timestamp":"2024-04-01T12:14:09.384Z"}
-{"level":"info","message":"Method: POST, URL: /, Status: 400, Duration: 85ms","timestamp":"2024-04-01T12:14:19.027Z"}
-{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 156ms","timestamp":"2024-04-01T12:14:24.720Z"}
-{"level":"info","message":"Method: POST, URL: /worries/128/comments, Status: 400, Duration: 1ms","timestamp":"2024-04-01T12:14:39.747Z"}
-{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 143ms","timestamp":"2024-04-01T12:15:07.678Z"}
-{"level":"info","message":"Method: POST, URL: /worries/129/comments, Status: 400, Duration: 1ms","timestamp":"2024-04-01T12:15:24.675Z"}
-{"level":"info","message":"Method: POST, URL: /worries/129/comments, Status: 400, Duration: 4ms","timestamp":"2024-04-01T12:16:06.645Z"}
-{"level":"info","message":"Method: POST, URL: /worries/129/comments, Status: 400, Duration: 2ms","timestamp":"2024-04-01T12:16:09.650Z"}
-{"level":"info","message":"Method: POST, URL: /worries/129/comments, Status: 400, Duration: 11ms","timestamp":"2024-04-01T12:16:25.823Z"}
-{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 233ms","timestamp":"2024-04-01T12:17:28.673Z"}
-{"level":"info","message":"Method: POST, URL: /worries/130/comments, Status: 400, Duration: 1ms","timestamp":"2024-04-01T12:17:36.957Z"}
-{"level":"info","message":"Method: POST, URL: /worries/130/comments, Status: 400, Duration: 1ms","timestamp":"2024-04-01T12:17:43.657Z"}
-{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 31ms","timestamp":"2024-04-01T12:19:24.674Z"}
-{"level":"info","message":"Method: GET, URL: /92, Status: 200, Duration: 13ms","timestamp":"2024-04-01T12:19:27.918Z"}
-{"level":"info","message":"Method: POST, URL: /worries/130/comments, Status: 400, Duration: 1ms","timestamp":"2024-04-01T12:19:30.514Z"}
-{"level":"info","message":"Method: POST, URL: /worries/130/comments, Status: 400, Duration: 5ms","timestamp":"2024-04-01T12:22:32.144Z"}
-{"level":"info","message":"Method: GET, URL: /comments/18, Status: 200, Duration: 98ms","timestamp":"2024-04-01T12:22:58.703Z"}
-{"level":"info","message":"Method: POST, URL: /worries/130/comments, Status: 201, Duration: 189ms","timestamp":"2024-04-01T12:26:36.113Z"}
-{"level":"info","message":"Method: GET, URL: /worries/142, Status: 200, Duration: 26ms","timestamp":"2024-04-01T12:27:53.152Z"}
-{"level":"error","message":"Error Status: undefined, Message: Cannot set headers after they are sent to the client","timestamp":"2024-04-01T12:27:53.153Z"}
-{"level":"info","message":"Method: GET, URL: /130, Status: 200, Duration: 12ms","timestamp":"2024-04-01T12:28:03.336Z"}
-{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 126ms","timestamp":"2024-04-01T12:54:18.254Z"}
-{"level":"info","message":"Method: GET, URL: /131, Status: 200, Duration: 25ms","timestamp":"2024-04-01T12:54:23.377Z"}
-{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 23ms","timestamp":"2024-04-01T12:54:41.551Z"}
-{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 15ms","timestamp":"2024-04-01T12:55:07.294Z"}
-{"level":"info","message":"Method: GET, URL: /147, Status: 200, Duration: 8ms","timestamp":"2024-04-01T12:55:13.942Z"}
-{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 20ms","timestamp":"2024-04-01T12:55:54.735Z"}
-{"level":"info","message":"Method: GET, URL: /132, Status: 200, Duration: 7ms","timestamp":"2024-04-01T12:56:03.620Z"}
-{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 11ms","timestamp":"2024-04-01T12:56:19.669Z"}
-{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 12ms","timestamp":"2024-04-01T12:56:40.864Z"}
-{"level":"info","message":"Method: GET, URL: /129, Status: 200, Duration: 8ms","timestamp":"2024-04-01T12:56:46.212Z"}
-{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 15ms","timestamp":"2024-04-01T12:57:41.412Z"}
-{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 133ms","timestamp":"2024-04-01T14:14:44.748Z"}
-{"level":"info","message":"Method: GET, URL: /201, Status: 200, Duration: 20ms","timestamp":"2024-04-01T14:14:51.588Z"}
-{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 16ms","timestamp":"2024-04-01T14:15:25.595Z"}
-{"level":"info","message":"Method: GET, URL: /179, Status: 200, Duration: 9ms","timestamp":"2024-04-01T14:15:35.032Z"}
-{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 16ms","timestamp":"2024-04-01T14:16:04.487Z"}
-{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 16ms","timestamp":"2024-04-01T14:17:43.643Z"}
-{"level":"info","message":"Method: GET, URL: /179, Status: 200, Duration: 37ms","timestamp":"2024-04-01T14:18:00.455Z"}
-{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 10ms","timestamp":"2024-04-01T14:18:02.637Z"}
-{"level":"info","message":"Method: GET, URL: /175, Status: 200, Duration: 11ms","timestamp":"2024-04-01T14:18:10.904Z"}
-{"level":"info","message":"Method: GET, URL: /175, Status: 200, Duration: 17ms","timestamp":"2024-04-01T14:19:06.957Z"}
-{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 16ms","timestamp":"2024-04-01T14:19:23.416Z"}
-{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 13ms","timestamp":"2024-04-01T14:19:50.369Z"}
-{"level":"info","message":"Method: GET, URL: /152, Status: 200, Duration: 10ms","timestamp":"2024-04-01T14:19:56.868Z"}
-{"level":"info","message":"Method: GET, URL: /, Status: 200, Duration: 15ms","timestamp":"2024-04-01T14:20:26.870Z"}
-{"level":"info","message":"Method: GET, URL: /131, Status: 200, Duration: 9ms","timestamp":"2024-04-01T14:20:35.314Z"}
-{"level":"info","message":"Method: GET, URL: /115, Status: 200, Duration: 16ms","timestamp":"2024-04-01T14:22:32.130Z"}
-{"level":"info","message":"Method: GET, URL: /113, Status: 200, Duration: 12ms","timestamp":"2024-04-01T14:23:06.147Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 1764ms","timestamp":"2024-04-01T12:11:12.813Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 65ms","timestamp":"2024-04-01T12:11:21.922Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 1465ms","timestamp":"2024-04-01T12:11:49.171Z"}
+{"level":"info","message":"Method: POST, URL: /worries/1/comments, Status: 201, Duration: 165ms","timestamp":"2024-04-01T12:13:00.480Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 429ms","timestamp":"2024-04-01T12:18:48.685Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 392ms","timestamp":"2024-04-01T12:19:05.518Z"}
