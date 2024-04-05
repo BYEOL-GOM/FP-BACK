@@ -12,6 +12,7 @@ import passport from 'passport';
 import jwt from 'jsonwebtoken';
 import bodyParser from 'body-parser';
 import { loadBannedWords } from './utils/bannedWordsLoader.js';
+import { swaggerUi, specs } from './swagger/swaggerOptions.js';
 
 const app = express();
 const PORT = 3000; // 환경 변수에서 포트를 설정할 수 있도록 변경
@@ -48,6 +49,9 @@ app.use(cookieParser());
 // Passport 초기화 및 라우팅 설정
 // app.use(passport.initialize()); // Passport를 사용하는 경우 초기화 필요
 app.use('/', router);
+
+// 스웨거 설정
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // 에러 핸들링 미들웨어는 가장 마지막에 위치
 app.use(generalErrorHandler);

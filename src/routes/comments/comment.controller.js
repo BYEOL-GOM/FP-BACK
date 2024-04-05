@@ -3,7 +3,7 @@ import * as CommentService from './comment.service.js';
 // # 답변 전체 조회
 export const findLatestCommentsAndWorriesForUserController = async (req, res) => {
     try {
-        const userId = parseInt(req.body.userId);
+        const userId = res.locals.user.userId;
         // if (!userId) {
         //     return res.status(400).json({ error: '사용자 ID가 제공되지 않았습니다.' });
         // } // 사용자인증 미들웨어로 처리
@@ -40,10 +40,11 @@ export const getCommentDetailController = async (req, res) => {
 export const createReplyController = async (req, res, next) => {
     try {
         const { worryId, commentId } = req.params;
-        const { content, userId, fontColor } = req.body;
+        const userId = res.locals.user.userId;
+        const { content, fontColor } = req.body;
 
         // 필수 데이터 검증
-        if (!worryId || !content || !userId || !fontColor) {
+        if (!worryId || !content || !fontColor) {
             return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
         }
 
@@ -59,7 +60,8 @@ export const createReplyController = async (req, res, next) => {
 // # 답장 삭제 또는 신고하기
 export const deleteCommentController = async (req, res) => {
     const { commentId } = req.params;
-    const { userId, deleteReason } = req.body;
+    const userId = res.locals.user.userId;
+    const { deleteReason } = req.body;
 
     try {
         await CommentService.deleteComment({ commentId: +commentId, userId: +userId, deleteReason });

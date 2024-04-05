@@ -23,6 +23,8 @@
         "passport-naver-v2": "^2.0.8",
         "prettier": "^3.2.5",
         "prisma": "^5.11.0",
+        "swagger-jsdoc": "^6.2.8",
+        "swagger-ui-express": "^5.0.0",
         "winston": "^3.13.0",
         "winston-daily-rotate-file": "^5.0.0"
     },

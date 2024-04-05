@@ -3,10 +3,10 @@ import * as worryService from './worry.service.js';
 // # 고민 등록
 export const createWorryController = async (req, res, next) => {
     try {
-        const { content, icon, userId, fontColor } = req.body; // 나중에 사용자 인증 미들웨어에서 userId로 변경하기
+        const { content, icon, fontColor } = req.body;
+        const userId = res.locals.user.userId;
 
-        if (!content || !icon || !userId || !fontColor)
-            return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
+        if (!content || !icon || !fontColor) return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
 
         const worry = await worryService.createWorry({ content, icon, userId: +userId, fontColor });
 
@@ -30,7 +30,7 @@ export const createWorryController = async (req, res, next) => {
 // # 전체 고민 조회 by 답변자id
 export const getWorriesByCommentAuthorIdController = async (req, res, next) => {
     try {
-        const { userId } = req.body; // 나중에 사용자 인증 미들웨어에서 userId 가져오는것으로 변경
+        const userId = res.locals.user.userId;
         const worries = await worryService.getWorriesByCommentAuthorId(+userId);
 
         // 만약 고민이 없다면
@@ -82,9 +82,10 @@ export const deleteWorryController = async (req, res, next) => {
 export const deleteSelectedWorryController = async (req, res, next) => {
     try {
         const { worryId } = req.params;
-        const { userId, deleteReason } = req.body; // 추후에 사용자 인증 userId로 변경
+        const userId = res.locals.user.userId;
+        const { deleteReason } = req.body; // 추후에 사용자 인증 userId로 변경
 
-        if (!worryId || !userId || !deleteReason) {
+        if (!worryId || !deleteReason) {
             return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
         }
 
