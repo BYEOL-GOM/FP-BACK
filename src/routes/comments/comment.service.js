@@ -71,18 +71,32 @@ export const deleteComment = async ({ commentId, userId, deleteReason }) => {
     if (!comment) {
         throw new Error('해당하는 답변이 존재하지 않습니다');
     }
-    if (comment.worry.userId !== userId) {
-        throw new Error('답장을 삭제할 권한이 없습니다.');
-    }
     if (comment.deletedAt !== null) {
         throw new Error('해당 답장은 이미 삭제되었습니다');
     }
+
+    // 본인이 작성한 답변 삭제 금지
+    if (comment.userId === userId) {
+        throw new Error('답장을 삭제할 권한이 없습니다.');
+    }
+
+    // 고민의 작성자 또는 답변(대댓글)의 부모 답변의 작성자인지 확인
+    const isWorryAuthor = comment.worry.userId === userId;
+    const isParentCommentAuthor = comment.parent && comment.parent.userId === userId;
+    if (!isWorryAuthor && !isParentCommentAuthor) {
+        throw new Error('답장을 삭제할 권한이 없습니다.');
+    }
+
     await CommentRepository.deleteComment(commentId);
 
+    // 삭제 이유가 DIFFICULT_TO_ANSWER 일 경우,
     if (deleteReason === 'DIFFICULT_TO_ANSWER') {
-        await CommentRepository.updateUserCounts(userId);
-    } else if (deleteReason === 'OFFENSIVE_CONTENT') {
-        await CommentRepository.updateUserWorryCount(userId);
-        await CommentRepository.reportComment(commentId, userId, deleteReason);
+        // 답변 작성자 및 부모의 카운트 업데이트
+        await CommentRepository.updateUserCounts(commentId, deleteReason, userId);
+    }
+    // 삭제 이유가 OFFENSIVE_CONTENT 일 경우,
+    else if (deleteReason === 'OFFENSIVE_CONTENT') {
+        // 답변자의 remainingAnswers만 업데이트, 신고 기록
+        await CommentRepository.updateUserCounts(commentId, deleteReason, userId);
     }
 };

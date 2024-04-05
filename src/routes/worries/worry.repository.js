@@ -205,15 +205,6 @@ export const getWorry = async (worryId) => {
     });
 };
 
-// worryId 에 해당하는 답변자 가져오기
-// export const getCommentAuthorId = async (worryId) => {
-//     const worry = await prisma.worries.findUnique({
-//         where: { worryId },
-//         select: { commentAuthorId: true, deletedAt: true },
-//     });
-//     return worry ? worry.commentAuthorId : null;
-// };
-
 // 고민 선택 삭제
 export const deleteSelectedWorry = async (worryId, deleteReason) => {
     // 해당고민 소프트 삭제하기
