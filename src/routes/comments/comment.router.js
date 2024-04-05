@@ -3,6 +3,7 @@ import {
     createReplyController,
     findLatestCommentsAndWorriesForUserController,
     getCommentDetailController,
+    deleteCommentController,
 } from './comment.controller.js';
 import authMiddleware from '../../middlewares/authMiddleware.js';
 
@@ -16,5 +17,8 @@ router.get('/comments', authMiddleware, findLatestCommentsAndWorriesForUserContr
 
 // 답장 상세조회
 router.get('/comments/:commentId', authMiddleware, getCommentDetailController);
+
+// 답장 삭제 또는 신고하기
+router.delete('/comments/:commentId', deleteCommentController);
 
 export default router;
