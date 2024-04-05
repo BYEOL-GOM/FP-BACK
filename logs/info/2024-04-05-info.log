@@ -157,3 +157,15 @@
 {"level":"info","message":"Method: POST, URL: /worries/64/comments, Status: 201, Duration: 66ms","timestamp":"2024-04-05T07:30:21.012Z"}
 {"level":"info","message":"Method: POST, URL: /worries/64/comments/40, Status: 201, Duration: 96ms","timestamp":"2024-04-05T07:30:29.965Z"}
 {"level":"info","message":"Method: DELETE, URL: /comments/41, Status: 200, Duration: 165ms","timestamp":"2024-04-05T07:31:04.181Z"}
+{"level":"error","message":"Error Status: undefined, Message: invalid signature","timestamp":"2024-04-05T07:44:57.856Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 500, Duration: 8ms","timestamp":"2024-04-05T07:44:57.861Z"}
+{"level":"error","message":"Error Status: undefined, Message: invalid signature","timestamp":"2024-04-05T07:46:00.194Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 500, Duration: 5ms","timestamp":"2024-04-05T07:46:00.196Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 60ms","timestamp":"2024-04-05T07:46:10.669Z"}
+{"level":"error","message":"Error Status: undefined, Message: invalid signature","timestamp":"2024-04-05T07:46:16.133Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 500, Duration: 4ms","timestamp":"2024-04-05T07:46:16.135Z"}
+{"level":"error","message":"Error Status: undefined, Message: invalid signature","timestamp":"2024-04-05T07:46:43.505Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 500, Duration: 3ms","timestamp":"2024-04-05T07:46:43.507Z"}
+{"level":"error","message":"Error Status: undefined, Message: invalid signature","timestamp":"2024-04-05T07:46:59.193Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 500, Duration: 3ms","timestamp":"2024-04-05T07:46:59.194Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 401, Duration: 1ms","timestamp":"2024-04-05T07:47:27.953Z"}
