@@ -3,6 +3,164 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Simple Chat</title>
+        <script src="/socket.io/socket.io.js"></script>
+        <!-- <script src="http://localhost:3000/socket.io/socket.io.js"></script> -->
+        <script src="chat.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    </head>
+    <body>
+        <div id="messageContainer"></div>
+        <input type="text" id="messageInput" />
+        <button id="sendButton">Send</button>
+
+        <script>
+            const userId = '사용자ID'; // 사용자의 ID 설정
+            const receiverId = '상대방ID'; // 메시지를 받을 사용자의 ID 설정
+            const token = localStorage.getItem('token');
+            const socket = io('http://localhost:3000', {
+                auth: {
+                    token: token, // 저장된 토큰 사용
+                },
+            });
+
+            // 메시지 수신을 위한 이벤트 리스너 설정
+            socket.on('private message', function ({ from, msg }) {
+                $('#messageContainer').append('<div>' + from + ': ' + msg + '</div>');
+            });
+
+            // 메시지 전송 함수
+            function sendMessage() {
+                const message = $('#messageInput').val();
+                socket.emit('private message', { receiverId, msg: message });
+                $('#messageInput').val(''); // 입력 필드 초기화
+            }
+
+            $(document).ready(function () {
+                $('#sendButton').click(sendMessage);
+            });
+        </script>
+    </body>
+</html>
+<!-- 
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>채팅 클라이언트 01</title>
+        <script src="./jquery-3.1.1.min.js"></script>
+        <!-- <script src="socket.io.js"></script> 
+        <!-- <script src="/socket.io/socket.io.js"></script> 
+        <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+        <script>
+            $(function () {});
+            function connect() {
+                var host = $('#hostInput').val();
+                var port = $('#portInput').val();
+
+                connectToServer(host, port);
+            }
+            function connectToServer(host, port) {
+                var url = 'http://' + host + ':' + port;
+                var options = {
+                    forceNew: true,
+                };
+                var socket = io.connect(url, options);
+
+                socket.on('connect', function () {
+                    println('웹소켓 서버에 연결됨 -> ' + url);
+                });
+
+                socket.on('disconnect', function () {
+                    println('웹소켓 연결 종료됨.');
+                });
+            }
+
+            function println(data) {
+                console.log(data);
+                $('#results').append('<p>' + data + '</p>');
+            }
+        </script>
+    </head>
+    <body>
+        <h3>채팅클라이언트 01</h3>
+        <br />
+        <div>
+            <input type="text" id="hostInput" value="localhost" />
+            <input type="text" id="portInput" value="3000" />
+            <input type="button" id="connectButton" value="연결하기" onclick="connect()" />
+        </div>
+        <hr />
+        <p>결과</p>
+        <div id="results"></div>
+    </body>
+</html> 
+-->
+
+<!-- <!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Socket.io Chat</title>
+    </head>
+    <body>
+        <h1>Socket.io Chat</h1>
+
+        <form id="message-form">
+            <input type="text" id="message-input" placeholder="Enter a message..." />
+            <button type="submit">Send</button>
+        </form>
+
+        <ul id="message-list"></ul>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="./index.js"></script>
+    </body>
+</html> -->
+<!-- <!doctype html>
+<html>
+    <head>
+        <title>실시간 채팅</title>
+    </head>
+    <body>
+        <h1>실시간 채팅</h1>
+        <ul id="chat-messages"></ul>
+        <form id="chat-form">
+            <input type="text" id="message-input" autocomplete="off" />
+            <button type="submit">전송</button>
+        </form>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            const socket = io();
+
+            const chatMessages = document.getElementById('chat-messages');
+            const chatForm = document.getElementById('chat-form');
+            const messageInput = document.getElementById('message-input');
+
+            chatForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const message = messageInput.value;
+                if (message.trim() !== '') {
+                    socket.emit('chat message', message);
+                    messageInput.value = '';
+                }
+            });
+
+            socket.on('chat message', (message) => {
+                const li = document.createElement('li');
+                li.textContent = message;
+                chatMessages.appendChild(li);
+            });
+        </script>
+    </body>
+</html> -->
+<!-- <!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>WebSocket 테스트</title>
     </head>
     <body>
@@ -37,4 +195,4 @@
             }
         </script>
     </body>
-</html>
+</html> -->

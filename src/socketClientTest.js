@@ -1,5 +1,4 @@
 // 클라이언트 측 코드. 프론트엔드에서 실행되면서 서버와의 실시간 통신 가능하게 함.
-
 import { io } from 'socket.io-client';
 
 const socket = io('http://localhost:3000');
