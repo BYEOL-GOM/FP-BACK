@@ -1,6 +1,6 @@
 import * as CommentRepository from './comment.repository.js';
 
-//  답변 메세지 전체 조회
+//  # 답변 메세지 전체 조회
 export const findLatestCommentsAndWorriesForUser = async (userId) => {
     try {
         return await CommentRepository.findLatestCommentsAndWorriesForUser(userId);
@@ -9,12 +9,12 @@ export const findLatestCommentsAndWorriesForUser = async (userId) => {
     }
 };
 
-// 답장 상세조회
+// # 답장 상세조회
 export const getCommentDetail = async (commentId) => {
     return await CommentRepository.getCommentDetails(commentId);
 };
 
-// 답장보내기
+// # 답장보내기
 export const createReply = async (worryId, commentId, content, userId, fontColor) => {
     // 금지어 포함 여부 확인
     const isBannedWordIncluded = global.bannedWords.some((word) => content.includes(word));
@@ -65,7 +65,7 @@ export const createReply = async (worryId, commentId, content, userId, fontColor
     };
 };
 
-// 답장 삭제 또는 신고하기
+// # 답장 삭제 또는 신고하기
 export const deleteComment = async ({ commentId, userId, deleteReason }) => {
     const comment = await CommentRepository.getComment(commentId);
     if (!comment) {

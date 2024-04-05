@@ -34,19 +34,20 @@ model Worries {
   content               String    @db.Text @map("content")
   fontColor             String?   @map("fontColor")
   createdAt             DateTime  @default(now()) @map("createdAt")
+  deletedAt             DateTime? @map("deletedAt")                    // 소프트 삭제 
+
   icon                  Icon?     @map("icon")
-  deletedAt             DateTime? @map("deletedAt")                    // 소프트 삭제를 위한  
   isSolved              Boolean   @default(false)                      // 고민이 해결됐는지에 대한 여부 확인
   isReWorry             Boolean   @default(false)                      // 재고민 여부 확인
-  deleteReason          DeleteReason?        @map("deleteReason")                          // 삭제 이유
-  reportReason          ReportReason?       @map("reportReason")                           // 신고 이유
+  deleteReason          DeleteReason?        @map("deleteReason")      // 삭제 이유
+  reportReason          ReportReason?       @map("reportReason")       // 신고 이유
 
   // 고민을 등록한 유저(선물을 보냄)
   userId      Int?       @map("userId")
   user        Users?    @relation(fields: [userId], references: [userId], onDelete: Cascade)
   
-  comments    Comments[] // 고민에 달린 댓글들
-  reports     Reports[]  // 신고
+  comments    Comments[]                                               // 고민에 달린 댓글들
+  reports     Reports[]                                                // 신고
   
   // 해결된 답변
   solvingCommentId Int?       @unique @map("solvingCommentId")
@@ -59,13 +60,13 @@ enum Icon{
   C
 }
 
-enum DeleteReason {
-  DIFFICULT_TO_ANSWER
-  OFFENSIVE_CONTENT
+enum DeleteReason {                                                   // 삭제 이유
+  DIFFICULT_TO_ANSWER                                                 // 답변하기 어려움
+  OFFENSIVE_CONTENT                                                   // 불쾌한 내용 
 }
 
-enum ReportReason {
-  OFFENSIVE
+enum ReportReason {                                                   // 신고 이유
+  OFFENSIVE                                                           // 불쾌함
 }
 
 
@@ -73,11 +74,12 @@ model Comments {
   commentId Int      @id @default(autoincrement()) @map("commentId")
   content   String   @db.Text  @map("content")
   createdAt DateTime @default(now())  @map("createdAt")
-  fontColor             String?   @map("fontColor")
-  deletedAt             DateTime? @map("deletedAt")                    // 소프트 삭제를 위한  
+  deletedAt             DateTime? @map("deletedAt")                    // 소프트 삭제
 
-  deleteReason          DeleteReason?        @map("deleteReason")                          // 삭제 이유
-  reportReason          ReportReason?       @map("reportReason")                           // 신고 이유
+  fontColor             String?   @map("fontColor")
+
+  deleteReason          DeleteReason?        @map("deleteReason")      // 삭제 이유
+  reportReason          ReportReason?       @map("reportReason")       // 신고 이유
 
   parentId  Int?     
   parent    Comments? @relation("CommentHierarchy", fields: [parentId], references: [commentId]) // 댓글 계층
@@ -90,7 +92,7 @@ model Comments {
   worry      Worries  @relation(fields: [worryId], references: [worryId])
 
   likes       Likes[]
-  reports     Reports[]  // 신고
+  reports     Reports[]                                               // 신고
 
 
   // 해결된 답변
@@ -118,12 +120,13 @@ model BannedWords {
   createdAt  DateTime @default(now())  @map("createdAt")
 }
 
-model Reports {
+// 신고
+model Reports {            
   reportId    Int      @id @default(autoincrement())
-  reason      String
-  reportedAt  DateTime @default(now())
+  reason      String                                                      // 신고 이유
+  reportedAt  DateTime @default(now())                                    // 신고된 날짜
   
-  // 사용자와의 관계
+  // 신고된 내용의 작성자
   userId      Int
   user        Users    @relation(fields: [userId], references: [userId])
 

@@ -1,6 +1,6 @@
 import * as worryService from './worry.service.js';
 
-// 고민 등록
+// # 고민 등록
 export const createWorryController = async (req, res, next) => {
     try {
         const { content, icon, userId, fontColor } = req.body; // 나중에 사용자 인증 미들웨어에서 userId로 변경하기
@@ -27,8 +27,8 @@ export const createWorryController = async (req, res, next) => {
     }
 };
 
-// 전체 고민 조회 by 답변자id
-export const getWorriesByCommentAuthorIdController = async (req, res) => {
+// # 전체 고민 조회 by 답변자id
+export const getWorriesByCommentAuthorIdController = async (req, res, next) => {
     try {
         const { userId } = req.body; // 나중에 사용자 인증 미들웨어에서 userId 가져오는것으로 변경
         const worries = await worryService.getWorriesByCommentAuthorId(+userId);
@@ -46,7 +46,7 @@ export const getWorriesByCommentAuthorIdController = async (req, res) => {
     }
 };
 
-//고민메세지 상세조회
+//# 고민메세지 상세조회
 export const WorryDetailController = async (req, res, next) => {
     try {
         const { worryId } = req.params;
@@ -83,6 +83,10 @@ export const deleteSelectedWorryController = async (req, res, next) => {
     try {
         const { worryId } = req.params;
         const { userId, deleteReason } = req.body; // 추후에 사용자 인증 userId로 변경
+
+        if (!worryId || !userId || !deleteReason) {
+            return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
+        }
 
         // 삭제 및 신고 로직 실행
         const response = await worryService.deleteSelectedWorry(+worryId, +userId, deleteReason);

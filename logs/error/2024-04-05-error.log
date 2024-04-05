@@ -1,0 +1,6 @@
+{"level":"error","message":"Error Status: undefined, Message: Cannot set headers after they are sent to the client","timestamp":"2024-04-04T17:04:30.464Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.findUnique()` invocation:\n\n\nCannot select both '$scalars: true' and a specific scalar field 'commentAuthor'.","timestamp":"2024-04-04T17:38:33.692Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.findUnique()` invocation:\n\n\nCannot select both '$scalars: true' and a specific scalar field 'commentAuthor'.","timestamp":"2024-04-04T17:38:38.910Z"}
+{"level":"error","message":"Error Status: undefined, Message: user is not defined","timestamp":"2024-04-04T17:41:50.492Z"}
+{"level":"error","message":"Error Status: undefined, Message: worryUpdateResult is not defined","timestamp":"2024-04-04T17:42:35.535Z"}
+{"level":"error","message":"Error Status: undefined, Message: worryUpdateResult is not defined","timestamp":"2024-04-04T17:44:34.067Z"}

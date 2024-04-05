@@ -1,6 +1,6 @@
 import * as CommentService from './comment.service.js';
 
-// 답변 전체 조회
+// # 답변 전체 조회
 export const findLatestCommentsAndWorriesForUserController = async (req, res) => {
     try {
         const userId = parseInt(req.body.userId);
@@ -20,7 +20,7 @@ export const findLatestCommentsAndWorriesForUserController = async (req, res) =>
     }
 };
 
-// 답변 상세조회
+// # 답변 상세조회
 export const getCommentDetailController = async (req, res) => {
     try {
         const { commentId } = req.params;
@@ -36,7 +36,7 @@ export const getCommentDetailController = async (req, res) => {
     }
 };
 
-// 답장 보내기
+// # 답장 보내기
 export const createReplyController = async (req, res, next) => {
     try {
         const { worryId, commentId } = req.params;
@@ -56,7 +56,7 @@ export const createReplyController = async (req, res, next) => {
     }
 };
 
-// 답장 삭제 또는 신고하기
+// # 답장 삭제 또는 신고하기
 export const deleteCommentController = async (req, res) => {
     const { commentId } = req.params;
     const { userId, deleteReason } = req.body;

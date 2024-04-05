@@ -109,3 +109,6 @@
 {"level":"info","message":"Method: POST, URL: /worries/31/comments, Status: 201, Duration: 109ms","timestamp":"2024-04-04T12:36:29.749Z"}
 {"level":"info","message":"Method: DELETE, URL: /comments/7, Status: 200, Duration: 133ms","timestamp":"2024-04-04T12:38:39.807Z"}
 {"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 340ms","timestamp":"2024-04-04T14:18:44.936Z"}
+{"level":"info","message":"Method: DELETE, URL: /32, Status: 400, Duration: 4ms","timestamp":"2024-04-04T14:31:31.793Z"}
+{"level":"info","message":"Method: DELETE, URL: /40, Status: 404, Duration: 45ms","timestamp":"2024-04-04T14:35:48.267Z"}
+{"level":"info","message":"Method: DELETE, URL: /32, Status: 403, Duration: 77ms","timestamp":"2024-04-04T14:47:45.621Z"}

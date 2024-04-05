@@ -1,6 +1,6 @@
 import * as worryRepository from './worry.repository.js';
 
-//고민 등록
+// # 고민 등록
 export const createWorry = async ({ content, icon, userId, fontColor }) => {
     try {
         // 사용자 정보와 남은 고민 횟수를 확인
@@ -38,7 +38,7 @@ export const createWorry = async ({ content, icon, userId, fontColor }) => {
     }
 };
 
-// 답변자Id 기준 고민 전체 조회
+// # 답변자Id 기준 고민 전체 조회
 export const getWorriesByCommentAuthorId = async (userId) => {
     try {
         const worries = await worryRepository.getWorriesByCommentAuthorId(userId);
@@ -48,7 +48,7 @@ export const getWorriesByCommentAuthorId = async (userId) => {
     }
 };
 
-// 고민 상세조회
+// # 고민 상세조회
 export const getWorryDetail = async (worryId) => {
     try {
         return await worryRepository.getWorryDetail(worryId);
@@ -57,7 +57,7 @@ export const getWorryDetail = async (worryId) => {
     }
 };
 
-// // 댓글이 없는 오래된 고민 삭제
+// # 댓글이 없는 오래된 고민 삭제
 export const deleteOldWorries = async () => {
     try {
         const worries = await worryRepository.findOldWorriesWithoutComments();
@@ -74,7 +74,7 @@ export const deleteOldWorries = async () => {
     }
 };
 
-// 질문 삭제 및 신고하기
+// # 질문 삭제 및 신고하기
 export const deleteSelectedWorry = async (worryId, userId, deleteReason) => {
     const selectedWorry = await worryRepository.getWorry(worryId);
     if (!selectedWorry) {
@@ -93,32 +93,3 @@ export const deleteSelectedWorry = async (worryId, userId, deleteReason) => {
 
     return deletedWorry;
 };
-// export const deleteSelectedWorry = async (worryId, userId, deleteReason) => {
-//     const worry = await worryRepository.getWorry(worryId);
-//     if (!worry) {
-//         throw new Error('해당하는 고민이 존재하지 않습니다');
-//     }
-
-//     // 이미 삭제된 고민인지 확인
-//     if (worry.deletedAt !== null) {
-//         throw new Error('해당 고민은 이미 삭제되었습니다');
-//     }
-
-//     // 답변 대상자 확인
-//     if (worry.commentAuthorId !== userId) {
-//         throw new Error('답변 대상자만 곤란한 고민을 삭제할 수 있습니다');
-//     }
-
-//     // 삭제 처리
-//     await worryRepository.deleteWorry(worryId);
-//     const worryAuthorId = worry.userId;
-//     const commentAuthorId = worry.commentAuthorId;
-//     if (deleteReason === 'DIFFICULT_TO_ANSWER') {
-//         // 삭제 이유가 답변하기 어려운 경우
-//         await worryRepository.updateUserCounts(+worryAuthorId, +commentAuthorId);
-//     } else if (deleteReason === 'OFFENSIVE_CONTENT') {
-//         // 삭제 이유가 불쾌한 내용인 경우
-//         await worryRepository.updateUserWorryCount(+worryAuthorId);
-//         // 신고 로직 추가 예정
-//     }
-// };
