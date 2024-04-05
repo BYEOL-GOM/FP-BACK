@@ -83,9 +83,6 @@ export const kakaoLoginController = async (req, res) => {
     }
 };
 
-
-
-
 // 네이버
 export const naverLoginController = async (req, res) => {
     try {
@@ -162,10 +159,6 @@ export const naverLoginController = async (req, res) => {
     }
 };
 
-
-
-
-
 // 리프레쉬
 // 리프레시 토큰 검증 및 재발급 로직
 export const refreshController = async (req, res, next) => {
@@ -185,8 +178,8 @@ export const refreshController = async (req, res, next) => {
         const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
         const user = await prisma.users.findFirst({
             where: {
-                userId: decoded.userId
-            }
+                userId: decoded.userId,
+            },
         });
 
         if (!user) {
@@ -195,15 +188,18 @@ export const refreshController = async (req, res, next) => {
             throw err;
         }
 
-        const newAccessToken = jwt.sign({ userId: user.userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_LIFE });
-        const newRefreshToken = jwt.sign({ userId: user.userId }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.REFRESH_TOKEN_LIFE });
+        const newAccessToken = jwt.sign({ userId: user.userId }, process.env.ACCESS_TOKEN_SECRET, {
+            expiresIn: process.env.ACCESS_TOKEN_LIFE,
+        });
+        const newRefreshToken = jwt.sign({ userId: user.userId }, process.env.REFRESH_TOKEN_SECRET, {
+            expiresIn: process.env.REFRESH_TOKEN_LIFE,
+        });
 
         return res.status(200).json({
             message: '토큰이 재발급 되었습니다',
             accessToken: `Bearer ${newAccessToken}`,
             refreshToken: `Bearer ${newRefreshToken}`,
         });
-
     } catch (error) {
         next(error);
     }

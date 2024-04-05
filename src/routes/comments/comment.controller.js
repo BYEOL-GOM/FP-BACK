@@ -1,9 +1,9 @@
 import * as CommentService from './comment.service.js';
 
-// 답변 전체 조회
+// # 답변 전체 조회
 export const findLatestCommentsAndWorriesForUserController = async (req, res) => {
     try {
-        const userId = parseInt(req.body.userId);
+        const userId = res.locals.user.userId;
         // if (!userId) {
         //     return res.status(400).json({ error: '사용자 ID가 제공되지 않았습니다.' });
         // } // 사용자인증 미들웨어로 처리
@@ -20,7 +20,7 @@ export const findLatestCommentsAndWorriesForUserController = async (req, res) =>
     }
 };
 
-// 답변 상세조회
+// # 답변 상세조회
 export const getCommentDetailController = async (req, res) => {
     try {
         const { commentId } = req.params;
@@ -36,14 +36,15 @@ export const getCommentDetailController = async (req, res) => {
     }
 };
 
-// 답장 보내기
+// # 답장 보내기
 export const createReplyController = async (req, res, next) => {
     try {
         const { worryId, commentId } = req.params;
-        const { content, userId, fontColor } = req.body;
+        const userId = res.locals.user.userId;
+        const { content, fontColor } = req.body;
 
         // 필수 데이터 검증
-        if (!worryId || !content || !userId || !fontColor) {
+        if (!worryId || !content || !fontColor) {
             return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
         }
 
@@ -53,5 +54,26 @@ export const createReplyController = async (req, res, next) => {
         return res.status(201).json({ message: '답변이 전송되었습니다.', comment });
     } catch (error) {
         res.status(400).json({ error: error.message });
+    }
+};
+
+// # 답장 삭제 또는 신고하기
+export const deleteCommentController = async (req, res) => {
+    const { commentId } = req.params;
+    const userId = res.locals.user.userId;
+    const { deleteReason } = req.body;
+
+    try {
+        await CommentService.deleteComment({ commentId: +commentId, userId: +userId, deleteReason });
+        res.status(200).json({ message: '답변이 성공적으로 삭제되었습니다.' });
+    } catch (error) {
+        if (error.message === '해당하는 답변이 존재하지 않습니다') {
+            return res.status(404).json({ error: error.message });
+        } else if (error.message === '답장을 삭제할 권한이 없습니다.') {
+            return res.status(403).json({ error: error.message });
+        } else if (error.message === '해당 답장은 이미 삭제되었습니다') {
+            return res.status(409).json({ error: error.message });
+        }
+        res.status(500).json({ error: error.message });
     }
 };
