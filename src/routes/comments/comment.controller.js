@@ -3,8 +3,8 @@ import * as CommentService from './comment.service.js';
 // # 로그인한 유저에게 온 답장 전체 조회
 export const findLatestCommentsAndWorriesForUserController = async (req, res) => {
     try {
-        // const userId = res.locals.user.userId;
-        const { userId } = req.body;
+        const userId = res.locals.user.userId;
+        // const { userId } = req.body;
         const latestComments = await CommentService.findLatestCommentsAndWorriesForUser(+userId);
         if (latestComments.length === 0) {
             return res.status(404).json({ error: '아직 답변이 도착하지 않았습니다' });
@@ -21,8 +21,8 @@ export const findLatestCommentsAndWorriesForUserController = async (req, res) =>
 export const getCommentDetailController = async (req, res) => {
     try {
         const { commentId } = req.params;
-        // const userId = res.locals.user.userId;
-        const { userId } = req.body;
+        const userId = res.locals.user.userId;
+        // const { userId } = req.body;
 
         if (!commentId) {
             return res.status(400).json({ error: '데이터 형식이 일치하지 않습니다' });
@@ -44,8 +44,8 @@ export const getCommentDetailController = async (req, res) => {
 export const createReplyController = async (req, res, next) => {
     try {
         const { worryId, commentId } = req.params;
-        // const userId = res.locals.user.userId;
-        const { content, fontColor, userId } = req.body;
+        const userId = res.locals.user.userId;
+        const { content, fontColor } = req.body;
 
         if (!worryId || !content || !fontColor) {
             return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
@@ -62,8 +62,8 @@ export const createReplyController = async (req, res, next) => {
 // # 답변하기 곤란한 답장 삭제하기
 export const deleteCommentController = async (req, res) => {
     const { commentId } = req.params;
-    // const userId = res.locals.user.userId;
-    const { userId } = req.body;
+    const userId = res.locals.user.userId;
+    // const { userId } = req.body;
 
     try {
         await CommentService.deleteComment(+commentId, +userId);
@@ -83,8 +83,8 @@ export const deleteCommentController = async (req, res) => {
 // # 불쾌한 답장 신고하기
 export const reportCommentController = async (req, res, next) => {
     const { commentId } = req.params;
-    // const userId = res.locals.user.userId;
-    const { userId, reportReason } = req.body;
+    const userId = res.locals.user.userId;
+    const { reportReason } = req.body;
 
     try {
         await CommentService.reportComment(+commentId, +userId, reportReason);
