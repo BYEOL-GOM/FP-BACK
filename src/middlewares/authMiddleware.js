@@ -4,7 +4,7 @@ import { prisma } from '../utils/prisma/index.js';
 export default async function authenticateUserMiddleware(req, res, next) {
     try {
         // 1. 클라이언트로부터 헤더의 액세스토큰을 전달 받는다
-        const { Authorization } = req.headers;
+        const { Authorization } = req.body.headers;
 
         // 헤더가 존재하지 않으면, 인증된 사용자가 아님
         if (!Authorization) return res.status(401).json({ message: '로그인이 필요한 서비스입니다' });
