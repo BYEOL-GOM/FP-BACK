@@ -57,14 +57,14 @@ export const createReplyController = async (req, res, next) => {
     }
 };
 
-// # 답장 삭제 또는 신고하기
+// # 답변하기 곤란한 답장 삭제하기
 export const deleteCommentController = async (req, res) => {
     const { commentId } = req.params;
-    const userId = res.locals.user.userId;
-    const { deleteReason } = req.body;
+    // const userId = res.locals.user.userId;
+    const { userId } = req.body;
 
     try {
-        await CommentService.deleteComment({ commentId: +commentId, userId: +userId, deleteReason });
+        await CommentService.deleteComment(+commentId, +userId);
         res.status(200).json({ message: '답변이 성공적으로 삭제되었습니다.' });
     } catch (error) {
         if (error.message === '해당하는 답변이 존재하지 않습니다') {
