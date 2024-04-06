@@ -64,7 +64,7 @@ export const kakaoLoginController = async (req, res) => {
             });
             return res
                 .status(200)
-                .json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken} ` });
+                .json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}` });
             //return res.status(200).json(userInfo);
         }
 
@@ -75,7 +75,7 @@ export const kakaoLoginController = async (req, res) => {
             expiresIn: process.env.REFRESH_TOKEN_LIFE,
         });
 
-        return res.status(200).json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken} ` });
+        return res.status(200).json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}` });
         //return res.status(200).json(ID);
     } catch (error) {
         console.error(error);
@@ -140,7 +140,7 @@ export const naverLoginController = async (req, res) => {
             });
             return res
                 .status(200)
-                .json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken} ` });
+                .json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}` });
             //return res.status(200).json(userInfo);
         }
 
@@ -151,7 +151,7 @@ export const naverLoginController = async (req, res) => {
             expiresIn: process.env.REFRESH_TOKEN_LIFE,
         });
 
-        return res.status(200).json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken} ` });
+        return res.status(200).json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}` });
         //return res.status(200).json(user);
     } catch (error) {
         console.error(error);
