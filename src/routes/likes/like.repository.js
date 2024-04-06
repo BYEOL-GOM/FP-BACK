@@ -164,7 +164,7 @@ async function fetchCommentsRecursively(commentId) {
             commentId: true,
             content: true,
             createdAt: true,
-            updatedAt: true,
+            //updatedAt: true,
             userId: true, // 댓글 작성자 ID
             parentId: true, // 부모 댓글 ID
             children: true, // 자식 댓글 선택
