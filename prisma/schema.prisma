@@ -38,9 +38,7 @@ model Worries {
 
   icon                  Icon?     @map("icon")
   isSolved              Boolean   @default(false)                      // 고민이 해결됐는지에 대한 여부 확인
-  isReWorry             Boolean   @default(false)                      // 재고민 여부 확인
-  deleteReason          DeleteReason?        @map("deleteReason")      // 삭제 이유
-  reportReason          ReportReason?       @map("reportReason")       // 신고 이유
+  reportReason          String?       @map("reportReason")             // 신고 이유
 
   // 고민을 등록한 유저(선물을 보냄)
   userId      Int?       @map("userId")
@@ -60,16 +58,6 @@ enum Icon{
   C
 }
 
-enum DeleteReason {                                                   // 삭제 이유
-  DIFFICULT_TO_ANSWER                                                 // 답변하기 어려움
-  OFFENSIVE_CONTENT                                                   // 불쾌한 내용 
-}
-
-enum ReportReason {                                                   // 신고 이유
-  OFFENSIVE                                                           // 불쾌함
-}
-
-
 model Comments {
   commentId Int      @id @default(autoincrement()) @map("commentId")
   content   String   @db.Text  @map("content")
@@ -77,9 +65,7 @@ model Comments {
   deletedAt             DateTime? @map("deletedAt")                    // 소프트 삭제
 
   fontColor             String?   @map("fontColor")
-
-  deleteReason          DeleteReason?        @map("deleteReason")      // 삭제 이유
-  reportReason          ReportReason?       @map("reportReason")       // 신고 이유
+  reportReason          String?       @map("reportReason")       // 신고 이유
 
   parentId  Int?     
   parent    Comments? @relation("CommentHierarchy", fields: [parentId], references: [commentId]) // 댓글 계층
