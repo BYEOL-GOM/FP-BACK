@@ -5,6 +5,7 @@ import {
     deleteWorryController,
     deleteSelectedWorryController,
     reportWorryController,
+    //WorryCountController,
 } from '../worries/worry.controller.js';
 import authMiddleware from '../../middlewares/authMiddleware.js';
 
@@ -25,4 +26,6 @@ router.delete('/:worryId', authMiddleware, deleteSelectedWorryController);
 // 불쾌한 고민 신고하기
 router.post('/:worryId/report', authMiddleware, reportWorryController);
 
+// 좋아요된 고민의 갯수 조회하기
+//router.get('/count', authMiddleware, WorryCountController);
 export default router;
