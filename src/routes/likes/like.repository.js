@@ -201,7 +201,7 @@ export const findSolvedWorryDetailsById = async (worryId, userId) => {
                     commentId: true,
                     content: true,
                     createdAt: true,
-                    updatedAt: true,
+                    // updatedAt: true,
                     userId: true, // 댓글 작성자 ID
                 },
                 orderBy: { createdAt: 'asc' },
@@ -240,7 +240,7 @@ export const findHelpedSolveWorryDetailsById = async (worryId, userId) => {
                     commentId: true,
                     content: true,
                     createdAt: true,
-                    updatedAt: true,
+                    // updatedAt: true,
                     userId: true, // 답변 작성자 ID
                 },
                 orderBy: { createdAt: 'asc' },
