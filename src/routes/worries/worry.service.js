@@ -102,11 +102,11 @@ export const reportWorry = async (worryId, userId, reportReason) => {
 
     // 고민이 이미 삭제되었거나 신고되었는지 확인
     if (selectedWorry.deletedAt !== null) {
-        throw new Error('해당 고민은 신고되었습니다');
+        throw new Error('해당 고민은 이미 신고되었습니다');
     }
 
     if (selectedWorry.commentAuthorId !== userId) {
-        throw new Error('답변 대상자만 곤란한 고민을 삭제할 수 있습니다');
+        throw new Error('답변 대상자만 신고할 수 있습니다');
     }
 
     // 고민 삭제 및 사용자 카운트 업데이트 로직 재사용

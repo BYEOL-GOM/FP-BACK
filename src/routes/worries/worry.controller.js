@@ -49,6 +49,7 @@ export const WorryDetailController = async (req, res, next) => {
 
 //오래된 메세지 삭제하기
 export const deleteWorryController = async (req, res, next) => {
+    // 관리자 권한 추가해야할것 같음
     try {
         const deletedWorries = await worryService.deleteOldWorries();
         res.status(200).json({ message: '오래된 고민 삭제에 성공했습니다.', deletedWorries });
@@ -73,7 +74,7 @@ export const deleteSelectedWorryController = async (req, res, next) => {
         res.status(200).json({ message: '해당 고민이 삭제되었습니다' });
     } catch (error) {
         if (error.message === '해당하는 고민이 존재하지 않습니다') {
-            return res.status(404).json({ error: '해당하는 고민이 존재하지 않습니다' });
+            return res.status(404).json({ error: error.message });
         } else if (error.message === '답변 대상자만 곤란한 고민을 삭제할 수 있습니다') {
             return res.status(403).json({ error: error.message });
         } else if (error.message === '해당 고민은 이미 삭제되었습니다') {
@@ -96,7 +97,13 @@ export const reportWorryController = async (req, res) => {
         await worryService.reportWorry(+worryId, +userId, reportReason);
         res.status(200).json({ message: '신고가 성공적으로 이루어졌습니다.' });
     } catch (error) {
-        console.error(error);
+        if (error.message === '해당하는 고민이 존재하지 않습니다') {
+            return res.status(404).json({ error: error.message });
+        } else if (error.message === '답변 대상자만 신고할 수 있습니다') {
+            return res.status(403).json({ error: error.message });
+        } else if (error.message === '해당 고민은 이미 신고되었습니다') {
+            return res.status(409).json({ error: error.message });
+        }
         res.status(500).json({ error: error.message });
     }
 };

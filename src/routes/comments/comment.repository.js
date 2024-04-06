@@ -5,22 +5,6 @@ export const findWorryById = async (worryId) => {
     return await prisma.worries.findUnique({ where: { worryId: parseInt(worryId) } });
 };
 
-// 고민을 해결된 상태로 변경
-export const markWorryAsSolved = async (worryId, commentId, senderId, receiverId) => {
-    return prisma.worries.update({
-        where: { worryId },
-        data: {
-            isSolved: true,
-            solvingCommentId: parseInt(commentId),
-            solvedByUserId: senderId,
-            helperUserId: receiverId,
-            // commentId: solvingCommentId,
-            // senderId: solvedByUserId,
-            // receiverId: helperUserId,
-        },
-    });
-};
-
 // 모든 답변 전체 조회
 export const findLatestCommentsAndWorriesForUser = async (userId) => {
     // 사용자가 고민자 혹은 답변자로 참여한 모든 고민 조회
@@ -50,9 +34,8 @@ export const findLatestCommentsAndWorriesForUser = async (userId) => {
         return {
             worryId: worry.worryId,
             icon: worry.icon, // 각 worry에 해당하는 icon 정보 추가
-            commentId: latestComment ? latestComment.commentId : worry.worryId, // 답변이 없으면 worryId 반환
-            // replyUserId: latestComment ? latestComment.userId : worry.userId, // 답변이 없으면 고민 작성자의 userId 반환
-            createdAt: latestComment ? latestComment.createdAt : worry.createdAt, // 답변이 없으면 worry의 생성 시간 반환
+            commentId: latestComment ? latestComment.commentId : null, // 첫번째 고민에 해당할때는 commentId 가 null
+            createdAt: latestComment ? latestComment.createdAt : worry.createdAt,
         };
     });
 

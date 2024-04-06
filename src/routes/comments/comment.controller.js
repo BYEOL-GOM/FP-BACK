@@ -3,11 +3,8 @@ import * as CommentService from './comment.service.js';
 // # 답변 전체 조회
 export const findLatestCommentsAndWorriesForUserController = async (req, res) => {
     try {
-        const userId = res.locals.user.userId;
-        // if (!userId) {
-        //     return res.status(400).json({ error: '사용자 ID가 제공되지 않았습니다.' });
-        // } // 사용자인증 미들웨어로 처리
-
+        // const userId = res.locals.user.userId;
+        const { userId } = req.body;
         const latestComments = await CommentService.findLatestCommentsAndWorriesForUser(+userId);
         if (latestComments.length === 0) {
             return res.status(404).json({ error: '아직 답변이 도착하지 않았습니다' });
