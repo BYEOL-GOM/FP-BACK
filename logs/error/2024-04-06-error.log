@@ -1,1 +1,2 @@
 {"level":"error","message":"Error Status: 400, Message: Expected double-quoted property name in JSON at position 23","timestamp":"2024-04-06T05:21:07.797Z"}
+{"level":"error","message":"Error Status: undefined, Message: 고민 상세조회 실패: 고민을 조회할 권한이 없습니다 ","timestamp":"2024-04-06T08:03:46.842Z"}

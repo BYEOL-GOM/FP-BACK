@@ -27,43 +27,23 @@ export const createWorryController = async (req, res, next) => {
     }
 };
 
-// # 전체 고민 조회 by 답변자id
-export const getWorriesByCommentAuthorIdController = async (req, res, next) => {
-    try {
-        const userId = res.locals.user.userId;
-        const worries = await worryService.getWorriesByCommentAuthorId(+userId);
-
-        // 만약 고민이 없다면
-        if (!worries || worries.length === 0) {
-            res.status(404).json({ error: '해당 유저에 할당된 고민목록이 존재하지 않습니다' });
-            return;
-        }
-
-        res.status(200).json(worries);
-    } catch (error) {
-        console.error('오류입니당', error);
-        res.status(500).json({ error: '오류입니당' });
-    }
-};
-
 //# 고민메세지 상세조회
 export const WorryDetailController = async (req, res, next) => {
     try {
         const { worryId } = req.params;
+        const { userId } = req.body;
         if (!worryId) {
-            throw new Error('데이터 형식이 올바르지 않아요');
+            throw new Error('데이터 형식이 올바르지 않습니다');
         }
-        const worryDetail = await worryService.getWorryDetail(+worryId);
-
-        // 만약 고민 상세정보가 없다면
-        if (!worryDetail) {
-            res.status(404).json({ error: '해당하는 고민이 존재하지 않습니다' });
-        }
-
+        const worryDetail = await worryService.getWorryDetail(+worryId, +userId);
         res.status(200).json(worryDetail);
     } catch (error) {
-        console.error(error);
-        next(error);
+        if (error.message === '해당하는 고민이 존재하지 않습니다') {
+            return res.status(404).json({ error: '해당하는 고민이 존재하지 않습니다' });
+        } else if (error.message === '고민을 조회할 권한이 없습니다 ') {
+            return res.status(403).json({ error: error.message });
+        }
+        res.status(500).json({ error: error.message });
     }
 };
 

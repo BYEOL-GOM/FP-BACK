@@ -38,22 +38,19 @@ export const createWorry = async ({ content, icon, userId, fontColor }) => {
     }
 };
 
-// # 답변자Id 기준 고민 전체 조회
-export const getWorriesByCommentAuthorId = async (userId) => {
-    try {
-        const worries = await worryRepository.getWorriesByCommentAuthorId(userId);
-        return worries;
-    } catch (error) {
-        throw new Error('Error in worry service: ' + error.message);
-    }
-};
-
 // # 고민 상세조회
-export const getWorryDetail = async (worryId) => {
+export const getWorryDetail = async (worryId, userId) => {
     try {
-        return await worryRepository.getWorryDetail(worryId);
+        const worry = await worryRepository.getWorryDetail(worryId);
+        if (!worry) {
+            throw new Error('해당하는 고민이 존재하지 않습니다');
+        }
+        if (worry.commentAuthorId !== userId) {
+            throw new Error('고민을 조회할 권한이 없습니다 ');
+        }
+        return worry;
     } catch (error) {
-        throw new Error('고민 상세조회 실패: ' + error.message);
+        throw new Error(error.message);
     }
 };
 

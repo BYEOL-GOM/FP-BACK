@@ -71,30 +71,6 @@ export const createWorry = async ({ content, icon, userId, randomAuthorId, fontC
     }
 };
 
-// 고민답변자Id기준으로 보는 고민 전체 조회
-export const getWorriesByCommentAuthorId = async (userId) => {
-    try {
-        const worries = await prisma.worries.findMany({
-            where: {
-                commentAuthorId: userId,
-                deletedAt: null,
-            },
-            select: {
-                worryId: true,
-                // userId: true,
-                icon: true,
-                createdAt: true,
-            },
-            orderBy: {
-                createdAt: 'desc',
-            },
-        });
-        return worries;
-    } catch (error) {
-        throw new Error('Error retrieving worries by author ID: ' + error.message);
-    }
-};
-
 // 고민 상세조회(삭제된 고민 제외)
 export const getWorryDetail = async (worryId) => {
     try {
@@ -183,15 +159,6 @@ export const softDeleteWorryById = async (worryId) => {
         throw error;
     }
 };
-
-// worryId 에 해당하는 답변자 가져오기
-// export const getCommentAuthorId = async (worryId) => {
-//     const worry = await prisma.worries.findUnique({
-//         where: { worryId },
-//         select: { commentAuthorId: true, deletedAt: true },
-//     });
-//     return worry ? worry.commentAuthorId : null;
-// };
 
 // worryId로 고민 조회 (삭제/미삭제 모두 포함)
 export const getWorry = async (worryId) => {
