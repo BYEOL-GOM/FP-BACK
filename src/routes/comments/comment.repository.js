@@ -42,7 +42,7 @@ export const findLatestCommentsAndWorriesForUser = async (userId) => {
     return latestCommentsAndWorriesInfo;
 };
 
-//commentId로 해당하는 답장 가져오기
+//commentId에 해당하는 답장 조회
 export const getComment = async (commentId) => {
     return await prisma.comments.findUnique({
         where: { commentId },
@@ -60,21 +60,6 @@ export const getComment = async (commentId) => {
         },
     });
 };
-
-// // 답장 상세조회
-// export const getCommentDetails = async (commentId) => {
-//     return await prisma.comments.findUnique({
-//         where: { commentId: parseInt(commentId) },
-//         select: {
-//             commentId: true,
-//             content: true,
-//             createdAt: true,
-//             fontColor: true,
-//             parentId: true,
-//             worryId: true,
-//         },
-//     });
-// };
 
 // 답장 보내기
 // 부모 고민 또는 답변의 존재 여부를 확인하는 함수
@@ -120,20 +105,6 @@ export const createReply = async ({ worryId, content, userId, parentId, fontColo
         },
     });
 };
-
-// //commentId로 해당하는 답장 가져오기
-// export const getComment = async (commentId) => {
-//     return await prisma.comments.findUnique({
-//         where: { commentId },
-//         select: {
-//             deletedAt: true,
-//             userId: true,
-//             parentId: true,
-//             worry: { select: { userId: true } },
-//             parent: { select: { userId: true } },
-//         },
-//     });
-// };
 
 // commentId에 해당하는 답장 삭제하기
 export const deleteComment = async (commentId) => {

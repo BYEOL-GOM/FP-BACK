@@ -123,21 +123,21 @@ export const deleteComment = async (commentId, userId) => {
 export const reportComment = async (commentId, userId, reportReason) => {
     const comment = await CommentRepository.getComment(commentId);
     if (!comment) {
-        throw new Error('해당하는 답변이 존재하지 않습니다');
+        throw new Error('해당하는 답장이 존재하지 않습니다');
     }
     if (comment.deletedAt !== null) {
-        throw new Error('해당 답장은 이미 삭제되었습니다');
+        throw new Error('해당 답장은 이미 신고되었습니다');
     }
     // 첫 번째 답변인 경우
     if (comment.parentId === null) {
         if (comment.worry.userId !== userId) {
-            throw new Error('답장을 삭제할 권한이 없습니다.');
+            throw new Error('답장을 신고할 권한이 없습니다.');
         }
     } else {
         // 대댓글인 경우
         const parentComment = await CommentRepository.getComment(comment.parentId);
         if (!parentComment || parentComment.userId !== userId) {
-            throw new Error('답장을 삭제할 권한이 없습니다.');
+            throw new Error('답장을 신고할 권한이 없습니다.');
         }
     }
 
