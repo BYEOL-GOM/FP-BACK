@@ -10,8 +10,35 @@ export const findLatestCommentsAndWorriesForUser = async (userId) => {
 };
 
 // # 답장 상세조회
-export const getCommentDetail = async (commentId) => {
-    return await CommentRepository.getCommentDetails(commentId);
+export const getCommentDetail = async (commentId, userId) => {
+    try {
+        const comment = await CommentRepository.getComment(commentId);
+        if (!comment) {
+            throw new Error('해당하는 답장이 존재하지 않습니다');
+        }
+        // 첫 번째 답변인 경우
+        if (comment.parentId === null) {
+            if (comment.worry.userId !== userId) {
+                throw new Error('답장을 조회할 권한이 없습니다.');
+            }
+        } else {
+            // 대댓글인 경우
+            const parentComment = await CommentRepository.getComment(comment.parentId);
+            if (!parentComment || parentComment.userId !== userId) {
+                throw new Error('답장을 조회할 권한이 없습니다.');
+            }
+        }
+        return {
+            commentId: comment.commentId,
+            content: comment.content,
+            createdAt: comment.createdAt,
+            fontColor: comment.fontColor,
+            parentId: comment.parentId,
+            worryId: comment.worryId,
+        };
+    } catch (error) {
+        throw new Error(error.message);
+    }
 };
 
 // # 답장보내기

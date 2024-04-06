@@ -21,15 +21,22 @@ export const findLatestCommentsAndWorriesForUserController = async (req, res) =>
 export const getCommentDetailController = async (req, res) => {
     try {
         const { commentId } = req.params;
+        // const userId = res.locals.user.userId;
+        const { userId } = req.body;
+
         if (!commentId) {
             return res.status(400).json({ error: '데이터 형식이 일치하지 않습니다' });
         }
 
-        const details = await CommentService.getCommentDetail(+commentId);
+        const details = await CommentService.getCommentDetail(+commentId, +userId);
         res.json(details);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: '서버 에러 발생' });
+        if (error.message === '해당하는 답장이 존재하지 않습니다') {
+            return res.status(404).json({ error: error.message });
+        } else if (error.message === '답장을 조회할 권한이 없습니다.') {
+            return res.status(403).json({ error: error.message });
+        }
+        res.status(500).json({ error: error.message });
     }
 };
 

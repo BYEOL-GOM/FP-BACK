@@ -127,3 +127,16 @@
 {"level":"info","message":"Method: POST, URL: /worries/84/comments, Status: 201, Duration: 117ms","timestamp":"2024-04-06T08:55:20.879Z"}
 {"level":"info","message":"Method: POST, URL: /worries/84/comments/47, Status: 201, Duration: 389ms","timestamp":"2024-04-06T08:55:35.807Z"}
 {"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 25ms","timestamp":"2024-04-06T08:55:51.047Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 404, Duration: 27ms","timestamp":"2024-04-06T09:00:36.962Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 42ms","timestamp":"2024-04-06T09:01:14.069Z"}
+{"level":"info","message":"Method: GET, URL: /comments/2, Status: 200, Duration: 21ms","timestamp":"2024-04-06T09:01:21.058Z"}
+{"level":"info","message":"Method: GET, URL: /comments/2, Status: 500, Duration: 56ms","timestamp":"2024-04-06T09:10:01.108Z"}
+{"level":"info","message":"Method: GET, URL: /comments/2, Status: 500, Duration: 19ms","timestamp":"2024-04-06T09:10:02.390Z"}
+{"level":"info","message":"Method: GET, URL: /comments/2, Status: 403, Duration: 47ms","timestamp":"2024-04-06T09:11:39.323Z"}
+{"level":"info","message":"Method: GET, URL: /comments/2, Status: 403, Duration: 28ms","timestamp":"2024-04-06T09:12:18.903Z"}
+{"level":"info","message":"Method: GET, URL: /comments/2, Status: 200, Duration: 219ms","timestamp":"2024-04-06T09:12:24.039Z"}
+{"level":"info","message":"Method: GET, URL: /comments/2, Status: 200, Duration: 78ms","timestamp":"2024-04-06T09:16:00.700Z"}
+{"level":"info","message":"Method: GET, URL: /comments/2, Status: 200, Duration: 17ms","timestamp":"2024-04-06T09:16:01.977Z"}
+{"level":"info","message":"Method: GET, URL: /comments/35, Status: 200, Duration: 77ms","timestamp":"2024-04-06T09:16:57.988Z"}
+{"level":"info","message":"Method: GET, URL: /comments/60, Status: 404, Duration: 17ms","timestamp":"2024-04-06T09:17:34.086Z"}
+{"level":"info","message":"Method: GET, URL: /comments/35, Status: 403, Duration: 44ms","timestamp":"2024-04-06T09:17:47.535Z"}
