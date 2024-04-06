@@ -27,48 +27,31 @@ export const createWorryController = async (req, res, next) => {
     }
 };
 
-// # 전체 고민 조회 by 답변자id
-export const getWorriesByCommentAuthorIdController = async (req, res, next) => {
-    try {
-        const userId = res.locals.user.userId;
-        const worries = await worryService.getWorriesByCommentAuthorId(+userId);
-
-        // 만약 고민이 없다면
-        if (!worries || worries.length === 0) {
-            res.status(404).json({ error: '해당 유저에 할당된 고민목록이 존재하지 않습니다' });
-            return;
-        }
-
-        res.status(200).json(worries);
-    } catch (error) {
-        console.error('오류입니당', error);
-        res.status(500).json({ error: '오류입니당' });
-    }
-};
-
 //# 고민메세지 상세조회
 export const WorryDetailController = async (req, res, next) => {
     try {
         const { worryId } = req.params;
+        // const { userId } = req.body;
+        const userId = res.locals.user.userId;
+
         if (!worryId) {
-            throw new Error('데이터 형식이 올바르지 않아요');
+            throw new Error('데이터 형식이 올바르지 않습니다');
         }
-        const worryDetail = await worryService.getWorryDetail(+worryId);
-
-        // 만약 고민 상세정보가 없다면
-        if (!worryDetail) {
-            res.status(404).json({ error: '해당하는 고민이 존재하지 않습니다' });
-        }
-
+        const worryDetail = await worryService.getWorryDetail(+worryId, +userId);
         res.status(200).json(worryDetail);
     } catch (error) {
-        console.error(error);
-        next(error);
+        if (error.message === '해당하는 고민이 존재하지 않습니다') {
+            return res.status(404).json({ error: '해당하는 고민이 존재하지 않습니다' });
+        } else if (error.message === '고민을 조회할 권한이 없습니다 ') {
+            return res.status(403).json({ error: error.message });
+        }
+        res.status(500).json({ error: error.message });
     }
 };
 
 //오래된 메세지 삭제하기
 export const deleteWorryController = async (req, res, next) => {
+    // 관리자 권한 추가해야할것 같음
     try {
         const deletedWorries = await worryService.deleteOldWorries();
         res.status(200).json({ message: '오래된 고민 삭제에 성공했습니다.', deletedWorries });
@@ -78,27 +61,50 @@ export const deleteWorryController = async (req, res, next) => {
     }
 };
 
-// 1. 고민(Worry) 삭제 및 신고 API
+// # 답변하기 어려운 고민 삭제하기
 export const deleteSelectedWorryController = async (req, res, next) => {
     try {
         const { worryId } = req.params;
         const userId = res.locals.user.userId;
-        const { deleteReason } = req.body; // 추후에 사용자 인증 userId로 변경
-
-        if (!worryId || !deleteReason) {
+        // const { userId } = req.body;
+        if (!worryId) {
             return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
         }
 
-        // 삭제 및 신고 로직 실행
-        const response = await worryService.deleteSelectedWorry(+worryId, +userId, deleteReason);
+        await worryService.deleteSelectedWorry(+worryId, +userId);
 
         res.status(200).json({ message: '해당 고민이 삭제되었습니다' });
     } catch (error) {
         if (error.message === '해당하는 고민이 존재하지 않습니다') {
-            return res.status(404).json({ error: '해당하는 고민이 존재하지 않습니다' });
+            return res.status(404).json({ error: error.message });
         } else if (error.message === '답변 대상자만 곤란한 고민을 삭제할 수 있습니다') {
             return res.status(403).json({ error: error.message });
         } else if (error.message === '해당 고민은 이미 삭제되었습니다') {
+            return res.status(409).json({ error: error.message });
+        }
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// #불쾌한 고민 신고하기
+export const reportWorryController = async (req, res) => {
+    try {
+        const { worryId } = req.params;
+        const userId = res.locals.user.userId;
+        const { reportReason } = req.body; // 신고 이유
+
+        if (!reportReason) {
+            return res.status(400).json({ error: '신고 이유를 작성해주세요.' });
+        }
+
+        await worryService.reportWorry(+worryId, +userId, reportReason);
+        res.status(200).json({ message: '신고가 성공적으로 이루어졌습니다.' });
+    } catch (error) {
+        if (error.message === '해당하는 고민이 존재하지 않습니다') {
+            return res.status(404).json({ error: error.message });
+        } else if (error.message === '답변 대상자만 신고할 수 있습니다') {
+            return res.status(403).json({ error: error.message });
+        } else if (error.message === '해당 고민은 이미 신고되었습니다') {
             return res.status(409).json({ error: error.message });
         }
         res.status(500).json({ error: error.message });

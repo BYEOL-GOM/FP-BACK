@@ -71,30 +71,6 @@ export const createWorry = async ({ content, icon, userId, randomAuthorId, fontC
     }
 };
 
-// 고민답변자Id기준으로 보는 고민 전체 조회
-export const getWorriesByCommentAuthorId = async (userId) => {
-    try {
-        const worries = await prisma.worries.findMany({
-            where: {
-                commentAuthorId: userId,
-                deletedAt: null,
-            },
-            select: {
-                worryId: true,
-                // userId: true,
-                icon: true,
-                createdAt: true,
-            },
-            orderBy: {
-                createdAt: 'desc',
-            },
-        });
-        return worries;
-    } catch (error) {
-        throw new Error('Error retrieving worries by author ID: ' + error.message);
-    }
-};
-
 // 고민 상세조회(삭제된 고민 제외)
 export const getWorryDetail = async (worryId) => {
     try {
@@ -184,15 +160,6 @@ export const softDeleteWorryById = async (worryId) => {
     }
 };
 
-// worryId 에 해당하는 답변자 가져오기
-// export const getCommentAuthorId = async (worryId) => {
-//     const worry = await prisma.worries.findUnique({
-//         where: { worryId },
-//         select: { commentAuthorId: true, deletedAt: true },
-//     });
-//     return worry ? worry.commentAuthorId : null;
-// };
-
 // worryId로 고민 조회 (삭제/미삭제 모두 포함)
 export const getWorry = async (worryId) => {
     return await prisma.worries.findUnique({
@@ -206,59 +173,37 @@ export const getWorry = async (worryId) => {
 };
 
 // 고민 선택 삭제
-export const deleteSelectedWorry = async (worryId, deleteReason) => {
-    // 해당고민 소프트 삭제하기
-    const worryUpdateResult = await prisma.worries.update({
+export const deleteSelectedWorry = async (worryId) => {
+    await prisma.worries.update({
         where: { worryId },
         data: { deletedAt: new Date() },
     });
+};
 
-    // 고민 작성자 조회
-    const user = await prisma.users.findUnique({
-        where: { userId: worryUpdateResult.userId },
+export const updateUserCounts = async (worryAuthorId, commentAuthorId) => {
+    // 고민 작성자의 remainingWorries 증가
+    await prisma.users.updateMany({
+        where: { userId: worryAuthorId, remainingWorries: { lt: 5 } },
+        data: { remainingWorries: { increment: 1 } },
     });
 
-    // 답변 작성자 조회
-    const commentAuthor = await prisma.users.findUnique({
-        where: { userId: worryUpdateResult.commentAuthorId },
-    });
-
-    // 삭제 이유가 'DIFFICULT_TO_ANSWER'일 경우
-    if (deleteReason === 'DIFFICULT_TO_ANSWER') {
-        // 고민 작성자의 remainingWorries가 5보다 작을 경우에만 증가
-        if (user && user.remainingWorries < 5) {
-            await prisma.users.update({
-                where: { userId: user.userId },
-                data: { remainingWorries: { increment: 1 } },
-            });
-        }
-
-        // 답변 작성자의 remainingAnswers가 10보다 작을 경우에만 증가
-        if (commentAuthor && commentAuthor.remainingAnswers < 10) {
-            await prisma.users.update({
-                where: { userId: commentAuthor.userId },
-                data: { remainingAnswers: { increment: 1 } },
-            });
-        }
-    }
-
-    // 삭제 이유가 'OFFENSIVE_CONTENT'일 경우
-    if (deleteReason === 'OFFENSIVE_CONTENT') {
-        // 답변 작성자의 remainingAnswers가 10보다 작을 경우에만 증가
-        if (commentAuthor && commentAuthor.remainingAnswers < 10) {
-            await prisma.users.update({
-                where: { userId: commentAuthor.userId },
-                data: { remainingAnswers: { increment: 1 } },
-            });
-        }
-
-        // 신고 정보 DB에 저장
-        await prisma.reports.create({
-            data: {
-                reason: deleteReason,
-                userId: commentAuthor.userId, // 여기서는 답변을 작성한 사용자를 신고하는 것이므로 commentAuthor.userId 사용
-                worryId,
-            },
+    // 답변 작성자가 고민 작성자와 다를 경우, 답변 작성자의 remainingAnswers 증가
+    if (commentAuthorId !== worryAuthorId) {
+        await prisma.users.updateMany({
+            where: { userId: commentAuthorId, remainingAnswers: { lt: 10 } },
+            data: { remainingAnswers: { increment: 1 } },
         });
     }
+};
+
+// 신고 정보 저장하기
+export const reportWorry = async (worryId, userId, reportReason) => {
+    await prisma.reports.create({
+        data: {
+            worryId,
+            userId, // 신고하는 사용자의 ID
+            reason: reportReason,
+            reportedAt: new Date(),
+        },
+    });
 };
