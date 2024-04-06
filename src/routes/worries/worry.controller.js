@@ -3,8 +3,8 @@ import * as worryService from './worry.service.js';
 // # 고민 등록
 export const createWorryController = async (req, res, next) => {
     try {
-        const { content, icon, fontColor } = req.body;
-        const userId = res.locals.user.userId;
+        const { content, icon, fontColor, userId } = req.body;
+        // const userId = res.locals.user.userId;
 
         if (!content || !icon || !fontColor) return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
 
@@ -78,19 +78,17 @@ export const deleteWorryController = async (req, res, next) => {
     }
 };
 
-// 1. 고민(Worry) 삭제 및 신고 API
+// # 답변하기 어려운 고민 삭제하기
 export const deleteSelectedWorryController = async (req, res, next) => {
     try {
         const { worryId } = req.params;
-        const userId = res.locals.user.userId;
-        const { deleteReason } = req.body; // 추후에 사용자 인증 userId로 변경
-
-        if (!worryId || !deleteReason) {
+        // const userId = res.locals.user.userId;
+        const { userId } = req.body;
+        if (!worryId) {
             return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
         }
 
-        // 삭제 및 신고 로직 실행
-        const response = await worryService.deleteSelectedWorry(+worryId, +userId, deleteReason);
+        await worryService.deleteSelectedWorry(+worryId, +userId);
 
         res.status(200).json({ message: '해당 고민이 삭제되었습니다' });
     } catch (error) {
@@ -101,6 +99,24 @@ export const deleteSelectedWorryController = async (req, res, next) => {
         } else if (error.message === '해당 고민은 이미 삭제되었습니다') {
             return res.status(409).json({ error: error.message });
         }
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// #불쾌한 고민 신고하기
+export const reportWorryController = async (req, res) => {
+    try {
+        const { worryId } = req.params;
+        const { userId, reportReason } = req.body; // 신고 이유
+
+        if (!reportReason) {
+            return res.status(400).json({ error: '신고 이유를 작성해주세요.' });
+        }
+
+        await worryService.reportWorry(+worryId, +userId, reportReason);
+        res.status(200).json({ message: '신고가 성공적으로 이루어졌습니다.' });
+    } catch (error) {
+        console.error(error);
         res.status(500).json({ error: error.message });
     }
 };

@@ -10,7 +10,7 @@ import authMiddleware from '../../middlewares/authMiddleware.js';
 const router = express.Router();
 
 // 답장 보내기
-router.post('/worries/:worryId/comments/:commentId?', authMiddleware, createReplyController);
+router.post('/worries/:worryId/comments/:commentId?', createReplyController);
 
 //  모든 답장 전체 조회
 router.get('/comments', authMiddleware, findLatestCommentsAndWorriesForUserController);

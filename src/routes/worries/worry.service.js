@@ -74,22 +74,48 @@ export const deleteOldWorries = async () => {
     }
 };
 
-// # 질문 삭제 및 신고하기
-export const deleteSelectedWorry = async (worryId, userId, deleteReason) => {
+// # 답변하기 어려운 질문 삭제하기
+export const deleteSelectedWorry = async (worryId, userId) => {
     const selectedWorry = await worryRepository.getWorry(worryId);
     if (!selectedWorry) {
         throw new Error('해당하는 고민이 존재하지 않습니다');
-    }
-
-    if (selectedWorry.commentAuthorId !== userId) {
-        throw new Error('답변 대상자만 곤란한 고민을 삭제할 수 있습니다');
     }
 
     if (selectedWorry.deletedAt !== null) {
         throw new Error('해당 고민은 이미 삭제되었습니다');
     }
 
-    const deletedWorry = await worryRepository.deleteSelectedWorry(worryId, deleteReason);
+    if (selectedWorry.commentAuthorId !== userId) {
+        throw new Error('답변 대상자만 곤란한 고민을 삭제할 수 있습니다');
+    }
+    // 고민 삭제
+    await worryRepository.deleteSelectedWorry(worryId);
+    // 사용자 카운트 업데이트
+    await worryRepository.updateUserCounts(selectedWorry.userId, selectedWorry.commentAuthorId);
 
-    return deletedWorry;
+    return;
+};
+
+// # 불쾌한 고민 신고하기
+export const reportWorry = async (worryId, userId, reportReason) => {
+    const selectedWorry = await worryRepository.getWorry(worryId);
+    if (!selectedWorry) {
+        throw new Error('해당하는 고민이 존재하지 않습니다');
+    }
+
+    // 고민이 이미 삭제되었거나 신고되었는지 확인
+    if (selectedWorry.deletedAt !== null) {
+        throw new Error('해당 고민은 신고되었습니다');
+    }
+
+    if (selectedWorry.commentAuthorId !== userId) {
+        throw new Error('답변 대상자만 곤란한 고민을 삭제할 수 있습니다');
+    }
+
+    // 고민 삭제 및 사용자 카운트 업데이트 로직 재사용
+    await worryRepository.deleteSelectedWorry(worryId);
+    await worryRepository.updateUserCounts(selectedWorry.userId, selectedWorry.commentAuthorId);
+
+    // 신고 정보 저장
+    await worryRepository.reportWorry(worryId, userId, reportReason);
 };

@@ -2,7 +2,6 @@
 // import  jwt from 'jsonwebtoken';
 // import  {userRepository}  from './user.repository.js'
 
-
 // const signInKakao = async (kakaoToken) => {
 //     const result = await axios.get("https://kapi.kakao.com/v2/user/me", {
 //         headers: {
@@ -23,7 +22,7 @@
 //     }
 
 //     return jwt.sign({ kakao_id: user[0].kakao_id }, process.env.TOKKENSECRET);
-    
+
 // };
 
 // export default signInKakao

@@ -40,8 +40,8 @@ export const getCommentDetailController = async (req, res) => {
 export const createReplyController = async (req, res, next) => {
     try {
         const { worryId, commentId } = req.params;
-        const userId = res.locals.user.userId;
-        const { content, fontColor } = req.body;
+        // const userId = res.locals.user.userId;
+        const { content, fontColor, userId } = req.body;
 
         // 필수 데이터 검증
         if (!worryId || !content || !fontColor) {
