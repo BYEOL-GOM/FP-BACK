@@ -91,3 +91,32 @@ export const deleteComment = async (commentId, userId) => {
 
     await CommentRepository.updateUserCounts(commentId, userId);
 };
+
+// # 답장 신고하기
+export const reportComment = async (commentId, userId, reportReason) => {
+    const comment = await CommentRepository.getComment(commentId);
+    if (!comment) {
+        throw new Error('해당하는 답변이 존재하지 않습니다');
+    }
+    if (comment.deletedAt !== null) {
+        throw new Error('해당 답장은 이미 삭제되었습니다');
+    }
+    // 첫 번째 답변인 경우
+    if (comment.parentId === null) {
+        if (comment.worry.userId !== userId) {
+            throw new Error('답장을 삭제할 권한이 없습니다.');
+        }
+    } else {
+        // 대댓글인 경우
+        const parentComment = await CommentRepository.getComment(comment.parentId);
+        if (!parentComment || parentComment.userId !== userId) {
+            throw new Error('답장을 삭제할 권한이 없습니다.');
+        }
+    }
+
+    await CommentRepository.deleteComment(commentId);
+
+    await CommentRepository.updateUserCounts(commentId, userId);
+    // 답장 신고 로직
+    await CommentRepository.reportComment(commentId, userId, reportReason);
+};

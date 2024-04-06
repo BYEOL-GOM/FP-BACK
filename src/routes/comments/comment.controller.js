@@ -77,3 +77,17 @@ export const deleteCommentController = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+// # 불쾌한 답장 신고하기
+export const reportCommentController = async (req, res, next) => {
+    const { commentId } = req.params;
+    // const userId = res.locals.user.userId;
+    const { userId, reportReason } = req.body;
+
+    try {
+        await CommentService.reportComment(+commentId, +userId, reportReason);
+        res.status(200).json({ message: '답변이 성공적으로 신고되었습니다.' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};

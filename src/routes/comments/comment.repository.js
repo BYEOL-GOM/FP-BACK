@@ -185,3 +185,15 @@ export const updateUserCounts = async (commentId, userId) => {
         });
     }
 };
+
+// 답장 신고하기
+export const reportComment = async (commentId, userId, reportReason) => {
+    await prisma.reports.create({
+        data: {
+            commentId,
+            userId,
+            reason: reportReason,
+            reportedAt: new Date(),
+        },
+    });
+};
