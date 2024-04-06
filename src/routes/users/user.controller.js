@@ -162,8 +162,10 @@ export const naverLoginController = async (req, res) => {
 // 리프레쉬
 // 리프레시 토큰 검증 및 재발급 로직
 export const refreshController = async (req, res, next) => {
+    console.log('페이커',req)
     try {
         const { Authorization } = req.headers;
+        console.log('손흥민',req)
         if (!Authorization) {
             return res.status(401).json({ message: 'Refresh Token을 전달받지 못했습니다.' });
         }
