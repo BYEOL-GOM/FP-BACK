@@ -87,11 +87,20 @@ export const getWorryDetail = async (worryId) => {
                 // icon: true,
                 fontColor: true,
                 commentAuthorId: true,
+                unRead: true,
             },
         });
     } catch (error) {
         throw new Error('고민 상세조회에 실패하였습니다 ' + error.message);
     }
+};
+
+// 고민을 읽음 상태로 업데이트
+export const updateWorryStatus = async (worryId) => {
+    await prisma.worries.update({
+        where: { worryId },
+        data: { unRead: false },
+    });
 };
 
 // 생성된지 24시간 이상이 된 고민중 답변이 없는 고민 찾기
