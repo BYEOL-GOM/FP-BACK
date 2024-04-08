@@ -321,6 +321,7 @@ export const findHelpedSolveWorryDetailsById = async (worryId, userId) => {
 
 // 좋아요를 가장 많이 받은 탑 5위 댓글 조회
 export const findTopLikedCommentAuthors = async (userId) => {
+    // 좋아요 데이터를 가져와서, 각 좋아요에 대한 댓글 작성자의 ID를 추출
     const likes = await prisma.likes.findMany({
         include: {
             comment: {
@@ -331,6 +332,7 @@ export const findTopLikedCommentAuthors = async (userId) => {
         },
     });
 
+    // 추출한 댓글 작성자 ID를 기반으로 각 댓글 작성자가 받은 좋아요 개수를 계산. commentAuthorLikesCount 객체에 저장
     const commentAuthorLikesCount = likes.reduce((acc, like) => {
         const commentAuthorId = like.comment.worry.commentAuthorId;
         if (!acc[commentAuthorId]) {
@@ -340,37 +342,63 @@ export const findTopLikedCommentAuthors = async (userId) => {
         return acc;
     }, {});
 
+    // 결과를 commentAuthorId와 좋아요 수로 구성된 객체로 변환하고, 좋아요 수에 따라 내림차순으로 정렬
+    // 유저 ID가 없는 경우 빼고 모두 commentAuthorId로 표시되도록 설정
     let sortedAuthors = Object.entries(commentAuthorLikesCount)
+        // .map(([commentAuthorId, likes]) => ({ userId: parseInt(commentAuthorId), likes }))
         .map(([commentAuthorId, likes]) => ({ commentAuthorId: parseInt(commentAuthorId), likes }))
-        .sort((a, b) => b.likes - a.likes);
+        .sort((a, b) => b.likes - a.likes)
+        .slice(0, 2);
 
-    // 로그인하지 않았다면 상위 2명만 반환
-    if (userId === undefined) {
-        return sortedAuthors.slice(0, 2);
+    // // 로그인하지 않았다면 상위 2명만 반환
+    // if (userId === undefined) {
+    //     return sortedAuthors.slice(0, 2);
+    // }
+    //---------------------------------------------------------
+    // 로그인하지 않은 경우 상위 2명만 반환
+    // if (!userId) {
+    //     return sortedAuthors.slice(0, 2);
+    // }
+
+    // // // 로그인한 사용자가 있다면 해당 사용자의 좋아요 순위를 추가로 계산
+    // // const userLikes = commentAuthorLikesCount[userId];
+    // // const userInTop = sortedAuthors.findIndex((author) => author.commentAuthorId === userId);
+    // // const userInTop = sortedAuthors.findIndex((author) => author.userId === userId);
+
+    // // 로그인한 사용자가 Top 2에 포함되지 않았고, 좋아요를 받았다면 추가
+    // if (userInTop === -1 && userLikes !== undefined) {
+    //     sortedAuthors.push({ userId: userId, likes: userLikes });
+    // }
+
+    // // 다시 순위를 정렬하고 상위 2명 + 로그인한 사용자의 정보를 포함시킵니다 (로그인한 사용자가 상위 2명에 포함되지 않는 경우에만)
+    // sortedAuthors = sortedAuthors.sort((a, b) => b.likes - a.likes);
+
+    // // 로그인한 사용자가 Top 2 안에 포함되지 않았다면, 상위 2명과 로그인한 사용자를 포함하여 반환
+    // if (userInTop > 1 || userInTop === -1) {
+    //     // 좋아요가 없는 경우 userId와 함께 0으로 표시
+    //     const userEntry = { userId: userId || 0, likes: userLikes || 0 };
+    //     return sortedAuthors
+    //         .slice(0, 2)
+    //         .concat(sortedAuthors.find((author) => author.commentAuthorId === userId) || userEntry);
+    //     // return sortedAuthors.slice(0, 2).concat(sortedAuthors.find((author) => author.commentAuthorId === userId));
+    // }
+
+    // // 그렇지 않으면 상위 2명만 반환
+    // return sortedAuthors.slice(0, 2);
+    // 로그인한 사용자가 있고 상위 랭커 2명에 포함되어 있는지 확인
+    if (userId !== undefined) {
+        const userLikes = commentAuthorLikesCount[userId];
+        const userInTop = sortedAuthors.findIndex((author) => author.commentAuthorId === userId);
+
+        // 로그인한 사용자가 상위 랭커 2명에 포함되어 있지 않은 경우
+        if (userInTop === -1) {
+            // 상위 랭커 2명과 로그인한 사용자 정보를 포함하여 반환
+            sortedAuthors.push({ userId: userId, likes: userLikes });
+        } else {
+            // 상위 랭커 2명에 포함되어 있는 경우 해당 정보만 업데이트
+            sortedAuthors[userInTop].userId = userId;
+        }
     }
 
-    // 로그인한 사용자가 있다면 해당 사용자의 좋아요 순위를 추가로 계산
-    const userLikes = commentAuthorLikesCount[userId];
-    const userInTop = sortedAuthors.findIndex((author) => author.commentAuthorId === userId);
-
-    // 로그인한 사용자가 Top 2에 포함되지 않았고, 좋아요를 받았다면 추가
-    if (userInTop === -1 && userLikes !== undefined) {
-        sortedAuthors.push({ commentAuthorId: userId, likes: userLikes });
-    }
-
-    // 다시 순위를 정렬하고 상위 2명 + 로그인한 사용자의 정보를 포함시킵니다 (로그인한 사용자가 상위 2명에 포함되지 않는 경우에만)
-    sortedAuthors = sortedAuthors.sort((a, b) => b.likes - a.likes);
-
-    // 로그인한 사용자가 Top 2 안에 포함되지 않았다면, 상위 2명과 로그인한 사용자를 포함하여 반환
-    if (userInTop > 1 || userInTop === -1) {
-        // 좋아요가 없는 경우 userId와 함께 0으로 표시
-        const userEntry = { userId: userId || 0, likes: userLikes || 0 };
-        return sortedAuthors
-            .slice(0, 2)
-            .concat(sortedAuthors.find((author) => author.commentAuthorId === userId) || userEntry);
-        // return sortedAuthors.slice(0, 2).concat(sortedAuthors.find((author) => author.commentAuthorId === userId));
-    }
-
-    // 그렇지 않으면 상위 2명만 반환
-    return sortedAuthors.slice(0, 2);
+    return sortedAuthors;
 };
