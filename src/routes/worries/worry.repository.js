@@ -100,6 +100,16 @@ export const updateWorryStatus = async (worryId) => {
     await prisma.worries.update({
         where: { worryId },
         data: { unRead: false },
+        select: {
+            worryId: true,
+            userId: true,
+            createdAt: true,
+            content: true,
+            // icon: true,
+            fontColor: true,
+            commentAuthorId: true,
+            unRead: true,
+        },
     });
 };
 

@@ -41,7 +41,7 @@ export const createWorry = async ({ content, icon, userId, fontColor }) => {
 // # 고민 상세조회
 export const getWorryDetail = async (worryId, userId) => {
     try {
-        const worry = await worryRepository.getWorryDetail(worryId);
+        let worry = await worryRepository.getWorryDetail(worryId);
         if (!worry) {
             throw new Error('해당하는 고민이 존재하지 않습니다');
         }
@@ -51,6 +51,7 @@ export const getWorryDetail = async (worryId, userId) => {
         // 고민을 "읽음" 상태로 업데이트
         if (worry.unRead) {
             await worryRepository.updateWorryStatus(worryId);
+            worry = await worryRepository.getWorryDetail(worryId);
         }
         return worry;
     } catch (error) {
