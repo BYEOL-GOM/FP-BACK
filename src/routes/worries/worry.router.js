@@ -11,7 +11,7 @@ import authMiddleware from '../../middlewares/authMiddleware.js';
 const router = express.Router();
 
 // 고민 메세지 작성
-router.post('/',authMiddleware, createWorryController);
+router.post('/', authMiddleware, createWorryController);
 
 // 전체 고민 조회 by 답변자id
 router.get('/', authMiddleware, getWorriesByCommentAuthorIdController);

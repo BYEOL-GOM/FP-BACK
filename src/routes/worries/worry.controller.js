@@ -6,9 +6,7 @@ export const createWorryController = async (req, res, next) => {
         const { content, icon, fontColor } = req.body;
         const userId = res.locals.user.userId;
 
-
-        if (!content || !icon  || !fontColor)
-            return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
+        if (!content || !icon || !fontColor) return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
 
         const worry = await worryService.createWorry({ content, icon, userId: +userId, fontColor });
 
