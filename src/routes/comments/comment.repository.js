@@ -36,6 +36,7 @@ export const findLatestCommentsAndWorriesForUser = async (userId) => {
             icon: worry.icon, // 각 worry에 해당하는 icon 정보 추가
             commentId: latestComment ? latestComment.commentId : null, // 첫번째 고민에 해당할때는 commentId 가 null
             createdAt: latestComment ? latestComment.createdAt : worry.createdAt,
+            unRead: latestComment ? latestComment.unRead : worry.unRead,
         };
     });
 
@@ -53,6 +54,32 @@ export const getComment = async (commentId) => {
             fontColor: true,
             worryId: true,
             deletedAt: true,
+            unRead: true,
+            userId: true,
+            parentId: true,
+            worry: { select: { userId: true } },
+            parent: { select: { userId: true } },
+        },
+    });
+};
+
+// 메세지 읽음상태로 업데이트 하기
+export const updateCommentStatus = async (commentId) => {
+    await prisma.comments.update({
+        where: { commentId },
+        data: { unRead: false },
+    });
+    // 업데이트 후 답장 정보 다시 조회
+    return await prisma.comments.findUnique({
+        where: { commentId },
+        select: {
+            commentId: true,
+            content: true,
+            createdAt: true,
+            fontColor: true,
+            worryId: true,
+            deletedAt: true,
+            unRead: true, // 이제 false로 업데이트된 상태를 확인할 수 있음
             userId: true,
             parentId: true,
             worry: { select: { userId: true } },
@@ -102,6 +129,7 @@ export const createReply = async ({ worryId, content, userId, parentId, fontColo
             userId: parseInt(userId),
             parentId,
             fontColor,
+            unRead: true, // 새로운 답장 '읽지 않음' 상태
         },
     });
 };
