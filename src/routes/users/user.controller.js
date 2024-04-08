@@ -208,21 +208,17 @@ export const refreshController = async (req, res, next) => {
     }
 };
 
-
-
-
-
 // 좋아요된 고민의 갯수 조회하기
 export const WorryCountController = async (req, res, next) => {
     try {
-        const userId = res.locals.user.userId; 
+        const userId = res.locals.user.userId;
         const solvedWorriesCount = await prisma.worries.count({
             where: {
-              commentAuthorId: +userId, // 이 값은 예시입니다. 실제 commentAuthorId 값으로 대체하세요.
-              isSolved: true,
+                commentAuthorId: +userId, // 이 값은 예시입니다. 실제 commentAuthorId 값으로 대체하세요.
+                isSolved: true,
             },
-          });
-          return res.status(200).json(solvedWorriesCount)
+        });
+        return res.status(200).json(solvedWorriesCount);
     } catch (error) {
         next(error);
     }
