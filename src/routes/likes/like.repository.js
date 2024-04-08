@@ -363,7 +363,12 @@ export const findTopLikedCommentAuthors = async (userId) => {
 
     // 로그인한 사용자가 Top 2 안에 포함되지 않았다면, 상위 2명과 로그인한 사용자를 포함하여 반환
     if (userInTop > 1 || userInTop === -1) {
-        return sortedAuthors.slice(0, 2).concat(sortedAuthors.find((author) => author.commentAuthorId === userId));
+        // 좋아요가 없는 경우 userId와 함께 0으로 표시
+        const userEntry = { userId: userId || 0, likes: userLikes || 0 };
+        return sortedAuthors
+            .slice(0, 2)
+            .concat(sortedAuthors.find((author) => author.commentAuthorId === userId) || userEntry);
+        // return sortedAuthors.slice(0, 2).concat(sortedAuthors.find((author) => author.commentAuthorId === userId));
     }
 
     // 그렇지 않으면 상위 2명만 반환
