@@ -1,0 +1,5 @@
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.likes.findMany()` invocation:\n\n\nThe column `final.Comments.updatedAt` does not exist in the current database.","timestamp":"2024-04-08T12:12:49.769Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.likes.findMany()` invocation:\n\n\nThe column `final.Comments.updatedAt` does not exist in the current database.","timestamp":"2024-04-08T12:15:54.615Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.likes.findMany()` invocation:\n\n\nThe column `final.Comments.updatedAt` does not exist in the current database.","timestamp":"2024-04-08T12:17:17.029Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.likes.findMany()` invocation:\n\n\nThe column `final.Comments.updatedAt` does not exist in the current database.","timestamp":"2024-04-08T12:17:59.919Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.likes.findMany()` invocation:\n\n\nThe column `final.Comments.updatedAt` does not exist in the current database.","timestamp":"2024-04-08T12:24:03.631Z"}
