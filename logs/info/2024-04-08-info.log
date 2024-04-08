@@ -72,3 +72,5 @@
 {"level":"info","message":"Method: GET, URL: /comments/60, Status: 200, Duration: 201ms","timestamp":"2024-04-08T12:53:37.567Z"}
 {"level":"info","message":"Method: POST, URL: /worries/83/comments/60, Status: 201, Duration: 129ms","timestamp":"2024-04-08T12:55:51.863Z"}
 {"level":"info","message":"Method: GET, URL: /comments/61, Status: 200, Duration: 203ms","timestamp":"2024-04-08T12:56:17.656Z"}
+{"level":"info","message":"Method: GET, URL: /count, Status: 401, Duration: 31ms","timestamp":"2024-04-08T12:12:08.575Z"}
+{"level":"info","message":"Method: GET, URL: /count, Status: 200, Duration: 537ms","timestamp":"2024-04-08T12:12:33.989Z"}
