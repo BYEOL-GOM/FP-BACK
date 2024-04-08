@@ -1,0 +1,16 @@
+{"level":"info","message":"Method: GET, URL: /remaining-worries, Status: 401, Duration: 6ms","timestamp":"2024-04-08T07:57:33.271Z"}
+{"level":"info","message":"Method: GET, URL: /remaining-worries, Status: 401, Duration: 3ms","timestamp":"2024-04-08T07:59:01.160Z"}
+{"level":"info","message":"Method: GET, URL: /remaining-worries, Status: 401, Duration: 0ms","timestamp":"2024-04-08T07:59:15.477Z"}
+{"level":"info","message":"Method: GET, URL: /remaining-worries, Status: 404, Duration: 1ms","timestamp":"2024-04-08T07:59:42.564Z"}
+{"level":"info","message":"Method: GET, URL: /remaining-worries, Status: 401, Duration: 0ms","timestamp":"2024-04-08T07:59:46.541Z"}
+{"level":"info","message":"Method: GET, URL: /remaining-worries, Status: 401, Duration: 3ms","timestamp":"2024-04-08T07:59:57.411Z"}
+{"level":"info","message":"Method: GET, URL: /remaining-worries, Status: 401, Duration: 3ms","timestamp":"2024-04-08T08:00:23.881Z"}
+{"level":"info","message":"Method: GET, URL: /remaining-worries, Status: 401, Duration: 1ms","timestamp":"2024-04-08T08:01:45.295Z"}
+{"level":"info","message":"Method: GET, URL: /remaining-worries, Status: 500, Duration: 274ms","timestamp":"2024-04-08T08:06:22.076Z"}
+{"level":"info","message":"Method: GET, URL: /remaining-worries, Status: 500, Duration: 29ms","timestamp":"2024-04-08T08:08:17.494Z"}
+{"level":"info","message":"Method: GET, URL: /remaining-worries, Status: 500, Duration: 24ms","timestamp":"2024-04-08T08:09:10.766Z"}
+{"level":"info","message":"Method: GET, URL: /remaining-worries, Status: 500, Duration: 16ms","timestamp":"2024-04-08T08:09:11.717Z"}
+{"level":"info","message":"Method: GET, URL: /remaining-worries, Status: 200, Duration: 20ms","timestamp":"2024-04-08T08:12:01.888Z"}
+{"level":"info","message":"Method: GET, URL: /remaining-worries, Status: 200, Duration: 22ms","timestamp":"2024-04-08T08:12:14.334Z"}
+{"level":"info","message":"Method: GET, URL: /remaining-worries, Status: 200, Duration: 14ms","timestamp":"2024-04-08T08:12:22.687Z"}
+{"level":"info","message":"Method: GET, URL: /remaining-worries, Status: 401, Duration: 2ms","timestamp":"2024-04-08T08:12:59.734Z"}
