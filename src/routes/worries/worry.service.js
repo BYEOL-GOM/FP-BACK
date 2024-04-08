@@ -48,6 +48,10 @@ export const getWorryDetail = async (worryId, userId) => {
         if (worry.commentAuthorId !== userId) {
             throw new Error('고민을 조회할 권한이 없습니다 ');
         }
+        // 고민을 "읽음" 상태로 업데이트
+        if (worry.unRead) {
+            await worryRepository.updateWorryStatus(worryId);
+        }
         return worry;
     } catch (error) {
         throw new Error(error.message);

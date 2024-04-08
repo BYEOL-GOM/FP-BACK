@@ -28,14 +28,22 @@ export const getCommentDetail = async (commentId, userId) => {
                 throw new Error('답장을 조회할 권한이 없습니다.');
             }
         }
-        return {
-            commentId: comment.commentId,
-            content: comment.content,
-            createdAt: comment.createdAt,
-            fontColor: comment.fontColor,
-            parentId: comment.parentId,
-            worryId: comment.worryId,
+
+        // 읽음 상태로 업데이트
+        const updatedComment = await CommentRepository.updateCommentStatus(commentId);
+
+        // 클라이언트에 반환할 정보만을 포함하는 객체 생성
+        const response = {
+            commentId: updatedComment.commentId,
+            content: updatedComment.content,
+            createdAt: updatedComment.createdAt,
+            fontColor: updatedComment.fontColor,
+            unRead: updatedComment.unRead,
+            parentId: updatedComment.parentId,
+            worryId: updatedComment.worryId,
         };
+
+        return response;
     } catch (error) {
         throw new Error(error.message);
     }
@@ -85,6 +93,7 @@ export const createReply = async (worryId, commentId, content, userId, fontColor
         commentId: comment.commentId,
         content: comment.content,
         createdAt: comment.createdAt,
+        unRead: comment.unRead,
         fontColor: comment.fontColor,
         parentId: comment.parentId,
         // userId: comment.userId,
