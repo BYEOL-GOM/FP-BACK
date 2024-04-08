@@ -4,7 +4,7 @@ import * as LikeService from './like.service.js';
 export const sendLike = async (req, res, next) => {
     try {
         const { worryId, commentId } = req.params;
-        const userId = Number(res.locals.user.userId);
+        const userId = parseInt(res.locals.user.userId);
 
         const result = await LikeService.sendLike(worryId, commentId, userId);
 
@@ -17,7 +17,7 @@ export const sendLike = async (req, res, next) => {
 // '나의 해결된 고민' 목록 전체 조회
 export const getSolvedWorries = async (req, res, next) => {
     try {
-        const userId = Number(res.locals.user.userId);
+        const userId = parseInt(res.locals.user.userId);
         console.log('🩵🩵🩵컨트롤러 userId : ', userId);
 
         // 페이지네이션
@@ -39,7 +39,7 @@ export const getSolvedWorries = async (req, res, next) => {
 // '내가 해결한 고민' 목록 전체 조회
 export const getHelpedSolveWorries = async (req, res, next) => {
     try {
-        const userId = Number(res.locals.user.userId);
+        const userId = parseInt(res.locals.user.userId);
 
         // 페이지네이션
         const page = parseInt(req.query.page) || 1; // 페이지 번호, 기본값은 1
@@ -61,7 +61,7 @@ export const getHelpedSolveWorries = async (req, res, next) => {
 export const getSolvedWorryDetails = async (req, res, next) => {
     try {
         const { worryId } = req.params;
-        const userId = Number(res.locals.user.userId);
+        const userId = parseInt(res.locals.user.userId);
 
         if (!worryId) {
             return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다.' });
@@ -83,7 +83,7 @@ export const getSolvedWorryDetails = async (req, res, next) => {
 export const getHelpedSolveWorryDetails = async (req, res, next) => {
     try {
         const { worryId } = req.params;
-        const userId = Number(res.locals.user.userId);
+        const userId = parseInt(res.locals.user.userId);
 
         if (!worryId) {
             return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다.' });
@@ -105,7 +105,11 @@ export const getHelpedSolveWorryDetails = async (req, res, next) => {
 // 좋아요를 가장 많이 받은 탑 5위 댓글 조회
 export const getTopLikedCommentAuthors = async (req, res, next) => {
     try {
-        const topUsers = await LikeService.getTopLikedCommentAuthors();
+        // 로그인한 사용자가 있다면, 그 사용자의 ID를 가져오기.
+        const userId = res.locals.user ? parseInt(res.locals.user.userId) : undefined;
+        // 서비스 계층에 사용자 ID를 전달. 로그인하지 않은 경우 userId는 undefined.
+
+        const topUsers = await LikeService.getTopLikedCommentAuthors(userId);
         return res.json(topUsers);
     } catch (error) {
         next(error);
