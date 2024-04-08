@@ -22,8 +22,9 @@ model Users {
   worry Worries[]
   reports     Reports[]  // 신고
 
-  comments  Comments[]
-  likesSent     Likes[] @relation("LikeSender")     // 선물을 보낸 사람 
+  comments      Comments[]
+  likesSent     Likes[]     @relation("LikeSender")     // 선물을 보낸 사람 
+  sentChattings Chattings[] @relation("SentChattings")  // 사용자가 보낸 메시지
 }
 
 
@@ -85,7 +86,6 @@ model Comments {
   likes       Likes[]
   reports     Reports[]                                               // 신고
 
-
   // 해결된 답변
   solvingWorryId Int?
   solvingWorry Worries? @relation("SolvingComment")
@@ -128,4 +128,33 @@ model Reports {
   // 답변이 신고된 경우
   commentId   Int?     
   comment     Comments? @relation(fields: [commentId], references: [commentId])
+}
+
+// 채팅방
+model Rooms {
+  roomId      Int      @id @default(autoincrement())
+  title       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  worryId             Int       @unique // 채팅방이 연결된 고민의 ID
+  worries             Worries   @relation(fields: [worryId], references: [worryId])
+
+  chattings    Chattings[]
+}
+
+// 채팅
+model Chattings {
+  chatId   Int      @id @default(autoincrement())
+  text        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // 메시지가 속한 채팅방
+  roomId      Int
+  room        Rooms     @relation(fields: [roomId], references: [roomId])
+
+  // 메시지를 보낸 사용자
+  senderId    Int
+  sender      Users     @relation("SentChattings", fields: [senderId], references: [userId])
 }

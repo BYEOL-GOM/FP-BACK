@@ -86,10 +86,29 @@ function displayRoomMessage(message) {
     displayContainer.scrollTo(0, displayContainer.scrollHeight);
 }
 
+// 'leave room' 이벤트를 서버로 전송하고, 사용자 ID를 함께 전달하는 함수
+const leaveRoom = () => {
+    // 서버에 'leave room' 이벤트와 userId를 함께 전송합니다.
+    socket.emit('leave room', { userId });
+
+    // 사용자가 UI 상에서 현재 방을 떠났음을 표시하는 로직
+    displayLeaveMessage(userId);
+};
+
+// 퇴장 메시지를 화면에 표시하는 함수
+function displayLeaveMessage(userId) {
+    // 메시지를 표시할 요소를 생성합니다.
+    const li = document.createElement('li');
+    li.classList.add('leave-message'); // 퇴장 메시지와 구별되는 스타일을 적용할 수 있습니다.
+    li.textContent = `사용자 ${userId}가 퇴장했습니다.`;
+
+    // 메시지 요소를 채팅 목록에 추가합니다.
+    chatList.appendChild(li);
+    displayContainer.scrollTo(0, displayContainer.scrollHeight);
+}
+
 // 퇴장 버튼 클릭 이벤트 리스너 추가
-leaveRoomButton.addEventListener('click', () => {
-    socket.emit('leave room');
-});
+leaveRoomButton.addEventListener('click', leaveRoom);
 
 function LiModel(name, msg, time) {
     this.name = name;

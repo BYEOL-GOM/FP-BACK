@@ -114,7 +114,7 @@ const initializeSocket = (httpServer) => {
                     userId,
                     name,
                     msg,
-                    time: new Date().toISOString(), // 현재 시각을 메시지에 포함
+                    time: moment(new Date().toISOString()), // 현재 시각을 메시지에 포함
                 });
             } else {
                 console.log('사용자가 아직 채팅 방에 입장하지 않았습니다.');
@@ -144,16 +144,29 @@ const initializeSocket = (httpServer) => {
         });
 
         // 사용자가 방을 퇴장하도록 요청할 때
-        socket.on('leave room', () => {
+        socket.on('leave room', ({ userId }) => {
             // 저장된 사용자 방 정보를 사용하여 퇴장 처리
-            const room = userRooms[socket.id];
-            if (room) {
-                socket.leave(room);
-                console.log(`사용자 (Socket ID: ${socket.id})가 방 ${room}에서 퇴장했습니다.`);
-                io.to(room).emit('room message', `사용자 (Socket ID: ${socket.id})가 방에서 퇴장했습니다.`);
+            const roomId = userRooms[userId]; // userId를 통해 roomId를 찾습니다.
+            // if (room) {
+            //     socket.leave(room);
+            //     console.log(`사용자 (Socket ID: ${socket.id})가 방 ${room}에서 퇴장했습니다.`);
+            //     io.to(room).emit('room message', `사용자 (Socket ID: ${socket.id})가 방에서 퇴장했습니다.`);
 
-                // 사용자의 방 정보 삭제
-                delete userRooms[socket.id];
+            //     // 사용자의 방 정보 삭제
+            //     delete userRooms[socket.id];
+            // }
+            if (roomId) {
+                // 사용자를 방에서 제거
+                socket.leave(roomId.toString());
+                console.log(`사용자 ${userId}가 방 ${roomId}에서 퇴장했습니다.`);
+
+                // 방에 남은 사용자들에게 메시지를 전송합니다.
+                io.to(roomId.toString()).emit('room message', `사용자 ${userId}가 방 ${roomId}에서 퇴장했습니다.`);
+
+                // 사용자의 방 정보를 userRooms 객체에서 삭제합니다.
+                delete userRooms[userId];
+            } else {
+                console.log('사용자가 아직 어떤 채팅 방에도 속해있지 않습니다.');
             }
         });
 

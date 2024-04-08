@@ -42,13 +42,6 @@ app.use((req, res, next) => {
         return res.status(204).json({});
     }
     next();
-    if (req.method === 'OPTIONS') {
-        res.header('Access-Control-Allow-Origin', '*');
-        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-        res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-        return res.status(204).json({});
-    }
-    next();
 });
 
 // bodyParser와 express.json()은 CORS 설정 바로 다음에 위치해야 합니다.
@@ -84,6 +77,6 @@ loadBannedWords()
         console.error('금지어 목록 로딩 중 오류 발생:', error);
     });
 
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
     console.log(`${PORT} 포트로 서버가 열렸어요!`);
 });
