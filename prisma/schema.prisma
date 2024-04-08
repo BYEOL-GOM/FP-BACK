@@ -37,6 +37,8 @@ model Worries {
   deletedAt             DateTime? @map("deletedAt")                    // 소프트 삭제 
 
   icon                  Icon?     @map("icon")
+  unRead                Boolean   @default(true)  @map("unRead")       // 아직 안읽음
+ 
   isSolved              Boolean   @default(false)                      // 고민이 해결됐는지에 대한 여부 확인
   reportReason          String?       @map("reportReason")             // 신고 이유
 
@@ -59,14 +61,15 @@ enum Icon{
 }
 
 model Comments {
-  commentId Int      @id @default(autoincrement()) @map("commentId")
-  content   String   @db.Text  @map("content")
-  createdAt DateTime @default(now())  @map("createdAt")
-  deletedAt             DateTime? @map("deletedAt")                    // 소프트 삭제
+  commentId    Int           @id @default(autoincrement()) @map("commentId")
+  content      String        @db.Text           @map("content")
+  createdAt    DateTime      @default(now())    @map("createdAt")
+  deletedAt    DateTime?                        @map("deletedAt")              // 소프트 삭제
+  fontColor             String?                 @map("fontColor")
+  unRead              Boolean   @default(true)  @map("unRead")                 // 아직 안읽음
 
-  fontColor             String?   @map("fontColor")
-  reportReason          String?       @map("reportReason")       // 신고 이유
-
+  reportReason          String?                 @map("reportReason")          // 신고 이유
+  
   parentId  Int?     
   parent    Comments? @relation("CommentHierarchy", fields: [parentId], references: [commentId]) // 댓글 계층
   children  Comments[] @relation("CommentHierarchy")
