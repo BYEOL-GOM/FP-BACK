@@ -110,7 +110,4 @@ function LiModel(name, msg, time) {
     };
 }
 
-// // 서버로 메시지 보내기
-// socket.emit('chat message', 'Hello from the client!');
-
 console.log(socket);
