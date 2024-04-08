@@ -59,7 +59,7 @@ export const kakaoLoginController = async (req, res) => {
             const accessToken = jwt.sign({ userId: createUser.userId }, process.env.ACCESS_TOKEN_SECRET, {
                 expiresIn: process.env.ACCESS_TOKEN_LIFE,
             });
-            const refreshToken = jwt.sign({}, process.env.REFRESH_TOKEN_SECRET, {
+            const refreshToken = jwt.sign({ userId: createUser.userId }, process.env.REFRESH_TOKEN_SECRET, {
                 expiresIn: process.env.REFRESH_TOKEN_LIFE,
             });
             return res
@@ -71,7 +71,7 @@ export const kakaoLoginController = async (req, res) => {
         const accessToken = jwt.sign({ userId: findUser.userId }, process.env.ACCESS_TOKEN_SECRET, {
             expiresIn: process.env.ACCESS_TOKEN_LIFE,
         });
-        const refreshToken = jwt.sign({}, process.env.REFRESH_TOKEN_SECRET, {
+        const refreshToken = jwt.sign({ userId: findUser.userId }, process.env.REFRESH_TOKEN_SECRET, {
             expiresIn: process.env.REFRESH_TOKEN_LIFE,
         });
 
@@ -163,12 +163,12 @@ export const naverLoginController = async (req, res) => {
 // 리프레시 토큰 검증 및 재발급 로직
 export const refreshController = async (req, res, next) => {
     try {
-        const { authorization } = req.headers;
-        if (!authorization) {
+        const { Authorization } = req.body.headers;
+        if (!Authorization) {
             return res.status(401).json({ message: 'Refresh Token을 전달받지 못했습니다.' });
         }
 
-        const [bearer, refreshToken] = authorization.split(' ');
+        const [bearer, refreshToken] = Authorization.split(' ');
         if (bearer !== 'Bearer') {
             const err = new Error('토큰 타입이 Bearer 형식이 아닙니다.');
             err.status = 401;
@@ -176,6 +176,9 @@ export const refreshController = async (req, res, next) => {
         }
 
         const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+        if (!decoded) {
+            return res.status(409).json({ message: '토큰을 decoded하지 못했습니다.' });
+        }
         const user = await prisma.users.findFirst({
             where: {
                 userId: decoded.userId,

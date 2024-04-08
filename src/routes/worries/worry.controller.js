@@ -111,5 +111,15 @@ export const reportWorryController = async (req, res) => {
     }
 };
 
+// 유저의 로켓 개수 확인하기
+export const getRemainingWorries = async (req, res) => {
+    try {
+        const userId = res.locals.user.userId;
+        // const { userId } = req.body;
+        const remainingWorries = await worryService.findRemainingWorriesByUserId(+userId);
 
-// export const WorryCountController = 
+        res.json({ remainingWorries });
+    } catch (error) {
+        res.status(500).send({ message: 'Internal server error' });
+    }
+};
