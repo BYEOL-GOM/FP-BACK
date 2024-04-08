@@ -24,22 +24,22 @@ jobs:
               run: yarn prettier:check
 
     deploy:
-    name: Deploy
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
-    needs: prettier-check
-    steps:
-        - uses: actions/checkout@v3
-        - run: yarn install --force
-        - uses: appleboy/ssh-action@v0.1.6
-          with:
-              host: ${{ secrets.REMOTE_IP }}
-              username: ${{ secrets.REMOTE_USER }}
-              key: ${{ secrets.REMOTE_PRIVATE_KEY }}
-              port: ${{ secrets.REMOTE_SSH_PORT }}
-              script: |
-                  cd /home/ubuntu/FP-BACK
-                  git pull origin dev
-                  pm2 kill || true
-                  yarn install --force
-                  pm2 start src/app.js
+        name: Deploy
+        runs-on: ubuntu-latest
+        if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+        needs: prettier-check
+        steps:
+            - uses: actions/checkout@v3
+            - run: yarn install --force
+            - uses: appleboy/ssh-action@v0.1.6
+              with:
+                  host: ${{ secrets.REMOTE_IP }}
+                  username: ${{ secrets.REMOTE_USER }}
+                  key: ${{ secrets.REMOTE_PRIVATE_KEY }}
+                  port: ${{ secrets.REMOTE_SSH_PORT }}
+                  script: |
+                      cd /home/ubuntu/FP-BACK
+                      git pull origin dev
+                      pm2 kill || true
+                      yarn install --force
+                      pm2 start src/app.js
