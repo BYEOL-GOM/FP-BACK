@@ -20,6 +20,8 @@ model Users {
   remainingAnswers Int @default(10) // 답변 가능 개수 10개
 
   worry Worries[]
+  reports     Reports[]  // 신고
+
   comments  Comments[]
   likesSent     Likes[] @relation("LikeSender")     // 선물을 보낸 사람 
 }
@@ -32,17 +34,20 @@ model Worries {
   content               String    @db.Text @map("content")
   fontColor             String?   @map("fontColor")
   createdAt             DateTime  @default(now()) @map("createdAt")
+  deletedAt             DateTime? @map("deletedAt")                    // 소프트 삭제 
+
   icon                  Icon?     @map("icon")
-  lastReplyTime         DateTime?                                      // 답변이 도착한 시간
-  deletedAt             DateTime? @map("deletedAt")                    // 소프트 삭제를 위한  
+  unRead                Boolean   @default(true)  @map("unRead")       // 아직 안읽음
+ 
   isSolved              Boolean   @default(false)                      // 고민이 해결됐는지에 대한 여부 확인
-  isReWorry             Boolean   @default(false)                      // 재고민 여부 확인
+  reportReason          String?       @map("reportReason")             // 신고 이유
 
   // 고민을 등록한 유저(선물을 보냄)
   userId      Int?       @map("userId")
   user        Users?    @relation(fields: [userId], references: [userId], onDelete: Cascade)
   
-  comments    Comments[] // 이 걱정에 달린 댓글들
+  comments    Comments[]                                               // 고민에 달린 댓글들
+  reports     Reports[]                                                // 신고
   
   // 해결된 답변
   solvingCommentId Int?       @unique @map("solvingCommentId")
@@ -55,12 +60,15 @@ enum Icon{
   C
 }
 
-
 model Comments {
-  commentId Int      @id @default(autoincrement()) @map("commentId")
-  content   String   @db.Text  @map("content")
-  createdAt DateTime @default(now())  @map("createdAt")
-  fontColor             String?   @map("fontColor")
+  commentId    Int           @id @default(autoincrement()) @map("commentId")
+  content      String        @db.Text           @map("content")
+  createdAt    DateTime      @default(now())    @map("createdAt")
+  deletedAt    DateTime?                        @map("deletedAt")              // 소프트 삭제
+  fontColor             String?                 @map("fontColor")
+  unRead              Boolean   @default(true)  @map("unRead")                 // 아직 안읽음
+
+  reportReason          String?                 @map("reportReason")          // 신고 이유
   
   parentId  Int?     
   parent    Comments? @relation("CommentHierarchy", fields: [parentId], references: [commentId]) // 댓글 계층
@@ -72,7 +80,9 @@ model Comments {
   worryId    Int
   worry      Worries  @relation(fields: [worryId], references: [worryId])
 
-  likes      Likes[]
+  likes       Likes[]
+  reports     Reports[]                                               // 신고
+
 
   // 해결된 답변
   solvingWorryId Int?
@@ -89,4 +99,31 @@ model Likes {
   // 좋아요가 적용되는 대상 (댓글)
   commentId   Int?
   comment     Comments? @relation(fields: [commentId], references: [commentId], onDelete: Cascade)
+}
+
+
+// 금지어
+model BannedWords {
+  bannedWordId         Int      @id @default(autoincrement()) @map("bannedWordId")
+  word       String   @unique  @map("word")
+  createdAt  DateTime @default(now())  @map("createdAt")
+}
+
+// 신고
+model Reports {            
+  reportId    Int      @id @default(autoincrement())
+  reason      String                                                      // 신고 이유
+  reportedAt  DateTime @default(now())                                    // 신고된 날짜
+  
+  // 신고된 내용의 작성자
+  userId      Int
+  user        Users    @relation(fields: [userId], references: [userId])
+
+  // 고민이 신고된 경우
+  worryId     Int?     
+  worry       Worries? @relation(fields: [worryId], references: [worryId])
+
+  // 답변이 신고된 경우
+  commentId   Int?     
+  comment     Comments? @relation(fields: [commentId], references: [commentId])
 }

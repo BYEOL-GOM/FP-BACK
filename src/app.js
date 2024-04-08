@@ -11,6 +11,8 @@ import passport from 'passport';
 // import session from 'express-session'; // JWT 사용으로 주석 처리
 import jwt from 'jsonwebtoken';
 import bodyParser from 'body-parser';
+import { loadBannedWords } from './utils/bannedWordsLoader.js';
+import { swaggerUi, specs } from './swagger/swaggerOptions.js';
 
 const app = express();
 const PORT = 3000; // 환경 변수에서 포트를 설정할 수 있도록 변경
@@ -48,8 +50,20 @@ app.use(cookieParser());
 // app.use(passport.initialize()); // Passport를 사용하는 경우 초기화 필요
 app.use('/', router);
 
+// 스웨거 설정
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+
 // 에러 핸들링 미들웨어는 가장 마지막에 위치
 app.use(generalErrorHandler);
+
+// 금지어 목록 로드
+loadBannedWords()
+    .then(() => {
+        console.log('금지어 목록이 메모리에 로드되었습니다.');
+    })
+    .catch((error) => {
+        console.error('금지어 목록 로딩 중 오류 발생:', error);
+    });
 
 app.listen(PORT, () => {
     console.log(`${PORT} 포트로 서버가 열렸어요!`);
