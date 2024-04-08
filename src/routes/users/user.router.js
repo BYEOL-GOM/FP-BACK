@@ -94,5 +94,4 @@ router.post('/sign-up', async (req, res, next) => {
                     type: string
                     example: 게시물 전체 목록 조회 성공하였습니다.
  */
-
 export default router;

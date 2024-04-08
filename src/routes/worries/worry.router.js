@@ -5,10 +5,14 @@ import {
     deleteWorryController,
     deleteSelectedWorryController,
     reportWorryController,
+    getRemainingWorries,
 } from '../worries/worry.controller.js';
 import authMiddleware from '../../middlewares/authMiddleware.js';
 
 const router = express.Router();
+
+// 사용자의 remainingWorries 개수 조회
+router.get('/remaining-worries', authMiddleware, getRemainingWorries);
 
 // 고민 메세지 작성
 router.post('/', authMiddleware, createWorryController);
@@ -24,6 +28,5 @@ router.delete('/:worryId', authMiddleware, deleteSelectedWorryController);
 
 // 불쾌한 고민 신고하기
 router.post('/:worryId/report', authMiddleware, reportWorryController);
-
 
 export default router;

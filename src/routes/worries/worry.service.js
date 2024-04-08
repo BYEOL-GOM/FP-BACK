@@ -116,3 +116,9 @@ export const reportWorry = async (worryId, userId, reportReason) => {
     // 신고 정보 저장
     await worryRepository.reportWorry(worryId, userId, reportReason);
 };
+
+// # 로켓(고민등록 가능) 개수 확인
+export const findRemainingWorriesByUserId = async (userId) => {
+    const remainingWorries = await worryRepository.findRemainingWorriesByUserId(userId);
+    return remainingWorries;
+};

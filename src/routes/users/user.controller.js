@@ -176,7 +176,7 @@ export const refreshController = async (req, res, next) => {
         }
 
         const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-        if (!decoded){
+        if (!decoded) {
             return res.status(409).json({ message: '토큰을 decoded하지 못했습니다.' });
         }
         const user = await prisma.users.findFirst({

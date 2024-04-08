@@ -207,3 +207,13 @@ export const reportWorry = async (worryId, userId, reportReason) => {
         },
     });
 };
+
+// 로켓 개수 확인
+export const findRemainingWorriesByUserId = async (userId) => {
+    const user = await prisma.users.findUnique({
+        where: { userId },
+        select: { remainingWorries: true },
+    });
+
+    return user?.remainingWorries;
+};
