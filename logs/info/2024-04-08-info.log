@@ -1,0 +1,22 @@
+{"level":"info","message":"Method: GET, URL: /count, Status: 500, Duration: 147ms","timestamp":"2024-04-08T08:07:22.076Z"}
+{"level":"info","message":"Method: GET, URL: /count, Status: 404, Duration: 3ms","timestamp":"2024-04-08T08:09:59.089Z"}
+{"level":"info","message":"Method: GET, URL: /count/as, Status: 401, Duration: 9ms","timestamp":"2024-04-08T08:13:40.475Z"}
+{"level":"error","message":"Error Status: 400, Message: Expected property name or '}' in JSON at position 3","timestamp":"2024-04-08T08:17:47.710Z"}
+{"level":"error","message":"Error Status: undefined, Message: prisma is not defined","timestamp":"2024-04-08T08:18:03.394Z"}
+{"level":"info","message":"Method: POST, URL: /worries/count/as, Status: 500, Duration: 7ms","timestamp":"2024-04-08T08:18:03.396Z"}
+{"level":"error","message":"Error Status: undefined, Message: prisma is not defined","timestamp":"2024-04-08T08:18:38.784Z"}
+{"level":"info","message":"Method: POST, URL: /worries/count/as, Status: 500, Duration: 13ms","timestamp":"2024-04-08T08:18:38.790Z"}
+{"level":"error","message":"Error Status: undefined, Message: prisma is not defined","timestamp":"2024-04-08T08:19:12.192Z"}
+{"level":"info","message":"Method: POST, URL: /worries/count/as, Status: 500, Duration: 11ms","timestamp":"2024-04-08T08:19:12.199Z"}
+{"level":"info","message":"Method: POST, URL: /worries/count/as, Status: 404, Duration: 5ms","timestamp":"2024-04-08T08:23:36.905Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.count()` invocation:\n\n{\n  select: {\n    _count: {\n      select: {\n        _all: true\n      }\n    }\n  },\n  where: {\n    isSolved: true,\n+   commentAuthorId: {\n+     equals: Int | IntFieldRefInput,\n+     in: Int[],\n+     notIn: Int[],\n+     lt: Int | IntFieldRefInput,\n+     lte: Int | IntFieldRefInput,\n+     gt: Int | IntFieldRefInput,\n+     gte: Int | IntFieldRefInput,\n+     not: Int | NestedIntFilter\n+   }\n  }\n}\n\nArgument `commentAuthorId` is missing.","timestamp":"2024-04-08T08:23:46.786Z"}
+{"level":"info","message":"Method: POST, URL: /count, Status: 500, Duration: 145ms","timestamp":"2024-04-08T08:23:46.789Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.count()` invocation:\n\n{\n  select: {\n    _count: {\n      select: {\n        _all: true\n      }\n    }\n  },\n  where: {\n    isSolved: true,\n    commentAuthorId: {\n+     equals: Int\n    }\n  }\n}\n\nArgument `equals` is missing.","timestamp":"2024-04-08T08:25:21.318Z"}
+{"level":"info","message":"Method: POST, URL: /count, Status: 500, Duration: 57ms","timestamp":"2024-04-08T08:25:21.328Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.count()` invocation:\n\n{\n  select: {\n    _count: {\n      select: {\n        _all: true\n      }\n    }\n  },\n  where: {\n    isSolved: true,\n    commentAuthorId: {\n+     equals: Int\n    }\n  }\n}\n\nArgument `equals` is missing.","timestamp":"2024-04-08T08:25:24.008Z"}
+{"level":"info","message":"Method: POST, URL: /count, Status: 500, Duration: 6ms","timestamp":"2024-04-08T08:25:24.011Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.worries.count()` invocation:\n\n{\n  select: {\n    _count: {\n      select: {\n        _all: true\n      }\n    }\n  },\n  where: {\n    isSolved: true,\n    commentAuthorId: {\n      equals: {\n        userId: 4,\n+       _ref: String\n      }\n    }\n  }\n}\n\nArgument `_ref` is missing.","timestamp":"2024-04-08T08:25:41.047Z"}
+{"level":"info","message":"Method: POST, URL: /count, Status: 500, Duration: 28ms","timestamp":"2024-04-08T08:25:41.060Z"}
+{"level":"info","message":"Method: POST, URL: /count, Status: 200, Duration: 173ms","timestamp":"2024-04-08T08:26:15.690Z"}
+{"level":"info","message":"Method: GET, URL: /count, Status: 401, Duration: 5ms","timestamp":"2024-04-08T08:28:50.295Z"}
+{"level":"info","message":"Method: GET, URL: /count, Status: 401, Duration: 6ms","timestamp":"2024-04-08T08:29:17.604Z"}
