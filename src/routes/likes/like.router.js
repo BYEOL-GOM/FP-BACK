@@ -9,6 +9,7 @@ import {
     getMain,
 } from './like.controller.js';
 import authMiddleware from '../../middlewares/authMiddleware.js';
+import likeAuthMiddleware from '../../middlewares/likeAuthMiddleware.js';
 
 let router = express.Router({ mergeParams: true });
 
@@ -28,9 +29,6 @@ router.get('/myHelpedSolvedWorry', authMiddleware, getHelpedSolveWorries);
 router.get('/myHelpedSolvedWorry/:worryId', authMiddleware, getHelpedSolveWorryDetails);
 
 // 좋아요를 가장 많이 받은 탑 5위 댓글 조회
-router.get('/top-likes', getTopLikedCommentAuthors);
-
-// 메인 전체 조회
-router.get('/main', authMiddleware, getMain);
+router.get('/top-likes', likeAuthMiddleware, getTopLikedCommentAuthors);
 
 export default router;

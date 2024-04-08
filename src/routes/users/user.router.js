@@ -1,10 +1,11 @@
 import express from 'express';
-import { kakaoLoginController, naverLoginController, refreshController } from './user.controller.js';
+import { kakaoLoginController, naverLoginController, refreshController,WorryCountController } from './user.controller.js';
 import { prisma } from '../../utils/prisma/index.js';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import passport from 'passport';
+import authMiddleware from '../../middlewares/authMiddleware.js';
 
 dotenv.config();
 
@@ -18,6 +19,10 @@ router.post('/naver', naverLoginController);
 
 // 엑세스 토큰 재발급
 router.post('/refresh', refreshController);
+
+// 좋아요된 고민의 갯수 조회하기
+router.get('/count',authMiddleware, WorryCountController);
+
 
 // 임시 회원가입 API
 router.post('/sign-up', async (req, res, next) => {
@@ -89,5 +94,4 @@ router.post('/sign-up', async (req, res, next) => {
                     type: string
                     example: 게시물 전체 목록 조회 성공하였습니다.
  */
-
 export default router;

@@ -1,6 +1,6 @@
 import * as CommentRepository from './comment.repository.js';
 
-//  답변 메세지 전체 조회
+//  # 답변 메세지 전체 조회
 export const findLatestCommentsAndWorriesForUser = async (userId) => {
     try {
         return await CommentRepository.findLatestCommentsAndWorriesForUser(userId);
@@ -9,13 +9,54 @@ export const findLatestCommentsAndWorriesForUser = async (userId) => {
     }
 };
 
-// 답장 상세조회
-export const getCommentDetail = async (commentId) => {
-    return await CommentRepository.getCommentDetails(commentId);
+// # 답장 상세조회
+export const getCommentDetail = async (commentId, userId) => {
+    try {
+        const comment = await CommentRepository.getComment(commentId);
+        if (!comment) {
+            throw new Error('해당하는 답장이 존재하지 않습니다');
+        }
+        // 첫 번째 답변인 경우
+        if (comment.parentId === null) {
+            if (comment.worry.userId !== userId) {
+                throw new Error('답장을 조회할 권한이 없습니다.');
+            }
+        } else {
+            // 대댓글인 경우
+            const parentComment = await CommentRepository.getComment(comment.parentId);
+            if (!parentComment || parentComment.userId !== userId) {
+                throw new Error('답장을 조회할 권한이 없습니다.');
+            }
+        }
+
+        // 읽음 상태로 업데이트
+        const updatedComment = await CommentRepository.updateCommentStatus(commentId);
+
+        // 클라이언트에 반환할 정보만을 포함하는 객체 생성
+        const response = {
+            commentId: updatedComment.commentId,
+            content: updatedComment.content,
+            createdAt: updatedComment.createdAt,
+            fontColor: updatedComment.fontColor,
+            unRead: updatedComment.unRead,
+            parentId: updatedComment.parentId,
+            worryId: updatedComment.worryId,
+        };
+
+        return response;
+    } catch (error) {
+        throw new Error(error.message);
+    }
 };
 
-// 답장보내기
+// # 답장보내기
 export const createReply = async (worryId, commentId, content, userId, fontColor) => {
+    // 금지어 포함 여부 확인
+    const isBannedWordIncluded = global.bannedWords.some((word) => content.includes(word));
+    if (isBannedWordIncluded) {
+        throw new Error('금지어가 포함된 내용은 등록할 수 없습니다.');
+    }
+
     let parentId = commentId ? parseInt(commentId) : null;
 
     // 중복 답변 검증
@@ -52,9 +93,66 @@ export const createReply = async (worryId, commentId, content, userId, fontColor
         commentId: comment.commentId,
         content: comment.content,
         createdAt: comment.createdAt,
+        unRead: comment.unRead,
         fontColor: comment.fontColor,
         parentId: comment.parentId,
         // userId: comment.userId,
         worryId: comment.worryId,
     };
+};
+
+// # 답변하기 어려운 답장 삭제하기
+export const deleteComment = async (commentId, userId) => {
+    const comment = await CommentRepository.getComment(commentId);
+    if (!comment) {
+        throw new Error('해당하는 답변이 존재하지 않습니다');
+    }
+    if (comment.deletedAt !== null) {
+        throw new Error('해당 답장은 이미 삭제되었습니다');
+    }
+    // 첫 번째 답변인 경우
+    if (comment.parentId === null) {
+        if (comment.worry.userId !== userId) {
+            throw new Error('답장을 삭제할 권한이 없습니다.');
+        }
+    } else {
+        // 대댓글인 경우
+        const parentComment = await CommentRepository.getComment(comment.parentId);
+        if (!parentComment || parentComment.userId !== userId) {
+            throw new Error('답장을 삭제할 권한이 없습니다.');
+        }
+    }
+
+    await CommentRepository.deleteComment(commentId);
+
+    await CommentRepository.updateUserCounts(commentId, userId);
+};
+
+// # 답장 신고하기
+export const reportComment = async (commentId, userId, reportReason) => {
+    const comment = await CommentRepository.getComment(commentId);
+    if (!comment) {
+        throw new Error('해당하는 답장이 존재하지 않습니다');
+    }
+    if (comment.deletedAt !== null) {
+        throw new Error('해당 답장은 이미 신고되었습니다');
+    }
+    // 첫 번째 답변인 경우
+    if (comment.parentId === null) {
+        if (comment.worry.userId !== userId) {
+            throw new Error('답장을 신고할 권한이 없습니다.');
+        }
+    } else {
+        // 대댓글인 경우
+        const parentComment = await CommentRepository.getComment(comment.parentId);
+        if (!parentComment || parentComment.userId !== userId) {
+            throw new Error('답장을 신고할 권한이 없습니다.');
+        }
+    }
+
+    await CommentRepository.deleteComment(commentId);
+
+    await CommentRepository.updateUserCounts(commentId, userId);
+    // 답장 신고 로직
+    await CommentRepository.reportComment(commentId, userId, reportReason);
 };
