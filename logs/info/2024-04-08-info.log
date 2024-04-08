@@ -14,3 +14,5 @@
 {"level":"info","message":"Method: GET, URL: /remaining-worries, Status: 200, Duration: 22ms","timestamp":"2024-04-08T08:12:14.334Z"}
 {"level":"info","message":"Method: GET, URL: /remaining-worries, Status: 200, Duration: 14ms","timestamp":"2024-04-08T08:12:22.687Z"}
 {"level":"info","message":"Method: GET, URL: /remaining-worries, Status: 401, Duration: 2ms","timestamp":"2024-04-08T08:12:59.734Z"}
+{"level":"info","message":"Method: GET, URL: /count, Status: 401, Duration: 31ms","timestamp":"2024-04-08T12:12:08.575Z"}
+{"level":"info","message":"Method: GET, URL: /count, Status: 200, Duration: 537ms","timestamp":"2024-04-08T12:12:33.989Z"}
