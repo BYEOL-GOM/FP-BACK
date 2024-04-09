@@ -1,3 +1,11 @@
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 74ms","timestamp":"2024-04-09T08:31:25.274Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 28ms","timestamp":"2024-04-09T08:31:31.031Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 52ms","timestamp":"2024-04-09T08:32:44.320Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 401, Duration: 7ms","timestamp":"2024-04-09T08:35:19.238Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 88ms","timestamp":"2024-04-09T08:41:20.286Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 62ms","timestamp":"2024-04-09T08:52:58.594Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 28ms","timestamp":"2024-04-09T08:53:06.871Z"}
+
 {"level":"info","message":"Method: POST, URL: /, Status: 401, Duration: 3ms","timestamp":"2024-04-09T05:20:02.168Z"}
 {"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 246ms","timestamp":"2024-04-09T05:20:55.915Z"}
 {"level":"info","message":"Method: GET, URL: /89, Status: 200, Duration: 124ms","timestamp":"2024-04-09T05:22:07.632Z"}

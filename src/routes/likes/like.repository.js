@@ -343,7 +343,6 @@ export const findTopLikedCommentAuthors = async (userId) => {
     }, {});
 
     // 결과를 commentAuthorId와 좋아요 수로 구성된 객체로 변환하고, 좋아요 수에 따라 내림차순으로 정렬
-    // 유저 ID가 없는 경우 빼고 모두 commentAuthorId로 표시되도록 설정
     let sortedAuthors = Object.entries(commentAuthorLikesCount)
         // .map(([commentAuthorId, likes]) => ({ userId: parseInt(commentAuthorId), likes }))
         .map(([commentAuthorId, likes]) => ({ commentAuthorId: parseInt(commentAuthorId), likes }))
