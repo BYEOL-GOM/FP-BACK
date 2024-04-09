@@ -23,14 +23,35 @@ jobs:
             - name: Run Prettier check
               run: yarn prettier:check
 
+    build-and-push:
+        name: Build and Push Docker Image
+        runs-on: ubuntu-latest
+        needs: prettier-check
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v1
+
+            - name: Login to DockerHub
+              uses: docker/login-action@v1
+              with:
+                  username: ${{ secrets.DOCKERHUB_USERNAME }}
+                  password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+            - name: Build and push
+              uses: docker/build-push-action@v2
+              with:
+                  context: .
+                  push: true
+                  tags: leticia0408/byeol_gom:latest
+
     deploy:
         name: Deploy
         runs-on: ubuntu-latest
-        if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
-        needs: prettier-check
+        needs: build-and-push
         steps:
-            - uses: actions/checkout@v3
-            - run: yarn install --force
             - uses: appleboy/ssh-action@v0.1.6
               with:
                   host: ${{ secrets.REMOTE_IP }}
@@ -38,8 +59,19 @@ jobs:
                   key: ${{ secrets.REMOTE_PRIVATE_KEY }}
                   port: ${{ secrets.REMOTE_SSH_PORT }}
                   script: |
-                      cd /home/ubuntu/FP-BACK
-                      git pull origin dev
-                      pm2 kill || true
-                      yarn install --force
-                      pm2 start src/app.js
+                      docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+                      docker pull leticia0408/byeol_gom:latest
+                      docker stop my-app || true
+                      docker rm my-app || true
+                      docker run -d --name my-app -p 3000:3000 \
+                        -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
+                        -e KAKAO_REST_API_KEY=${{ secrets.KAKAO_REST_API_KEY }} \
+                        -e KAKAO_REDIRECT_URI=${{ secrets.KAKAO_REDIRECT_URI }} \
+                        -e SESSION_SECRET=${{ secrets.SESSION_SECRET }} \
+                        -e JWT_SECRET=${{ secrets.JWT_SECRET }} \
+                        -e ACCESS_TOKEN_SECRET=${{ secrets.ACCESS_TOKEN_SECRET }} \
+                        -e REFRESH_TOKEN_SECRET=${{ secrets.REFRESH_TOKEN_SECRET }} \
+                        -e ACCESS_TOKEN_LIFE=${{ secrets.ACCESS_TOKEN_LIFE }} \
+                        -e REFRESH_TOKEN_LIFE=${{ secrets.REFRESH_TOKEN_LIFE }} \
+                        -e CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} \
+                        leticia0408/byeol_gom:latest

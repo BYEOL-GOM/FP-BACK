@@ -35,6 +35,7 @@
         "seed": "node prisma/seed.js"
     },
     "scripts": {
-        "prettier:check": "prettier --check ."
+        "prettier:check": "prettier --check .",
+        "dev": "node src/app.js"
     }
 }
