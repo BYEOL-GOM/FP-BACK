@@ -106,8 +106,7 @@ export const getHelpedSolveWorryDetails = async (req, res, next) => {
 export const getTopLikedCommentAuthors = async (req, res, next) => {
     try {
         // 로그인한 사용자가 있다면, 그 사용자의 ID를 가져오기.
-        const userId = res.locals.user ? parseInt(res.locals.user.userId) : undefined;
-        // 서비스 계층에 사용자 ID를 전달. 로그인하지 않은 경우 userId는 undefined.
+        const userId = parseInt(res.locals.user.userId);
 
         const topUsers = await LikeService.getTopLikedCommentAuthors(userId);
         return res.json(topUsers);
