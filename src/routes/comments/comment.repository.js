@@ -87,7 +87,12 @@ export const getComment = async (commentId) => {
             unRead: true,
             userId: true,
             parentId: true,
-            worry: { select: { userId: true } },
+            worry: {
+                select: {
+                    userId: true,
+                    icon: true,
+                },
+            },
             parent: { select: { userId: true } },
         },
     });
