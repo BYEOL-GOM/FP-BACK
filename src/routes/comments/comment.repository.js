@@ -10,6 +10,7 @@ export const findLatestCommentsAndWorriesForUser = async (userId) => {
     // 사용자에게 온 모든 고민 + 답변 조회
     const userWorriesAndComments = await prisma.worries.findMany({
         where: {
+            deletedAt: null, // 삭제되지 않은 고민만 조회
             OR: [
                 { userId: userId }, // 사용자가 고민을 작성한 경우
                 { commentAuthorId: userId }, // 사용자가 고민에 대한 최초의 답변자인 경우
@@ -17,6 +18,9 @@ export const findLatestCommentsAndWorriesForUser = async (userId) => {
         },
         include: {
             comments: {
+                where: {
+                    deletedAt: null, // 삭제되지 않은 답변만 조회
+                },
                 orderBy: {
                     createdAt: 'desc',
                 },
@@ -198,24 +202,24 @@ export const updateUserCounts = async (commentId, userId) => {
     // 요청자가 고민 작성자일 경우
     if (userId === worryAuthorId) {
         // 고민 작성자의 remainingWorries +1
-        await prisma.users.update({
+        await prisma.users.updateMany({
             where: { userId: worryAuthorId, remainingWorries: { lt: 5 } },
             data: { remainingWorries: { increment: 1 } },
         });
         // 해당 고민의 답변 작성자의 remainingAnswers +1
-        await prisma.users.update({
+        await prisma.users.updateMany({
             where: { userId: commentAuthorId, remainingAnswers: { lt: 10 } },
             data: { remainingAnswers: { increment: 1 } },
         });
     } else if (userId === commentAuthorId) {
         // 요청자가 답변 작성자일 경우
         // 답변 작성자의 remainingAnswers +1
-        await prisma.users.update({
+        await prisma.users.updateMany({
             where: { userId: commentAuthorId, remainingAnswers: { lt: 10 } },
             data: { remainingAnswers: { increment: 1 } },
         });
         // 고민 작성자의 remainingWorries +1
-        await prisma.users.update({
+        await prisma.users.updateMany({
             where: { userId: worryAuthorId, remainingWorries: { lt: 5 } },
             data: { remainingWorries: { increment: 1 } },
         });

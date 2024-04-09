@@ -14,34 +14,22 @@ jobs:
         name: Prettier Check
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout code
-              uses: actions/checkout@v3
-
-            - name: Install dependencies
-              run: yarn install --force
-
-            - name: Run Prettier check
-              run: yarn prettier:check
+            - uses: actions/checkout@v3
+            - run: yarn install --force
+            - run: yarn prettier:check
 
     build-and-push:
         name: Build and Push Docker Image
         runs-on: ubuntu-latest
         needs: prettier-check
         steps:
-            - name: Checkout code
-              uses: actions/checkout@v3
-
-            - name: Set up Docker Buildx
-              uses: docker/setup-buildx-action@v1
-
-            - name: Login to DockerHub
-              uses: docker/login-action@v1
+            - uses: actions/checkout@v3
+            - uses: docker/setup-buildx-action@v1
+            - uses: docker/login-action@v1
               with:
                   username: ${{ secrets.DOCKERHUB_USERNAME }}
-                  password: ${{ secrets.DOCKERHUB_PASSWORD }}
-
-            - name: Build and push
-              uses: docker/build-push-action@v2
+                  password: ${{ secrets.DOCKERHUB_TOKEN }}
+            - uses: docker/build-push-action@v2
               with:
                   context: .
                   push: true
@@ -59,10 +47,20 @@ jobs:
                   key: ${{ secrets.REMOTE_PRIVATE_KEY }}
                   port: ${{ secrets.REMOTE_SSH_PORT }}
                   script: |
+                      # PM2로 실행된 애플리케이션 정지
+                      pm2 stop all || true
+                      pm2 delete all || true
+
+                      # Docker 로그인
                       echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+                      # Docker 이미지 Pull
                       docker pull leticia0408/byeol_gom:latest
+
+                      # 기존 Docker 컨테이너 정지 및 제거
                       docker stop my-app || true
-                      docker rm my-app -f || true
+                      docker rm my-app || true
+
+                      # 새 Docker 컨테이너 실행
                       docker run -d --name my-app -p 3000:3000 \
                         -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
                         -e KAKAO_REST_API_KEY=${{ secrets.KAKAO_REST_API_KEY }} \
