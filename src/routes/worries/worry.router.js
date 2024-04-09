@@ -15,10 +15,10 @@ const router = express.Router();
 router.get('/remaining-worries', authMiddleware, getRemainingWorries);
 
 // 고민 메세지 작성
-router.post('/', authMiddleware, createWorryController);
+router.post('/', createWorryController);
 
 // 고민메세지 상세조회
-router.get('/:worryId', authMiddleware, WorryDetailController);
+router.get('/:worryId', WorryDetailController);
 
 // 오래된 고민 삭제 api (24시간동안 답장이 없으면 소프트 삭제하기)
 router.delete('/', deleteWorryController);

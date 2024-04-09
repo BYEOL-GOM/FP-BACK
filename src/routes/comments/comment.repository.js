@@ -7,40 +7,70 @@ export const findWorryById = async (worryId) => {
 
 // 모든 답변 전체 조회
 export const findLatestCommentsAndWorriesForUser = async (userId) => {
-    // 사용자가 고민자 혹은 답변자로 참여한 모든 고민 조회
-    const userWorries = await prisma.worries.findMany({
+    // 사용자에게 온 모든 고민 + 답변 조회
+    const userWorriesAndComments = await prisma.worries.findMany({
         where: {
             OR: [
-                { userId }, // 고민을 작성한 경우
-                { commentAuthorId: userId }, // 답변자로 매칭된 경우
+                { userId: userId }, // 사용자가 고민을 작성한 경우
+                { commentAuthorId: userId }, // 사용자가 고민에 대한 최초의 답변자인 경우
             ],
         },
         include: {
             comments: {
-                where: {
-                    userId: { not: userId }, // 사용자가 작성한 답변 제외
-                },
                 orderBy: {
                     createdAt: 'desc',
                 },
-                take: 1, // 각 고민에 대한 최신 답변만 선택
             },
         },
     });
 
-    // 필요한 정보만 추출하여 배열로 반환
-    const latestCommentsAndWorriesInfo = userWorries.map((worry) => {
+    // 고민과 답변에 대한 추가적인 로직 처리
+    const filteredWorriesAndComments = userWorriesAndComments.flatMap((worry) => {
         const latestComment = worry.comments[0] || null;
-        return {
-            worryId: worry.worryId,
-            icon: worry.icon, // 각 worry에 해당하는 icon 정보 추가
-            commentId: latestComment ? latestComment.commentId : null, // 첫번째 고민에 해당할때는 commentId 가 null
-            createdAt: latestComment ? latestComment.createdAt : worry.createdAt,
-            unRead: latestComment ? latestComment.unRead : worry.unRead,
-        };
+
+        // 최초 고민 작성자가 사용자일경우, 최신 답변이 다른 사람에 의해 작성된 경우
+        if (worry.userId === userId && latestComment && latestComment.userId !== userId) {
+            return [
+                {
+                    worryId: worry.worryId,
+                    icon: worry.icon,
+                    commentId: latestComment.commentId,
+                    createdAt: latestComment.createdAt,
+                    unRead: latestComment.unRead,
+                },
+            ];
+        }
+
+        // 최초 고민의 답변자가 사용자일경우, 아직 답변(대댓글)이 없는 경우
+        if (worry.commentAuthorId === userId && !latestComment) {
+            return [
+                {
+                    worryId: worry.worryId,
+                    icon: worry.icon,
+                    commentId: null, // 아직 답변이 없으므로 null
+                    createdAt: worry.createdAt,
+                    unRead: worry.unRead, // 고민의 읽음/안 읽음 상태
+                },
+            ];
+        }
+
+        //최초 고민의 답변자가 사용자일경우, 이후 답변(대댓글)이 다른 사람에 의해 작성된 경우
+        if (worry.commentAuthorId === userId && latestComment && latestComment.userId !== userId) {
+            return worry.comments
+                .filter((comment) => comment.userId !== userId)
+                .map((comment) => ({
+                    worryId: worry.worryId,
+                    icon: worry.icon,
+                    commentId: comment.commentId,
+                    createdAt: comment.createdAt,
+                    unRead: comment.unRead,
+                }));
+        }
+
+        return []; // 위 조건에 맞지 않는 경우 빈 배열 반환
     });
 
-    return latestCommentsAndWorriesInfo;
+    return filteredWorriesAndComments;
 };
 
 //commentId에 해당하는 답장 조회
