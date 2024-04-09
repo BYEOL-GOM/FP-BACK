@@ -321,8 +321,6 @@ export const findHelpedSolveWorryDetailsById = async (worryId, userId) => {
 
 // 좋아요를 가장 많이 받은 탑 2위 댓글 조회
 export const findTopLikedCommentAuthors = async (userId) => {
-    console.log('🩷🩷🩷레포지토리 userId : ', userId);
-
     // 좋아요 데이터를 가져와서, 각 좋아요에 대한 댓글 작성자의 ID를 추출
     const likes = await prisma.likes.findMany({
         include: {
@@ -345,7 +343,6 @@ export const findTopLikedCommentAuthors = async (userId) => {
     }, {});
 
     // 결과를 commentAuthorId와 좋아요 수로 구성된 객체로 변환하고, 좋아요 수에 따라 내림차순으로 정렬
-    // 유저 ID가 없는 경우 빼고 모두 commentAuthorId로 표시되도록 설정
     let sortedAuthors = Object.entries(commentAuthorLikesCount)
         // .map(([commentAuthorId, likes]) => ({ userId: parseInt(commentAuthorId), likes }))
         .map(([commentAuthorId, likes]) => ({ commentAuthorId: parseInt(commentAuthorId), likes }))
