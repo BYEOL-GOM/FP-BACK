@@ -84,7 +84,7 @@ export const getWorryDetail = async (worryId) => {
                 userId: true,
                 createdAt: true,
                 content: true,
-                // icon: true,
+                icon: true,
                 fontColor: true,
                 commentAuthorId: true,
                 unRead: true,
