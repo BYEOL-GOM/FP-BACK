@@ -41,6 +41,7 @@ export const getCommentDetail = async (commentId, userId) => {
             unRead: updatedComment.unRead,
             parentId: updatedComment.parentId,
             worryId: updatedComment.worryId,
+            icon: comment.worry.icon,
         };
 
         return response;
