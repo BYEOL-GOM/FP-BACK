@@ -5,13 +5,13 @@ export default async function likeAuthenticateUserMiddleware(req, res, next) {
     console.log('req : ', req);
     console.log('req.header : ', req.header);
     console.log('req.headers : ', req.headers);
-    console.log('req.headers.authorization : ', req.headers.authorization);
+    console.log('🎟️🎟️🎟️req.headers.authorization : ', req.headers.authorization);
 
     try {
         // 클라이언트로부터 헤더의 액세스토큰을 전달 받는다
         const { authorization } = req.headers;
 
-        console.log('authorization : ', authorization);
+        console.log('🎟️🎟️🎟️authorization : ', authorization);
 
         // 인증 정보가 있는 경우, 엑세스 토큰 추출
         if (authorization) {
@@ -24,7 +24,7 @@ export default async function likeAuthenticateUserMiddleware(req, res, next) {
                             userId: +decodedAccessToken.userId,
                         },
                     });
-                    console.log('+decodedAccessToken.userId : ', +decodedAccessToken.userId);
+                    console.log('🎫🎫🎫+decodedAccessToken.userId : ', +decodedAccessToken.userId);
 
                     if (user) {
                         res.locals.user = user;

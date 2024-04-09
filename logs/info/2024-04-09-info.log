@@ -16,3 +16,13 @@
 {"level":"info","message":"Method: GET, URL: /index.html, Status: 304, Duration: 5ms","timestamp":"2024-04-08T15:23:27.954Z"}
 {"level":"info","message":"Method: GET, URL: /css/style.css, Status: 304, Duration: 4ms","timestamp":"2024-04-08T15:23:27.985Z"}
 {"level":"info","message":"Method: GET, URL: /chat.js, Status: 200, Duration: 7ms","timestamp":"2024-04-08T15:23:27.998Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of undefined (reading 'userId')","timestamp":"2024-04-09T07:20:19.488Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 76ms","timestamp":"2024-04-09T07:20:19.497Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of undefined (reading 'userId')","timestamp":"2024-04-09T07:20:56.379Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 7ms","timestamp":"2024-04-09T07:20:56.383Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 404, Duration: 48ms","timestamp":"2024-04-09T07:21:50.154Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 404, Duration: 23ms","timestamp":"2024-04-09T07:22:13.036Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 404, Duration: 9ms","timestamp":"2024-04-09T07:22:13.850Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 404, Duration: 23ms","timestamp":"2024-04-09T07:23:39.636Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 55ms","timestamp":"2024-04-09T07:25:28.754Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 122ms","timestamp":"2024-04-09T07:26:21.279Z"}
