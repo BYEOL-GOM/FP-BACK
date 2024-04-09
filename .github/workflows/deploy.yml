@@ -47,31 +47,31 @@ jobs:
                   key: ${{ secrets.REMOTE_PRIVATE_KEY }}
                   port: ${{ secrets.REMOTE_SSH_PORT }}
                   script: |
-            sudo -s
-            # PM2로 실행된 애플리케이션 정지
-            pm2 stop all || true
-            pm2 delete all || true
+                    sudo -s
+                    # PM2로 실행된 애플리케이션 정지
+                    pm2 stop all || true
+                    pm2 delete all || true
 
-            # Docker 로그인
-            echo ${{ secrets.DOCKERHUB_PASSWORD }} | sudo docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+                    # Docker 로그인
+                    echo ${{ secrets.DOCKERHUB_PASSWORD }} | sudo docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
-            # Docker 이미지 Pull
-            sudo docker pull leticia0408/byeol_gom:latest
+                    # Docker 이미지 Pull
+                    sudo docker pull leticia0408/byeol_gom:latest
 
-            # 기존 Docker 컨테이너 정지 및 제거
-            sudo docker stop my-app || true
-            sudo docker rm my-app || true
+                    # 기존 Docker 컨테이너 정지 및 제거
+                    sudo docker stop my-app || true
+                    sudo docker rm my-app || true
 
-            # 새 Docker 컨테이너 실행
-            sudo docker run -d --name my-app -p 3000:3000 \
-              -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
-              -e KAKAO_REST_API_KEY="${{ secrets.KAKAO_REST_API_KEY }}" \
-              -e KAKAO_REDIRECT_URI="${{ secrets.KAKAO_REDIRECT_URI }}" \
-              -e SESSION_SECRET="${{ secrets.SESSION_SECRET }}" \
-              -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
-              -e ACCESS_TOKEN_SECRET="${{ secrets.ACCESS_TOKEN_SECRET }}" \
-              -e REFRESH_TOKEN_SECRET="${{ secrets.REFRESH_TOKEN_SECRET }}" \
-              -e ACCESS_TOKEN_LIFE="${{ secrets.ACCESS_TOKEN_LIFE }}" \
-              -e REFRESH_TOKEN_LIFE="${{ secrets.REFRESH_TOKEN_LIFE }}" \
-              -e CLIENT_SECRET="${{ secrets.CLIENT_SECRET }}" \
-              leticia0408/byeol_gom:latest
+                    # 새 Docker 컨테이너 실행
+                    sudo docker run -d --name my-app -p 3000:3000 \
+                      -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
+                      -e KAKAO_REST_API_KEY="${{ secrets.KAKAO_REST_API_KEY }}" \
+                      -e KAKAO_REDIRECT_URI="${{ secrets.KAKAO_REDIRECT_URI }}" \
+                      -e SESSION_SECRET="${{ secrets.SESSION_SECRET }}" \
+                      -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
+                      -e ACCESS_TOKEN_SECRET="${{ secrets.ACCESS_TOKEN_SECRET }}" \
+                      -e REFRESH_TOKEN_SECRET="${{ secrets.REFRESH_TOKEN_SECRET }}" \
+                      -e ACCESS_TOKEN_LIFE="${{ secrets.ACCESS_TOKEN_LIFE }}" \
+                      -e REFRESH_TOKEN_LIFE="${{ secrets.REFRESH_TOKEN_LIFE }}" \
+                      -e CLIENT_SECRET="${{ secrets.CLIENT_SECRET }}" \
+                      leticia0408/byeol_gom:latest
