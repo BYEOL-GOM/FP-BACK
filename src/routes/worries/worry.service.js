@@ -114,12 +114,12 @@ export const reportWorry = async (worryId, userId, reportReason) => {
         throw new Error('답변 대상자만 신고할 수 있습니다');
     }
 
+    // 신고 정보 저장
+    await worryRepository.reportWorry(worryId, selectedWorry.userId, reportReason);
+
     // 고민 삭제 및 사용자 카운트 업데이트 로직 재사용
     await worryRepository.deleteSelectedWorry(worryId);
     await worryRepository.updateUserCounts(selectedWorry.userId, selectedWorry.commentAuthorId);
-
-    // 신고 정보 저장
-    await worryRepository.reportWorry(worryId, userId, reportReason);
 };
 
 // # 로켓(고민등록 가능) 개수 확인
