@@ -221,7 +221,7 @@ export const reportWorry = async (worryId, userId, reportReason) => {
     await prisma.reports.create({
         data: {
             worryId,
-            userId, // 신고하는 사용자의 ID
+            userId,
             reason: reportReason,
             reportedAt: new Date(),
         },

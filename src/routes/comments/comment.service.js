@@ -151,9 +151,10 @@ export const reportComment = async (commentId, userId, reportReason) => {
         }
     }
 
+    // 답장 신고 로직
+    await CommentRepository.reportComment(commentId, comment.userId, reportReason);
+
     await CommentRepository.deleteComment(commentId);
 
     await CommentRepository.updateUserCounts(commentId, userId);
-    // 답장 신고 로직
-    await CommentRepository.reportComment(commentId, userId, reportReason);
 };
