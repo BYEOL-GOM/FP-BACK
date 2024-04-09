@@ -6,7 +6,6 @@ import {
     getSolvedWorryDetails,
     getHelpedSolveWorryDetails,
     getTopLikedCommentAuthors,
-    getMain,
 } from './like.controller.js';
 import authMiddleware from '../../middlewares/authMiddleware.js';
 import likeAuthMiddleware from '../../middlewares/likeAuthMiddleware.js';

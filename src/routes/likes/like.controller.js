@@ -109,17 +109,12 @@ export const getTopLikedCommentAuthors = async (req, res, next) => {
         // 로그인한 사용자가 있다면, 그 사용자의 ID를 가져오기.
         const userId = res.locals.user ? parseInt(res.locals.user.userId) : undefined;
         // 서비스 계층에 사용자 ID를 전달. 로그인하지 않은 경우 userId는 undefined.
+        console.log('res.locals.user : ', res.locals.user);
+        console.log('res.locals.user.userId : ', res.locals.user.userId);
+        console.log('🩵🩵🩵컨트롤러 userId : ', userId);
 
         const topUsers = await LikeService.getTopLikedCommentAuthors(userId);
         return res.json(topUsers);
-    } catch (error) {
-        next(error);
-    }
-};
-
-// 메인 전체 조회
-export const getMain = async (req, res, next) => {
-    try {
     } catch (error) {
         next(error);
     }
