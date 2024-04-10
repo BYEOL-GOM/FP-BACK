@@ -52,7 +52,7 @@ jobs:
                       pm2 delete all || true
 
                       # Docker 로그인
-                      echo ${{ secrets.DOCKERHUB_TOKEN }} | sudo docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+                      echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
                       # Docker 이미지 Pull
                       docker pull leticia0408/byeol_gom:latest
