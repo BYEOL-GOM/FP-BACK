@@ -59,19 +59,16 @@ export const getWorryDetail = async (worryId, userId) => {
     }
 };
 
-// # 댓글이 없는 오래된 고민 삭제
-export const deleteOldWorries = async () => {
+// # 답장이 없는 오래된 고민 삭제하기
+export const deleteOldMessages = async () => {
     try {
-        const worries = await worryRepository.findOldWorriesWithoutComments();
+        const oldWorries = await worryRepository.findOldMessages();
 
-        for (const worry of worries) {
-            const { worryId } = worry;
-            await worryRepository.softDeleteWorryById(worryId);
+        for (const worry of oldWorries) {
+            await worryRepository.softDeleteWorryById(worry.worryId);
         }
-
-        // return worries;
     } catch (error) {
-        console.error('오래된 댓글 삭제에 실패했습니다.', error);
+        console.error('오래된 고민 삭제에 실패했습니다.', error);
         throw error;
     }
 };

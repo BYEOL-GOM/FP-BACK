@@ -2,7 +2,7 @@ import express from 'express';
 import {
     createWorryController,
     WorryDetailController,
-    deleteWorryController,
+    deleteOldMessagesController,
     deleteSelectedWorryController,
     reportWorryController,
     getRemainingWorries,
@@ -18,12 +18,12 @@ router.get('/remaining-worries', authMiddleware, getRemainingWorries);
 router.post('/', authMiddleware, createWorryController);
 
 // 고민메세지 상세조회
-router.get('/:worryId', authMiddleware, WorryDetailController);
+router.get('/:worryId', authMiddleware, authMiddleware, WorryDetailController);
 
-// 오래된 고민 삭제 api (24시간동안 답장이 없으면 소프트 삭제하기)
-router.delete('/', deleteWorryController);
+// 최초 고민에 24시간 동안 답변없는 고민 or 첫답장은 있지만 이후 답장이 24시간 동안 없는 고민 삭제
+router.delete('/', deleteOldMessagesController);
 
-// 답변하기 어려운 고민(Worry) 삭제하기
+// 답변하기 어려운 고민(Worry) 삭제
 router.delete('/:worryId', authMiddleware, deleteSelectedWorryController);
 
 // 불쾌한 고민 신고하기
