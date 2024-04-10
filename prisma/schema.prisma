@@ -34,7 +34,9 @@ model Worries {
   content               String    @db.Text @map("content")
   fontColor             String?   @map("fontColor")
   createdAt             DateTime  @default(now()) @map("createdAt")
+  updatedAt             DateTime? @map("updatedAt") 
   deletedAt             DateTime? @map("deletedAt")                    // 소프트 삭제 
+
 
   icon                  Icon?     @map("icon")
   unRead                Boolean   @default(true)  @map("unRead")       // 아직 안읽음

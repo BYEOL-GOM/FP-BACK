@@ -143,6 +143,14 @@ export const createReply = async ({ worryId, content, userId, parentId, fontColo
     });
 };
 
+// # 고민 테이블 updatedAt 업데이트
+export const updateWorryUpdatedAt = async (worryId) => {
+    return prisma.worries.update({
+        where: { worryId: parseInt(worryId) },
+        data: { updatedAt: new Date() },
+    });
+};
+
 // # commentId에 해당하는 답장 소프트 삭제
 export const deleteComment = async (commentId) => {
     await prisma.comments.update({
@@ -169,7 +177,7 @@ export const updateUserCounts = async (comment, userId) => {
     });
 };
 
-// 답장 신고하기
+// # 답장 신고하기
 export const reportComment = async (commentId, userId, reportReason) => {
     await prisma.reports.create({
         data: {
