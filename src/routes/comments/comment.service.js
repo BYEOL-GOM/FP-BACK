@@ -101,6 +101,9 @@ export const createReply = async (worryId, commentId, content, userId, fontColor
         fontColor,
     });
 
+    // 고민 테이블에 updatedAt 업데이트
+    await commentRepository.updateWorryUpdatedAt(worryId);
+
     // 클라이언트에 반환할 정보
     return {
         commentId: comment.commentId,
