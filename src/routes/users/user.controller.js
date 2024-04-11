@@ -2,7 +2,7 @@ import axios from 'axios';
 import { prisma } from '../../utils/prisma/index.js';
 import jwt from 'jsonwebtoken';
 
-// 카카오
+// 카카오 로그인 컨트롤러
 export const kakaoLoginController = async (req, res) => {
     try {
         const ID = process.env.KAKAO_REST_API_KEY;
@@ -33,9 +33,12 @@ export const kakaoLoginController = async (req, res) => {
             id,
             kakao_account: {
                 email,
-                profile: { nickname },
+                profile: { nickname = '고민의 미아가 된 곰' },  // 기본 닉네임 설정
             },
-        } = userInfoResponse.data;
+        } = userInfo;
+
+        // 닉네임이 빈 문자열인 경우 기본값으로 대체
+        nickname = nickname || '고민의 미아가 된 곰';
 
         const user = {
             id,
@@ -62,10 +65,7 @@ export const kakaoLoginController = async (req, res) => {
             const refreshToken = jwt.sign({ userId: createUser.userId }, process.env.REFRESH_TOKEN_SECRET, {
                 expiresIn: process.env.REFRESH_TOKEN_LIFE,
             });
-            return res
-                .status(200)
-                .json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}` });
-            //return res.status(200).json(userInfo);
+            return res.status(200).json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}` });
         }
 
         const accessToken = jwt.sign({ userId: findUser.userId }, process.env.ACCESS_TOKEN_SECRET, {
@@ -76,7 +76,6 @@ export const kakaoLoginController = async (req, res) => {
         });
 
         return res.status(200).json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}` });
-        //return res.status(200).json(ID);
     } catch (error) {
         console.error(error);
         return res.status(405).json({ message: '카카오 인증 및 사용자 정보 가져오기 오류' });
