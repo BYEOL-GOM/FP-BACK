@@ -33,7 +33,7 @@ export const kakaoLoginController = async (req, res) => {
             id,
             kakao_account: {
                 email,
-                profile: { nickname = '고민의 미아가 된 곰' },  // 기본 닉네임 설정
+                profile: { nickname = '고민의 미아가 된 곰' }, // 기본 닉네임 설정
             },
         } = userInfo;
 
@@ -65,7 +65,9 @@ export const kakaoLoginController = async (req, res) => {
             const refreshToken = jwt.sign({ userId: createUser.userId }, process.env.REFRESH_TOKEN_SECRET, {
                 expiresIn: process.env.REFRESH_TOKEN_LIFE,
             });
-            return res.status(200).json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}` });
+            return res
+                .status(200)
+                .json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}` });
         }
 
         const accessToken = jwt.sign({ userId: findUser.userId }, process.env.ACCESS_TOKEN_SECRET, {
