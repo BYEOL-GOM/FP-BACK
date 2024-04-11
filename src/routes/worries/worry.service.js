@@ -88,22 +88,22 @@ export const deleteSelectedWorry = async (worryId, userId, commentId) => {
     if (selectedWorry.userId !== userId && selectedWorry.commentAuthorId !== userId) {
         throw new Error('메세지를 삭제할수 있는 권한이 없습니다');
     }
-    // 1) 첫고민이 아닐 경우,
-    if (commentId) {
-        const comment = await worryRepository.getComment(commentId);
-        if (!comment) {
-            throw new Error('해당하는 답변이 존재하지 않습니다');
-        }
-        // 본인이 작성한 글 삭제 권한 없음
-        if (comment.userId === userId) {
-            throw new Error('메세지를 삭제할 수 있는 권한이 없습니다');
-        }
-    } else {
-        // 2 ) 첫 고민을 삭제하는 경우, 고민의 답변자만이 삭제 가능
-        if (selectedWorry.commentAuthorId !== userId) {
-            throw new Error('메세지를 삭제할 수 있는 권한이 없습니다');
-        }
-    }
+    // // 1) 첫고민이 아닐 경우,
+    // if (commentId) {
+    //     const comment = await worryRepository.getComment(commentId);
+    //     if (!comment) {
+    //         throw new Error('해당하는 답변이 존재하지 않습니다');
+    //     }
+    //     // 본인이 작성한 글 삭제 권한 없음
+    //     if (comment.userId === userId) {
+    //         throw new Error('메세지를 삭제할 수 있는 권한이 없습니다');
+    //     }
+    // } else {
+    //     // 2 ) 첫 고민을 삭제하는 경우, 고민의 답변자만이 삭제 가능
+    //     if (selectedWorry.commentAuthorId !== userId) {
+    //         throw new Error('메세지를 삭제할 수 있는 권한이 없습니다');
+    //     }
+    // }
 
     // worryId 소프트 삭제
     await worryRepository.deleteSelectedWorry(worryId);
