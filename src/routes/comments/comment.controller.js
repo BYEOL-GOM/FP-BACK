@@ -4,7 +4,7 @@ import * as CommentService from './comment.service.js';
 export const findLatestCommentsAndWorriesForUserController = async (req, res) => {
     try {
         const userId = res.locals.user.userId;
-        // const { userId } = req.body;
+
         const latestComments = await CommentService.findLatestCommentsAndWorriesForUser(+userId);
         if (latestComments.length === 0) {
             return res.status(404).json({ error: '아직 답변이 도착하지 않았습니다' });
@@ -46,6 +46,7 @@ export const createReplyController = async (req, res, next) => {
         const { worryId, commentId } = req.params;
         const userId = res.locals.user.userId;
         const { content, fontColor } = req.body;
+        // const { userId, content, fontColor } = req.body;
 
         if (!worryId || !content || !fontColor) {
             return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
