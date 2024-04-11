@@ -16,9 +16,11 @@ router.get('/remaining-worries', authMiddleware, getRemainingWorries);
 
 // 고민 메세지 작성
 router.post('/', authMiddleware, createWorryController);
+// router.post('/', createWorryController);
 
 // 고민메세지 상세조회
 router.get('/:worryId', authMiddleware, WorryDetailController);
+// router.get('/:worryId', WorryDetailController);
 
 // 최초 고민에 24시간 동안 답변없는 고민 or 첫답장은 있지만 이후 답장이 24시간 동안 없는 고민 삭제
 router.delete('/', deleteOldMessagesController);

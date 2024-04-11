@@ -23,10 +23,11 @@ export const verifyCommentExists = async (commentId, worryId) => {
 };
 
 // 선물 보내기
-export const markWorryAsSolvedAndCreateLike = async (worryId, commentId, userId) => {
+export const markWorryAsSolvedAndCreateLike = async (worryId, commentId, userId, content) => {
     try {
-        // 고민을 업데이트하고, 선물을 생성하며, 사용자 엔티티를 업데이트하는 트랜잭션
+        // 고민을 업데이트하고, 선물을 생성하며, 사용자 엔티티를 업데이트하고, 답변을 생성하는 트랜잭션
         const transactionResults = await prisma.$transaction([
+            // 고민 업데이트
             prisma.worries.update({
                 where: { worryId: parseInt(worryId) },
                 data: {
@@ -38,6 +39,7 @@ export const markWorryAsSolvedAndCreateLike = async (worryId, commentId, userId)
                     commentAuthorId: true, // 여기에 추가
                 },
             }),
+            // 선물 보내기
             prisma.likes.create({
                 data: {
                     userId: parseInt(userId),
@@ -46,16 +48,36 @@ export const markWorryAsSolvedAndCreateLike = async (worryId, commentId, userId)
             }),
         ]);
 
+        // 해당 worryId에 대한 최신 답변 조회
+        const lastReply = await prisma.comments.findFirst({
+            where: { worryId: parseInt(worryId) },
+            orderBy: { createdAt: 'desc' },
+        });
+
+        // 최신 답변에 대한 답변 생성
+        const replyCreationResult = await prisma.comments.create({
+            data: {
+                worryId: parseInt(worryId),
+                content: content, // 답변 내용
+                userId: parseInt(userId), // 답변 작성자
+                parentId: lastReply ? lastReply.commentId : null, // 최신 답변의 ID를 부모 ID로 설정
+                fontColor: 'default', // 기본 폰트 색상 or 요청에서 받은 값 사용
+                unRead: true,
+            },
+        });
+
+        // 결과 객체 업데이트
         const worryUpdateResult = transactionResults[0]; // 업데이트된 worry의 결과
         const likeCreationResult = transactionResults[1]; // 생성된 like의 결과
+        // const replyCreationResult = transactionResults[2]; // 생성된 답변의 결과
 
-        // 사용자의 remainingWorries를 증가시킵니다.
+        // 사용자의 remainingWorries(남은 고민 수)를 증가시킵니다.
         await prisma.users.update({
             where: { userId: worryUpdateResult.userId },
             data: { remainingWorries: { increment: 1 } },
         });
 
-        // 답변자의 remainingAnswers 증가시키기
+        // 답변자의 remainingAnswers(남은 답변 수) 증가시키기
         await prisma.users.update({
             where: { userId: worryUpdateResult.commentAuthorId },
             data: { remainingAnswers: { increment: 1 } },
@@ -63,7 +85,7 @@ export const markWorryAsSolvedAndCreateLike = async (worryId, commentId, userId)
 
         return { worryUpdateResult, likeCreationResult };
     } catch (error) {
-        console.error('Error during transaction:', error);
+        console.error('트랜잭션 중 오류 발생 : ', error);
         throw error;
     }
 };
