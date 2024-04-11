@@ -188,9 +188,25 @@ export const getWorry = async (worryId) => {
     });
 };
 
+// commentId로 답장 조회
+export const getComment = async (commentId) => {
+    return await prisma.comments.findUnique({
+        where: { commentId },
+    });
+};
+
+//worryId에 해당하는 comments 모두 소프트 삭제
+export const deleteAllCommentsForWorry = async (worryId) => {
+    // worryId에 속한 모든 댓글을 소프트 삭제
+    await prisma.comments.updateMany({
+        where: { worryId },
+        data: { deletedAt: new Date() },
+    });
+};
+
 // 고민 선택 삭제
 export const deleteSelectedWorry = async (worryId) => {
-    await prisma.worries.update({
+    await prisma.worries.updateMany({
         where: { worryId },
         data: { deletedAt: new Date() },
     });

@@ -64,22 +64,22 @@ export const deleteOldMessagesController = async (req, res, next) => {
 // # 답변하기 어려운 고민 삭제하기
 export const deleteSelectedWorryController = async (req, res, next) => {
     try {
-        const { worryId } = req.params;
+        const { worryId, commentId } = req.params;
         const userId = res.locals.user.userId;
         // const { userId } = req.body;
         if (!worryId) {
             return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
         }
 
-        await worryService.deleteSelectedWorry(+worryId, +userId);
+        await worryService.deleteSelectedWorry(+worryId, +userId, +commentId);
 
-        res.status(200).json({ message: '해당 고민이 삭제되었습니다' });
+        res.status(200).json({ message: '메세지가 삭제되었습니다' });
     } catch (error) {
-        if (error.message === '해당하는 고민이 존재하지 않습니다') {
+        if (error.message === '해당하는 메세지가 존재하지 않습니다') {
             return res.status(404).json({ error: error.message });
-        } else if (error.message === '답변 대상자만 곤란한 고민을 삭제할 수 있습니다') {
+        } else if (error.message === '메세지를 삭제할수 있는 권한이 없습니다') {
             return res.status(403).json({ error: error.message });
-        } else if (error.message === '해당 고민은 이미 삭제되었습니다') {
+        } else if (error.message === '해당 메세지는 이미 삭제되었습니다') {
             return res.status(409).json({ error: error.message });
         }
         res.status(500).json({ error: error.message });
