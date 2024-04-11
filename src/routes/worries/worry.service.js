@@ -73,22 +73,45 @@ export const deleteOldMessages = async () => {
     }
 };
 
-// # 답변하기 어려운 질문 삭제하기
-export const deleteSelectedWorry = async (worryId, userId) => {
+// # 메세지 선택 삭제
+export const deleteSelectedWorry = async (worryId, userId, commentId) => {
     const selectedWorry = await worryRepository.getWorry(worryId);
     if (!selectedWorry) {
-        throw new Error('해당하는 고민이 존재하지 않습니다');
+        throw new Error('해당하는 메세지가 존재하지 않습니다');
     }
 
     if (selectedWorry.deletedAt !== null) {
-        throw new Error('해당 고민은 이미 삭제되었습니다');
+        throw new Error('해당 메세지는 이미 삭제되었습니다');
     }
 
-    if (selectedWorry.commentAuthorId !== userId) {
-        throw new Error('답변 대상자만 곤란한 고민을 삭제할 수 있습니다');
+    // 0 ) 고민의 작성자도, 지정된 답변자도 아닌 경우, 작성 권한 없음
+    if (selectedWorry.userId !== userId && selectedWorry.commentAuthorId !== userId) {
+        throw new Error('메세지를 삭제할수 있는 권한이 없습니다');
     }
-    // 고민 삭제
+    // 1) 첫고민이 아닐 경우,
+    if (commentId) {
+        const comment = await worryRepository.getComment(commentId);
+        if (!comment) {
+            throw new Error('해당하는 답변이 존재하지 않습니다');
+        }
+        // 본인이 작성한 글 삭제 권한 없음
+        if (comment.userId === userId) {
+            throw new Error('메세지를 삭제할 수 있는 권한이 없습니다');
+        }
+    } else {
+        // 2 ) 첫 고민을 삭제하는 경우, 고민의 답변자만이 삭제 가능
+        if (selectedWorry.commentAuthorId !== userId) {
+            throw new Error('메세지를 삭제할 수 있는 권한이 없습니다');
+        }
+    }
+
+    // worryId 소프트 삭제
     await worryRepository.deleteSelectedWorry(worryId);
+    // 첫고민이 아닐경우 ,worryId 와 그에 해당하는 모든 commentId 소프트 삭제
+    if (commentId) {
+        await worryRepository.deleteAllCommentsForWorry(worryId);
+    }
+
     // 사용자 카운트 업데이트
     await worryRepository.updateUserCounts(selectedWorry.userId, selectedWorry.commentAuthorId);
 

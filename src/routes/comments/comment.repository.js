@@ -151,6 +151,19 @@ export const updateWorryUpdatedAt = async (worryId) => {
     });
 };
 
+export const deleteSelectedWorryAndComments = async (worryId) => {
+    // 고민에 속한 모든 답변 삭제
+    await prisma.comments.updateMany({
+        where: { worryId },
+        data: { deletedAt: new Date() },
+    });
+    // 고민 삭제
+    await prisma.worries.update({
+        where: { worryId },
+        data: { deletedAt: new Date() },
+    });
+};
+
 // # commentId에 해당하는 답장 소프트 삭제
 export const deleteComment = async (commentId) => {
     await prisma.comments.update({
@@ -159,6 +172,13 @@ export const deleteComment = async (commentId) => {
     });
 };
 
+// # commentId에 해당하는  worryId 소프트 삭제
+export const deleteWorry = async (worryId) => {
+    await prisma.worries.update({
+        where: { worryId },
+        data: { deletedAt: new Date() },
+    });
+};
 // # 사용자 카운트 업데이트
 export const updateUserCounts = async (comment, userId) => {
     // 최초 고민 작성자와 최초 답변 작성자
