@@ -51,11 +51,11 @@ export const WorryDetailController = async (req, res, next) => {
 };
 
 //오래된 메세지 삭제하기
-export const deleteWorryController = async (req, res, next) => {
+export const deleteOldMessagesController = async (req, res, next) => {
     // 관리자 권한 추가해야할것 같음
     try {
-        const deletedWorries = await worryService.deleteOldWorries();
-        res.status(200).json({ message: '오래된 고민 삭제에 성공했습니다.', deletedWorries });
+        const oldMessages = await worryService.deleteOldMessages();
+        res.status(200).json({ message: '오래된 고민 삭제에 성공했습니다.', oldMessages });
     } catch (error) {
         console.error(error);
         next(error);

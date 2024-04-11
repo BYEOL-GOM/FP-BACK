@@ -41,7 +41,7 @@ export const createWorry = async ({ content, icon, userId, fontColor }) => {
 // # 고민 상세조회
 export const getWorryDetail = async (worryId, userId) => {
     try {
-        const worry = await worryRepository.getWorryDetail(worryId);
+        let worry = await worryRepository.getWorryDetail(worryId);
         if (!worry) {
             throw new Error('해당하는 고민이 존재하지 않습니다');
         }
@@ -51,6 +51,7 @@ export const getWorryDetail = async (worryId, userId) => {
         // 고민을 "읽음" 상태로 업데이트
         if (worry.unRead) {
             await worryRepository.updateWorryStatus(worryId);
+            worry = await worryRepository.getWorryDetail(worryId);
         }
         return worry;
     } catch (error) {
@@ -58,19 +59,16 @@ export const getWorryDetail = async (worryId, userId) => {
     }
 };
 
-// # 댓글이 없는 오래된 고민 삭제
-export const deleteOldWorries = async () => {
+// # 답장이 없는 오래된 고민 삭제하기
+export const deleteOldMessages = async () => {
     try {
-        const worries = await worryRepository.findOldWorriesWithoutComments();
+        const oldWorries = await worryRepository.findOldMessages();
 
-        for (const worry of worries) {
-            const { worryId } = worry;
-            await worryRepository.softDeleteWorryById(worryId);
+        for (const worry of oldWorries) {
+            await worryRepository.softDeleteWorryById(worry.worryId);
         }
-
-        // return worries;
     } catch (error) {
-        console.error('오래된 댓글 삭제에 실패했습니다.', error);
+        console.error('오래된 고민 삭제에 실패했습니다.', error);
         throw error;
     }
 };
@@ -113,12 +111,12 @@ export const reportWorry = async (worryId, userId, reportReason) => {
         throw new Error('답변 대상자만 신고할 수 있습니다');
     }
 
+    // 신고 정보 저장
+    await worryRepository.reportWorry(worryId, selectedWorry.userId, reportReason);
+
     // 고민 삭제 및 사용자 카운트 업데이트 로직 재사용
     await worryRepository.deleteSelectedWorry(worryId);
     await worryRepository.updateUserCounts(selectedWorry.userId, selectedWorry.commentAuthorId);
-
-    // 신고 정보 저장
-    await worryRepository.reportWorry(worryId, userId, reportReason);
 };
 
 // # 로켓(고민등록 가능) 개수 확인

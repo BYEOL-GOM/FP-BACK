@@ -84,7 +84,7 @@ export const getWorryDetail = async (worryId) => {
                 userId: true,
                 createdAt: true,
                 content: true,
-                // icon: true,
+                icon: true,
                 fontColor: true,
                 commentAuthorId: true,
                 unRead: true,
@@ -100,35 +100,41 @@ export const updateWorryStatus = async (worryId) => {
     await prisma.worries.update({
         where: { worryId },
         data: { unRead: false },
+        select: {
+            worryId: true,
+            userId: true,
+            createdAt: true,
+            content: true,
+            icon: true,
+            fontColor: true,
+            commentAuthorId: true,
+            unRead: true,
+        },
     });
 };
 
-// 생성된지 24시간 이상이 된 고민중 답변이 없는 고민 찾기
-export const findOldWorriesWithoutComments = async () => {
-    try {
-        const twentyFourHoursAgo = new Date();
-        twentyFourHoursAgo.setDate(twentyFourHoursAgo.getDate() - 1);
+// 생성된지 24시간 이상된 답변 없는 고민 or 답변이 있지만 마지막 답변이 24시간 이상된 고민 찾기
+export const findOldMessages = async () => {
+    const twentyFourHoursAgo = new Date(new Date().getTime() - 12 * 60 * 60 * 1000);
 
-        const worries = await prisma.worries.findMany({
-            where: {
-                createdAt: {
-                    lt: twentyFourHoursAgo,
+    return await prisma.worries.findMany({
+        where: {
+            OR: [
+                {
+                    // 답변이 없고 createdAt이 12시간 이상된 경우
+                    createdAt: { lt: twentyFourHoursAgo },
+                    comments: { none: {} },
                 },
-                comments: {
-                    none: {},
+                {
+                    // 답변이 있고 updatedAt이 12시간 이상된 경우
+                    updatedAt: { lt: twentyFourHoursAgo },
+                    comments: { some: {} },
                 },
-                deletedAt: null, // deletedAt이 null인 레코드만 선택
-            },
-            select: {
-                worryId: true,
-            },
-        });
-
-        return worries;
-    } catch (error) {
-        console.error('댓글이 없는 오래된 고민 찾기 실패했습니다', error);
-        throw error;
-    }
+            ],
+            deletedAt: null,
+        },
+        select: { worryId: true },
+    });
 };
 
 // 오래된 고민 소프트 삭제
@@ -177,6 +183,7 @@ export const getWorry = async (worryId) => {
             worryId: true,
             commentAuthorId: true,
             deletedAt: true,
+            userId: true,
         },
     });
 };
@@ -210,7 +217,7 @@ export const reportWorry = async (worryId, userId, reportReason) => {
     await prisma.reports.create({
         data: {
             worryId,
-            userId, // 신고하는 사용자의 ID
+            userId,
             reason: reportReason,
             reportedAt: new Date(),
         },

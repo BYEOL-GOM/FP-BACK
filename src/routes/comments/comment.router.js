@@ -1,7 +1,7 @@
 import express from 'express';
 import {
     createReplyController,
-    findLatestCommentsAndWorriesForUserController,
+    getAllLatestMessagesController,
     getCommentDetailController,
     deleteCommentController,
     reportCommentController,
@@ -15,8 +15,7 @@ router.post('/worries/:worryId/comments/:commentId?', authMiddleware, createRepl
 // router.post('/worries/:worryId/comments/:commentId?', createReplyController);
 
 //  모든 답장 전체 조회
-router.get('/comments', authMiddleware, findLatestCommentsAndWorriesForUserController);
-// router.get('/comments', findLatestCommentsAndWorriesForUserController);
+router.get('/comments', authMiddleware, getAllLatestMessagesController);
 
 // 답장 상세조회
 router.get('/comments/:commentId', authMiddleware, getCommentDetailController);
