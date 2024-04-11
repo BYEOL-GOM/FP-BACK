@@ -1,5 +1,10 @@
 import express from 'express';
-import { kakaoLoginController, naverLoginController, refreshController,WorryCountController } from './user.controller.js';
+import {
+    kakaoLoginController,
+    naverLoginController,
+    refreshController,
+    WorryCountController,
+} from './user.controller.js';
 import { prisma } from '../../utils/prisma/index.js';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
@@ -21,8 +26,7 @@ router.post('/naver', naverLoginController);
 router.post('/refresh', refreshController);
 
 // 좋아요된 고민의 갯수 조회하기
-router.get('/count',authMiddleware, WorryCountController);
-
+router.get('/count', authMiddleware, WorryCountController);
 
 // 임시 회원가입 API
 router.post('/sign-up', async (req, res, next) => {
