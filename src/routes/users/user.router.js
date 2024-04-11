@@ -49,31 +49,28 @@ router.post('/sign-up', async (req, res, next) => {
     }
 });
 
-
-
-
 // 닉네임 변경
 router.put('/nickname', authMiddleware, async (req, res, next) => {
-  const { nickname } = req.body; // 요청 본문에서 닉네임 가져오기
-  const userId = res.locals.user.userId; // 현재 사용자의 ID 가져오기
+    const { nickname } = req.body; // 요청 본문에서 닉네임 가져오기
+    const userId = res.locals.user.userId; // 현재 사용자의 ID 가져오기
 
-  // 닉네임 길이 유효성 검사
-  if (nickname.length >= 15) {
-    return res.status(400).json({ message: '닉네임은 15글자 미만이어야 합니다.' });
-  }
+    // 닉네임 길이 유효성 검사
+    if (nickname.length >= 15) {
+        return res.status(400).json({ message: '닉네임은 15글자 미만이어야 합니다.' });
+    }
 
-  try {
-    // 사용자의 닉네임을 업데이트하고 결과를 반환
-    const updatedUser = await prisma.users.update({
-      where: { userId }, // 사용자 ID를 사용하여 해당 사용자를 찾습니다.
-      data: { nickname }, // 새로운 닉네임으로 업데이트합니다.
-    });
+    try {
+        // 사용자의 닉네임을 업데이트하고 결과를 반환
+        const updatedUser = await prisma.users.update({
+            where: { userId }, // 사용자 ID를 사용하여 해당 사용자를 찾습니다.
+            data: { nickname }, // 새로운 닉네임으로 업데이트합니다.
+        });
 
-    return res.status(200).json({ message: '닉네임이 성공적으로 변경되었습니다.'});
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: '서버 오류' });
-  }
+        return res.status(200).json({ message: '닉네임이 성공적으로 변경되었습니다.' });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: '서버 오류' });
+    }
 });
 
 export default router;
