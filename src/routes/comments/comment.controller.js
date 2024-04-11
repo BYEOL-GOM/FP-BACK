@@ -46,6 +46,7 @@ export const createReplyController = async (req, res, next) => {
         const { worryId, commentId } = req.params;
         const userId = res.locals.user.userId;
         const { content, fontColor } = req.body;
+        // const { userId, content, fontColor } = req.body;
 
         if (!worryId || !content || !fontColor) {
             return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });

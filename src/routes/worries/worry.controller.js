@@ -5,6 +5,7 @@ export const createWorryController = async (req, res, next) => {
     try {
         const { content, icon, fontColor } = req.body;
         const userId = res.locals.user.userId;
+        // const { userId, content, icon, fontColor } = req.body;
 
         if (!content || !icon || !fontColor) return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
 
@@ -31,8 +32,8 @@ export const createWorryController = async (req, res, next) => {
 export const WorryDetailController = async (req, res, next) => {
     try {
         const { worryId } = req.params;
-        // const { userId } = req.body;
         const userId = res.locals.user.userId;
+        // const { userId } = req.body;
 
         if (!worryId) {
             throw new Error('데이터 형식이 올바르지 않습니다');
@@ -67,6 +68,7 @@ export const deleteSelectedWorryController = async (req, res, next) => {
         const { worryId, commentId } = req.params;
         const userId = res.locals.user.userId;
         // const { userId } = req.body;
+
         if (!worryId) {
             return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
         }
@@ -116,6 +118,7 @@ export const getRemainingWorries = async (req, res) => {
     try {
         const userId = res.locals.user.userId;
         // const { userId } = req.body;
+
         const remainingWorries = await worryService.findRemainingWorriesByUserId(+userId);
 
         res.json({ remainingWorries });
