@@ -2,6 +2,7 @@ import axios from 'axios';
 import { prisma } from '../../utils/prisma/index.js';
 import jwt from 'jsonwebtoken';
 
+
 // 카카오
 export const kakaoLoginController = async (req, res) => {
     try {
@@ -33,11 +34,7 @@ export const kakaoLoginController = async (req, res) => {
             id,
             kakao_account: {
                 email,
-<<<<<<< HEAD
                 profile: { nickname },
-=======
-                profile: { nickname = '고민의 미아가 된 곰' }, // 기본 닉네임 설정
->>>>>>> 114952792ef21c87c0c40e3d20705330b2921522
             },
         } = userInfoResponse.data;
 
@@ -69,10 +66,7 @@ export const kakaoLoginController = async (req, res) => {
             return res
                 .status(200)
                 .json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}` });
-<<<<<<< HEAD
             //return res.status(200).json(userInfo);
-=======
->>>>>>> 114952792ef21c87c0c40e3d20705330b2921522
         }
 
         const accessToken = jwt.sign({ userId: findUser.userId }, process.env.ACCESS_TOKEN_SECRET, {
@@ -89,6 +83,7 @@ export const kakaoLoginController = async (req, res) => {
         return res.status(405).json({ message: '카카오 인증 및 사용자 정보 가져오기 오류' });
     }
 };
+
 
 // 네이버
 export const naverLoginController = async (req, res) => {
