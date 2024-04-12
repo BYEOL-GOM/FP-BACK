@@ -91,6 +91,7 @@ export const getComment = async (commentId) => {
                     userId: true,
                     icon: true,
                     commentAuthorId: true,
+                    isSolved: true,
                 },
             },
             parent: { select: { userId: true } }, // 대댓글의 경우, 부모 댓글의 작성자id (userId) 조회

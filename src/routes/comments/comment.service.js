@@ -48,6 +48,7 @@ export const getCommentDetail = async (commentId, userId) => {
             worryId: updatedComment.worryId,
             worryUserId: updatedComment.worry?.userId, // 고민 작성자 userId
             icon: updatedComment.worry?.icon,
+            isSolved: updatedComment.worry.isSolved,
         };
 
         return response;
