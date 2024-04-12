@@ -13,7 +13,7 @@ const router = express.Router();
 router.post('/worries/:worryId/comments/:commentId?', authMiddleware, createReplyController);
 // router.post('/worries/:worryId/comments/:commentId?', createReplyController);
 
-//  모든 답장 전체 조회
+//  나에게 온 메세지 전체 조회
 router.get('/comments', authMiddleware, getAllLatestMessagesController);
 
 // 답장 상세조회
