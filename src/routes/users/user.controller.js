@@ -2,10 +2,6 @@ import axios from 'axios';
 import { prisma } from '../../utils/prisma/index.js';
 import jwt from 'jsonwebtoken';
 
-
-
-
-
 // 카카오
 export const kakaoLoginController = async (req, res) => {
     try {
@@ -86,7 +82,6 @@ export const kakaoLoginController = async (req, res) => {
         return res.status(405).json({ message: '카카오 인증 및 사용자 정보 가져오기 오류' });
     }
 };
-
 
 // 네이버
 export const naverLoginController = async (req, res) => {
