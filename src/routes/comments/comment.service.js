@@ -48,6 +48,7 @@ export const getCommentDetail = async (commentId, userId) => {
             worryId: updatedComment.worryId,
             worryUserId: updatedComment.worry?.userId, // 고민 작성자 userId
             icon: updatedComment.worry?.icon,
+            isSolved: updatedComment.worry.isSolved,
         };
 
         return response;
@@ -118,33 +119,6 @@ export const createReply = async (worryId, commentId, content, userId, fontColor
     };
 };
 
-// # 답변하기 어려운 답장 삭제하기
-export const deleteComment = async (commentId, userId) => {
-    const comment = await commentRepository.getComment(commentId);
-    if (!comment) {
-        throw new Error('해당하는 답변이 존재하지 않습니다');
-    }
-    if (comment.deletedAt !== null) {
-        throw new Error('해당 답장은 이미 삭제되었습니다');
-    }
-    // 1 ) 첫번째 답변인 경우
-    if (comment.parentId === null) {
-        if (comment.worry.userId !== userId) {
-            throw new Error('답장을 삭제할 권한이 없습니다.');
-        }
-    } else {
-        // 2 ) 재고민 or 재답변인 경우
-        const parentComment = await commentRepository.getComment(comment.parentId);
-        if (!parentComment || parentComment.userId !== userId) {
-            throw new Error('답장을 삭제할 권한이 없습니다.');
-        }
-    }
-    // 답장 삭제
-    await commentRepository.deleteComment(commentId);
-    // 사용자 count 증가 (고민자의 고민력 +1 / 답변자의 답변력 +1)
-    await commentRepository.updateUserCounts(comment, userId); //comment객체(답장 상세 정보)를 인자로 받음
-};
-
 // # 답장 신고하기
 export const reportComment = async (commentId, userId, reportReason) => {
     const comment = await commentRepository.getComment(commentId);
@@ -171,6 +145,8 @@ export const reportComment = async (commentId, userId, reportReason) => {
     await commentRepository.reportComment(commentId, comment.userId, reportReason);
     // 답장 삭제
     await commentRepository.deleteComment(commentId);
+    // 연관된 worryId 삭제
+    await commentRepository.deleteWorry(comment.worryId);
     // 사용자 카운트 업
     await commentRepository.updateUserCounts(comment, userId);
 };

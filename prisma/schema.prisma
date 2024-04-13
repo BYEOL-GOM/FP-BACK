@@ -13,7 +13,7 @@ datasource db {
 model Users {
   userId        Int      @id @default(autoincrement())
   userCheckId   String
-  nickname      String
+  nickname      String @default("고민의 미로에 빠진 곰")
   email         String
   fruit         String?
   remainingWorries Int @default(5) //  최대 고민작성 가능 개수 5

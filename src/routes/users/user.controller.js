@@ -159,16 +159,21 @@ export const naverLoginController = async (req, res) => {
     }
 };
 
-// 리프레쉬
 // 리프레시 토큰 검증 및 재발급 로직
 export const refreshController = async (req, res, next) => {
     try {
-        const { Authorization } = req.body.headers;
-        if (!Authorization) {
+        const { authorization } = req.body.headers;
+        if (!authorization) {
             return res.status(401).json({ message: 'Refresh Token을 전달받지 못했습니다.' });
         }
 
-        const [bearer, refreshToken] = Authorization.split(' ');
+        console.log(authorization);
+
+        const [bearer, refreshToken] = authorization.split(' ');
+
+        console.log(bearer);
+        console.log(refreshToken);
+
         if (bearer !== 'Bearer') {
             const err = new Error('토큰 타입이 Bearer 형식이 아닙니다.');
             err.status = 401;
