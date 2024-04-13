@@ -1,1 +1,2 @@
 {"level":"error","message":"Error Status: undefined, Message: Cannot read properties of undefined (reading 'userId')","timestamp":"2024-04-13T06:11:55.536Z"}
+{"level":"error","message":"Error Status: 400, Message: 이미 선물이 전송되었습니다.","timestamp":"2024-04-13T12:28:03.632Z"}
