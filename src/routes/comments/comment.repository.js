@@ -12,7 +12,7 @@ export const getAllLatestMessages = async (userId) => {
             },
             {
                 commentAuthorId: userId, // 유저가 답변자일 경우 isSolved 필터를 제거
-                unRead: false,
+                unRead: true,
             },
         ],
     };
