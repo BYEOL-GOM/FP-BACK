@@ -6,6 +6,7 @@ export const getAllLatestMessages = async (userId) => {
     const allWorriesAndComments = await prisma.worries.findMany({
         where: {
             deletedAt: null, // 삭제되지 않은 고민(worries)만 조회
+            isSolved: false, // 해결되지 않은 고민(답례 받지 않은)만 조회
             OR: [
                 { userId: userId }, // 유저가 첫 고민을 작성한 경우
                 { commentAuthorId: userId }, // 타인의 첫고민에 유저가 답변자로 매칭된 경우
