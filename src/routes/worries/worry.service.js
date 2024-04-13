@@ -1,7 +1,7 @@
 import * as worryRepository from './worry.repository.js';
 
 // # 고민 등록
-export const createWorry = async ({ content, icon, userId, fontColor }) => {
+export const createWorry = async (content, icon, userId, fontColor) => {
     try {
         // 사용자 정보와 남은 고민 횟수를 확인
         const user = await worryRepository.getUserById(userId);
@@ -20,7 +20,7 @@ export const createWorry = async ({ content, icon, userId, fontColor }) => {
         }
 
         // 고민 생성
-        const worry = await worryRepository.createWorry({ content, icon, userId, randomAuthorId, fontColor });
+        const worry = await worryRepository.createWorry(content, icon, userId, randomAuthorId, fontColor);
 
         // 사용자의 remainingWorries -1 하기
         await worryRepository.decreaseRemainingWorries(userId);
@@ -31,8 +31,14 @@ export const createWorry = async ({ content, icon, userId, fontColor }) => {
         // 수정된 사용자 정보로  현재 남은 고민 횟수 확인
         const updatedUser = await worryRepository.getUserById(userId);
 
-        // 반환 값에 commentAuthorId와 remainingWorries 포함
-        return { ...worry, commentAuthorId: randomAuthorId, remainingWorries: updatedUser.remainingWorries };
+        return {
+            worryId: worry.worryId,
+            userId: worry.userId,
+            commentAuthorId: randomAuthorId,
+            createdAt: worry.createdAt,
+            fontColor: worry.fontColor,
+            remainingWorries: updatedUser.remainingWorries,
+        };
     } catch (error) {
         throw new Error(error.message);
     }
@@ -59,21 +65,26 @@ export const getWorryDetail = async (worryId, userId) => {
     }
 };
 
-// # 답장이 없는 오래된 고민 삭제하기
+// # 답장이 없는 오래된 메세지 삭제하기
 export const deleteOldMessages = async () => {
     try {
         const oldWorries = await worryRepository.findOldMessages();
 
         for (const worry of oldWorries) {
-            await worryRepository.softDeleteWorryById(worry.worryId);
+            if (!worry.deletedAt) {
+                await worryRepository.deleteSelectedWorry(worry.worryId); // 고민 삭제
+                await worryRepository.deleteAllCommentsForWorry(worry.worryId); // 고민의 모든 댓글 삭제
+                await worryRepository.updateUserCounts(worry.userId, worry.commentAuthorId); // 사용자 카운터 업데이트
+            }
         }
+        return oldWorries.length; // 삭제된 고민의 수
     } catch (error) {
         console.error('오래된 고민 삭제에 실패했습니다.', error);
         throw error;
     }
 };
 
-// # 메세지 선택 삭제
+// # 곤란한 메세지 삭제
 export const deleteSelectedWorry = async (worryId, userId, commentId) => {
     const selectedWorry = await worryRepository.getWorry(worryId);
     if (!selectedWorry) {
@@ -88,22 +99,6 @@ export const deleteSelectedWorry = async (worryId, userId, commentId) => {
     if (selectedWorry.userId !== userId && selectedWorry.commentAuthorId !== userId) {
         throw new Error('메세지를 삭제할수 있는 권한이 없습니다');
     }
-    // // 1) 첫고민이 아닐 경우,
-    // if (commentId) {
-    //     const comment = await worryRepository.getComment(commentId);
-    //     if (!comment) {
-    //         throw new Error('해당하는 답변이 존재하지 않습니다');
-    //     }
-    //     // 본인이 작성한 글 삭제 권한 없음
-    //     if (comment.userId === userId) {
-    //         throw new Error('메세지를 삭제할 수 있는 권한이 없습니다');
-    //     }
-    // } else {
-    //     // 2 ) 첫 고민을 삭제하는 경우, 고민의 답변자만이 삭제 가능
-    //     if (selectedWorry.commentAuthorId !== userId) {
-    //         throw new Error('메세지를 삭제할 수 있는 권한이 없습니다');
-    //     }
-    // }
 
     // worryId 소프트 삭제
     await worryRepository.deleteSelectedWorry(worryId);
@@ -111,7 +106,6 @@ export const deleteSelectedWorry = async (worryId, userId, commentId) => {
     if (commentId) {
         await worryRepository.deleteAllCommentsForWorry(worryId);
     }
-
     // 사용자 카운트 업데이트
     await worryRepository.updateUserCounts(selectedWorry.userId, selectedWorry.commentAuthorId);
 
@@ -136,9 +130,9 @@ export const reportWorry = async (worryId, userId, reportReason) => {
 
     // 신고 정보 저장
     await worryRepository.reportWorry(worryId, selectedWorry.userId, reportReason);
-
-    // 고민 삭제 및 사용자 카운트 업데이트 로직 재사용
+    // 고민 삭제
     await worryRepository.deleteSelectedWorry(worryId);
+    //사용자 카운트 업데이트
     await worryRepository.updateUserCounts(selectedWorry.userId, selectedWorry.commentAuthorId);
 };
 
