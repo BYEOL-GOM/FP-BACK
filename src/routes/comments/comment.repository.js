@@ -12,7 +12,6 @@ export const getAllLatestMessages = async (userId) => {
             },
             {
                 commentAuthorId: userId, // 유저가 답변자일 경우 isSolved 필터를 제거
-                unRead: true,
             },
         ],
     };
@@ -23,6 +22,7 @@ export const getAllLatestMessages = async (userId) => {
             comments: {
                 where: {
                     deletedAt: null,
+                    unRead: true, // 읽지 않은 답장만 조회
                 },
                 orderBy: {
                     createdAt: 'desc',
