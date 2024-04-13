@@ -37,3 +37,16 @@
 {"level":"info","message":"Method: DELETE, URL: /22/20, Status: 403, Duration: 20ms","timestamp":"2024-04-13T01:30:21.187Z"}
 {"level":"info","message":"Method: DELETE, URL: /22/20, Status: 403, Duration: 25ms","timestamp":"2024-04-13T01:30:57.680Z"}
 {"level":"info","message":"Method: DELETE, URL: /22/20, Status: 200, Duration: 157ms","timestamp":"2024-04-13T01:31:40.681Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 274ms","timestamp":"2024-04-13T06:08:13.916Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 401, Duration: 1ms","timestamp":"2024-04-13T06:08:38.603Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 44ms","timestamp":"2024-04-13T06:09:01.034Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 204, Duration: 30ms","timestamp":"2024-04-13T06:09:20.921Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 18ms","timestamp":"2024-04-13T06:09:24.285Z"}
+{"level":"info","message":"Method: POST, URL: /worries/23/comments/, Status: 201, Duration: 439ms","timestamp":"2024-04-13T06:10:33.974Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 204, Duration: 49ms","timestamp":"2024-04-13T06:10:57.224Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 200, Duration: 22ms","timestamp":"2024-04-13T06:11:00.846Z"}
+{"level":"info","message":"Method: POST, URL: /worries/23/comments/21/sendLike, Status: 401, Duration: 2ms","timestamp":"2024-04-13T06:11:20.056Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of undefined (reading 'userId')","timestamp":"2024-04-13T06:11:55.536Z"}
+{"level":"info","message":"Method: POST, URL: /worries/23/comments/21/sendLike, Status: 500, Duration: 10ms","timestamp":"2024-04-13T06:11:55.544Z"}
+{"level":"info","message":"Method: POST, URL: /worries/23/comments/21/sendLike, Status: 201, Duration: 599ms","timestamp":"2024-04-13T06:12:36.323Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 204, Duration: 21ms","timestamp":"2024-04-13T06:12:55.264Z"}
