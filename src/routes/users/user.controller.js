@@ -181,7 +181,7 @@ export const refreshController = async (req, res, next) => {
 
         // 디코드된 정보로 사용자 조회
         const user = await prisma.users.findFirst({
-            where: { userId: decoded.userId }
+            where: { userId: decoded.userId },
         });
 
         if (!user) {
@@ -190,22 +190,21 @@ export const refreshController = async (req, res, next) => {
 
         // 새로운 토큰 발급
         const newAccessToken = jwt.sign({ userId: user.userId }, process.env.ACCESS_TOKEN_SECRET, {
-            expiresIn: process.env.ACCESS_TOKEN_LIFE
+            expiresIn: process.env.ACCESS_TOKEN_LIFE,
         });
         const newRefreshToken = jwt.sign({ userId: user.userId }, process.env.REFRESH_TOKEN_SECRET, {
-            expiresIn: process.env.REFRESH_TOKEN_LIFE
+            expiresIn: process.env.REFRESH_TOKEN_LIFE,
         });
 
         return res.status(200).json({
             message: '토큰이 재발급 되었습니다',
             accessToken: `Bearer ${newAccessToken}`,
-            refreshToken: `Bearer ${newRefreshToken}`
+            refreshToken: `Bearer ${newRefreshToken}`,
         });
     } catch (error) {
         return res.status(401).json({ message: 'Invalid or Expired Token.' });
     }
 };
-
 
 // 좋아요된 고민의 갯수 조회하기
 export const WorryCountController = async (req, res, next) => {
