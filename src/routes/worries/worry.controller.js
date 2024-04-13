@@ -9,18 +9,11 @@ export const createWorryController = async (req, res, next) => {
 
         if (!content || !icon || !fontColor) return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다' });
 
-        const worry = await worryService.createWorry({ content, icon, userId: +userId, fontColor });
+        const worry = await worryService.createWorry(content, icon, +userId, fontColor);
 
         res.status(201).json({
             message: '고민 생성이 완료되었습니다',
-            worry: {
-                worryId: worry.worryId,
-                userId: worry.userId,
-                commentAuthorId: worry.commentAuthorId,
-                createdAt: worry.createdAt,
-                fontColor: worry.fontColor,
-                remainingWorries: worry.remainingWorries,
-            },
+            worry,
         });
     } catch (error) {
         console.error('고민 등록 중 에러가 발생했어요! :', error);
@@ -28,7 +21,7 @@ export const createWorryController = async (req, res, next) => {
     }
 };
 
-//# 고민메세지 상세조회
+// # 고민메세지 상세조회
 export const WorryDetailController = async (req, res, next) => {
     try {
         const { worryId } = req.params;
@@ -50,19 +43,18 @@ export const WorryDetailController = async (req, res, next) => {
     }
 };
 
-//오래된 메세지 삭제하기
+// # 오래된 메세지 삭제하기
 export const deleteOldMessagesController = async (req, res, next) => {
-    // 관리자 권한 추가해야할것 같음
     try {
-        const oldMessages = await worryService.deleteOldMessages();
-        res.status(200).json({ message: '오래된 고민 삭제에 성공했습니다.', oldMessages });
+        const deletedCount = await worryService.deleteOldMessages();
+        res.status(200).json({ message: '오래된 고민 삭제에 성공했습니다.', deletedCount });
     } catch (error) {
         console.error(error);
         next(error);
     }
 };
 
-// # 답변하기 어려운 고민 삭제하기
+// # 곤란한 메세지 선택 삭제
 export const deleteSelectedWorryController = async (req, res, next) => {
     try {
         const { worryId, commentId } = req.params;
