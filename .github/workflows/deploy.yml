@@ -71,3 +71,6 @@ jobs:
                         -e REFRESH_TOKEN_LIFE="${{ secrets.REFRESH_TOKEN_LIFE }}" \
                         -e CLIENT_SECRET="${{ secrets.CLIENT_SECRET }}" \
                         leticia0408/byeol_gom:latest
+
+                      # Prisma 마이그레이션 실행
+                      docker exec my-app npx prisma migrate deploy
