@@ -159,36 +159,43 @@ export const naverLoginController = async (req, res) => {
     }
 };
 
-// 리프레쉬
+// 리프레시 토큰 검증 및 재발급 로직
 export const refreshController = async (req, res, next) => {
     try {
-        const authorization = req.headers.authorization; // 직접 변수를 할당
-
-        // Authorization 헤더의 존재 여부와 형식 검증
-        if (!authorization || authorization.split(' ').length !== 2) {
-            return res.status(401).json({ message: 'Refresh Token이 올바르게 전달되지 않았습니다.' });
+        const { authorization } = req.body.headers;
+        if (!authorization) {
+            return res.status(401).json({ message: 'Refresh Token을 전달받지 못했습니다.' });
         }
+
+        console.log(authorization);
 
         const [bearer, refreshToken] = authorization.split(' ');
 
-        // Bearer 타입 검증
+        console.log(bearer);
+        console.log(refreshToken);
+
         if (bearer !== 'Bearer') {
-            return res.status(401).json({ message: '토큰 타입이 Bearer 형식이 아닙니다.' });
+            const err = new Error('토큰 타입이 Bearer 형식이 아닙니다.');
+            err.status = 401;
+            throw err;
         }
 
-        // Refresh Token 디코드
         const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-
-        // 디코드된 정보로 사용자 조회
+        if (!decoded) {
+            return res.status(409).json({ message: '토큰을 decoded하지 못했습니다.' });
+        }
         const user = await prisma.users.findFirst({
-            where: { userId: decoded.userId },
+            where: {
+                userId: decoded.userId,
+            },
         });
 
         if (!user) {
-            return res.status(404).json({ message: '토큰의 사용자를 찾을 수 없습니다.' });
+            const err = new Error('토큰의 사용자를 찾을 수 없습니다.');
+            err.status = 404;
+            throw err;
         }
 
-        // 새로운 토큰 발급
         const newAccessToken = jwt.sign({ userId: user.userId }, process.env.ACCESS_TOKEN_SECRET, {
             expiresIn: process.env.ACCESS_TOKEN_LIFE,
         });
@@ -202,7 +209,7 @@ export const refreshController = async (req, res, next) => {
             refreshToken: `Bearer ${newRefreshToken}`,
         });
     } catch (error) {
-        return res.status(401).json({ message: 'Invalid or Expired Token.' });
+        next(error);
     }
 };
 
