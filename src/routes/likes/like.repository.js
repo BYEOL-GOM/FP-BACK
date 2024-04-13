@@ -73,13 +73,13 @@ export const markWorryAsSolvedAndCreateLike = async (worryId, commentId, userId,
 
         // 사용자의 remainingWorries(남은 고민 수)를 증가시킵니다.
         await prisma.users.update({
-            where: { userId: worryUpdateResult.userId },
+            where: { userId: worryUpdateResult.userId, remainingWorries: { lt: 5 } },
             data: { remainingWorries: { increment: 1 } },
         });
 
         // 답변자의 remainingAnswers(남은 답변 수) 증가시키기
         await prisma.users.update({
-            where: { userId: worryUpdateResult.commentAuthorId },
+            where: { userId: worryUpdateResult.commentAuthorId, remainingAnswers: { lt: 10 } },
             data: { remainingAnswers: { increment: 1 } },
         });
 
