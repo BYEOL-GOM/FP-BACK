@@ -1,4 +1,3 @@
-import { prisma } from '../../utils/prisma/index.js';
 // 유저가 참여한 모든 고민(worries)과 답장(comments)
 const allWorriesAndComments = await prisma.worries.findMany({
     where: {
