@@ -12,6 +12,8 @@ export default async function authenticateUserMiddleware(req, res, next) {
         // 인증 정보가 있는 경우, 엑세스 토큰 추출
         const [bearer, accessToken] = authorization.split(' ');
         // // 만약 토큰 타입이 Bearer가 아닐때 오류
+        if (!accessToken) return res.status(401).json({ message: '토큰' });
+
         if (bearer !== 'Bearer') return res.status(401).json({ message: '토큰 타입이 Bearer 형식이 아닙니다' });
 
         // 엑세스 토큰을 확인하고 사용자 ID를 추출

@@ -167,13 +167,7 @@ export const refreshController = async (req, res, next) => {
             return res.status(401).json({ message: 'Refresh Token을 전달받지 못했습니다.' });
         }
 
-        console.log(authorization);
-
         const [bearer, refreshToken] = authorization.split(' ');
-
-        console.log(bearer);
-        console.log(refreshToken);
-
         if (bearer !== 'Bearer') {
             const err = new Error('토큰 타입이 Bearer 형식이 아닙니다.');
             err.status = 401;
