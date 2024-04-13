@@ -1,29 +1,38 @@
 import { prisma } from '../../utils/prisma/index.js';
-// # 유저에게 온 전체 최신 메세지 조회
-export const getAllLatestMessages = async (userId) => {
-    // 유저가 참여한 모든 고민(worries)과 답장(comments)
-    const allWorriesAndComments = await prisma.worries.findMany({
-        where: {
-            deletedAt: null, // 삭제되지 않은 고민(worries)만 조회
-            isSolved: false, // 해결된 고민은 제외
-
-            OR: [
-                { userId: userId }, // 유저가 첫 고민을 작성한 경우
-                { commentAuthorId: userId }, // 타인의 첫고민에 유저가 답변자로 매칭된 경우
-            ],
-        },
-        include: {
-            comments: {
-                where: {
-                    deletedAt: null, // 삭제되지 않은 답변(comments)만 조회
-                    unRead: true, // 읽지 않은 답변만 조회
-                },
-                orderBy: {
-                    createdAt: 'desc', // 최신 답변 순으로 정렬
-                },
+// 유저가 참여한 모든 고민(worries)과 답장(comments)
+const allWorriesAndComments = await prisma.worries.findMany({
+    where: {
+        deletedAt: null, // 삭제되지 않은 고민(worries)만 조회
+        AND: [  // 이 부분에 AND 조건 추가
+            {
+                OR: [
+                    { userId: userId }, // 유저가 첫 고민을 작성한 경우
+                    { commentAuthorId: userId }, // 타인의 첫고민에 유저가 답변자로 매칭된 경우
+                ],
+            },
+            {   // 해결된 고민이지만 읽지 않은 메세지는 제외하지 않기
+                NOT: {
+                    isSolved: true,
+                    comments: {
+                        some: {
+                            unRead: false
+                        }
+                    }
+                }
+            }
+        ]
+    },
+    include: {
+        comments: {
+            where: {
+                deletedAt: null, // 삭제되지 않은 답변(comments)만 조회
+            },
+            orderBy: {
+                createdAt: 'desc', // 최신 답변 순으로 정렬
             },
         },
-    });
+    },
+});
 
     // 각 고민에 해당하는 최신 답장
     const filteredWorriesAndComments = allWorriesAndComments.flatMap((worry) => {
