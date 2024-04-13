@@ -3,28 +3,22 @@ import { prisma } from '../../utils/prisma/index.js';
 // # 유저에게 온 전체 최신 메세지 조회
 export const getAllLatestMessages = async (userId) => {
     // 유저가 참여한 모든 고민(worries)과 답장(comments)
-    const whereClause = {
-        deletedAt: null,
-        OR: [
-            {
-                userId: userId,
-                isSolved: false, // 유저가 최초 고민 작성자일 때는 해결되지 않은 고민만
-            },
-            {
-                commentAuthorId: userId, // 유저가 답변자일 경우 isSolved 필터를 제거
-            },
-        ],
-    };
-
     const allWorriesAndComments = await prisma.worries.findMany({
-        where: whereClause,
+        where: {
+            deletedAt: null, // 삭제되지 않은 고민(worries)만 조회
+            isSolved: false, // 해결되지 않은 고민(답례 받지 않은)만 조회
+            OR: [
+                { userId: userId }, // 유저가 첫 고민을 작성한 경우
+                { commentAuthorId: userId }, // 타인의 첫고민에 유저가 답변자로 매칭된 경우
+            ],
+        },
         include: {
             comments: {
                 where: {
-                    deletedAt: null,
+                    deletedAt: null, // 삭제되지 않은 답변(comments)만 조회
                 },
                 orderBy: {
-                    createdAt: 'desc',
+                    createdAt: 'desc', // 최신 답변 순으로 정렬
                 },
             },
         },
@@ -47,36 +41,8 @@ export const getAllLatestMessages = async (userId) => {
             ];
         }
 
-        // // 2 )  자신의 고민에 대한 최신 답장  =>  유저가 최초 고민 작성자 + (해당 worryId의) 최신 답장은 다른사람(Not 유저)이 작성한 경우
-        // if (worry.userId === userId && latestComment && latestComment.userId !== userId) {
-        //     return [
-        //         {
-        //             worryId: worry.worryId,
-        //             icon: worry.icon,
-        //             commentId: latestComment.commentId,
-        //             createdAt: latestComment.createdAt,
-        //             unRead: latestComment.unRead,
-        //         },
-        //     ];
-        // }
-
-        // // 3 )  유저에게 온 재고민  =>  유저가 최초 고민의 답변자로 지정 + 최초 답장 보냄 + 이후 최신 답장(재고민)을 다른사람(Not 유저)이 작성한 경우
-        // if (worry.commentAuthorId === userId && latestComment && latestComment.userId !== userId) {
-        //     return worry.comments
-        //         .filter((comment) => comment.userId !== userId)
-        //         .map((comment) => ({
-        //             worryId: worry.worryId,
-        //             icon: worry.icon,
-        //             commentId: comment.commentId,
-        //             createdAt: comment.createdAt,
-        //             unRead: comment.unRead,
-        //         }));
-        // }
-        if (
-            (worry.userId === userId || worry.commentAuthorId === userId) &&
-            latestComment &&
-            latestComment.userId !== userId
-        ) {
+        // 2 )  자신의 고민에 대한 최신 답장  =>  유저가 최초 고민 작성자 + (해당 worryId의) 최신 답장은 다른사람(Not 유저)이 작성한 경우
+        if (worry.userId === userId && latestComment && latestComment.userId !== userId) {
             return [
                 {
                     worryId: worry.worryId,
@@ -87,7 +53,21 @@ export const getAllLatestMessages = async (userId) => {
                 },
             ];
         }
-        return []; // 위 조건에 맞지 않는 경우 빈 배열
+
+        // 3 )  유저에게 온 재고민  =>  유저가 최초 고민의 답변자로 지정 + 최초 답장 보냄 + 이후 최신 답장(재고민)을 다른사람(Not 유저)이 작성한 경우
+        if (worry.commentAuthorId === userId && latestComment && latestComment.userId !== userId) {
+            return worry.comments
+                .filter((comment) => comment.userId !== userId)
+                .map((comment) => ({
+                    worryId: worry.worryId,
+                    icon: worry.icon,
+                    commentId: comment.commentId,
+                    createdAt: comment.createdAt,
+                    unRead: comment.unRead,
+                }));
+        }
+
+        return []; // 위 조건에 맞지 않는 경우 빈 배열 반환
     });
 
     return filteredWorriesAndComments;
