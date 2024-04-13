@@ -1,57 +1,53 @@
-// 유저가 참여한 모든 고민(worries)과 답장(comments)
-const allWorriesAndComments = await prisma.worries.findMany({
-    where: {
-        deletedAt: null, // 삭제되지 않은 고민(worries)만 조회
-        AND: [  // 이 부분에 AND 조건 추가
-            {
-                OR: [
-                    { userId: userId }, // 유저가 첫 고민을 작성한 경우
-                    { commentAuthorId: userId }, // 타인의 첫고민에 유저가 답변자로 매칭된 경우
-                ],
-            },
-            {   // 해결된 고민이지만 읽지 않은 메세지는 제외하지 않기
-                NOT: {
-                    isSolved: true,
-                    comments: {
-                        some: {
-                            unRead: false
-                        }
-                    }
-                }
-            }
-        ]
-    },
-    include: {
-        comments: {
-            where: {
-                deletedAt: null, // 삭제되지 않은 답변(comments)만 조회
-            },
-            orderBy: {
-                createdAt: 'desc', // 최신 답변 순으로 정렬
+import { prisma } from '../../utils/prisma/index.js';
+
+// 유저에게 온 전체 최신 메세지 조회
+export const getAllLatestMessages = async (userId) => {
+    // 유저가 참여한 모든 고민(worries)과 답장(comments)
+    const allWorriesAndComments = await prisma.worries.findMany({
+        where: {
+            deletedAt: null, // 삭제되지 않은 고민(worries)만 조회
+            OR: [
+                { userId: userId }, // 유저가 첫 고민을 작성한 경우
+                { commentAuthorId: userId }, // 타인의 첫고민에 유저가 답변자로 매칭된 경우
+            ],
+            NOT: {
+                isSolved: true, // 해결된 고민은 제외
+                comments: {
+                    every: { unRead: false }, // 모든 답변이 읽힌 경우 제외
+                },
             },
         },
-    },
-});
+        include: {
+            comments: {
+                where: {
+                    deletedAt: null, // 삭제되지 않은 답변(comments)만 조회
+                },
+                orderBy: {
+                    createdAt: 'desc', // 최신 답변 순으로 정렬
+                },
+            },
+        },
+    });
 
     // 각 고민에 해당하는 최신 답장
     const filteredWorriesAndComments = allWorriesAndComments.flatMap((worry) => {
-        const latestComment = worry.comments[0] || null; // 첫 고민일 경우는 lastestComment 는 null, 그 외에는 0번째(가장 최신) 답변
+        const latestComment = worry.comments[0] || null; // 첫 고민일 경우는 lastestComment는 null, 그 외에는 0번째(가장 최신) 답변
 
-        // 1 ) 유저에게 온 첫 고민 메세지  =>  유저가 최초 고민의 답변자 + 아직 답장을 보내지 않은 경우
+        // 유저에게 온 첫 고민 메세지 => 유저가 최초 고민의 답변자 + 아직 답장을 보내지 않은 경우
         if (worry.commentAuthorId === userId && !latestComment) {
             return [
                 {
                     worryId: worry.worryId,
                     icon: worry.icon,
-                    commentId: null, // 최초 고민 메세지의 commentId 는 null
+                    commentId: null, // 최초 고민 메세지의 commentId는 null
                     createdAt: worry.createdAt,
                     unRead: worry.unRead,
                 },
             ];
         }
 
-        // 2 )  자신의 고민에 대한 최신 답장  =>  유저가 최초 고민 작성자 + (해당 worryId의) 최신 답장은 다른사람(Not 유저)이 작성한 경우
-        // 3 )  유저에게 온 재고민  =>  유저가 최초 고민의 답변자로 지정 + 최초 답장 보냄 + 이후 최신 답장(재고민)을 다른사람(Not 유저)이 작성한 경우
+        // 자신의 고민에 대한 최신 답장 => 유저가 최초 고민 작성자 + (해당 worryId의) 최신 답장은 다른사람(Not 유저)이 작성한 경우
+        // 유저에게 온 재고민 => 유저가 최초 고민의 답변자로 지정 + 최초 답장 보냄 + 이후 최신 답장(재고민)을 다른사람(Not 유저)이 작성한 경우
         if (
             (worry.userId === userId || worry.commentAuthorId === userId) &&
             latestComment &&
