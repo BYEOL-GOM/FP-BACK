@@ -44,3 +44,10 @@
 {"level":"error","message":"Error Status: 403, Message: 선물을 보낼 권한이 없습니다. 게시글의 작성자만 선물을 보낼 수 있습니다.","timestamp":"2024-04-11T15:49:57.540Z"}
 {"level":"info","message":"Method: POST, URL: /worries/16/comments/18/sendLike, Status: 403, Duration: 13ms","timestamp":"2024-04-11T15:49:57.542Z"}
 {"level":"info","message":"Method: POST, URL: /worries/16/comments/18/sendLike, Status: 201, Duration: 402ms","timestamp":"2024-04-11T15:52:52.782Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 401, Duration: 7ms","timestamp":"2024-04-11T15:37:04.436Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 206ms","timestamp":"2024-04-11T15:38:42.459Z"}
+{"level":"info","message":"Method: POST, URL: /worries/10/comments, Status: 400, Duration: 108ms","timestamp":"2024-04-11T15:38:53.456Z"}
+{"level":"info","message":"Method: POST, URL: /worries/10/comments, Status: 400, Duration: 43ms","timestamp":"2024-04-11T15:40:18.123Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 165ms","timestamp":"2024-04-11T15:40:21.109Z"}
+{"level":"info","message":"Method: POST, URL: /worries/11/comments, Status: 201, Duration: 119ms","timestamp":"2024-04-11T15:40:27.484Z"}
+{"level":"info","message":"Method: POST, URL: /worries/11/comments/39/sendLike, Status: 201, Duration: 297ms","timestamp":"2024-04-11T15:40:48.208Z"}
