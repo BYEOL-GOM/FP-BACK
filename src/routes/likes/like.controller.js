@@ -29,10 +29,18 @@ export const getSolvedWorries = async (req, res, next) => {
 
         // 페이지 번호 유효성 검사
         if (isNaN(page) || page < 1) {
-            return res.status(400).json({ error: '유효하지 않은 페이지 번호입니다.' });
+            const err = new Error('유효하지 않은 페이지 번호입니다.');
+            err.status = 400;
+            throw err;
         }
 
         const solvedWorries = await LikeService.getSolvedWorriesByUserId(parseInt(userId), page, limit);
+        if (solvedWorries.worries.length === 0) {
+            const err = new Error('해당 페이지에 고민 내용이 없습니다.');
+            err.status = 404;
+            throw err;
+        }
+
         return res.status(200).json(solvedWorries);
     } catch (error) {
         next(error);
@@ -51,10 +59,18 @@ export const getHelpedSolveWorries = async (req, res, next) => {
 
         // 페이지 번호 유효성 검사
         if (isNaN(page) || page < 1) {
-            return res.status(400).json({ error: '유효하지 않은 페이지 번호입니다.' });
+            const err = new Error('유효하지 않은 페이지 번호입니다.');
+            err.status = 400;
+            throw err;
         }
 
         const helpedSolveWorries = await LikeService.getHelpedSolveWorriesByUserId(parseInt(userId), page, limit);
+        if (helpedSolveWorries.worries.length === 0) {
+            const err = new Error('해당 페이지에 고민 내용이 없습니다.');
+            err.status = 404;
+            throw err;
+        }
+
         res.status(200).json(helpedSolveWorries);
     } catch (error) {
         next(error);
@@ -69,15 +85,26 @@ export const getSolvedWorryDetails = async (req, res, next) => {
         // const { userId, worryId } = req.params;
 
         if (!worryId) {
-            return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다.' });
+            const err = new Error('고민 게시글 ID가 제공되지 않았습니다.');
+            err.status = 400;
+            throw err;
         }
 
         const worryDetails = await LikeService.getSolvedWorryDetailsById(+worryId, +userId);
+
         if (!worryDetails) {
-            const err = new Error('해당하는 답변의 고민 게시글이 존재하지 않습니다.');
+            const err = new Error('해당하는 고민 게시글을 찾을 수 없습니다.');
             err.status = 404;
             throw err;
         }
+
+        // 접근 권한 에러
+        if (worryDetails.userId !== userId) {
+            const err = new Error('이 고민 게시글에 접근할 권한이 없습니다.');
+            err.status = 403;
+            throw err;
+        }
+
         return res.status(200).json(worryDetails);
     } catch (error) {
         next(error);
@@ -92,16 +119,25 @@ export const getHelpedSolveWorryDetails = async (req, res, next) => {
         // const { userId, worryId } = req.params;
 
         if (!worryId) {
-            return res.status(400).json({ error: '데이터 형식이 올바르지 않습니다.' });
+            const err = new Error('고민 게시글 ID가 제공되지 않았습니다.');
+            err.status = 400;
+            throw err;
         }
 
         const worryDetails = await LikeService.getHelpedSolveWorryDetailsById(+worryId, +userId);
 
         if (!worryDetails) {
-            const err = new Error('해당하는 답변의 고민 게시글이 존재하지 않습니다.');
+            const err = new Error('해당하는 고민 게시글을 찾을 수 없습니다.');
             err.status = 404;
             throw err;
         }
+
+        if (worryDetails.commentAuthorId !== userId) {
+            const err = new Error('이 고민을 해결한 사용자만 접근이 가능합니다.');
+            err.status = 403;
+            throw err;
+        }
+
         return res.status(200).json(worryDetails);
     } catch (error) {
         next(error);
@@ -116,7 +152,9 @@ export const getTopLikedCommentAuthors = async (req, res, next) => {
         // const { userId } = req.body;
 
         const topUsers = await LikeService.getTopLikedCommentAuthors(userId);
-        return res.json(topUsers);
+
+        // 결과가 없는 경우 빈 배열 반환
+        return res.json(topUsers || []);
     } catch (error) {
         next(error);
     }
