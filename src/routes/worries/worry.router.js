@@ -4,7 +4,7 @@ import {
     WorryDetailController,
     deleteOldMessagesController,
     deleteSelectedWorryController,
-    reportWorryController,
+    reportMessageController,
     getRemainingWorries,
 } from '../worries/worry.controller.js';
 import authMiddleware from '../../middlewares/authMiddleware.js';
@@ -29,6 +29,6 @@ router.delete('/', deleteOldMessagesController);
 router.delete('/:worryId/:commentId?', authMiddleware, deleteSelectedWorryController);
 
 // 불쾌한 고민 신고하기
-router.post('/:worryId/report', authMiddleware, reportWorryController);
+router.post('/:worryId/comments/:commentId?/report', authMiddleware, reportMessageController);
 
 export default router;
