@@ -184,6 +184,18 @@ export const reportWorry = async (worryId, userId, reportReason) => {
     });
 };
 
+// # 답장 신고 정보 저장하기
+export const reportComment = async (commentId, userId, reportReason) => {
+    await prisma.reports.create({
+        data: {
+            commentId,
+            userId,
+            reason: reportReason,
+            reportedAt: new Date(),
+        },
+    });
+};
+
 // # 로켓 개수 확인
 export const findRemainingWorriesByUserId = async (userId) => {
     const user = await prisma.users.findUnique({
