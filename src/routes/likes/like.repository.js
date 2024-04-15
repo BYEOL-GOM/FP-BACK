@@ -277,10 +277,6 @@ export const findHelpedSolveWorryDetailsById = async (worryId, userId) => {
         }
     }
 
-    if (worryDetails && worryDetails.commentAuthorId !== userId) {
-        throw new Error("Access denied. You're not the solver of this worry.");
-    }
-
     return worryDetails;
 };
 
@@ -371,7 +367,7 @@ export const findTopLikedCommentAuthors = async (userId) => {
         .sort((a, b) => b.likes - a.likes)
         .slice(0, 5);
 
-    // 로그인한 사용자가 있고 상위 랭커 2명에 포함되어 있는지 확인
+    // 로그인한 사용자가 있고 상위 랭커 5명에 포함되어 있는지 확인
     if (userId !== undefined) {
         const userLikes = commentAuthorLikesCount[userId];
         const userInTop = sortedAuthors.findIndex((author) => author.commentAuthorId === userId);
@@ -379,12 +375,12 @@ export const findTopLikedCommentAuthors = async (userId) => {
         // 좋아요가 없는 경우 likes를 0으로 설정
         const likesForCurrentUser = userLikes !== undefined ? userLikes : 0;
 
-        // 로그인한 사용자가 상위 랭커 2명에 포함되어 있지 않은 경우
+        // 로그인한 사용자가 상위 랭커 5명에 포함되어 있지 않은 경우
         if (userInTop === -1) {
-            // 상위 랭커 2명과 로그인한 사용자 정보를 포함하여 반환
+            // 상위 랭커 5명과 로그인한 사용자 정보를 포함하여 반환
             sortedAuthors.push({ userId: userId, likes: likesForCurrentUser });
         } else {
-            // 상위 랭커 2명에 포함되어 있는 경우 해당 정보만 업데이트
+            // 상위 랭커 5명에 포함되어 있는 경우 해당 정보만 업데이트
             sortedAuthors[userInTop].userId = userId;
             sortedAuthors[userInTop].likes = likesForCurrentUser;
         }

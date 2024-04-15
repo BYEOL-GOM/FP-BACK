@@ -33,7 +33,7 @@ export const sendLike = async (worryId, commentId, userId, content) => {
 
     // 선물을 이미 보냈다(고민 해결)면 에러 처리
     if (worry.isSolved) {
-        const err = new Error('이미 선물이 전송되었습니다.');
+        const err = new Error('해당 답변에 대한 선물을 이미 보냈습니다.');
         err.status = 400;
         throw err;
     }
@@ -48,8 +48,6 @@ export const sendLike = async (worryId, commentId, userId, content) => {
 
     // 좋아요(답례) 보내기. (고민(worry)을 해결된 상태로 변경)
     const present = await LikeRepository.markWorryAsSolvedAndCreateLike(worryId, commentId, userId, content);
-
-    // return present;
 
     // 해당 worryId에 대한 최신 답변 조회
     const lastReply = await CommentRepository.findLastReplyByWorryId(worryId);
