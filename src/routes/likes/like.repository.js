@@ -369,7 +369,7 @@ export const findTopLikedCommentAuthors = async (userId) => {
         // .map(([commentAuthorId, likes]) => ({ userId: parseInt(commentAuthorId), likes }))
         .map(([commentAuthorId, likes]) => ({ commentAuthorId: parseInt(commentAuthorId), likes }))
         .sort((a, b) => b.likes - a.likes)
-        .slice(0, 2);
+        .slice(0, 5);
 
     // 로그인한 사용자가 있고 상위 랭커 2명에 포함되어 있는지 확인
     if (userId !== undefined) {
