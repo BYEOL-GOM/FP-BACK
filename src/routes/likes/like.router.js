@@ -33,5 +33,6 @@ router.get('/myHelpedSolvedWorry/:worryId', authMiddleware, getHelpedSolveWorryD
 
 // 좋아요를 가장 많이 받은 탑 5위 댓글 조회
 router.get('/top-likes', authMiddleware, getTopLikedCommentAuthors);
+// router.get('/top-likes', getTopLikedCommentAuthors);
 
 export default router;

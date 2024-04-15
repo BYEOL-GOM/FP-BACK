@@ -8,7 +8,6 @@ import LogMiddleware from './middlewares/logMiddleware.js';
 import generalErrorHandler from './middlewares/generalErrorMiddleware.js';
 import router from './routes/index.js';
 import passport from 'passport';
-// import session from 'express-session'; // JWT 사용으로 주석 처리
 import jwt from 'jsonwebtoken';
 import bodyParser from 'body-parser';
 import { loadBannedWords } from './utils/bannedWordsLoader.js';
@@ -21,10 +20,11 @@ const PORT = 3000; // 환경 변수에서 포트를 설정할 수 있도록 변�
 // CORS 미들웨어 설정
 app.use(
     cors({
-        origin: [
-            'http://star-bear.s3-website.eu-north-1.amazonaws.com',
-            'https://star-bear.s3-website.eu-north-1.amazonaws.com',
-        ],
+        origin: '*',
+        // [
+        //     'http://star-bear.s3-website.eu-north-1.amazonaws.com',
+        //     'https://star-bear.s3-website.eu-north-1.amazonaws.com',
+        // ],
         methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
         allowedHeaders: ['Content-Type', 'Authorization'],
     }),

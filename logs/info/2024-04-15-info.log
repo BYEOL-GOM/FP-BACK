@@ -1,0 +1,5 @@
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 69ms","timestamp":"2024-04-15T06:09:18.331Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 56ms","timestamp":"2024-04-15T06:11:50.792Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 28ms","timestamp":"2024-04-15T06:12:10.940Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 65ms","timestamp":"2024-04-15T06:28:46.870Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 54ms","timestamp":"2024-04-15T06:29:44.993Z"}
