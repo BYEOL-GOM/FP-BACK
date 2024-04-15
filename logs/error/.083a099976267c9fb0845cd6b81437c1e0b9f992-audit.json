@@ -36,9 +36,10 @@
             "hash": "da0da1be764c5deab1c820e3ca34a68d17b9e3def58191c933f40efec18fc8f7"
         },
         {
-            "date": 1713161350172,
+            "date": 1713164617792,
             "name": "logs\\error\\2024-04-15-error.log",
-            "hash": "6b8f901228a11258ef5e510af14106f483f11aff2f12cb3e65358a88077afe9c"
+            "hash": "c6a2a8ea9c4adc3102fbd504324126fd0c1f2c249d8674469f7c2822255e31ad"
+
         }
     ],
     "hashType": "sha256"
