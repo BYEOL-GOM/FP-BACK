@@ -71,7 +71,7 @@ export const deleteSelectedWorryController = async (req, res, next) => {
     } catch (error) {
         if (error.message === '해당하는 메세지가 존재하지 않습니다') {
             return res.status(404).json({ error: error.message });
-        } else if (error.message === '메세지를 삭제할수 있는 권한이 없습니다') {
+        } else if (error.message === '메세지를 신고할수 있는 권한이 없습니다') {
             return res.status(403).json({ error: error.message });
         } else if (error.message === '해당 메세지는 이미 삭제되었습니다') {
             return res.status(409).json({ error: error.message });
@@ -80,25 +80,26 @@ export const deleteSelectedWorryController = async (req, res, next) => {
     }
 };
 
-// #불쾌한 고민 신고하기
-export const reportWorryController = async (req, res) => {
+// #불쾌한 메세지 신고하기
+export const reportMessageController = async (req, res) => {
     try {
-        const { worryId } = req.params;
+        const { worryId, commentId } = req.params;
         const userId = res.locals.user.userId;
-        const { reportReason } = req.body; // 신고 이유
+        const { reportReason } = req.body;
 
         if (!reportReason) {
             return res.status(400).json({ error: '신고 이유를 작성해주세요.' });
         }
 
-        await worryService.reportWorry(+worryId, +userId, reportReason);
+        await worryService.reportMessage(+worryId, userId, +commentId || null, reportReason);
+
         res.status(200).json({ message: '신고가 성공적으로 이루어졌습니다.' });
     } catch (error) {
-        if (error.message === '해당하는 고민이 존재하지 않습니다') {
+        if (error.message === '해당하는 메세지가 존재하지 않습니다') {
             return res.status(404).json({ error: error.message });
-        } else if (error.message === '답변 대상자만 신고할 수 있습니다') {
+        } else if (error.message === '메세지를 신고할수 있는 권한이 없습니다') {
             return res.status(403).json({ error: error.message });
-        } else if (error.message === '해당 고민은 이미 신고되었습니다') {
+        } else if (error.message === '해당 메세지는 이미 신고되었습니다') {
             return res.status(409).json({ error: error.message });
         }
         res.status(500).json({ error: error.message });

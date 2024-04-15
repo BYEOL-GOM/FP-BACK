@@ -60,23 +60,23 @@ export const createReplyController = async (req, res, next) => {
     }
 };
 
-// # 불쾌한 답장 신고하기
-export const reportCommentController = async (req, res, next) => {
-    const { commentId } = req.params;
-    const userId = res.locals.user.userId;
-    const { reportReason } = req.body;
+// // # 불쾌한 답장 신고하기
+// export const reportCommentController = async (req, res, next) => {
+//     const { commentId } = req.params;
+//     const userId = res.locals.user.userId;
+//     const { reportReason } = req.body;
 
-    try {
-        await commentService.reportComment(+commentId, +userId, reportReason);
-        res.status(200).json({ message: '답변이 성공적으로 신고되었습니다.' });
-    } catch (error) {
-        if (error.message === '해당하는 답장이 존재하지 않습니다') {
-            return res.status(404).json({ error: error.message });
-        } else if (error.message === '답장을 신고할 권한이 없습니다.') {
-            return res.status(403).json({ error: error.message });
-        } else if (error.message === '해당 답장은 이미 신고되었습니다') {
-            return res.status(409).json({ error: error.message });
-        }
-        res.status(500).json({ error: error.message });
-    }
-};
+//     try {
+//         await commentService.reportComment(+commentId, +userId, reportReason);
+//         res.status(200).json({ message: '답변이 성공적으로 신고되었습니다.' });
+//     } catch (error) {
+//         if (error.message === '해당하는 답장이 존재하지 않습니다') {
+//             return res.status(404).json({ error: error.message });
+//         } else if (error.message === '답장을 신고할 권한이 없습니다.') {
+//             return res.status(403).json({ error: error.message });
+//         } else if (error.message === '해당 답장은 이미 신고되었습니다') {
+//             return res.status(409).json({ error: error.message });
+//         }
+//         res.status(500).json({ error: error.message });
+//     }
+// };

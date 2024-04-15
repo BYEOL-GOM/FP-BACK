@@ -119,34 +119,34 @@ export const createReply = async (worryId, commentId, content, userId, fontColor
     };
 };
 
-// # 답장 신고하기
-export const reportComment = async (commentId, userId, reportReason) => {
-    const comment = await commentRepository.getComment(commentId);
-    if (!comment) {
-        throw new Error('해당하는 답장이 존재하지 않습니다');
-    }
-    if (comment.deletedAt !== null) {
-        throw new Error('해당 답장은 이미 신고되었습니다');
-    }
-    // 1)  첫번째 답변인 경우
-    if (comment.parentId === null) {
-        if (comment.worry.userId !== userId) {
-            throw new Error('답장을 신고할 권한이 없습니다.');
-        }
-    } else {
-        // 2 ) 재고민 or 재답변인 경우
-        const parentComment = await commentRepository.getComment(comment.parentId);
-        if (!parentComment || parentComment.userId !== userId) {
-            throw new Error('답장을 신고할 권한이 없습니다.');
-        }
-    }
+// // # 답장 신고하기
+// export const reportComment = async (commentId, userId, reportReason) => {
+//     const comment = await commentRepository.getComment(commentId);
+//     if (!comment) {
+//         throw new Error('해당하는 답장이 존재하지 않습니다');
+//     }
+//     if (comment.deletedAt !== null) {
+//         throw new Error('해당 답장은 이미 신고되었습니다');
+//     }
+//     // 1)  첫번째 답변인 경우
+//     if (comment.parentId === null) {
+//         if (comment.worry.userId !== userId) {
+//             throw new Error('답장을 신고할 권한이 없습니다.');
+//         }
+//     } else {
+//         // 2 ) 재고민 or 재답변인 경우
+//         const parentComment = await commentRepository.getComment(comment.parentId);
+//         if (!parentComment || parentComment.userId !== userId) {
+//             throw new Error('답장을 신고할 권한이 없습니다.');
+//         }
+//     }
 
-    // 답장 신고
-    await commentRepository.reportComment(commentId, comment.userId, reportReason);
-    // 답장 삭제
-    await commentRepository.deleteComment(commentId);
-    // 연관된 worryId 삭제
-    await commentRepository.deleteWorry(comment.worryId);
-    // 사용자 카운트 업
-    await commentRepository.updateUserCounts(comment, userId);
-};
+//     // 답장 신고
+//     await commentRepository.reportComment(commentId, comment.userId, reportReason);
+//     // 답장 삭제
+//     await commentRepository.deleteComment(commentId);
+//     // 연관된 worryId 삭제
+//     await commentRepository.deleteWorry(comment.worryId);
+//     // 사용자 카운트 업
+//     await commentRepository.updateUserCounts(comment, userId);
+// };
