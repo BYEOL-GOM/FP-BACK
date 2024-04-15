@@ -35,10 +35,10 @@ export const getSolvedWorries = async (req, res, next) => {
         }
 
         const solvedWorries = await LikeService.getSolvedWorriesByUserId(parseInt(userId), page, limit);
+
+        // 고민이 없을 때 빈 배열 반환
         if (solvedWorries.worries.length === 0) {
-            const err = new Error('해당 페이지에 고민 내용이 없습니다.');
-            err.status = 404;
-            throw err;
+            return res.status(200).json([]);
         }
 
         return res.status(200).json(solvedWorries);
@@ -65,10 +65,10 @@ export const getHelpedSolveWorries = async (req, res, next) => {
         }
 
         const helpedSolveWorries = await LikeService.getHelpedSolveWorriesByUserId(parseInt(userId), page, limit);
+
+        // 고민이 없을 때 빈 배열 반환
         if (helpedSolveWorries.worries.length === 0) {
-            const err = new Error('해당 페이지에 고민 내용이 없습니다.');
-            err.status = 404;
-            throw err;
+            return res.status(200).json([]);
         }
 
         res.status(200).json(helpedSolveWorries);
