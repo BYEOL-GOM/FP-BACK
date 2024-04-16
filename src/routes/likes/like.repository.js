@@ -281,13 +281,73 @@ export const findHelpedSolveWorryDetailsById = async (worryId, userId) => {
 };
 
 // 좋아요(답례)를 가장 많이 받은 상위 5명 유저 조회
+// export const findTopLikedCommentAuthors = async (userId) => {
+//     // 좋아요 데이터를 가져와서, 각 좋아요에 대한 댓글 작성자의 ID를 추출
+//     const likes = await prisma.likes.findMany({
+//         include: {
+//             comment: {
+//                 include: {
+//                     worry: true,
+//                 },
+//             },
+//         },
+//     });
+
+//     // 추출한 댓글 작성자 ID를 기반으로 각 댓글 작성자가 받은 좋아요 개수를 계산. commentAuthorLikesCount 객체에 저장
+//     const commentAuthorLikesCount = likes.reduce((acc, like) => {
+//         const commentAuthorId = like.comment.worry.commentAuthorId;
+//         if (!acc[commentAuthorId]) {
+//             acc[commentAuthorId] = 0;
+//         }
+//         acc[commentAuthorId]++;
+//         return acc;
+//     }, {});
+
+//     // 작성자 ID와 좋아요 수를 객체로 매핑한 후 좋아요 수에 따라 내림차순으로 정렬합니다.
+//     let sortedAuthors = Object.entries(commentAuthorLikesCount)
+//         .map(([commentAuthorId, likes]) => ({ commentAuthorId: parseInt(commentAuthorId), likes }))
+//         .sort((a, b) => b.likes - a.likes);
+
+//     // 좋아요 수가 같은 경우 동일한 순위를 부여하기 위해 순위 할당 로직을 추가.
+//     let rank = 1; // 초기 순위를 1로 설정합니다.
+//     for (let i = 0; i < sortedAuthors.length; i++) {
+//         if (i > 0 && sortedAuthors[i].likes === sortedAuthors[i - 1].likes) {
+//             sortedAuthors[i].rank = rank; // 이전 사용자와 좋아요 수가 같다면 같은 순위를 부여
+//         } else {
+//             rank = i + 1; // 다른 좋아요 수를 가진 경우, 현재 인덱스에 1을 더한 값을 순위로 설정
+//             sortedAuthors[i].rank = rank;
+//         }
+//     }
+
+//     // 상위 5명의 작성자 정보만 추출.
+//     let topFiveAuthors = sortedAuthors.slice(0, 5);
+
+//     // 로그인한 사용자의 전체 순위 찾기
+//     const userIndex = sortedAuthors.findIndex((author) => author.commentAuthorId === userId);
+//     const userLikes = commentAuthorLikesCount[userId] || 0;
+
+//     // 로그인한 사용자가 상위 5명 안에 있다면 userId 추가, 그렇지 않으면 상위 5명에 추가
+//     if (userIndex !== -1 && userIndex < 5) {
+//         topFiveAuthors[userIndex].userId = userId; // 사용자 ID 추가
+//     } else if (userIndex >= 5 || userIndex === -1) {
+//         topFiveAuthors.push({
+//             userId: userId,
+//             likes: userLikes,
+//             rank: userIndex !== -1 ? sortedAuthors[userIndex].rank : sortedAuthors.length + 1, // 사용자의 전체 순위
+//         });
+//     }
+
+//     return topFiveAuthors; // 계산된 상위 5명의 작성자 정보를 반환.
+// };
+//-------------------------------------------------------------------------------------------
+// 좋아요(답례)를 가장 많이 받은 상위 5명 유저 조회
 export const findTopLikedCommentAuthors = async (userId) => {
     // 좋아요 데이터를 가져와서, 각 좋아요에 대한 댓글 작성자의 ID를 추출
     const likes = await prisma.likes.findMany({
         include: {
             comment: {
                 include: {
-                    worry: true,
+                    user: { select: { userId: true, nickname: true } }, // 각 댓글 작성자의 ID와 닉네임을 선택.
                 },
             },
         },
@@ -295,7 +355,7 @@ export const findTopLikedCommentAuthors = async (userId) => {
 
     // 추출한 댓글 작성자 ID를 기반으로 각 댓글 작성자가 받은 좋아요 개수를 계산. commentAuthorLikesCount 객체에 저장
     const commentAuthorLikesCount = likes.reduce((acc, like) => {
-        const commentAuthorId = like.comment.worry.commentAuthorId;
+        const commentAuthorId = like.comment.userId; // 댓글 작성자의 ID
         if (!acc[commentAuthorId]) {
             acc[commentAuthorId] = 0;
         }
@@ -308,19 +368,54 @@ export const findTopLikedCommentAuthors = async (userId) => {
         .map(([commentAuthorId, likes]) => ({ commentAuthorId: parseInt(commentAuthorId), likes }))
         .sort((a, b) => b.likes - a.likes);
 
-    // 좋아요 수가 같은 경우 동일한 순위를 부여하기 위해 순위 할당 로직을 추가.
-    let rank = 1; // 초기 순위를 1로 설정합니다.
-    for (let i = 0; i < sortedAuthors.length; i++) {
-        if (i > 0 && sortedAuthors[i].likes === sortedAuthors[i - 1].likes) {
-            sortedAuthors[i].rank = rank; // 이전 사용자와 좋아요 수가 같다면 같은 순위를 부여
-        } else {
-            rank = i + 1; // 다른 좋아요 수를 가진 경우, 현재 인덱스에 1을 더한 값을 순위로 설정
-            sortedAuthors[i].rank = rank;
-        }
-    }
-
     // 상위 5명의 작성자 정보만 추출.
     let topFiveAuthors = sortedAuthors.slice(0, 5);
+
+    // 각 작성자의 닉네임을 가져와서 추가합니다.
+    for (const author of topFiveAuthors) {
+        const user = await prisma.users.findUnique({
+            where: {
+                userId: author.commentAuthorId,
+            },
+            select: {
+                nickname: true,
+            },
+        });
+        if (user) {
+            author.nickname = user.nickname;
+            if (author.commentAuthorId === userId) {
+                author.userId = userId;
+            }
+        }
+    }
+    // 로그인한 사용자의 닉네임을 가져옵니다.
+    const loginUser = await prisma.users.findUnique({
+        where: {
+            userId: userId,
+        },
+        select: {
+            nickname: true,
+        },
+    });
+
+    // 만약 로그인한 사용자의 정보가 존재하지 않으면, userId에 해당하는 사용자의 닉네임을 가져와서 결과 배열에 추가.
+    if (!loginUser) {
+        const user = await prisma.users.findUnique({
+            where: {
+                userId: userId,
+            },
+            select: {
+                nickname: true,
+            },
+        });
+        if (user) {
+            topFiveAuthors.push({
+                userId: userId,
+                nickname: user.nickname,
+                likes: commentAuthorLikesCount[userId] || 0,
+            });
+        }
+    }
 
     // 로그인한 사용자의 전체 순위 찾기
     const userIndex = sortedAuthors.findIndex((author) => author.commentAuthorId === userId);
@@ -333,9 +428,16 @@ export const findTopLikedCommentAuthors = async (userId) => {
         topFiveAuthors.push({
             userId: userId,
             likes: userLikes,
+            nickname: loginUser.nickname, // 사용자의 닉네임
             rank: userIndex !== -1 ? sortedAuthors[userIndex].rank : sortedAuthors.length + 1, // 사용자의 전체 순위
+            // nickname: userIndex !== -1 ? sortedAuthors[userIndex].nickname : '', // 사용자의 닉네임
         });
     }
+
+    // 상위 유저들의 순위(rank) 추가
+    topFiveAuthors.forEach((author, index) => {
+        author.rank = index + 1;
+    });
 
     return topFiveAuthors; // 계산된 상위 5명의 작성자 정보를 반환.
 };
