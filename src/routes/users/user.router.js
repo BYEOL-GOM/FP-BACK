@@ -80,11 +80,11 @@ router.get('/myNickname', authMiddleware, async (req, res, next) => {
 
         const myNickname = await prisma.users.findFirst({
             where: {
-                id: userId 
+                id: userId,
             },
             select: {
-                nickname: true 
-            }
+                nickname: true,
+            },
         });
 
         if (!myNickname) {
