@@ -73,4 +73,28 @@ router.put('/nickname', authMiddleware, async (req, res, next) => {
     }
 });
 
+// 나의 닉네임 조회
+router.get('/myNickname', authMiddleware, async (req, res, next) => {
+    try {
+        const userId = res.locals.user.userId;
+
+        const myNickname = await prisma.users.findFirst({
+            where: {
+                id: userId 
+            },
+            select: {
+                nickname: true 
+            }
+        });
+
+        if (!myNickname) {
+            return res.status(404).json({ message: '사용자를 찾을 수 없습니다.' });
+        }
+
+        return res.status(200).json({ nickname: myNickname.nickname });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: '서버 오류' });
+    }
+});
 export default router;
