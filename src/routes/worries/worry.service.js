@@ -112,27 +112,39 @@ export const deleteSelectedWorry = async (worryId, userId, commentId) => {
     return;
 };
 
-// # 불쾌한 고민 신고하기
-export const reportWorry = async (worryId, userId, reportReason) => {
+// # 불쾌한 메세지 신고하기
+export const reportMessage = async (worryId, userId, commentId, reportReason) => {
     const selectedWorry = await worryRepository.getWorry(worryId);
     if (!selectedWorry) {
-        throw new Error('해당하는 고민이 존재하지 않습니다');
+        throw new Error('해당하는 메세지가 존재하지 않습니다');
     }
 
     // 고민이 이미 삭제되었거나 신고되었는지 확인
     if (selectedWorry.deletedAt !== null) {
-        throw new Error('해당 고민은 이미 신고되었습니다');
+        throw new Error('해당 메세지는 이미 신고되었습니다');
     }
 
-    if (selectedWorry.commentAuthorId !== userId) {
-        throw new Error('답변 대상자만 신고할 수 있습니다');
+    // 0 ) 고민의 작성자도, 지정된 답변자도 아닌 경우, 신고 권한 없음
+    if (selectedWorry.userId !== userId && selectedWorry.commentAuthorId !== userId) {
+        throw new Error('메세지를 신고할수 있는 권한이 없습니다');
     }
 
-    // 신고 정보 저장
-    await worryRepository.reportWorry(worryId, selectedWorry.userId, reportReason);
-    // 고민 삭제
+    if (commentId) {
+        const selectedComment = await worryRepository.getComment(commentId);
+        if (!selectedComment) {
+            throw new Error('해당하는 답장이 존재하지 않습니다');
+        }
+        // 답장 신고: 답장을 작성한 사용자 ID를 사용
+        await worryRepository.reportComment(commentId, selectedComment.userId, reportReason);
+    } else {
+        // 고민 신고: 고민을 작성한 사용자 ID를 사용
+        await worryRepository.reportWorry(worryId, selectedWorry.userId, reportReason);
+    }
+
     await worryRepository.deleteSelectedWorry(worryId);
-    //사용자 카운트 업데이트
+    if (commentId) {
+        await worryRepository.deleteAllCommentsForWorry(worryId);
+    }
     await worryRepository.updateUserCounts(selectedWorry.userId, selectedWorry.commentAuthorId);
 };
 
