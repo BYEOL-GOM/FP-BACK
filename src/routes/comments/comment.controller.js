@@ -56,7 +56,16 @@ export const createReplyController = async (req, res, next) => {
 
         return res.status(201).json({ message: '답변이 전송되었습니다.', comment });
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        switch (error.message) {
+            case '금지어가 포함된 내용은 등록할 수 없습니다.':
+                return res.status(400).json({ error: error.message });
+            case '답변 작성 권한이 없습니다.':
+                return res.status(403).json({ error: error.message });
+            case '이미 답변을 작성했습니다.':
+                return res.status(409).json({ error: error.message });
+            default:
+                return res.status(500).json({ error: '서버 오류가 발생했습니다.' });
+        }
     }
 };
 

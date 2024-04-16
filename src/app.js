@@ -21,10 +21,6 @@ const PORT = 3000; // 환경 변수에서 포트를 설정할 수 있도록 변�
 app.use(
     cors({
         origin: '*',
-        // [
-        //     'http://star-bear.s3-website.eu-north-1.amazonaws.com',
-        //     'https://star-bear.s3-website.eu-north-1.amazonaws.com',
-        // ],
         methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
         allowedHeaders: ['Content-Type', 'Authorization'],
     }),
