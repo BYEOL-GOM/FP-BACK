@@ -36,6 +36,7 @@
     },
     "scripts": {
         "prettier:check": "prettier --check .",
-        "dev": "node src/app.js"
+        "dev": "NODE_ENV=development node src/app.js",
+        "start": "NODE_ENV=production node src/app.js"
     }
 }

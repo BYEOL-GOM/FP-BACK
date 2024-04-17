@@ -14,28 +14,33 @@ import { loadBannedWords } from './utils/bannedWordsLoader.js';
 import { swaggerUi, specs } from './swagger/swaggerOptions.js';
 import './scheduler.js';
 
+dotenv.config();
 const app = express();
 const PORT = 3000; // 환경 변수에서 포트를 설정할 수 있도록 변경
 
 // CORS 미들웨어 설정
-app.use(
-    cors({
-        origin: '*',
+let corsOptions;
+if (process.env.NODE_ENV === 'production') {
+    corsOptions = {
+        origin: 'http://star-bear.s3-website.eu-north-1.amazonaws.com',
         methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
         allowedHeaders: ['Content-Type', 'Authorization'],
-    }),
-);
+        credentials: true,
+    };
+} else {
+    corsOptions = {
+        origin: 'http://localhost:3000',
+        methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+        allowedHeaders: ['Content-Type', 'Authorization'],
+        credentials: true,
+    };
+}
+
+// CORS를 사용하도록 설정
+app.use(cors(corsOptions));
 
 // CORS Preflight 요청 처리
-app.use((req, res, next) => {
-    if (req.method === 'OPTIONS') {
-        res.header('Access-Control-Allow-Origin', req.headers.origin);
-        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-        res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-        return res.status(204).json({});
-    }
-    next();
-});
+app.options('*', cors(corsOptions));
 
 // bodyParser와 express.json()은 CORS 설정 바로 다음
 app.use(bodyParser.json());

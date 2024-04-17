@@ -19,6 +19,7 @@ RUN yarn prisma generate
 # 애플리케이션 실행을 위한 포트 열기
 EXPOSE 3000
 
-
 # 애플리케이션 실행
-CMD ["yarn", "dev"]
+ARG NODE_ENV
+
+CMD ["sh", "-c", "yarn ${NODE_ENV}"]
