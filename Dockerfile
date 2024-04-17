@@ -20,6 +20,5 @@ RUN yarn prisma generate
 EXPOSE 3000
 
 # 애플리케이션 실행
-ARG NODE_ENV
+CMD ["node", "src/app.js"]
 
-CMD ["sh", "-c", "yarn ${NODE_ENV}"]
