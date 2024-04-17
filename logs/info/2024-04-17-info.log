@@ -1,0 +1,115 @@
+{"level":"error","message":"Error Status: 400, Message: Unexpected token '\"', \"\n    \"content\":\"... is not valid JSON","timestamp":"2024-04-17T06:37:55.416Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.users.findUnique()` invocation:\n\n{\n  where: {\n+   userId: Int\n  }\n}\n\nArgument `userId` is missing.","timestamp":"2024-04-17T06:38:10.075Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 500, Duration: 116ms","timestamp":"2024-04-17T06:38:10.079Z"}
+{"level":"error","message":"Error Status: 400, Message: 데이터 형식이 올바르지 않습니다","timestamp":"2024-04-17T06:38:31.558Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 400, Duration: 3ms","timestamp":"2024-04-17T06:38:31.560Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:38:55.811Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 400, Duration: 62ms","timestamp":"2024-04-17T06:38:55.816Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:38:57.035Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 400, Duration: 16ms","timestamp":"2024-04-17T06:38:57.037Z"}
+{"level":"info","message":"Method: POST, URL: /worries/43/comments, Status: 401, Duration: 2ms","timestamp":"2024-04-17T06:39:31.607Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:43:30.004Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 400, Duration: 27ms","timestamp":"2024-04-17T06:43:30.008Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:43:31.383Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 400, Duration: 12ms","timestamp":"2024-04-17T06:43:31.385Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:43:32.441Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 400, Duration: 11ms","timestamp":"2024-04-17T06:43:32.442Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:43:33.216Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 400, Duration: 10ms","timestamp":"2024-04-17T06:43:33.217Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:43:34.008Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 400, Duration: 16ms","timestamp":"2024-04-17T06:43:34.009Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:43:35.668Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 400, Duration: 10ms","timestamp":"2024-04-17T06:43:35.669Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:43:36.837Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 400, Duration: 10ms","timestamp":"2024-04-17T06:43:36.838Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:43:39.867Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 400, Duration: 19ms","timestamp":"2024-04-17T06:43:39.869Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:43:45.808Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 400, Duration: 41ms","timestamp":"2024-04-17T06:43:45.810Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:43:55.690Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 400, Duration: 13ms","timestamp":"2024-04-17T06:43:55.692Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:43:57.929Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 400, Duration: 38ms","timestamp":"2024-04-17T06:43:57.932Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:44:04.872Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 400, Duration: 15ms","timestamp":"2024-04-17T06:44:04.873Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:44:06.829Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 400, Duration: 23ms","timestamp":"2024-04-17T06:44:06.833Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:44:07.714Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 400, Duration: 12ms","timestamp":"2024-04-17T06:44:07.715Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 453ms","timestamp":"2024-04-17T06:45:01.917Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 248ms","timestamp":"2024-04-17T06:45:39.911Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 175ms","timestamp":"2024-04-17T06:45:56.333Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 526ms","timestamp":"2024-04-17T06:46:03.370Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:48:35.891Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 400, Duration: 49ms","timestamp":"2024-04-17T06:48:35.898Z"}
+{"level":"error","message":"Error Status: 400, Message: 금지어가 포함된 내용은 등록할 수 없습니다","timestamp":"2024-04-17T06:48:40.686Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 400, Duration: 37ms","timestamp":"2024-04-17T06:48:40.689Z"}
+{"level":"error","message":"Error Status: 400, Message: 금지어가 포함된 내용은 등록할 수 없습니다","timestamp":"2024-04-17T06:48:48.545Z"}
+{"level":"info","message":"Method: POST, URL: /worries, Status: 400, Duration: 31ms","timestamp":"2024-04-17T06:48:48.546Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 고민이 존재하지 않습니다","timestamp":"2024-04-17T06:49:41.842Z"}
+{"level":"info","message":"Method: GET, URL: /worries/60, Status: 404, Duration: 45ms","timestamp":"2024-04-17T06:49:41.843Z"}
+{"level":"error","message":"Error Status: 403, Message: 고민을 조회할 권한이 없습니다 ","timestamp":"2024-04-17T06:49:54.910Z"}
+{"level":"info","message":"Method: GET, URL: /worries/48, Status: 403, Duration: 11ms","timestamp":"2024-04-17T06:49:54.911Z"}
+{"level":"error","message":"Error Status: 403, Message: 고민을 조회할 권한이 없습니다","timestamp":"2024-04-17T06:50:27.598Z"}
+{"level":"info","message":"Method: GET, URL: /worries/48, Status: 403, Duration: 22ms","timestamp":"2024-04-17T06:50:27.602Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 메세지가 존재하지 않습니다","timestamp":"2024-04-17T06:50:47.046Z"}
+{"level":"info","message":"Method: DELETE, URL: /worries/60/36, Status: 404, Duration: 39ms","timestamp":"2024-04-17T06:50:47.049Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 메세지가 존재하지 않습니다","timestamp":"2024-04-17T06:51:19.756Z"}
+{"level":"info","message":"Method: DELETE, URL: /worries/60/36, Status: 404, Duration: 18ms","timestamp":"2024-04-17T06:51:19.758Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 메세지가 존재하지 않습니다","timestamp":"2024-04-17T06:51:23.272Z"}
+{"level":"info","message":"Method: DELETE, URL: /worries/60/36, Status: 404, Duration: 28ms","timestamp":"2024-04-17T06:51:23.278Z"}
+{"level":"error","message":"Error Status: 403, Message: 메세지를 삭제할수 있는 권한이 없습니다","timestamp":"2024-04-17T06:52:04.057Z"}
+{"level":"info","message":"Method: DELETE, URL: /worries/48, Status: 403, Duration: 26ms","timestamp":"2024-04-17T06:52:04.061Z"}
+{"level":"error","message":"Error Status: 409, Message: 해당 메세지는 이미 삭제되었습니다","timestamp":"2024-04-17T06:52:28.258Z"}
+{"level":"info","message":"Method: DELETE, URL: /worries/43, Status: 409, Duration: 21ms","timestamp":"2024-04-17T06:52:28.260Z"}
+{"level":"info","message":"Method: POST, URL: /49/comments/46/report, Status: 401, Duration: 1ms","timestamp":"2024-04-17T06:53:56.306Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 메세지가 존재하지 않습니다","timestamp":"2024-04-17T06:55:38.563Z"}
+{"level":"info","message":"Method: POST, URL: /worries/49/comments/46/report, Status: 404, Duration: 24ms","timestamp":"2024-04-17T06:55:38.567Z"}
+{"level":"error","message":"Error Status: 409, Message: 해당 메세지는 이미 신고되었습니다","timestamp":"2024-04-17T06:56:07.498Z"}
+{"level":"info","message":"Method: POST, URL: /worries/43/comments/report, Status: 409, Duration: 32ms","timestamp":"2024-04-17T06:56:07.503Z"}
+{"level":"info","message":"Method: POST, URL: /44/comments/report, Status: 200, Duration: 229ms","timestamp":"2024-04-17T06:56:40.196Z"}
+{"level":"info","message":"Method: POST, URL: /45/comments/report, Status: 200, Duration: 148ms","timestamp":"2024-04-17T06:56:54.550Z"}
+{"level":"error","message":"Error Status: 403, Message: 메세지를 신고할수 있는 권한이 없습니다","timestamp":"2024-04-17T06:57:05.772Z"}
+{"level":"info","message":"Method: POST, URL: /worries/46/comments/report, Status: 403, Duration: 24ms","timestamp":"2024-04-17T06:57:05.774Z"}
+{"level":"error","message":"Error Status: 400, Message: 데이터 형식이 일치하지 않습니다","timestamp":"2024-04-17T07:31:13.897Z"}
+{"level":"info","message":"Method: POST, URL: /worries/50/comments, Status: 400, Duration: 7ms","timestamp":"2024-04-17T07:31:13.902Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'userId')","timestamp":"2024-04-17T07:31:26.916Z"}
+{"level":"info","message":"Method: POST, URL: /worries/50/comments, Status: 500, Duration: 91ms","timestamp":"2024-04-17T07:31:26.917Z"}
+{"level":"error","message":"Error Status: undefined, Message: commentService.findWorryById is not a function","timestamp":"2024-04-17T07:49:55.812Z"}
+{"level":"info","message":"Method: POST, URL: /worries/50/comments, Status: 500, Duration: 6ms","timestamp":"2024-04-17T07:49:55.816Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'userId')","timestamp":"2024-04-17T07:50:41.742Z"}
+{"level":"info","message":"Method: POST, URL: /worries/50/comments, Status: 500, Duration: 22ms","timestamp":"2024-04-17T07:50:41.747Z"}
+{"level":"error","message":"Error Status: undefined, Message: commentService.findWorryById is not a function","timestamp":"2024-04-17T07:57:40.439Z"}
+{"level":"info","message":"Method: POST, URL: /worries/50/comments, Status: 500, Duration: 19ms","timestamp":"2024-04-17T07:57:40.456Z"}
+{"level":"error","message":"Error Status: undefined, Message: commentService.findWorryById is not a function","timestamp":"2024-04-17T07:57:42.664Z"}
+{"level":"info","message":"Method: POST, URL: /worries/50/comments, Status: 500, Duration: 2ms","timestamp":"2024-04-17T07:57:42.665Z"}
+{"level":"error","message":"Error Status: undefined, Message: commentService.findWorryById is not a function","timestamp":"2024-04-17T07:59:33.281Z"}
+{"level":"info","message":"Method: POST, URL: /worries/50/comments, Status: 500, Duration: 2ms","timestamp":"2024-04-17T07:59:33.283Z"}
+{"level":"error","message":"Error Status: undefined, Message: commentService.findWorryById is not a function","timestamp":"2024-04-17T08:01:55.150Z"}
+{"level":"info","message":"Method: POST, URL: /worries/50/comments, Status: 500, Duration: 7ms","timestamp":"2024-04-17T08:01:55.155Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당 고민 게시글을 찾을 수 없습니다","timestamp":"2024-04-17T08:03:56.401Z"}
+{"level":"info","message":"Method: POST, URL: /worries/50/comments, Status: 404, Duration: 47ms","timestamp":"2024-04-17T08:03:56.405Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당 고민 게시글을 찾을 수 없습니다","timestamp":"2024-04-17T08:03:57.752Z"}
+{"level":"info","message":"Method: POST, URL: /worries/50/comments, Status: 404, Duration: 10ms","timestamp":"2024-04-17T08:03:57.753Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당 고민 게시글을 찾을 수 없습니다","timestamp":"2024-04-17T08:05:52.456Z"}
+{"level":"info","message":"Method: POST, URL: /worries/50/comments, Status: 404, Duration: 19ms","timestamp":"2024-04-17T08:05:52.457Z"}
+{"level":"error","message":"Error Status: 403, Message: 답변 작성 권한이 없습니다.","timestamp":"2024-04-17T08:06:56.563Z"}
+{"level":"info","message":"Method: POST, URL: /worries/48/comments, Status: 403, Duration: 34ms","timestamp":"2024-04-17T08:06:56.565Z"}
+{"level":"error","message":"Error Status: 400, Message: 금지어가 포함된 내용은 등록할 수 없습니다.","timestamp":"2024-04-17T08:07:07.896Z"}
+{"level":"info","message":"Method: POST, URL: /worries/48/comments, Status: 400, Duration: 4ms","timestamp":"2024-04-17T08:07:07.898Z"}
+{"level":"info","message":"Method: POST, URL: /worries/48/comments, Status: 201, Duration: 217ms","timestamp":"2024-04-17T08:07:19.256Z"}
+{"level":"error","message":"Error Status: 409, Message: 이미 답변을 작성했습니다.","timestamp":"2024-04-17T08:07:20.225Z"}
+{"level":"info","message":"Method: POST, URL: /worries/48/comments, Status: 409, Duration: 40ms","timestamp":"2024-04-17T08:07:20.228Z"}
+{"level":"info","message":"Method: POST, URL: /sign-up, Status: 201, Duration: 85ms","timestamp":"2024-04-17T08:07:52.328Z"}
+{"level":"error","message":"Error Status: 204, Message: 아직 메세지가 도착하지 않았습니다","timestamp":"2024-04-17T08:07:57.204Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 204, Duration: 47ms","timestamp":"2024-04-17T08:07:57.207Z"}
+{"level":"error","message":"Error Status: 204, Message: 아직 메세지가 도착하지 않았습니다","timestamp":"2024-04-17T08:07:58.492Z"}
+{"level":"info","message":"Method: GET, URL: /comments, Status: 204, Duration: 16ms","timestamp":"2024-04-17T08:07:58.494Z"}
+{"level":"error","message":"Error Status: 403, Message: 답장을 조회할 권한이 없습니다.","timestamp":"2024-04-17T08:08:26.692Z"}
+{"level":"info","message":"Method: GET, URL: /comments/47, Status: 403, Duration: 44ms","timestamp":"2024-04-17T08:08:26.694Z"}
+{"level":"error","message":"Error Status: 403, Message: 답장을 조회할 권한이 없습니다.","timestamp":"2024-04-17T08:08:31.743Z"}
+{"level":"info","message":"Method: GET, URL: /comments/47, Status: 403, Duration: 32ms","timestamp":"2024-04-17T08:08:31.745Z"}
+{"level":"info","message":"Method: GET, URL: /comments/, Status: 200, Duration: 40ms","timestamp":"2024-04-17T08:08:38.387Z"}
+{"level":"error","message":"Error Status: 403, Message: 답장을 조회할 권한이 없습니다.","timestamp":"2024-04-17T08:08:43.220Z"}
+{"level":"info","message":"Method: GET, URL: /comments/47, Status: 403, Duration: 37ms","timestamp":"2024-04-17T08:08:43.222Z"}
+{"level":"info","message":"Method: GET, URL: /comments/47, Status: 200, Duration: 118ms","timestamp":"2024-04-17T08:09:05.316Z"}

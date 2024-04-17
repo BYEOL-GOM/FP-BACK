@@ -1,3 +1,29 @@
+<<<<<<< HEAD
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 5ms","timestamp":"2024-04-16T04:48:53.604Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 1ms","timestamp":"2024-04-16T04:48:55.254Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 1ms","timestamp":"2024-04-16T04:48:56.159Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 0ms","timestamp":"2024-04-16T04:48:56.610Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 0ms","timestamp":"2024-04-16T04:48:57.009Z"}
+{"level":"info","message":"Method: GET, URL: /posts, Status: 404, Duration: 1ms","timestamp":"2024-04-16T04:49:04.072Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 1ms","timestamp":"2024-04-16T04:49:07.401Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 9ms","timestamp":"2024-04-16T04:54:35.898Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 3ms","timestamp":"2024-04-16T05:14:23.914Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 1ms","timestamp":"2024-04-16T05:14:25.550Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 1ms","timestamp":"2024-04-16T05:14:26.140Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 0ms","timestamp":"2024-04-16T05:17:20.987Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 1ms","timestamp":"2024-04-16T05:19:27.944Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 1ms","timestamp":"2024-04-16T05:22:47.386Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 0ms","timestamp":"2024-04-16T05:22:48.091Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 1ms","timestamp":"2024-04-16T05:23:27.493Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 1ms","timestamp":"2024-04-16T05:23:42.372Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 1ms","timestamp":"2024-04-16T05:23:42.775Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 3ms","timestamp":"2024-04-16T05:23:42.928Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 1ms","timestamp":"2024-04-16T05:25:28.409Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 4ms","timestamp":"2024-04-16T06:18:09.525Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 10ms","timestamp":"2024-04-16T07:12:05.255Z"}
+{"level":"info","message":"Method: GET, URL: /, Status: 404, Duration: 3ms","timestamp":"2024-04-16T07:12:05.403Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 577ms","timestamp":"2024-04-16T08:56:00.348Z"}
+=======
 {"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 40ms","timestamp":"2024-04-16T08:55:42.550Z"}
 {"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.likes.findMany()` invocation:\n\n\nCannot select both '$scalars: true' and a specific scalar field 'commentAuthor'.","timestamp":"2024-04-16T09:01:23.856Z"}
 {"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 10ms","timestamp":"2024-04-16T09:01:23.860Z"}
@@ -114,3 +140,4 @@
 {"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 66ms","timestamp":"2024-04-16T10:16:52.646Z"}
 {"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 54ms","timestamp":"2024-04-16T10:17:13.062Z"}
 {"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 2385ms","timestamp":"2024-04-16T10:17:32.767Z"}
+>>>>>>> 06b58ba495b99943af5951bded9926d0bdc5e41e

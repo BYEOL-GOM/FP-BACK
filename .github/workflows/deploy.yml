@@ -1,10 +1,10 @@
-name: Deploy on dev Push or Merge
+name: Deploy on Branch Conditions
 
 on:
-    pull_request:
+    push:
         branches:
             - dev
-        types: [closed]
+            - main
 
 jobs:
     prettier-check:
@@ -47,22 +47,15 @@ jobs:
 
                       # 사용하지 않는 Docker 컨테이너, 이미지, 볼륨 정리
                       docker system prune -a -f --volumes
-
-                      # Docker 로그인
                       echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-
-                      # Docker 이미지 Pull
                       docker pull leticia0408/byeol_gom:latest
-
-                      # 기존 Docker 컨테이너 정지 및 제거
                       docker stop my-app || true
-                      docker rm my-app || true
-
-                      # 새 Docker 컨테이너 실행
+                      docker rm my-app || true               
                       docker run -d --name my-app -p 3000:3000 \
+                        -e NODE_ENV=${{ github.ref == 'refs/heads/main' && 'production' || 'development' }} \
                         -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
                         -e KAKAO_REST_API_KEY="${{ secrets.KAKAO_REST_API_KEY }}" \
-                        -e KAKAO_REDIRECT_URI="${{ secrets.KAKAO_REDIRECT_URI }}" \
+                        -e KAKAO_REDIRECT_URI="${{ github.ref == 'refs/heads/dev' && secrets.DEV_KAKAO_REDIRECT_URI || secrets.PROD_KAKAO_REDIRECT_URI }}" \
                         -e SESSION_SECRET="${{ secrets.SESSION_SECRET }}" \
                         -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
                         -e ACCESS_TOKEN_SECRET="${{ secrets.ACCESS_TOKEN_SECRET }}" \
