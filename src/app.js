@@ -8,13 +8,13 @@ import LogMiddleware from './middlewares/logMiddleware.js';
 import generalErrorHandler from './middlewares/generalErrorMiddleware.js';
 import router from './routes/index.js';
 import passport from 'passport';
+// import session from 'express-session'; // JWT 사용으로 주석 처리
 import jwt from 'jsonwebtoken';
 import bodyParser from 'body-parser';
 import { loadBannedWords } from './utils/bannedWordsLoader.js';
 import { swaggerUi, specs } from './swagger/swaggerOptions.js';
 import './scheduler.js';
 
-dotenv.config();
 const app = express();
 const PORT = 3000; // 환경 변수에서 포트를 설정할 수 있도록 변경
 
@@ -23,6 +23,7 @@ const corsOrigin = process.env.CORS_ORIGIN || '*';
 app.use(
     cors({
         origin: corsOrigin,
+
         methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
         allowedHeaders: ['Content-Type', 'Authorization'],
     }),
@@ -31,6 +32,7 @@ app.use(
 app.use((req, res, next) => {
     if (req.method === 'OPTIONS') {
         res.header('Access-Control-Allow-Origin', req.headers.origin || corsOrigin);
+
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
         res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
         return res.status(204).json({});

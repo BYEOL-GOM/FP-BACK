@@ -44,11 +44,13 @@ jobs:
                   key: ${{ secrets.REMOTE_PRIVATE_KEY }}
                   port: ${{ secrets.REMOTE_SSH_PORT }}
                   script: |
+
+                      # 사용하지 않는 Docker 컨테이너, 이미지, 볼륨 정리
                       docker system prune -a -f --volumes
                       echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
                       docker pull leticia0408/byeol_gom:latest
                       docker stop my-app || true
-                      docker rm my-app || true
+                      docker rm my-app || true               
                       docker run -d --name my-app -p 3000:3000 \
                         -e NODE_ENV=${{ github.ref == 'refs/heads/main' && 'production' || 'development' }} \
                         -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \

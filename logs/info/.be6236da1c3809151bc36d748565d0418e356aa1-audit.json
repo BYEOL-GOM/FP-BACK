@@ -46,9 +46,11 @@
             "hash": "592e73bde90ce9030439727e88a31ca928d9760ba916596ed95e1b2271ba1652"
         },
         {
+
             "date": 1713321575303,
             "name": "logs\\info\\2024-04-17-info.log",
             "hash": "21c19f5f99c0d3a2a72d671caa3fc52cd2e0d31ed290c22da788b37f25e42394"
+
         }
     ],
     "hashType": "sha256"

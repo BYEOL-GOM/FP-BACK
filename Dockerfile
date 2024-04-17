@@ -22,3 +22,4 @@ EXPOSE 3000
 # 환경 변수에 따라 애플리케이션 실행 명령 선택
 CMD ["sh", "-c", "yarn docker"]
 
+
