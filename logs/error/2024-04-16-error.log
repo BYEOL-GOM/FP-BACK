@@ -1,0 +1,13 @@
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.likes.findMany()` invocation:\n\n\nCannot select both '$scalars: true' and a specific scalar field 'commentAuthor'.","timestamp":"2024-04-16T09:01:23.856Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.likes.findMany()` invocation:\n\n\nCannot select both '$scalars: true' and a specific scalar field 'commentAuthor'.","timestamp":"2024-04-16T09:01:51.048Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.likes.findMany()` invocation:\n\n\nCannot select both '$scalars: true' and a specific scalar field 'commentAuthor'.","timestamp":"2024-04-16T09:03:24.019Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.likes.findMany()` invocation:\n\n\nCannot select both '$scalars: true' and a specific scalar field 'commentAuthor'.","timestamp":"2024-04-16T09:04:28.367Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-16T09:24:01.547Z"}
+{"level":"error","message":"Error Status: undefined, Message: userId is not defined","timestamp":"2024-04-16T09:24:08.872Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot access 'userLikes' before initialization","timestamp":"2024-04-16T09:47:44.772Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-16T10:02:24.201Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-16T10:13:07.688Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-16T10:13:52.115Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-16T10:13:55.011Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-16T10:14:19.437Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-16T10:14:40.098Z"}
