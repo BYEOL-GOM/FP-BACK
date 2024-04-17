@@ -7,6 +7,12 @@ on:
         types: [closed]
 
 jobs:
+    independent-job:
+    name: Independent Job
+    runs-on: ubuntu-latest
+    steps:
+        - name: Print Message
+          run: echo "This is an independent job"
     # prettier-check:
     #     name: Prettier Check
     #     runs-on: ubuntu-latest
