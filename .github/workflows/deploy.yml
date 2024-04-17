@@ -30,7 +30,7 @@ jobs:
               with:
                   context: .
                   push: true
-                  tags: leticia0408/byeol_gom:latest
+                  tags: leticia0408/byeol_gom:${{ github.ref == 'refs/heads/main' && 'latest' || 'latest-dev' }}
 
     deploy:
         name: Deploy
@@ -44,18 +44,14 @@ jobs:
                   key: ${{ secrets.REMOTE_PRIVATE_KEY }}
                   port: ${{ secrets.REMOTE_SSH_PORT }}
                   script: |
-
-                      # 사용하지 않는 Docker 컨테이너, 이미지, 볼륨 정리
-                      docker system prune -a -f --volumes
-                      echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-                      docker pull leticia0408/byeol_gom:latest
-                      docker stop my-app || true
-                      docker rm my-app || true               
-                      docker run -d --name my-app -p 3000:3000 \
+                      docker stop my-app-${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }} || true
+                      docker rm my-app-${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }} || true
+                      docker run -d --name my-app-${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }} -p ${{ secrets.PORT }}:3000 \
                         -e NODE_ENV=${{ github.ref == 'refs/heads/main' && 'production' || 'development' }} \
                         -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
                         -e KAKAO_REST_API_KEY="${{ secrets.KAKAO_REST_API_KEY }}" \
                         -e KAKAO_REDIRECT_URI="${{ github.ref == 'refs/heads/dev' && secrets.DEV_KAKAO_REDIRECT_URI || secrets.PROD_KAKAO_REDIRECT_URI }}" \
+                        -e CORS_ORIGIN="${{ github.ref == 'refs/heads/main' && secrets.CORS_ORIGIN || '*' }}" \
                         -e SESSION_SECRET="${{ secrets.SESSION_SECRET }}" \
                         -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
                         -e ACCESS_TOKEN_SECRET="${{ secrets.ACCESS_TOKEN_SECRET }}" \
@@ -63,4 +59,4 @@ jobs:
                         -e ACCESS_TOKEN_LIFE="${{ secrets.ACCESS_TOKEN_LIFE }}" \
                         -e REFRESH_TOKEN_LIFE="${{ secrets.REFRESH_TOKEN_LIFE }}" \
                         -e CLIENT_SECRET="${{ secrets.CLIENT_SECRET }}" \
-                        leticia0408/byeol_gom:latest
+                        leticia0408/byeol_gom:${{ github.ref == 'refs/heads/main' && 'latest' || 'latest-dev' }}
