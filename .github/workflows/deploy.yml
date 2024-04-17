@@ -32,9 +32,9 @@ jobs:
         with:
           context: .
           push: true
-          tags: leticia0408/byeol_gom:${{ github.event.pull_request ? 'dev' : 'latest' }}
+          tags: leticia0408/byeol_gom:${{ github.event_name == 'pull_request' ? 'dev' : 'latest' }}
           build-args: |
-            NODE_ENV=${{ github.event.pull_request ? 'development' : 'production' }}
+            NODE_ENV=${{ github.event_name == 'pull_request' ? 'development' : 'production' }}
 
   deploy:
     name: Deploy
@@ -50,13 +50,13 @@ jobs:
           script: |
             docker system prune -a -f --volumes
             echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-            docker pull leticia0408/byeol_gom:${{ github.event.pull_request ? 'dev' : 'latest' }}
+            docker pull leticia0408/byeol_gom:${{ github.event_name == 'pull_request' ? 'dev' : 'latest' }}
             docker stop my-app || true
             docker rm my-app || true
             docker run -d --name my-app -p 3000:3000 \
               -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
               -e KAKAO_REST_API_KEY="${{ secrets.KAKAO_REST_API_KEY }}" \
-              -e KAKAO_REDIRECT_URI="${{ github.event.pull_request ? secrets.PROD_KAKAO_REDIRECT_URI : secrets.DEV_KAKAO_REDIRECT_URI }}" \
+              -e KAKAO_REDIRECT_URI="${{ github.event_name == 'pull_request' ? secrets.PROD_KAKAO_REDIRECT_URI : secrets.DEV_KAKAO_REDIRECT_URI }}" \
               -e SESSION_SECRET="${{ secrets.SESSION_SECRET }}" \
               -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
               -e ACCESS_TOKEN_SECRET="${{ secrets.ACCESS_TOKEN_SECRET }}" \
@@ -64,4 +64,4 @@ jobs:
               -e ACCESS_TOKEN_LIFE="${{ secrets.ACCESS_TOKEN_LIFE }}" \
               -e REFRESH_TOKEN_LIFE="${{ secrets.REFRESH_TOKEN_LIFE }}" \
               -e CLIENT_SECRET="${{ secrets.CLIENT_SECRET }}" \
-              leticia0408/byeol_gom:${{ github.event.pull_request ? 'dev' : 'latest' }}
+              leticia0408/byeol_gom:${{ github.event_name == 'pull_request' ? 'dev' : 'latest' }}
