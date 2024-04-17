@@ -18,6 +18,7 @@ jobs:
             - run: yarn prettier:check
 
     build-and-push:
+        name: Build and Push Docker Image
         runs-on: ubuntu-latest
         needs: prettier-check
         steps:
@@ -43,34 +44,32 @@ jobs:
                   tags: leticia0408/byeol_gom:${{ env.TAG }}
                   build-args: NODE_ENV=${{ env.BUILD_ENV }}
 
-     deploy:
-    name: Deploy
-    runs-on: ubuntu-latest
-    needs: build-and-push
-    steps:
-      - uses: appleboy/ssh-action@v0.1.6
-        with:
-          host: ${{ secrets.REMOTE_IP }}
-          username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.REMOTE_PRIVATE_KEY }}
-          port: ${{ secrets.REMOTE_SSH_PORT }}
-          script: |
-            KAKAO_REDIRECT_URI="${{ github.event_name == 'pull_request' ? secrets.PROD_KAKAO_REDIRECT_URI : secrets.DEV_KAKAO_REDIRECT_URI }}"
-
-            docker system prune -a -f --volumes
-            echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-            docker pull leticia0408/byeol_gom:${{ env.TAG }}
-            docker stop my-app || true
-            docker rm my-app || true
-            docker run -d --name my-app -p 3000:3000 \
-              -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
-              -e KAKAO_REST_API_KEY="${{ secrets.KAKAO_REST_API_KEY }}" \
-              -e KAKAO_REDIRECT_URI="$KAKAO_REDIRECT_URI" \
-              -e SESSION_SECRET="${{ secrets.SESSION_SECRET }}" \
-              -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
-              -e ACCESS_TOKEN_SECRET="${{ secrets.ACCESS_TOKEN_SECRET }}" \
-              -e REFRESH_TOKEN_SECRET="${{ secrets.REFRESH_TOKEN_SECRET }}" \
-              -e ACCESS_TOKEN_LIFE="${{ secrets.ACCESS_TOKEN_LIFE }}" \
-              -e REFRESH_TOKEN_LIFE="${{ secrets.REFRESH_TOKEN_LIFE }}" \
-              -e CLIENT_SECRET="${{ secrets.CLIENT_SECRET }}" \
-              leticia0408/byeol_gom:${{ env.TAG }}
+    deploy:
+        name: Deploy
+        runs-on: ubuntu-latest
+        needs: build-and-push
+        steps:
+            - uses: appleboy/ssh-action@v0.1.6
+              with:
+                  host: ${{ secrets.REMOTE_IP }}
+                  username: ${{ secrets.REMOTE_USER }}
+                  key: ${{ secrets.REMOTE_PRIVATE_KEY }}
+                  port: ${{ secrets.REMOTE_SSH_PORT }}
+                  script: |
+                      docker system prune -a -f --volumes
+                      echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+                      docker pull leticia0408/byeol_gom:${{ env.TAG }}
+                      docker stop my-app || true
+                      docker rm my-app || true
+                      docker run -d --name my-app -p 3000:3000 \
+                        -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
+                        -e KAKAO_REST_API_KEY="${{ secrets.KAKAO_REST_API_KEY }}" \
+                        -e KAKAO_REDIRECT_URI="${{ env.KAKAO_REDIRECT_URI }}" \
+                        -e SESSION_SECRET="${{ secrets.SESSION_SECRET }}" \
+                        -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
+                        -e ACCESS_TOKEN_SECRET="${{ secrets.ACCESS_TOKEN_SECRET }}" \
+                        -e REFRESH_TOKEN_SECRET="${{ secrets.REFRESH_TOKEN_SECRET }}" \
+                        -e ACCESS_TOKEN_LIFE="${{ secrets.ACCESS_TOKEN_LIFE }}" \
+                        -e REFRESH_TOKEN_LIFE="${{ secrets.REFRESH_TOKEN_LIFE }}" \
+                        -e CLIENT_SECRET="${{ secrets.CLIENT_SECRET }}" \
+                        leticia0408/byeol_gom:${{ env.TAG }}
