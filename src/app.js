@@ -20,7 +20,7 @@ const PORT = 3000;
 
 app.use(
     cors({
-        origin: 'http://star-bear.s3-website.eu-north-1.amazonaws.com/', // 특정 도메인 설정
+        origin: 'http://star-bear.s3-website.eu-north-1.amazonaws.com', // 특정 도메인 설정
         methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH'],
         allowedHeaders: ['Content-Type', 'Authorization'],
     }),
@@ -28,7 +28,7 @@ app.use(
 
 app.use((req, res, next) => {
     if (req.method === 'OPTIONS') {
-        res.header('Access-Control-Allow-Origin', 'http://star-bear.s3-website.eu-north-1.amazonaws.com/');
+        res.header('Access-Control-Allow-Origin', 'http://star-bear.s3-website.eu-north-1.amazonaws.com');
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
         res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
         return res.status(204).json({});
