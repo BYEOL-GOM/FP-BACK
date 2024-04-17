@@ -1,10 +1,10 @@
-name: Deploy on Branch Conditions
+name: Deploy on dev Push or Merge
 
 on:
-    push:
+    pull_request:
         branches:
             - dev
-            - main
+        types: [closed]
 
 jobs:
     prettier-check:
@@ -30,7 +30,7 @@ jobs:
               with:
                   context: .
                   push: true
-                  tags: leticia0408/byeol_gom:${{ github.ref == 'refs/heads/main' && 'latest' || 'latest-dev' }}
+                  tags: leticia0408/byeol_gom:latest
 
     deploy:
         name: Deploy
@@ -44,14 +44,25 @@ jobs:
                   key: ${{ secrets.REMOTE_PRIVATE_KEY }}
                   port: ${{ secrets.REMOTE_SSH_PORT }}
                   script: |
-                      docker stop my-app-${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }} || true
-                      docker rm my-app-${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }} || true
-                      docker run -d --name my-app-${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }} -p ${{ secrets.PORT }}:3000 \
-                        -e NODE_ENV=${{ github.ref == 'refs/heads/main' && 'production' || 'development' }} \
+
+                      # 사용하지 않는 Docker 컨테이너, 이미지, 볼륨 정리
+                      docker system prune -a -f --volumes
+
+                      # Docker 로그인
+                      echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+
+                      # Docker 이미지 Pull
+                      docker pull leticia0408/byeol_gom:latest
+
+                      # 기존 Docker 컨테이너 정지 및 제거
+                      docker stop my-app || true
+                      docker rm my-app || true
+
+                      # 새 Docker 컨테이너 실행
+                      docker run -d --name my-app -p 3000:3000 \
                         -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
                         -e KAKAO_REST_API_KEY="${{ secrets.KAKAO_REST_API_KEY }}" \
-                        -e KAKAO_REDIRECT_URI="${{ github.ref == 'refs/heads/dev' && secrets.DEV_KAKAO_REDIRECT_URI || secrets.PROD_KAKAO_REDIRECT_URI }}" \
-                        -e CORS_ORIGIN="${{ github.ref == 'refs/heads/main' && secrets.CORS_ORIGIN || '*' }}" \
+                        -e KAKAO_REDIRECT_URI="${{ secrets.KAKAO_REDIRECT_URI }}" \
                         -e SESSION_SECRET="${{ secrets.SESSION_SECRET }}" \
                         -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
                         -e ACCESS_TOKEN_SECRET="${{ secrets.ACCESS_TOKEN_SECRET }}" \
@@ -59,4 +70,4 @@ jobs:
                         -e ACCESS_TOKEN_LIFE="${{ secrets.ACCESS_TOKEN_LIFE }}" \
                         -e REFRESH_TOKEN_LIFE="${{ secrets.REFRESH_TOKEN_LIFE }}" \
                         -e CLIENT_SECRET="${{ secrets.CLIENT_SECRET }}" \
-                        leticia0408/byeol_gom:${{ github.ref == 'refs/heads/main' && 'latest' || 'latest-dev' }}
+                        leticia0408/byeol_gom:latest
