@@ -59,7 +59,7 @@ jobs:
                   port: ${{ secrets.REMOTE_SSH_PORT }}
                   script: |
                       docker system prune -a -f --volumes
-                      echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+                      echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
                       docker pull leticia0408/byeol_gom:${{ env.TAG }}
                       docker stop my-app || true
                       docker rm my-app || true
