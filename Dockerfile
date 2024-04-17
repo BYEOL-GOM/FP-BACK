@@ -19,6 +19,6 @@ RUN yarn prisma generate
 # 애플리케이션 실행을 위한 포트 열기
 EXPOSE 3000
 
-# 애플리케이션 실행
-CMD ["node", "src/app.js"]
+# 환경 변수에 따라 애플리케이션 실행 명령 선택
+CMD ["sh", "-c", "yarn docker"]
 

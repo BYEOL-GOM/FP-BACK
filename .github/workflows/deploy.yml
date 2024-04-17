@@ -50,9 +50,10 @@ jobs:
                       docker stop my-app || true
                       docker rm my-app || true
                       docker run -d --name my-app -p 3000:3000 \
+                        -e NODE_ENV=${{ github.ref == 'refs/heads/main' && 'production' || 'development' }} \
                         -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
                         -e KAKAO_REST_API_KEY="${{ secrets.KAKAO_REST_API_KEY }}" \
-                        -e KAKAO_REDIRECT_URI="${{ secrets.KAKAO_REDIRECT_URI }}" \
+                        -e KAKAO_REDIRECT_URI="${{ github.ref == 'refs/heads/dev' && secrets.DEV_KAKAO_REDIRECT_URI || secrets.PROD_KAKAO_REDIRECT_URI }}" \
                         -e SESSION_SECRET="${{ secrets.SESSION_SECRET }}" \
                         -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
                         -e ACCESS_TOKEN_SECRET="${{ secrets.ACCESS_TOKEN_SECRET }}" \
@@ -61,5 +62,3 @@ jobs:
                         -e REFRESH_TOKEN_LIFE="${{ secrets.REFRESH_TOKEN_LIFE }}" \
                         -e CLIENT_SECRET="${{ secrets.CLIENT_SECRET }}" \
                         leticia0408/byeol_gom:latest
-              env:
-                  KAKAO_REDIRECT_URI: ${{ github.ref == 'refs/heads/dev' && secrets.DEV_KAKAO_REDIRECT_URI || secrets.PROD_KAKAO_REDIRECT_URI }}
