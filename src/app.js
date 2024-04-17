@@ -8,13 +8,13 @@ import LogMiddleware from './middlewares/logMiddleware.js';
 import generalErrorHandler from './middlewares/generalErrorMiddleware.js';
 import router from './routes/index.js';
 import passport from 'passport';
+// import session from 'express-session'; // JWT 사용으로 주석 처리
 import jwt from 'jsonwebtoken';
 import bodyParser from 'body-parser';
 import { loadBannedWords } from './utils/bannedWordsLoader.js';
 import { swaggerUi, specs } from './swagger/swaggerOptions.js';
 import './scheduler.js';
 
-dotenv.config();
 const app = express();
 const PORT = 3000; // 환경 변수에서 포트를 설정할 수 있도록 변경
 
@@ -69,5 +69,5 @@ loadBannedWords()
 app.listen(PORT, () => {
     console.log(`${PORT} 포트로 서버가 열렸어요!`);
 });
-//
-//
+
+
