@@ -1,6 +1,7 @@
 import { prisma } from '../src/utils/prisma/index.js';
 
 const bannedWords = [
+    'ㅅㅂ',
     '메롱',
     '바보',
     '똥개',
