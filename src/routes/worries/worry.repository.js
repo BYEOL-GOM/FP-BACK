@@ -11,9 +11,11 @@ export const getRandomUser = async (userId) => {
             },
         });
 
-        // 사용 가능한 답변자가 없는 경우 에러 처리
+        // // 사용 가능한 답변자가 없는 경우 에러 처리
         if (potentialResponders.length === 0) {
-            throw new Error('모든 답변자가 답장을 작성중입니다');
+            const error = new Error('모든 답변자가 답장을 작성중입니다');
+            error.status = 400;
+            throw error;
         }
         // 랜덤 답변자 선택
         const randomIndex = Math.floor(Math.random() * potentialResponders.length);
