@@ -46,7 +46,7 @@ jobs:
                   script: |
                       docker stop my-app-${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }} || true
                       docker rm my-app-${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }} || true
-                      docker run -d --name my-app-${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }} -p 3000:3000 \
+                      docker run -d --name my-app-${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }} -p ${{ secrets.PORT }}:3000 \
                         -e NODE_ENV=${{ github.ref == 'refs/heads/main' && 'production' || 'development' }} \
                         -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
                         -e KAKAO_REST_API_KEY="${{ secrets.KAKAO_REST_API_KEY }}" \
