@@ -12,7 +12,7 @@ import { swaggerUi, specs } from './swagger/swaggerOptions.js';
 import './scheduler.js';
 
 const app = express();
-const PORT = process.env.PORT || 3001; // 개발환경에서는 3000, 배포는 3001
+const PORT = process.env.PORT || 3001; // 개발환경에서는 3001, 배포는 3000
 
 const corsOrigin = process.env.CORS_ORIGIN || '*';
 
