@@ -1,0 +1,52 @@
+{"level":"error","message":"Error Status: 400, Message: Unexpected token '\"', \"\n    \"content\":\"... is not valid JSON","timestamp":"2024-04-17T06:37:55.416Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.users.findUnique()` invocation:\n\n{\n  where: {\n+   userId: Int\n  }\n}\n\nArgument `userId` is missing.","timestamp":"2024-04-17T06:38:10.075Z"}
+{"level":"error","message":"Error Status: 400, Message: 데이터 형식이 올바르지 않습니다","timestamp":"2024-04-17T06:38:31.558Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:38:55.811Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:38:57.035Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:43:30.004Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:43:31.383Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:43:32.441Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:43:33.216Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:43:34.008Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:43:35.668Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:43:36.837Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:43:39.867Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:43:45.808Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:43:55.690Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:43:57.929Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:44:04.872Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:44:06.829Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:44:07.714Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-17T06:48:35.891Z"}
+{"level":"error","message":"Error Status: 400, Message: 금지어가 포함된 내용은 등록할 수 없습니다","timestamp":"2024-04-17T06:48:40.686Z"}
+{"level":"error","message":"Error Status: 400, Message: 금지어가 포함된 내용은 등록할 수 없습니다","timestamp":"2024-04-17T06:48:48.545Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 고민이 존재하지 않습니다","timestamp":"2024-04-17T06:49:41.842Z"}
+{"level":"error","message":"Error Status: 403, Message: 고민을 조회할 권한이 없습니다 ","timestamp":"2024-04-17T06:49:54.910Z"}
+{"level":"error","message":"Error Status: 403, Message: 고민을 조회할 권한이 없습니다","timestamp":"2024-04-17T06:50:27.598Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 메세지가 존재하지 않습니다","timestamp":"2024-04-17T06:50:47.046Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 메세지가 존재하지 않습니다","timestamp":"2024-04-17T06:51:19.756Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 메세지가 존재하지 않습니다","timestamp":"2024-04-17T06:51:23.272Z"}
+{"level":"error","message":"Error Status: 403, Message: 메세지를 삭제할수 있는 권한이 없습니다","timestamp":"2024-04-17T06:52:04.057Z"}
+{"level":"error","message":"Error Status: 409, Message: 해당 메세지는 이미 삭제되었습니다","timestamp":"2024-04-17T06:52:28.258Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 메세지가 존재하지 않습니다","timestamp":"2024-04-17T06:55:38.563Z"}
+{"level":"error","message":"Error Status: 409, Message: 해당 메세지는 이미 신고되었습니다","timestamp":"2024-04-17T06:56:07.498Z"}
+{"level":"error","message":"Error Status: 403, Message: 메세지를 신고할수 있는 권한이 없습니다","timestamp":"2024-04-17T06:57:05.772Z"}
+{"level":"error","message":"Error Status: 400, Message: 데이터 형식이 일치하지 않습니다","timestamp":"2024-04-17T07:31:13.897Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'userId')","timestamp":"2024-04-17T07:31:26.916Z"}
+{"level":"error","message":"Error Status: undefined, Message: commentService.findWorryById is not a function","timestamp":"2024-04-17T07:49:55.812Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'userId')","timestamp":"2024-04-17T07:50:41.742Z"}
+{"level":"error","message":"Error Status: undefined, Message: commentService.findWorryById is not a function","timestamp":"2024-04-17T07:57:40.439Z"}
+{"level":"error","message":"Error Status: undefined, Message: commentService.findWorryById is not a function","timestamp":"2024-04-17T07:57:42.664Z"}
+{"level":"error","message":"Error Status: undefined, Message: commentService.findWorryById is not a function","timestamp":"2024-04-17T07:59:33.281Z"}
+{"level":"error","message":"Error Status: undefined, Message: commentService.findWorryById is not a function","timestamp":"2024-04-17T08:01:55.150Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당 고민 게시글을 찾을 수 없습니다","timestamp":"2024-04-17T08:03:56.401Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당 고민 게시글을 찾을 수 없습니다","timestamp":"2024-04-17T08:03:57.752Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당 고민 게시글을 찾을 수 없습니다","timestamp":"2024-04-17T08:05:52.456Z"}
+{"level":"error","message":"Error Status: 403, Message: 답변 작성 권한이 없습니다.","timestamp":"2024-04-17T08:06:56.563Z"}
+{"level":"error","message":"Error Status: 400, Message: 금지어가 포함된 내용은 등록할 수 없습니다.","timestamp":"2024-04-17T08:07:07.896Z"}
+{"level":"error","message":"Error Status: 409, Message: 이미 답변을 작성했습니다.","timestamp":"2024-04-17T08:07:20.225Z"}
+{"level":"error","message":"Error Status: 204, Message: 아직 메세지가 도착하지 않았습니다","timestamp":"2024-04-17T08:07:57.204Z"}
+{"level":"error","message":"Error Status: 204, Message: 아직 메세지가 도착하지 않았습니다","timestamp":"2024-04-17T08:07:58.492Z"}
+{"level":"error","message":"Error Status: 403, Message: 답장을 조회할 권한이 없습니다.","timestamp":"2024-04-17T08:08:26.692Z"}
+{"level":"error","message":"Error Status: 403, Message: 답장을 조회할 권한이 없습니다.","timestamp":"2024-04-17T08:08:31.743Z"}
+{"level":"error","message":"Error Status: 403, Message: 답장을 조회할 권한이 없습니다.","timestamp":"2024-04-17T08:08:43.220Z"}
