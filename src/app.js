@@ -13,10 +13,10 @@ import { swaggerUi, specs } from './swagger/swaggerOptions.js';
 import initializeSocket from './socket.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import './scheduler.js';
 
 // 환경 변수 설정 로드
 dotenv.config();
-import './scheduler.js';
 
 const app = express();
 const PORT = 3000; // 환경 변수에서 포트를 설정할 수 있도록 변경
@@ -81,5 +81,3 @@ loadBannedWords()
 httpServer.listen(PORT, () => {
     console.log(`${PORT} 포트로 서버가 열렸어요!`);
 });
-
-//
