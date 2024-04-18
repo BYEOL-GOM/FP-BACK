@@ -1,0 +1,13 @@
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-18T05:22:25.093Z"}
+{"level":"error","message":"Error Status: 403, Message: 답변 작성 권한이 없습니다.","timestamp":"2024-04-18T05:23:37.954Z"}
+{"level":"error","message":"Error Status: 400, Message: Expected ',' or '}' after property value in JSON at position 17","timestamp":"2024-04-18T05:25:54.881Z"}
+{"level":"error","message":"Error Status: 400, Message: Expected ',' or '}' after property value in JSON at position 17","timestamp":"2024-04-18T05:25:56.436Z"}
+{"level":"error","message":"Error Status: 400, Message: 최대 고민 작성수를 초과하였습니다","timestamp":"2024-04-18T06:21:41.580Z"}
+{"level":"error","message":"Error Status: 400, Message: 유효하지 않은 댓글입니다.","timestamp":"2024-04-18T06:23:29.118Z"}
+{"level":"error","message":"Error Status: 403, Message: 선물을 보낼 권한이 없습니다. 게시글의 작성자만 선물을 보낼 수 있습니다.","timestamp":"2024-04-18T06:24:20.736Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-18T06:33:16.590Z"}
+{"level":"error","message":"Error Status: undefined, Message: commentRepository.getFruitCount is not a function","timestamp":"2024-04-18T07:08:47.965Z"}
+{"level":"error","message":"Error Status: undefined, Message: commentRepository.getFruitCount is not a function","timestamp":"2024-04-18T07:08:49.985Z"}
+{"level":"error","message":"Error Status: 400, Message: 별의 개수가 5개 이상일 때만 수확할 수 있습니다","timestamp":"2024-04-18T09:00:34.933Z"}
+{"level":"error","message":"Error Status: 400, Message: 별의 개수가 5개 이상일 때만 수확할 수 있습니다","timestamp":"2024-04-18T09:15:41.896Z"}
+{"level":"error","message":"Error Status: 400, Message: 별의 개수가 5개 이상일 때만 수확할 수 있습니다","timestamp":"2024-04-18T09:18:41.861Z"}

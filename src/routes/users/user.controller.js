@@ -211,13 +211,24 @@ export const refreshController = async (req, res, next) => {
 export const WorryCountController = async (req, res, next) => {
     try {
         const userId = res.locals.user.userId;
-        const solvedWorriesCount = await prisma.worries.count({
+        // const { userId } = req.body;
+        // const solvedWorriesCount = await prisma.worries.count({
+        //     where: {
+        //         commentAuthorId: +userId, // 이 값은 예시입니다. 실제 commentAuthorId 값으로 대체하세요.
+        //         isSolved: true,
+        //     },
+        // });
+        const user = await prisma.users.findUnique({
             where: {
-                commentAuthorId: +userId, // 이 값은 예시입니다. 실제 commentAuthorId 값으로 대체하세요.
-                isSolved: true,
+                userId: +userId,
+            },
+            select: {
+                remainingStars: true,
             },
         });
-        return res.status(200).json(solvedWorriesCount);
+        return res.status(200).json({ remainingStars: user.remainingStars });
+
+        // return res.status(200).json(solvedWorriesCount);
     } catch (error) {
         next(error);
     }

@@ -41,8 +41,8 @@ export const createReplyController = async (req, res, next) => {
     try {
         const { worryId, commentId } = req.params;
         const userId = res.locals.user.userId;
+        // const { content, fontColor } = req.body;
         const { content, fontColor } = req.body;
-        // const { userId, content, fontColor } = req.body;
 
         if (!worryId || !content || !fontColor) {
             const error = new Error('데이터 형식이 일치하지 않습니다');
@@ -53,6 +53,18 @@ export const createReplyController = async (req, res, next) => {
         const comment = await commentService.createReply(+worryId, +commentId, content, +userId, fontColor);
 
         return res.status(201).json({ message: '답변이 전송되었습니다.', comment });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// # 별 수확하기
+export const updateFruitCountController = async (req, res, next) => {
+    try {
+        // const { userId } = req.body;
+        const userId = res.locals.user.userId;
+        const result = await commentService.updateFuitCount(+userId);
+        res.status(201).json(result);
     } catch (error) {
         next(error);
     }

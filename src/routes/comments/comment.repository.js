@@ -149,3 +149,29 @@ export const updateWorryUpdatedAt = async (worryId) => {
         data: { updatedAt: new Date() },
     });
 };
+// # 사용자 정보 가져오기
+export const getUserById = async (userId) => {
+    return await prisma.users.findUnique({
+        where: { userId },
+    });
+};
+
+// # 유저의 별 개수 업데이트
+export const updateRemainingStars = async (userId, remainingStars) => {
+    return await prisma.users.update({
+        where: { userId },
+        data: { remainingStars },
+    });
+};
+
+// # 별수확하고 fruit 업데이트
+export const updateFruitCount = async (userId, fuitToAdd) => {
+    return await prisma.users.update({
+        where: { userId: userId },
+        data: {
+            fruit: {
+                increment: fuitToAdd,
+            },
+        },
+    });
+};
