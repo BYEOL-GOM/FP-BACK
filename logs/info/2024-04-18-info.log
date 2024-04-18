@@ -209,3 +209,12 @@
 {"level":"info","message":"Method: POST, URL: /harvest, Status: 400, Duration: 29ms","timestamp":"2024-04-18T09:18:41.863Z"}
 {"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 156ms","timestamp":"2024-04-18T09:19:26.418Z"}
 {"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 165ms","timestamp":"2024-04-18T09:19:27.296Z"}
+{"level":"info","message":"Method: GET, URL: /count, Status: 200, Duration: 20ms","timestamp":"2024-04-18T09:29:17.473Z"}
+{"level":"info","message":"Method: GET, URL: /count, Status: 200, Duration: 14ms","timestamp":"2024-04-18T09:29:19.315Z"}
+{"level":"info","message":"Method: GET, URL: /count, Status: 200, Duration: 31ms","timestamp":"2024-04-18T09:37:50.403Z"}
+{"level":"info","message":"Method: GET, URL: /count, Status: 200, Duration: 20ms","timestamp":"2024-04-18T09:38:43.884Z"}
+{"level":"info","message":"Method: GET, URL: /count, Status: 200, Duration: 37ms","timestamp":"2024-04-18T09:38:45.534Z"}
+{"level":"info","message":"Method: GET, URL: /count, Status: 200, Duration: 14ms","timestamp":"2024-04-18T09:38:53.160Z"}
+{"level":"info","message":"Method: GET, URL: /count, Status: 200, Duration: 11ms","timestamp":"2024-04-18T09:38:54.243Z"}
+{"level":"info","message":"Method: GET, URL: /count, Status: 200, Duration: 22ms","timestamp":"2024-04-18T10:03:43.915Z"}
+{"level":"info","message":"Method: GET, URL: /count, Status: 200, Duration: 8ms","timestamp":"2024-04-18T10:03:44.627Z"}
