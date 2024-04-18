@@ -1,23 +1,24 @@
-# 수동으로 입력하는 방식
-# 1. 운영체제 및 프로그램 설치
-# CD로 운영체제 설치 or 부팅용 USB로 설치하는 방법 등이 있다.
-# 하지만 도커의 장점을 활용해보자! : 컴퓨터들이 모여져있는 홈페이지가 있다(도커허브) 그 컴퓨터를 다운 받을 수 있다.
-# 도커허브 홈페이지로 가서 'ubuntu' 검색하면 확인 가능. 그 ubuntu를 다운받는다는 코드. 
-# FROM ubuntu:22.04
+# 기반 이미지 선택 (Node.js 안정된 최신버전)
+FROM node:alpine 
 
-# 2. Node.js 설치(ubuntu에 설치)
-# ubuntu를 다운로드 받으면 터미널 하나가 실행된다는 의미.
-# RUN sudo apt install nodejs
-# RUN sudo npm install -g yarn
+# 애플리케이션 디렉토리 생성
+WORKDIR /app
 
-# 1. 운영체제 및 프로그램 설치(이미 리눅스, node, npm, yarn까지 모두 깔려있는 컴퓨터 다운로드하는 방식)
-FROM node:20
+# package.json 과 package-lock.json을 /app 디렉토리로 복사
+COPY package.json yarn.lock ./
 
-# 2. 내 컴퓨터에 있는 폴더나 파일을 도커 컴퓨터 안으로 복사하기
-# CLI - RUN : 실행 / mkdir : 폴더 만들기
-RUN mkdir myfolder
-# myfolder 안으로 이동하기
-RUN cd myfolder
+# 의존성 설치
+RUN yarn install
 
-# CLI - COPY : docker 바깥에 있는 내용을 안쪽으로 복사해줘.
-COPY src/app.js /myfolder/app.js
+# 나머지 애플리케이션 파일 복사
+COPY . .
+
+# Prisma 클라이언트 생성
+RUN yarn prisma generate
+
+# 애플리케이션 실행을 위한 포트 열기
+EXPOSE 3000
+
+
+# 애플리케이션 실행
+CMD ["yarn", "dev"]

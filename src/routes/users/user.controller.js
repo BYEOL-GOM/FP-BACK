@@ -159,16 +159,15 @@ export const naverLoginController = async (req, res) => {
     }
 };
 
-// 리프레쉬
 // 리프레시 토큰 검증 및 재발급 로직
 export const refreshController = async (req, res, next) => {
     try {
-        const { Authorization } = req.body.headers;
-        if (!Authorization) {
+        const { authorization } = req.body.headers;
+        if (!authorization) {
             return res.status(401).json({ message: 'Refresh Token을 전달받지 못했습니다.' });
         }
 
-        const [bearer, refreshToken] = Authorization.split(' ');
+        const [bearer, refreshToken] = authorization.split(' ');
         if (bearer !== 'Bearer') {
             const err = new Error('토큰 타입이 Bearer 형식이 아닙니다.');
             err.status = 401;
@@ -208,21 +207,17 @@ export const refreshController = async (req, res, next) => {
     }
 };
 
-
-
-
-
 // 좋아요된 고민의 갯수 조회하기
 export const WorryCountController = async (req, res, next) => {
     try {
-        const userId = res.locals.user.userId; 
+        const userId = res.locals.user.userId;
         const solvedWorriesCount = await prisma.worries.count({
             where: {
-              commentAuthorId: +userId, // 이 값은 예시입니다. 실제 commentAuthorId 값으로 대체하세요.
-              isSolved: true,
+                commentAuthorId: +userId, // 이 값은 예시입니다. 실제 commentAuthorId 값으로 대체하세요.
+                isSolved: true,
             },
-          });
-          return res.status(200).json(solvedWorriesCount)
+        });
+        return res.status(200).json(solvedWorriesCount);
     } catch (error) {
         next(error);
     }

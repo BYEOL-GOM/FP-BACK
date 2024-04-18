@@ -13,7 +13,7 @@ datasource db {
 model Users {
   userId        Int      @id @default(autoincrement())
   userCheckId   String
-  nickname      String
+  nickname      String @default("고민의 미로가 된 곰")
   email         String
   fruit         String?
   remainingWorries Int @default(5) //  최대 고민작성 가능 개수 5
@@ -35,7 +35,9 @@ model Worries {
   content               String    @db.Text @map("content")
   fontColor             String?   @map("fontColor")
   createdAt             DateTime  @default(now()) @map("createdAt")
+  updatedAt             DateTime? @map("updatedAt") 
   deletedAt             DateTime? @map("deletedAt")                    // 소프트 삭제 
+
 
   icon                  Icon?     @map("icon")
   unRead                Boolean   @default(true)  @map("unRead")       // 아직 안읽음

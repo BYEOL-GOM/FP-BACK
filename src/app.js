@@ -16,6 +16,7 @@ import path from 'path';
 
 // 환경 변수 설정 로드
 dotenv.config();
+import './scheduler.js';
 
 const app = express();
 const PORT = 3000; // 환경 변수에서 포트를 설정할 수 있도록 변경
@@ -26,17 +27,17 @@ initializeSocket(httpServer); // 여기서 Socket.IO 서버를 초기화하고, 
 // CORS 미들웨어 설정
 app.use(
     cors({
-        origin: '*', // 실제 배포시에는 허용할 도메인을 명시적으로 지정하는 것이 좋습니다.
+        origin: '*',
         methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-        allowedHeaders: ['Content-Type', 'Authorization'], // 'Authorization' 헤더 허용
+        allowedHeaders: ['Content-Type', 'Authorization'],
         credentials: true,
     }),
 );
 
-// CORS Preflight 요청에 대한 처리를 위한 미들웨어 추가
+// CORS Preflight 요청 처리
 app.use((req, res, next) => {
     if (req.method === 'OPTIONS') {
-        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Origin', req.headers.origin);
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
         res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
         return res.status(204).json({});
@@ -44,7 +45,7 @@ app.use((req, res, next) => {
     next();
 });
 
-// bodyParser와 express.json()은 CORS 설정 바로 다음에 위치해야 합니다.
+// bodyParser와 express.json()은 CORS 설정 바로 다음
 app.use(bodyParser.json());
 app.use(express.json());
 
@@ -80,3 +81,5 @@ loadBannedWords()
 httpServer.listen(PORT, () => {
     console.log(`${PORT} 포트로 서버가 열렸어요!`);
 });
+
+//

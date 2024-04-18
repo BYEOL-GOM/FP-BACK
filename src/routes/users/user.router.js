@@ -1,5 +1,10 @@
 import express from 'express';
-import { kakaoLoginController, naverLoginController, refreshController,WorryCountController } from './user.controller.js';
+import {
+    kakaoLoginController,
+    naverLoginController,
+    refreshController,
+    WorryCountController,
+} from './user.controller.js';
 import { prisma } from '../../utils/prisma/index.js';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
@@ -21,8 +26,7 @@ router.post('/naver', naverLoginController);
 router.post('/refresh', refreshController);
 
 // 좋아요된 고민의 갯수 조회하기
-router.get('/count',authMiddleware, WorryCountController);
-
+router.get('/count', authMiddleware, WorryCountController);
 
 // 임시 회원가입 API
 router.post('/sign-up', async (req, res, next) => {
@@ -44,54 +48,53 @@ router.post('/sign-up', async (req, res, next) => {
         return res.status(500).json({ message: '서버 오류' });
     }
 });
-/**
- * @swagger
-  /posts:
-    post:
-      summary: 새 게시물 등록
-      tags:
-        - Posts
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PostRequest'
-      responses:
-        '201':
-          description: 게시물이 성공적으로 등록되었습니다.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: 게시물이 성공적으로 등록되었습니다.
-        '400':
-          description: 데이터 형식이 올바르지 않음
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: 데이터 형식이 올바르지 않습니다.
-    get:
-      summary: 게시물 전체 조회
-      tags:
-        - Posts
-      responses:
-        '200':
-          description: 게시물 전체 목록 조회 성공.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: 게시물 전체 목록 조회 성공하였습니다.
- */
+
+// 닉네임 변경
+router.put('/nickname', authMiddleware, async (req, res, next) => {
+    const { nickname } = req.body; // 요청 본문에서 닉네임 가져오기
+    const userId = res.locals.user.userId; // 현재 사용자의 ID 가져오기
+
+    // 닉네임 길이 유효성 검사
+    if (nickname.length >= 15) {
+        return res.status(400).json({ message: '닉네임은 15글자 미만이어야 합니다.' });
+    }
+
+    try {
+        // 사용자의 닉네임을 업데이트하고 결과를 반환
+        const updatedUser = await prisma.users.update({
+            where: { userId }, // 사용자 ID를 사용하여 해당 사용자를 찾습니다.
+            data: { nickname }, // 새로운 닉네임으로 업데이트합니다.
+        });
+
+        return res.status(200).json({ message: '닉네임이 성공적으로 변경되었습니다.' });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: '서버 오류' });
+    }
+});
+
+// 나의 닉네임 조회
+router.get('/myNickname', authMiddleware, async (req, res, next) => {
+    try {
+        const userId = res.locals.user.userId;
+
+        const myNickname = await prisma.users.findFirst({
+            where: {
+                userId: userId,
+            },
+            select: {
+                nickname: true,
+            },
+        });
+
+        if (!myNickname) {
+            return res.status(404).json({ message: '사용자를 찾을 수 없습니다.' });
+        }
+
+        return res.status(200).json({ nickname: myNickname.nickname });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: '서버 오류' });
+    }
+});
 export default router;
