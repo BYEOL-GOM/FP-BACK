@@ -44,6 +44,7 @@ export const getCommentDetail = async (commentId, userId) => {
         fontColor: updatedComment.fontColor,
         unRead: updatedComment.unRead,
         parentId: updatedComment.parentId,
+        parentContent: updatedComment.parent ? updatedComment.parent.content : comment.worry.content, // 첫답변일 경우 worry의 Content 추가
         worryId: updatedComment.worryId,
         worryUserId: updatedComment.worry?.userId, // 고민 작성자 userId
         icon: updatedComment.worry?.icon,

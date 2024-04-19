@@ -87,12 +87,13 @@ export const getComment = async (commentId) => {
             worry: {
                 select: {
                     userId: true,
+                    content: true, // 고민의 내용도 조회
                     icon: true,
                     commentAuthorId: true,
                     isSolved: true,
                 },
             },
-            parent: { select: { userId: true } }, // 대댓글의 경우, 부모 댓글의 작성자id (userId) 조회
+            parent: { select: { userId: true, content: true } }, // 대댓글의 경우, 부모 댓글의 작성자id (userId) 조회
         },
     });
 };

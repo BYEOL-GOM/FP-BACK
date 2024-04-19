@@ -168,7 +168,7 @@ export const updateUserCounts = async (worryAuthorId, commentAuthorId) => {
     // 답변 작성자가 고민 작성자와 다를 경우, 답변 작성자의 remainingAnswers 증가
     if (commentAuthorId !== worryAuthorId) {
         await prisma.users.updateMany({
-            where: { userId: commentAuthorId, remainingAnswers: { lt: 10 } },
+            where: { userId: commentAuthorId, remainingAnswers: { lt: 5 } },
             data: { remainingAnswers: { increment: 1 } },
         });
     }
