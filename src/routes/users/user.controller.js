@@ -48,10 +48,11 @@ export const kakaoLoginController = async (req, res) => {
         });
 
         if (!findUser) {
+            const lastUser = await prisma.users.count();
             const createUser = await prisma.users.create({
                 data: {
                     userCheckId: user.id.toString(),
-                    nickname: user.nickname,
+                    nickname: `고민의 늪에 빠진 곰 ${lastUser + 1}`,
                     email: user.email,
                 },
             });
@@ -124,10 +125,11 @@ export const naverLoginController = async (req, res) => {
         });
 
         if (!findUser) {
+            const lastUser = await prisma.users.count();
             const createUser = await prisma.users.create({
                 data: {
-                    userCheckId: user.id,
-                    nickname: user.nickname,
+                    userCheckId: user.id.toString(),
+                    nickname: `고민의 늪에 빠진 곰 ${lastUser + 1}`,
                     email: user.email,
                 },
             });
