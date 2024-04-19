@@ -15,24 +15,13 @@ const app = express();
 const PORT = 3000; // 환경 변수에서 포트를 설정할 수 있도록 변경
 
 // CORS 미들웨어 설정
-app.use(
-    cors({
-        origin: '*',
-        methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-        allowedHeaders: ['Content-Type', 'Authorization'],
-    }),
-);
+const corsOptions = {
+    origin: process.env.CORS_ORIGIN || '*',
+    methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+};
 
-// CORS Preflight 요청 처리
-app.use((req, res, next) => {
-    if (req.method === 'OPTIONS') {
-        res.header('Access-Control-Allow-Origin', req.headers.origin);
-        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-        res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-        return res.status(204).json({});
-    }
-    next();
-});
+app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 app.use(express.json());

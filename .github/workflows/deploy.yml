@@ -3,8 +3,8 @@ name: Deploy on dev Push or Merge
 on:
     pull_request:
         branches:
+            - main
             - dev
-        types: [closed]
 
 jobs:
     prettier-check:
@@ -44,19 +44,23 @@ jobs:
                   key: ${{ secrets.REMOTE_PRIVATE_KEY }}
                   port: ${{ secrets.REMOTE_SSH_PORT }}
                   script: |
-
+                      if [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
+                          COMPOSE_FILE=docker-compose.dev.yml
+                      else
+                          COMPOSE_FILE=docker-compose.prod.yml
+                      fi
                       # 사용하지 않는 Docker 컨테이너, 이미지, 볼륨 정리
-                      docker system prune -a -f --volumes
+                      # docker system prune -a -f --volumes
 
                       # Docker 로그인
-                      echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+                      # echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
                       # Docker 이미지 Pull
-                      docker pull leticia0408/byeol_gom:latest
+                      # docker pull leticia0408/byeol_gom:latest
 
                       # 기존 Docker 컨테이너 정지 및 제거
-                      docker stop my-app || true
-                      docker rm my-app || true
+                      # docker stop my-app || true
+                      # docker rm my-app || true
 
                       # 새 Docker 컨테이너 실행
                       docker run -d --name my-app -p 3000:3000 \
