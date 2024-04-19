@@ -4,11 +4,9 @@ import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import LogMiddleware from './middlewares/logMiddleware.js';
-//import TestLogMiddleware from './middlewares/testLogMiddleware.js';
 import generalErrorHandler from './middlewares/generalErrorMiddleware.js';
 import router from './routes/index.js';
 import passport from 'passport';
-// import session from 'express-session'; // JWT 사용으로 주석 처리
 import jwt from 'jsonwebtoken';
 import bodyParser from 'body-parser';
 import { loadBannedWords } from './utils/bannedWordsLoader.js';
@@ -69,5 +67,3 @@ loadBannedWords()
 app.listen(PORT, () => {
     console.log(`${PORT} 포트로 서버가 열렸어요!`);
 });
-
-//
