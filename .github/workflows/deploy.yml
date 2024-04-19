@@ -3,7 +3,7 @@ name: Deploy on dev Push or Merge
 on:
     push:
         branches:
-          - dev
+            - dev
 
 jobs:
     prettier-check:
