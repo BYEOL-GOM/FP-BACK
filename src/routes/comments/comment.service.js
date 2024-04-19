@@ -44,6 +44,7 @@ export const getCommentDetail = async (commentId, userId) => {
         fontColor: updatedComment.fontColor,
         unRead: updatedComment.unRead,
         parentId: updatedComment.parentId,
+        parentContent: updatedComment.parent ? updatedComment.parent.content : comment.worry.content, // 첫답변일 경우 worry의 Content 추가
         worryId: updatedComment.worryId,
         worryUserId: updatedComment.worry?.userId, // 고민 작성자 userId
         icon: updatedComment.worry?.icon,
@@ -129,4 +130,27 @@ export const createReply = async (worryId, commentId, content, userId, fontColor
         // userId: comment.userId,
         worryId: comment.worryId,
     };
+};
+
+// # 별 수확하기
+export const updateFuitCount = async (userId) => {
+    const user = await commentRepository.getUserById(userId); // 사용자 정보 가져오기
+    if (user.remainingStars >= 5) {
+        const fruitToAdd = Math.floor(user.remainingStars / 5);
+        const updatedRemainingStars = user.remainingStars % 5;
+
+        const updatedUser = await commentRepository.updateFruitCount(userId, fruitToAdd); //fruit 업데이트
+        await commentRepository.updateRemainingStars(userId, updatedRemainingStars); // remainingStars 업데이트
+
+        return {
+            message: '별 수확이 완료되었습니다',
+            harvestedFruits: fruitToAdd, // 수확한 열매 수
+            remainingStars: updatedRemainingStars, // 남은 별의 수
+            totalFruits: updatedUser.fruit, // 총 열매 수
+        };
+    } else {
+        const error = new Error('별의 개수가 5개 이상일 때만 수확할 수 있습니다');
+        error.status = 400;
+        throw error;
+    }
 };

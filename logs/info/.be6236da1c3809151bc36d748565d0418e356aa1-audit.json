@@ -51,9 +51,15 @@
             "hash": "21c19f5f99c0d3a2a72d671caa3fc52cd2e0d31ed290c22da788b37f25e42394"
         },
         {
-            "date": 1713366352119,
+            "date": 1713407043544,
             "name": "logs\\info\\2024-04-18-info.log",
-            "hash": "bedf6d1451980922129ed70bcbfdbca1a55908f227daa8b5ef416ee3ee2df96a"
+            "hash": "de94e3596bdd2b7079d24293e6a555792fbffd68f2e3b76bd6d48f92ba3aedbd"
+        },
+        {
+            "date": 1713508335559,
+            "name": "logs\\info\\2024-04-19-info.log",
+            "hash": "4d974f2983056f1fec06c824d2c9aecbd32e2867d2aed91c6be70e4cda53b0b6"
+
         }
     ],
     "hashType": "sha256"

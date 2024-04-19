@@ -1,0 +1,109 @@
+{"level":"info","message":"Method: GET, URL: /comments/30, Status: 401, Duration: 8ms","timestamp":"2024-04-19T06:36:26.414Z"}
+{"level":"error","message":"Error Status: 403, Message: 답장을 조회할 권한이 없습니다.","timestamp":"2024-04-19T06:36:41.373Z"}
+{"level":"info","message":"Method: GET, URL: /comments/30, Status: 403, Duration: 110ms","timestamp":"2024-04-19T06:36:41.380Z"}
+{"level":"info","message":"Method: GET, URL: /comments/30, Status: 200, Duration: 162ms","timestamp":"2024-04-19T06:37:04.542Z"}
+{"level":"info","message":"Method: GET, URL: /comments/30, Status: 200, Duration: 253ms","timestamp":"2024-04-19T06:39:28.002Z"}
+{"level":"info","message":"Method: GET, URL: /comments/30, Status: 200, Duration: 124ms","timestamp":"2024-04-19T06:39:29.986Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 239ms","timestamp":"2024-04-19T06:42:02.932Z"}
+{"level":"info","message":"Method: POST, URL: /worries/19/comments, Status: 401, Duration: 2ms","timestamp":"2024-04-19T06:43:03.589Z"}
+{"level":"info","message":"Method: POST, URL: /worries/19/comments, Status: 201, Duration: 287ms","timestamp":"2024-04-19T06:43:30.188Z"}
+{"level":"error","message":"Error Status: 403, Message: 답장을 조회할 권한이 없습니다.","timestamp":"2024-04-19T06:43:54.142Z"}
+{"level":"info","message":"Method: GET, URL: /comments/31, Status: 403, Duration: 50ms","timestamp":"2024-04-19T06:43:54.143Z"}
+{"level":"error","message":"Error Status: 403, Message: 답장을 조회할 권한이 없습니다.","timestamp":"2024-04-19T06:44:01.027Z"}
+{"level":"info","message":"Method: GET, URL: /comments/31, Status: 403, Duration: 18ms","timestamp":"2024-04-19T06:44:01.028Z"}
+{"level":"info","message":"Method: GET, URL: /comments/31, Status: 200, Duration: 110ms","timestamp":"2024-04-19T06:44:14.185Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'content')","timestamp":"2024-04-19T06:46:01.847Z"}
+{"level":"info","message":"Method: GET, URL: /comments/31, Status: 500, Duration: 121ms","timestamp":"2024-04-19T06:46:01.853Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'content')","timestamp":"2024-04-19T06:46:03.875Z"}
+{"level":"info","message":"Method: GET, URL: /comments/31, Status: 500, Duration: 190ms","timestamp":"2024-04-19T06:46:03.876Z"}
+{"level":"info","message":"Method: GET, URL: /comments/31, Status: 200, Duration: 116ms","timestamp":"2024-04-19T06:46:51.221Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.comments.findUnique()` invocation:\n\n\nUnknown nested field 'parentWorry' for operation worry does not match any query.","timestamp":"2024-04-19T06:59:06.926Z"}
+{"level":"info","message":"Method: GET, URL: /comments/31, Status: 500, Duration: 10ms","timestamp":"2024-04-19T06:59:06.929Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.comments.findUnique()` invocation:\n\n\nUnknown nested field 'parentWorry' for operation worry does not match any query.","timestamp":"2024-04-19T06:59:08.325Z"}
+{"level":"info","message":"Method: GET, URL: /comments/31, Status: 500, Duration: 3ms","timestamp":"2024-04-19T06:59:08.326Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.comments.findUnique()` invocation:\n\n\nUnknown nested field 'parentWorry' for operation worry does not match any query.","timestamp":"2024-04-19T07:00:35.172Z"}
+{"level":"info","message":"Method: GET, URL: /comments/31, Status: 500, Duration: 10ms","timestamp":"2024-04-19T07:00:35.176Z"}
+{"level":"info","message":"Method: GET, URL: /comments/31, Status: 200, Duration: 163ms","timestamp":"2024-04-19T07:01:23.861Z"}
+{"level":"info","message":"Method: GET, URL: /comments/31, Status: 200, Duration: 106ms","timestamp":"2024-04-19T07:01:50.591Z"}
+{"level":"error","message":"Error Status: 403, Message: 답장을 조회할 권한이 없습니다.","timestamp":"2024-04-19T07:02:08.777Z"}
+{"level":"info","message":"Method: GET, URL: /comments/30, Status: 403, Duration: 83ms","timestamp":"2024-04-19T07:02:08.780Z"}
+{"level":"info","message":"Method: GET, URL: /comments/30, Status: 200, Duration: 112ms","timestamp":"2024-04-19T07:02:17.356Z"}
+{"level":"info","message":"Method: GET, URL: /comments/31, Status: 200, Duration: 92ms","timestamp":"2024-04-19T07:02:30.374Z"}
+{"level":"info","message":"Method: GET, URL: /comments/31, Status: 200, Duration: 117ms","timestamp":"2024-04-19T07:08:53.741Z"}
+{"level":"info","message":"Method: GET, URL: /comments/31, Status: 200, Duration: 76ms","timestamp":"2024-04-19T07:08:56.016Z"}
+{"level":"info","message":"Method: GET, URL: /comments/31, Status: 200, Duration: 79ms","timestamp":"2024-04-19T07:08:57.584Z"}
+{"level":"info","message":"Method: GET, URL: /comments/31, Status: 200, Duration: 180ms","timestamp":"2024-04-19T07:09:00.406Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 204ms","timestamp":"2024-04-19T07:09:26.149Z"}
+{"level":"info","message":"Method: POST, URL: /worries/20/comments, Status: 201, Duration: 168ms","timestamp":"2024-04-19T07:09:43.237Z"}
+{"level":"info","message":"Method: GET, URL: /comments/32, Status: 200, Duration: 131ms","timestamp":"2024-04-19T07:10:00.983Z"}
+{"level":"error","message":"Error Status: 403, Message: 답변 작성 권한이 없습니다.","timestamp":"2024-04-19T07:10:29.037Z"}
+{"level":"info","message":"Method: POST, URL: /worries/20/comments/32, Status: 403, Duration: 56ms","timestamp":"2024-04-19T07:10:29.038Z"}
+{"level":"info","message":"Method: POST, URL: /worries/20/comments/32, Status: 201, Duration: 256ms","timestamp":"2024-04-19T07:10:34.443Z"}
+{"level":"error","message":"Error Status: 403, Message: 답장을 조회할 권한이 없습니다.","timestamp":"2024-04-19T07:10:43.197Z"}
+{"level":"info","message":"Method: GET, URL: /comments/33, Status: 403, Duration: 51ms","timestamp":"2024-04-19T07:10:43.198Z"}
+{"level":"info","message":"Method: GET, URL: /comments/33, Status: 200, Duration: 120ms","timestamp":"2024-04-19T07:10:46.857Z"}
+{"level":"error","message":"Error Status: 403, Message: 답장을 조회할 권한이 없습니다.","timestamp":"2024-04-19T07:32:55.997Z"}
+{"level":"info","message":"Method: GET, URL: /comments/31, Status: 403, Duration: 93ms","timestamp":"2024-04-19T07:32:56.000Z"}
+{"level":"info","message":"Method: GET, URL: /comments/32, Status: 200, Duration: 116ms","timestamp":"2024-04-19T07:33:17.715Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-18T15:53:27.716Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 42ms","timestamp":"2024-04-18T15:53:27.721Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-18T15:53:46.755Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 27ms","timestamp":"2024-04-18T15:53:46.757Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-18T15:53:59.124Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 24ms","timestamp":"2024-04-18T15:53:59.125Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-18T15:54:09.256Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 31ms","timestamp":"2024-04-18T15:54:09.258Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-18T15:54:30.429Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 22ms","timestamp":"2024-04-18T15:54:30.430Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-18T16:03:01.361Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 48ms","timestamp":"2024-04-18T16:03:01.367Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-18T16:37:35.343Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 83ms","timestamp":"2024-04-18T16:37:35.347Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.users.findUnique()` invocation:\n\n{\n  where: {\n    userId: undefined,\n?   AND?: UsersWhereInput | UsersWhereInput[],\n?   OR?: UsersWhereInput[],\n?   NOT?: UsersWhereInput | UsersWhereInput[],\n?   userCheckId?: StringFilter | String,\n?   nickname?: StringFilter | String,\n?   email?: StringFilter | String,\n?   fruit?: StringNullableFilter | String | Null,\n?   remainingWorries?: IntFilter | Int,\n?   remainingAnswers?: IntFilter | Int,\n?   worry?: WorriesListRelationFilter,\n?   reports?: ReportsListRelationFilter,\n?   comments?: CommentsListRelationFilter,\n?   likesSent?: LikesListRelationFilter\n  },\n  select: {\n    nickname: true\n  }\n}\n\nArgument `where` of type UsersWhereUniqueInput needs at least one of `userId` arguments. Available options are marked with ?.","timestamp":"2024-04-18T16:38:12.387Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 27ms","timestamp":"2024-04-18T16:38:12.392Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.users.findUnique()` invocation:\n\n{\n  where: {\n    userId: undefined,\n?   AND?: UsersWhereInput | UsersWhereInput[],\n?   OR?: UsersWhereInput[],\n?   NOT?: UsersWhereInput | UsersWhereInput[],\n?   userCheckId?: StringFilter | String,\n?   nickname?: StringFilter | String,\n?   email?: StringFilter | String,\n?   fruit?: StringNullableFilter | String | Null,\n?   remainingWorries?: IntFilter | Int,\n?   remainingAnswers?: IntFilter | Int,\n?   worry?: WorriesListRelationFilter,\n?   reports?: ReportsListRelationFilter,\n?   comments?: CommentsListRelationFilter,\n?   likesSent?: LikesListRelationFilter\n  },\n  select: {\n    nickname: true\n  }\n}\n\nArgument `where` of type UsersWhereUniqueInput needs at least one of `userId` arguments. Available options are marked with ?.","timestamp":"2024-04-18T16:54:33.109Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 31ms","timestamp":"2024-04-18T16:54:33.114Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.users.findUnique()` invocation:\n\n{\n  where: {\n    userId: undefined,\n?   AND?: UsersWhereInput | UsersWhereInput[],\n?   OR?: UsersWhereInput[],\n?   NOT?: UsersWhereInput | UsersWhereInput[],\n?   userCheckId?: StringFilter | String,\n?   nickname?: StringFilter | String,\n?   email?: StringFilter | String,\n?   fruit?: StringNullableFilter | String | Null,\n?   remainingWorries?: IntFilter | Int,\n?   remainingAnswers?: IntFilter | Int,\n?   worry?: WorriesListRelationFilter,\n?   reports?: ReportsListRelationFilter,\n?   comments?: CommentsListRelationFilter,\n?   likesSent?: LikesListRelationFilter\n  },\n  select: {\n    nickname: true\n  }\n}\n\nArgument `where` of type UsersWhereUniqueInput needs at least one of `userId` arguments. Available options are marked with ?.","timestamp":"2024-04-18T16:59:12.750Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 30ms","timestamp":"2024-04-18T16:59:12.757Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-18T17:00:17.177Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 59ms","timestamp":"2024-04-18T17:00:17.181Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-18T17:04:13.397Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 45ms","timestamp":"2024-04-18T17:04:13.398Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-18T17:04:17.656Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 28ms","timestamp":"2024-04-18T17:04:17.658Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-18T17:19:32.821Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 45ms","timestamp":"2024-04-18T17:19:32.824Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 79ms","timestamp":"2024-04-18T17:20:38.362Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 47ms","timestamp":"2024-04-18T17:22:58.735Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-18T17:23:03.175Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 51ms","timestamp":"2024-04-18T17:23:03.176Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-18T17:23:11.566Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 281ms","timestamp":"2024-04-18T17:23:11.568Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-18T17:23:15.442Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 54ms","timestamp":"2024-04-18T17:23:15.443Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 39ms","timestamp":"2024-04-18T17:23:19.433Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-18T17:29:32.913Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 171ms","timestamp":"2024-04-18T17:29:32.914Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 41ms","timestamp":"2024-04-18T17:29:37.396Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 3619ms","timestamp":"2024-04-18T17:32:00.587Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-18T17:32:08.152Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 62ms","timestamp":"2024-04-18T17:32:08.154Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 59ms","timestamp":"2024-04-18T17:32:11.753Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 55ms","timestamp":"2024-04-18T17:35:39.233Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 51ms","timestamp":"2024-04-18T17:37:06.851Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 51ms","timestamp":"2024-04-18T17:37:59.428Z"}
+{"level":"error","message":"Error Status: undefined, Message: loginUser is not defined","timestamp":"2024-04-18T17:49:34.902Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 92ms","timestamp":"2024-04-18T17:49:34.906Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 7480ms","timestamp":"2024-04-18T17:52:21.115Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 47ms","timestamp":"2024-04-18T17:52:30.017Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 62ms","timestamp":"2024-04-18T17:54:16.987Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 68ms","timestamp":"2024-04-18T17:54:30.906Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-18T17:54:45.368Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 46ms","timestamp":"2024-04-18T17:54:45.369Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 47ms","timestamp":"2024-04-18T17:54:49.529Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 89ms","timestamp":"2024-04-18T18:40:17.219Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 40ms","timestamp":"2024-04-18T18:40:22.069Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 79ms","timestamp":"2024-04-18T18:40:29.191Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 101ms","timestamp":"2024-04-18T19:13:04.845Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 63ms","timestamp":"2024-04-18T19:13:09.240Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 112ms","timestamp":"2024-04-18T19:13:14.335Z"}
