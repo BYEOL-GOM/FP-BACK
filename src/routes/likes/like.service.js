@@ -49,6 +49,9 @@ export const sendLike = async (worryId, commentId, userId, content) => {
     // 좋아요(답례) 보내기. (고민(worry)을 해결된 상태로 변경)
     const present = await LikeRepository.markWorryAsSolvedAndCreateLike(worryId, commentId, userId, content);
 
+    // 답변 작성자의 별 개수 (remainingStars) +1 추가하기
+    const incrementStar = await LikeRepository.incrementStars(worry.commentAuthorId);
+
     // 해당 worryId에 대한 최신 답변 조회
     const lastReply = await CommentRepository.findLastReplyByWorryId(worryId);
 

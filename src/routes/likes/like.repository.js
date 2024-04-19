@@ -22,6 +22,14 @@ export const verifyCommentExists = async (commentId, worryId) => {
     return !!comment;
 };
 
+// 좋아요 받은 답변 작성자 remainingStars +1 해주기
+export const incrementStars = async (commentAuthorId) => {
+    return await prisma.users.update({
+        where: { userId: parseInt(commentAuthorId) },
+        data: { remainingStars: { increment: 1 } },
+    });
+};
+
 // 선물 보내기
 export const markWorryAsSolvedAndCreateLike = async (worryId, commentId, userId, content) => {
     try {
@@ -79,7 +87,7 @@ export const markWorryAsSolvedAndCreateLike = async (worryId, commentId, userId,
 
         // 답변자의 remainingAnswers(남은 답변 수) 증가시키기
         await prisma.users.updateMany({
-            where: { userId: worryUpdateResult.commentAuthorId, remainingAnswers: { lt: 10 } },
+            where: { userId: worryUpdateResult.commentAuthorId, remainingAnswers: { lt: 5 } },
             data: { remainingAnswers: { increment: 1 } },
         });
 
