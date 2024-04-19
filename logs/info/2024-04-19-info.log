@@ -107,3 +107,37 @@
 {"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 101ms","timestamp":"2024-04-18T19:13:04.845Z"}
 {"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 63ms","timestamp":"2024-04-18T19:13:09.240Z"}
 {"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 112ms","timestamp":"2024-04-18T19:13:14.335Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 119ms","timestamp":"2024-04-19T07:00:49.640Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 64ms","timestamp":"2024-04-19T07:01:01.541Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 64ms","timestamp":"2024-04-19T07:01:32.905Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of undefined (reading 'userId')","timestamp":"2024-04-19T07:23:22.410Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 9ms","timestamp":"2024-04-19T07:23:22.418Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1/?page=1&limit=10, Status: 200, Duration: 39ms","timestamp":"2024-04-19T07:28:50.835Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1/?page=1&limit=10, Status: 200, Duration: 25ms","timestamp":"2024-04-19T07:29:05.530Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1/?page=1&limit=10, Status: 200, Duration: 102ms","timestamp":"2024-04-19T07:37:10.845Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1/?page=1&limit=10, Status: 200, Duration: 14ms","timestamp":"2024-04-19T07:37:14.256Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1/?page=1&limit=10, Status: 200, Duration: 27ms","timestamp":"2024-04-19T07:37:19.172Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1/?page=1&limit=10, Status: 200, Duration: 16ms","timestamp":"2024-04-19T07:37:23.540Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1/?page=1&limit=10, Status: 200, Duration: 17ms","timestamp":"2024-04-19T07:37:28.537Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1/?page=1&limit=10, Status: 200, Duration: 22ms","timestamp":"2024-04-19T07:37:33.087Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1/?page=1&limit=10, Status: 200, Duration: 39ms","timestamp":"2024-04-19T07:37:37.996Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1/?page=1&limit=10, Status: 200, Duration: 61ms","timestamp":"2024-04-19T07:59:18.844Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 고민 게시글을 찾을 수 없습니다.","timestamp":"2024-04-19T07:59:25.284Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1/117, Status: 404, Duration: 29ms","timestamp":"2024-04-19T07:59:25.288Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/117, Status: 200, Duration: 26ms","timestamp":"2024-04-19T07:59:30.905Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry/150, Status: 200, Duration: 50ms","timestamp":"2024-04-19T08:00:03.291Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry, Status: 404, Duration: 3ms","timestamp":"2024-04-19T08:00:06.286Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry, Status: 200, Duration: 30ms","timestamp":"2024-04-19T08:01:13.817Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 고민 게시글을 찾을 수 없습니다.","timestamp":"2024-04-19T08:01:17.722Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1/?page=1&limit=10, Status: 404, Duration: 21ms","timestamp":"2024-04-19T08:01:17.724Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/?page=1&limit=10, Status: 200, Duration: 41ms","timestamp":"2024-04-19T08:01:30.639Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 고민 게시글을 찾을 수 없습니다.","timestamp":"2024-04-19T08:01:35.452Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/117, Status: 404, Duration: 11ms","timestamp":"2024-04-19T08:01:35.454Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 고민 게시글을 찾을 수 없습니다.","timestamp":"2024-04-19T08:02:03.599Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/83, Status: 404, Duration: 19ms","timestamp":"2024-04-19T08:02:03.602Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/?page=1&limit=10, Status: 200, Duration: 25ms","timestamp":"2024-04-19T08:02:36.845Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry, Status: 200, Duration: 18ms","timestamp":"2024-04-19T08:02:42.324Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry, Status: 200, Duration: 26ms","timestamp":"2024-04-19T08:07:06.163Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/?page=1&limit=10, Status: 200, Duration: 24ms","timestamp":"2024-04-19T08:07:18.440Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/75, Status: 200, Duration: 29ms","timestamp":"2024-04-19T08:07:41.800Z"}
+{"level":"info","message":"Method: GET, URL: /myHelpedSolvedWorry/119, Status: 200, Duration: 55ms","timestamp":"2024-04-19T08:08:12.748Z"}

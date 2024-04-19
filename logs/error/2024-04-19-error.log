@@ -31,3 +31,8 @@
 {"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-18T17:32:08.152Z"}
 {"level":"error","message":"Error Status: undefined, Message: loginUser is not defined","timestamp":"2024-04-18T17:49:34.902Z"}
 {"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-18T17:54:45.368Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of undefined (reading 'userId')","timestamp":"2024-04-19T07:23:22.410Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 고민 게시글을 찾을 수 없습니다.","timestamp":"2024-04-19T07:59:25.284Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 고민 게시글을 찾을 수 없습니다.","timestamp":"2024-04-19T08:01:17.722Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 고민 게시글을 찾을 수 없습니다.","timestamp":"2024-04-19T08:01:35.452Z"}
+{"level":"error","message":"Error Status: 404, Message: 해당하는 고민 게시글을 찾을 수 없습니다.","timestamp":"2024-04-19T08:02:03.599Z"}
