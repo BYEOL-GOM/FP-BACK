@@ -149,61 +149,29 @@ export const updateWorryUpdatedAt = async (worryId) => {
         data: { updatedAt: new Date() },
     });
 };
-
-export const deleteSelectedWorryAndComments = async (worryId) => {
-    // 고민에 속한 모든 답변 삭제
-    await prisma.comments.updateMany({
-        where: { worryId },
-        data: { deletedAt: new Date() },
-    });
-    // 고민 삭제
-    await prisma.worries.update({
-        where: { worryId },
-        data: { deletedAt: new Date() },
+// # 사용자 정보 가져오기
+export const getUserById = async (userId) => {
+    return await prisma.users.findUnique({
+        where: { userId },
     });
 };
 
-// # commentId에 해당하는 답장 소프트 삭제
-export const deleteComment = async (commentId) => {
-    await prisma.comments.update({
-        where: { commentId },
-        data: { deletedAt: new Date() },
+// # 유저의 별 개수 업데이트
+export const updateRemainingStars = async (userId, remainingStars) => {
+    return await prisma.users.update({
+        where: { userId },
+        data: { remainingStars },
     });
 };
 
-// # commentId에 해당하는  worryId 소프트 삭제
-export const deleteWorry = async (worryId) => {
-    await prisma.worries.update({
-        where: { worryId },
-        data: { deletedAt: new Date() },
-    });
-};
-// # 사용자 카운트 업데이트
-export const updateUserCounts = async (comment, userId) => {
-    // 최초 고민 작성자와 최초 답변 작성자
-    const worryAuthorId = comment.worry.userId; // 고민을 작성한 사용자 ID
-    const commentAuthorId = comment.worry.commentAuthorId; // 최초 고민에 답변을 단 사용자 ID
-
-    // 최초 고민 작성자의 remainingWorries +1
-    await prisma.users.updateMany({
-        where: { userId: worryAuthorId, remainingWorries: { lt: 5 } }, // 최대 고민 가능 횟수(5) 미만인 경우에만 증가
-        data: { remainingWorries: { increment: 1 } },
-    });
-    // 최초 답변자의 remainingAnswers +1
-    await prisma.users.updateMany({
-        where: { userId: commentAuthorId, remainingAnswers: { lt: 10 } }, // 최대 답변 가능 횟수(10) 미만인 경우에만 증가
-        data: { remainingAnswers: { increment: 1 } },
-    });
-};
-
-// # 답장 신고하기
-export const reportComment = async (commentId, userId, reportReason) => {
-    await prisma.reports.create({
+// # 별수확하고 fruit 업데이트
+export const updateFruitCount = async (userId, fuitToAdd) => {
+    return await prisma.users.update({
+        where: { userId: userId },
         data: {
-            commentId,
-            userId,
-            reason: reportReason,
-            reportedAt: new Date(),
+            fruit: {
+                increment: fuitToAdd,
+            },
         },
     });
 };

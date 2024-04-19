@@ -11,9 +11,11 @@ export const getRandomUser = async (userId) => {
             },
         });
 
-        // 사용 가능한 답변자가 없는 경우 에러 처리
+        // // 사용 가능한 답변자가 없는 경우 에러 처리
         if (potentialResponders.length === 0) {
-            throw new Error('모든 답변자가 답장을 작성중입니다');
+            const error = new Error('모든 답변자가 답장을 작성중입니다');
+            error.status = 400;
+            throw error;
         }
         // 랜덤 답변자 선택
         const randomIndex = Math.floor(Math.random() * potentialResponders.length);
@@ -177,6 +179,18 @@ export const reportWorry = async (worryId, userId, reportReason) => {
     await prisma.reports.create({
         data: {
             worryId,
+            userId,
+            reason: reportReason,
+            reportedAt: new Date(),
+        },
+    });
+};
+
+// # 답장 신고 정보 저장하기
+export const reportComment = async (commentId, userId, reportReason) => {
+    await prisma.reports.create({
+        data: {
+            commentId,
             userId,
             reason: reportReason,
             reportedAt: new Date(),

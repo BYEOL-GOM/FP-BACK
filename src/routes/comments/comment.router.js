@@ -3,7 +3,7 @@ import {
     createReplyController,
     getAllLatestMessagesController,
     getCommentDetailController,
-    reportCommentController,
+    updateFruitCountController,
 } from './comment.controller.js';
 import authMiddleware from '../../middlewares/authMiddleware.js';
 
@@ -20,7 +20,6 @@ router.get('/comments', authMiddleware, getAllLatestMessagesController);
 router.get('/comments/:commentId', authMiddleware, getCommentDetailController);
 // router.get('/comments/:commentId', getCommentDetailController);
 
-// 불쾌한 답장 신고하기 (삭제 포함)
-router.post('/comments/:commentId/report', authMiddleware, reportCommentController);
-
+// 별 수확하기
+router.post('/harvest', authMiddleware, updateFruitCountController);
 export default router;
