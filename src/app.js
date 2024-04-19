@@ -1,12 +1,10 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
-// import kakaoStrategy from './routes/passport/kakaoStrategy.js';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import LogMiddleware from './middlewares/logMiddleware.js';
 import generalErrorHandler from './middlewares/generalErrorMiddleware.js';
 import router from './routes/index.js';
-import passport from 'passport';
 import jwt from 'jsonwebtoken';
 import bodyParser from 'body-parser';
 import { loadBannedWords } from './utils/bannedWordsLoader.js';
@@ -36,26 +34,18 @@ app.use((req, res, next) => {
     next();
 });
 
-// bodyParser와 express.json()은 CORS 설정 바로 다음
 app.use(bodyParser.json());
 app.use(express.json());
 
-// 로깅 및 쿠키 파서 미들웨어
 app.use(LogMiddleware);
-//app.use(TestLogMiddleware);
 app.use(cookieParser());
 
-// Passport 초기화 및 라우팅 설정
-// app.use(passport.initialize()); // Passport를 사용하는 경우 초기화 필요
 app.use('/', router);
 
-// 스웨거 설정
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
-// 에러 핸들링 미들웨어는 가장 마지막에 위치
 app.use(generalErrorHandler);
 
-// 금지어 목록 로드
 loadBannedWords()
     .then(() => {
         console.log('금지어 목록이 메모리에 로드되었습니다.');
