@@ -69,22 +69,22 @@ export const sendLike = async (worryId, commentId, userId, content) => {
     };
 };
 
-// '나의 해결된 고민' 목록 전체 조회
+// '나의 해결된 고민' 목록 전체 조회 -> '내가 등록한 고민' 목록 전체 조회
 export const getSolvedWorriesByUserId = async (userId, page, limit) => {
     return LikeRepository.findSolvedWorriesByUserId(userId, page, limit);
 };
 
-// '나의 해결된 고민' 상세 조회
-export const getSolvedWorryDetailsById = async (worryId, userId) => {
-    return LikeRepository.findSolvedWorryDetailsById(worryId, userId);
-};
-
-// '내가 해결한 고민' 목록 전체 조회
+// '내가 해결한 고민' 목록 전체 조회 -> '내가 답변한 고민' 목록 전체 조회
 export const getHelpedSolveWorriesByUserId = async (userId, page, limit) => {
     return LikeRepository.findHelpedSolveWorriesByUserId(userId, page, limit);
 };
 
-// '내가 해결한 고민' 상세 조회
+// '나의 해결된 고민' 상세 조회 -> '내가 등록한 고민' 상세 조회
+export const getSolvedWorryDetailsById = async (worryId, userId) => {
+    return LikeRepository.findSolvedWorryDetailsById(worryId, userId);
+};
+
+// '내가 해결한 고민' 상세 조회 -> '내가 답변한 고민' 상세 조회
 export const getHelpedSolveWorryDetailsById = async (worryId, userId) => {
     return LikeRepository.findHelpedSolveWorryDetailsById(worryId, userId);
 };

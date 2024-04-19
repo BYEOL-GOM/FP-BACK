@@ -106,13 +106,14 @@ export const findCommentById = async (commentId) => {
     });
 };
 
-// '나의 해결된 고민' 목록 전체 조회
+// '나의 해결된 고민' 목록 전체 조회 -> '내가 등록한 고민' 목록 전체 조회
 export const findSolvedWorriesByUserId = async (userId, page, limit) => {
     const skip = (page - 1) * limit;
     const worries = await prisma.worries.findMany({
         where: {
-            isSolved: true,
+            // isSolved: true,
             userId: userId,
+            deletedAt: null, // 신고,삭제되지 않은 고민만 검색
         },
         select: {
             worryId: true,
@@ -120,6 +121,7 @@ export const findSolvedWorriesByUserId = async (userId, page, limit) => {
             icon: true,
             content: true,
             createdAt: true,
+            isSolved: true, // 해결 여부 포함
         },
         orderBy: {
             createdAt: 'desc',
@@ -130,8 +132,9 @@ export const findSolvedWorriesByUserId = async (userId, page, limit) => {
     // 전체 항목 수를 조회합니다.
     const totalCount = await prisma.worries.count({
         where: {
-            isSolved: true,
+            // isSolved: true,
             userId: userId,
+            deletedAt: null, // 신고,삭제되지 않은 고민에 대한 전체 항목 수를 조회
         },
     });
 
@@ -143,16 +146,17 @@ export const findSolvedWorriesByUserId = async (userId, page, limit) => {
     };
 };
 
-// '내가 해결한 고민' 목록 전체 조회
+// '내가 해결한 고민' 목록 전체 조회 -> '내가 답변한 고민' 목록 전체 조회
 export const findHelpedSolveWorriesByUserId = async (userId, page, limit) => {
     const skip = (page - 1) * limit;
     const worries = await prisma.worries.findMany({
         where: {
-            isSolved: true,
+            // isSolved: true,
             commentAuthorId: userId,
-            solvingComment: {
-                userId: userId,
-            },
+            deletedAt: null, // 신고,삭제되지 않은 고민만 검색
+            // solvingComment: {
+            //     userId: userId,
+            // },
         },
         select: {
             worryId: true,
@@ -160,6 +164,7 @@ export const findHelpedSolveWorriesByUserId = async (userId, page, limit) => {
             icon: true,
             content: true,
             createdAt: true,
+            isSolved: true, // 해결 여부 포함
         },
         orderBy: {
             createdAt: 'desc',
@@ -170,7 +175,8 @@ export const findHelpedSolveWorriesByUserId = async (userId, page, limit) => {
     // 전체 항목 수를 조회합니다.
     const totalCount = await prisma.worries.count({
         where: {
-            isSolved: true,
+            // isSolved: true,
+            deletedAt: null, // 신고,삭제되지 않은 고민에 대한 전체 항목 수를 조회
             commentAuthorId: userId,
             // solvingComment: {
             //     commentAuthorId: userId,
@@ -211,19 +217,20 @@ async function fetchCommentsRecursively(commentId) {
     return comment;
 }
 
-// 나의 해결된 고민 상세조회
+// 나의 해결된 고민 상세 조회 -> '내가 등록한 고민' 상세 조회
 export const findSolvedWorryDetailsById = async (worryId, userId) => {
     const worryDetails = await prisma.worries.findUnique({
         where: {
             worryId: worryId,
             userId: userId,
-            isSolved: true,
+            // isSolved: true,
         },
         select: {
             worryId: true,
+            icon: true,
             content: true,
             createdAt: true,
-            icon: true,
+            isSolved: true, // 해결 여부 포함
             userId: true,
             comments: {
                 where: { parentId: null }, // 최초 댓글만 선택
@@ -249,19 +256,20 @@ export const findSolvedWorryDetailsById = async (worryId, userId) => {
     return worryDetails;
 };
 
-// '내가 해결한 고민' 상세 조회
+// '내가 해결한 고민' 상세 조회 -> '내가 답변한 고민' 상세 조회
 export const findHelpedSolveWorryDetailsById = async (worryId, userId) => {
     const worryDetails = await prisma.worries.findUnique({
         where: {
             worryId: worryId,
             commentAuthorId: userId,
-            isSolved: true,
+            // isSolved: true,
         },
         select: {
             worryId: true,
+            icon: true,
             content: true,
             createdAt: true,
-            icon: true,
+            isSolved: true, // 해결 여부 포함
             userId: true,
             commentAuthorId: true, // 답변 작성자 ID
             comments: {
@@ -520,7 +528,7 @@ export const findTopLikedCommentAuthors = async (userId) => {
     });
 
     // 로그인한 사용자의 전체 순위를 찾기
-    const userIndex = sortedAuthors.findIndex((author) => author.commentAuthorId === userId); //  sortedAuthors 배열에서 로그인한 사용자의 ID (userId)와 일치하는 댓글 작성자 ID를 가진 요소의 인덱스를 찾는다.
+    const userIndex = sortedAuthors.findIndex((author) => author.commentAuthorId === userId); // sortedAuthors 배열에서 로그인한 사용자의 ID (userId)와 일치하는 댓글 작성자 ID를 가진 요소의 인덱스를 찾는다.
     const userLikes = commentAuthorLikesCount[userId] || 0; //  로그인한 사용자의 ID를 키로 사용하여 좋아요 수를 조회. 만약 해당 키에 대한 값이 존재하지 않으면 0을 기본 값으로 사용
     const userRank = userIndex !== -1 ? userIndex + 1 : sortedAuthors.length + 1; // 삼항 연산자를 사용하여 사용자의 순위 계산. 배열은 0부터 인덱스를 시작하므로 실제 순위를 얻기 위해 1을 더함.
 

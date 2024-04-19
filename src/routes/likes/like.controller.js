@@ -16,12 +16,11 @@ export const sendLike = async (req, res, next) => {
     }
 };
 
-// '나의 해결된 고민' 목록 전체 조회
+// '나의 해결된 고민' 목록 전체 조회 -> '내가 등록한 고민' 목록 전체 조회
 export const getSolvedWorries = async (req, res, next) => {
     try {
         const userId = parseInt(res.locals.user.userId);
-        // const { userId } = req.params;
-        console.log('🩵🩵🩵컨트롤러 userId : ', userId);
+        // const userId = parseInt(req.body.userId);
 
         // 페이지네이션
         const page = parseInt(req.query.page) || 1; // 페이지 번호, 기본값은 1
@@ -47,11 +46,11 @@ export const getSolvedWorries = async (req, res, next) => {
     }
 };
 
-// '내가 해결한 고민' 목록 전체 조회
+// '내가 해결한 고민' 목록 전체 조회 -> '내가 답변한 고민' 목록 전체 조회
 export const getHelpedSolveWorries = async (req, res, next) => {
     try {
         const userId = parseInt(res.locals.user.userId);
-        // const { userId } = req.params;
+        // const userId = parseInt(req.body.userId);
 
         // 페이지네이션
         const page = parseInt(req.query.page) || 1; // 페이지 번호, 기본값은 1
@@ -77,12 +76,12 @@ export const getHelpedSolveWorries = async (req, res, next) => {
     }
 };
 
-// '나의 해결된 고민' 상세 조회
+// '나의 해결된 고민' 상세 조회 -> '내가 등록한 고민' 상세 조회
 export const getSolvedWorryDetails = async (req, res, next) => {
     try {
         const { worryId } = req.params;
         const userId = parseInt(res.locals.user.userId);
-        // const { userId, worryId } = req.params;
+        // const userId = parseInt(req.body.userId);
 
         if (!worryId) {
             const err = new Error('고민 게시글 ID가 제공되지 않았습니다.');
@@ -111,12 +110,12 @@ export const getSolvedWorryDetails = async (req, res, next) => {
     }
 };
 
-// '내가 해결한 고민' 상세 조회
+// '내가 해결한 고민' 상세 조회 -> '내가 답변한 고민' 상세 조회
 export const getHelpedSolveWorryDetails = async (req, res, next) => {
     try {
         const { worryId } = req.params;
         const userId = parseInt(res.locals.user.userId);
-        // const { userId, worryId } = req.params;
+        // const userId = parseInt(req.body.userId);
 
         if (!worryId) {
             const err = new Error('고민 게시글 ID가 제공되지 않았습니다.');
