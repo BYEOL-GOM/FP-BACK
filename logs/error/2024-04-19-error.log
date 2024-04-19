@@ -24,3 +24,15 @@
 {"level":"error","message":"Error Status: 404, Message: 해당하는 고민 게시글을 찾을 수 없습니다.","timestamp":"2024-04-19T08:01:17.722Z"}
 {"level":"error","message":"Error Status: 404, Message: 해당하는 고민 게시글을 찾을 수 없습니다.","timestamp":"2024-04-19T08:01:35.452Z"}
 {"level":"error","message":"Error Status: 404, Message: 해당하는 고민 게시글을 찾을 수 없습니다.","timestamp":"2024-04-19T08:02:03.599Z"}
+{"level":"error","message":"Error Status: 403, Message: 답장을 조회할 권한이 없습니다.","timestamp":"2024-04-19T06:36:41.373Z"}
+{"level":"error","message":"Error Status: 403, Message: 답장을 조회할 권한이 없습니다.","timestamp":"2024-04-19T06:43:54.142Z"}
+{"level":"error","message":"Error Status: 403, Message: 답장을 조회할 권한이 없습니다.","timestamp":"2024-04-19T06:44:01.027Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'content')","timestamp":"2024-04-19T06:46:01.847Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'content')","timestamp":"2024-04-19T06:46:03.875Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.comments.findUnique()` invocation:\n\n\nUnknown nested field 'parentWorry' for operation worry does not match any query.","timestamp":"2024-04-19T06:59:06.926Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.comments.findUnique()` invocation:\n\n\nUnknown nested field 'parentWorry' for operation worry does not match any query.","timestamp":"2024-04-19T06:59:08.325Z"}
+{"level":"error","message":"Error Status: undefined, Message: \nInvalid `prisma.comments.findUnique()` invocation:\n\n\nUnknown nested field 'parentWorry' for operation worry does not match any query.","timestamp":"2024-04-19T07:00:35.172Z"}
+{"level":"error","message":"Error Status: 403, Message: 답장을 조회할 권한이 없습니다.","timestamp":"2024-04-19T07:02:08.777Z"}
+{"level":"error","message":"Error Status: 403, Message: 답변 작성 권한이 없습니다.","timestamp":"2024-04-19T07:10:29.037Z"}
+{"level":"error","message":"Error Status: 403, Message: 답장을 조회할 권한이 없습니다.","timestamp":"2024-04-19T07:10:43.197Z"}
+{"level":"error","message":"Error Status: 403, Message: 답장을 조회할 권한이 없습니다.","timestamp":"2024-04-19T07:32:55.997Z"}
