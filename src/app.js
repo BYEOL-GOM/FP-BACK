@@ -12,12 +12,14 @@ import { swaggerUi, specs } from './swagger/swaggerOptions.js';
 import './scheduler.js';
 
 const app = express();
-const PORT = 3000; // 환경 변수에서 포트를 설정할 수 있도록 변경
+
+// 환경 변수에서 CONTAINER_PORT를 불러옵니다. 없다면 기본값으로 3000을 사용합니다.
+const PORT = process.env.CONTAINER_PORT || 3000;
 
 // CORS 미들웨어 설정
 app.use(
     cors({
-        origin: '*',
+        origin: process.env.CORS_ORIGIN || '*', // 환경 변수 CORS_ORIGIN을 사용하거나 기본값으로 모든 도메인 허용
         methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
         allowedHeaders: ['Content-Type', 'Authorization'],
     }),
@@ -26,7 +28,7 @@ app.use(
 // CORS Preflight 요청 처리
 app.use((req, res, next) => {
     if (req.method === 'OPTIONS') {
-        res.header('Access-Control-Allow-Origin', req.headers.origin);
+        res.header('Access-Control-Allow-Origin', req.headers.origin); // 요청이 온 원점(origin)을 허용
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
         res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
         return res.status(204).json({});
