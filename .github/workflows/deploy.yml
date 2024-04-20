@@ -38,13 +38,13 @@ jobs:
               run: |
                   if [ "${{ github.ref }}" == "refs/heads/dev" ]; then
                     echo "CORS_ORIGIN=${{ secrets.CORS_ORIGIN_DEV }}" >> $GITHUB_ENV
-                    echo "KAKAO_REDIRECT_URI=${{ secrets.KAKAO_REDIRECT_URI_DEV }}" >> $GITHUB_ENV
+                    echo "KAKAO_REDIRECT_URI=${{ secrets.DEV_KAKAO_REDIRECT_URI }}" >> $GITHUB_ENV
                     echo "DATABASE_URL=${{ secrets.DEV_DATABASE_URL }}" >> $GITHUB_ENV
                     echo "CONTAINER_NAME=my-app-dev" >> $GITHUB_ENV
                     echo "CONTAINER_PORT=3000" >> $GITHUB_ENV
                   else
                     echo "CORS_ORIGIN=${{ secrets.CORS_ORIGIN_PROD }}" >> $GITHUB_ENV
-                    echo "KAKAO_REDIRECT_URI=${{ secrets.KAKAO_REDIRECT_URI_PROD }}" >> $GITHUB_ENV
+                    echo "KAKAO_REDIRECT_URI=${{ secrets.PROD_KAKAO_REDIRECT_URI }}" >> $GITHUB_ENV
                     echo "DATABASE_URL=${{ secrets.PROD_DATABASE_URL }}" >> $GITHUB_ENV
                     echo "CONTAINER_NAME=my-app-prod" >> $GITHUB_ENV
                     echo "CONTAINER_PORT=3001" >> $GITHUB_ENV
