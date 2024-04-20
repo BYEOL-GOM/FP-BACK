@@ -28,7 +28,7 @@ jobs:
               with:
                   context: .
                   push: true
-                  tags: leticia0408/byeol_gom:latest
+                  tags: leticia0408/byeol_gom:${{ github.ref == 'refs/heads/dev' && 'latest-dev' || 'latest-prod' }}
 
     deploy:
         runs-on: ubuntu-latest
@@ -41,13 +41,13 @@ jobs:
                     echo "KAKAO_REDIRECT_URI=${{ secrets.KAKAO_REDIRECT_URI_DEV }}" >> $GITHUB_ENV
                     echo "DATABASE_URL=${{ secrets.DEV_DATABASE_URL }}" >> $GITHUB_ENV
                     echo "CONTAINER_NAME=my-app-dev" >> $GITHUB_ENV
-                    echo "CONTAINER_PORT=3000" >> $GITHUB_ENV  # Adjust this as necessary
+                    echo "CONTAINER_PORT=3000" >> $GITHUB_ENV
                   else
                     echo "CORS_ORIGIN=${{ secrets.CORS_ORIGIN_PROD }}" >> $GITHUB_ENV
                     echo "KAKAO_REDIRECT_URI=${{ secrets.KAKAO_REDIRECT_URI_PROD }}" >> $GITHUB_ENV
                     echo "DATABASE_URL=${{ secrets.PROD_DATABASE_URL }}" >> $GITHUB_ENV
                     echo "CONTAINER_NAME=my-app-prod" >> $GITHUB_ENV
-                    echo "CONTAINER_PORT=3001" >> $GITHUB_ENV  # Adjust this as necessary
+                    echo "CONTAINER_PORT=3001" >> $GITHUB_ENV
                   fi
             - uses: appleboy/ssh-action@v0.1.6
               with:
@@ -58,7 +58,7 @@ jobs:
                   script: |
                       docker system prune -a -f --volumes
                       echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-                      docker pull leticia0408/byeol_gom:latest
+                      docker pull leticia0408/byeol_gom:${{ github.ref == 'refs/heads/dev' && 'latest-dev' || 'latest-prod' }}
                       docker stop ${{ env.CONTAINER_NAME }} || true
                       docker rm ${{ env.CONTAINER_NAME }} || true
                       docker run -d --name ${{ env.CONTAINER_NAME }} -p ${{ env.CONTAINER_PORT }}:3000 \
@@ -73,4 +73,4 @@ jobs:
                         -e ACCESS_TOKEN_LIFE="${{ secrets.ACCESS_TOKEN_LIFE }}" \
                         -e REFRESH_TOKEN_LIFE="${{ secrets.REFRESH_TOKEN_LIFE }}" \
                         -e CLIENT_SECRET="${{ secrets.CLIENT_SECRET }}" \
-                        leticia0408/byeol_gom:latest
+                        leticia0408/byeol_gom:${{ github.ref == 'refs/heads/dev' && 'latest-dev' || 'latest-prod' }}
