@@ -26,6 +26,7 @@ model Users {
 
   comments  Comments[]
   likesSent     Likes[] @relation("LikeSender")     // 선물을 보낸 사람 
+  planetHistory PlanetBuyHistory[]
 }
 
 enum PlanetType{
@@ -136,4 +137,11 @@ model Reports {
   // 답변이 신고된 경우
   commentId   Int?     
   comment     Comments? @relation(fields: [commentId], references: [commentId])
+}
+
+model PlanetBuyHistory {
+  HistoryId Int             @id @default(autoincrement())
+  userId    Int
+  user      Users           @relation(fields: [userId], references: [userId])
+  planetType PlanetType     @default(A)
 }
