@@ -36,3 +36,16 @@
 {"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 337ms","timestamp":"2024-04-20T07:44:36.157Z"}
 {"level":"error","message":"Error Status: undefined, Message: Cannot read properties of undefined (reading 'nickname')","timestamp":"2024-04-20T07:46:25.703Z"}
 {"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 103ms","timestamp":"2024-04-20T07:46:25.708Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-20T14:02:58.957Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 76ms","timestamp":"2024-04-20T14:02:58.963Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-20T14:03:15.366Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 56ms","timestamp":"2024-04-20T14:03:15.367Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-20T14:03:22.639Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 31ms","timestamp":"2024-04-20T14:03:22.640Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-20T14:03:39.342Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 55ms","timestamp":"2024-04-20T14:03:39.343Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-20T14:05:05.009Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 40ms","timestamp":"2024-04-20T14:05:05.010Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-20T14:05:12.762Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 27ms","timestamp":"2024-04-20T14:05:12.763Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 401, Duration: 3ms","timestamp":"2024-04-20T14:13:03.162Z"}
