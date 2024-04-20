@@ -56,14 +56,14 @@ export const kakaoLoginController = async (req, res) => {
             });
 
             const accessToken = jwt.sign(
-                { userId: createUser.userId, planet: createUser.planet },
+                { userId: createUser.userId },
                 process.env.ACCESS_TOKEN_SECRET,
                 {
                     expiresIn: process.env.ACCESS_TOKEN_LIFE,
                 },
             );
             const refreshToken = jwt.sign(
-                { userId: createUser.userId, planet: createUser.planet },
+                { userId: createUser.userId },
                 process.env.REFRESH_TOKEN_SECRET,
                 {
                     expiresIn: process.env.REFRESH_TOKEN_LIFE,
@@ -75,14 +75,14 @@ export const kakaoLoginController = async (req, res) => {
         }
 
         const accessToken = jwt.sign(
-            { userId: findUser.userId, planet: findUser.planet },
+            { userId: findUser.userId },
             process.env.ACCESS_TOKEN_SECRET,
             {
                 expiresIn: process.env.ACCESS_TOKEN_LIFE,
             },
         );
         const refreshToken = jwt.sign(
-            { userId: findUser.userId, planet: findUser.planet },
+            { userId: findUser.userId },
             process.env.REFRESH_TOKEN_SECRET,
             {
                 expiresIn: process.env.REFRESH_TOKEN_LIFE,
