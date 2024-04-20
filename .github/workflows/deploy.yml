@@ -38,14 +38,16 @@ jobs:
               run: |
                   if [ "${{ github.ref }}" == "refs/heads/dev" ]; then
                     echo "CORS_ORIGIN=${{ secrets.CORS_ORIGIN_DEV }}" >> $GITHUB_ENV
-                    echo "KAKAO_REDIRECT_URI=${{ secrets.DEV_KAKAO_REDIRECT_URI }}" >> $GITHUB_ENV
-                    echo "CONTAINER_PORT=${{ secrets.DEV_PORT }}" >> $GITHUB_ENV
+                    echo "KAKAO_REDIRECT_URI=${{ secrets.KAKAO_REDIRECT_URI_DEV }}" >> $GITHUB_ENV
+                    echo "DATABASE_URL=${{ secrets.DEV_DATABASE_URL }}" >> $GITHUB_ENV
                     echo "CONTAINER_NAME=my-app-dev" >> $GITHUB_ENV
+                    echo "CONTAINER_PORT=3000" >> $GITHUB_ENV  # Adjust this as necessary
                   else
                     echo "CORS_ORIGIN=${{ secrets.CORS_ORIGIN_PROD }}" >> $GITHUB_ENV
-                    echo "KAKAO_REDIRECT_URI=${{ secrets.PROD_KAKAO_REDIRECT_URI }}" >> $GITHUB_ENV
-                    echo "CONTAINER_PORT=${{ secrets.PROD_PORT }}" >> $GITHUB_ENV
+                    echo "KAKAO_REDIRECT_URI=${{ secrets.KAKAO_REDIRECT_URI_PROD }}" >> $GITHUB_ENV
+                    echo "DATABASE_URL=${{ secrets.PROD_DATABASE_URL }}" >> $GITHUB_ENV
                     echo "CONTAINER_NAME=my-app-prod" >> $GITHUB_ENV
+                    echo "CONTAINER_PORT=3001" >> $GITHUB_ENV  # Adjust this as necessary
                   fi
             - uses: appleboy/ssh-action@v0.1.6
               with:
@@ -62,7 +64,7 @@ jobs:
                       docker run -d --name ${{ env.CONTAINER_NAME }} -p ${{ env.CONTAINER_PORT }}:3000 \
                         -e CORS_ORIGIN="${{ env.CORS_ORIGIN }}" \
                         -e KAKAO_REDIRECT_URI="${{ env.KAKAO_REDIRECT_URI }}" \
-                        -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
+                        -e DATABASE_URL="${{ env.DATABASE_URL }}" \
                         -e KAKAO_REST_API_KEY="${{ secrets.KAKAO_REST_API_KEY }}" \
                         -e SESSION_SECRET="${{ secrets.SESSION_SECRET }}" \
                         -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
