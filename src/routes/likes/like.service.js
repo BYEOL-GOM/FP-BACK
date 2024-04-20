@@ -49,6 +49,9 @@ export const sendLike = async (worryId, commentId, userId, content) => {
     // 좋아요(답례) 보내기. (고민(worry)을 해결된 상태로 변경)
     const present = await LikeRepository.markWorryAsSolvedAndCreateLike(worryId, commentId, userId, content);
 
+    // 답변 작성자의 별 개수 (remainingStars) +1 추가하기
+    const incrementStar = await LikeRepository.incrementStars(worry.commentAuthorId);
+
     // 해당 worryId에 대한 최신 답변 조회
     const lastReply = await CommentRepository.findLastReplyByWorryId(worryId);
 
@@ -66,22 +69,22 @@ export const sendLike = async (worryId, commentId, userId, content) => {
     };
 };
 
-// '나의 해결된 고민' 목록 전체 조회
+// '나의 해결된 고민' 목록 전체 조회 -> '내가 등록한 고민' 목록 전체 조회
 export const getSolvedWorriesByUserId = async (userId, page, limit) => {
     return LikeRepository.findSolvedWorriesByUserId(userId, page, limit);
 };
 
-// '나의 해결된 고민' 상세 조회
-export const getSolvedWorryDetailsById = async (worryId, userId) => {
-    return LikeRepository.findSolvedWorryDetailsById(worryId, userId);
-};
-
-// '내가 해결한 고민' 목록 전체 조회
+// '내가 해결한 고민' 목록 전체 조회 -> '내가 답변한 고민' 목록 전체 조회
 export const getHelpedSolveWorriesByUserId = async (userId, page, limit) => {
     return LikeRepository.findHelpedSolveWorriesByUserId(userId, page, limit);
 };
 
-// '내가 해결한 고민' 상세 조회
+// '나의 해결된 고민' 상세 조회 -> '내가 등록한 고민' 상세 조회
+export const getSolvedWorryDetailsById = async (worryId, userId) => {
+    return LikeRepository.findSolvedWorryDetailsById(worryId, userId);
+};
+
+// '내가 해결한 고민' 상세 조회 -> '내가 답변한 고민' 상세 조회
 export const getHelpedSolveWorryDetailsById = async (worryId, userId) => {
     return LikeRepository.findHelpedSolveWorryDetailsById(worryId, userId);
 };

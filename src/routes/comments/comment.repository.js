@@ -87,12 +87,13 @@ export const getComment = async (commentId) => {
             worry: {
                 select: {
                     userId: true,
+                    content: true, // 고민의 내용도 조회
                     icon: true,
                     commentAuthorId: true,
                     isSolved: true,
                 },
             },
-            parent: { select: { userId: true } }, // 대댓글의 경우, 부모 댓글의 작성자id (userId) 조회
+            parent: { select: { userId: true, content: true } }, // 대댓글의 경우, 부모 댓글의 작성자id (userId) 조회
         },
     });
 };
@@ -147,5 +148,31 @@ export const updateWorryUpdatedAt = async (worryId) => {
     return prisma.worries.update({
         where: { worryId: parseInt(worryId) },
         data: { updatedAt: new Date() },
+    });
+};
+// # 사용자 정보 가져오기
+export const getUserById = async (userId) => {
+    return await prisma.users.findUnique({
+        where: { userId },
+    });
+};
+
+// # 유저의 별 개수 업데이트
+export const updateRemainingStars = async (userId, remainingStars) => {
+    return await prisma.users.update({
+        where: { userId },
+        data: { remainingStars },
+    });
+};
+
+// # 별수확하고 fruit 업데이트
+export const updateFruitCount = async (userId, fuitToAdd) => {
+    return await prisma.users.update({
+        where: { userId: userId },
+        data: {
+            fruit: {
+                increment: fuitToAdd,
+            },
+        },
     });
 };
