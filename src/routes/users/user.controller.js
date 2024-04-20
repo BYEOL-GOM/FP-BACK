@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { prisma } from '../../utils/prisma/index.js';
 import jwt from 'jsonwebtoken';
-
 // 카카오
 export const kakaoLoginController = async (req, res) => {
     try {
@@ -27,15 +26,13 @@ export const kakaoLoginController = async (req, res) => {
             },
         });
 
-        const userInfo = userInfoResponse.data;
-
         const {
             id,
             kakao_account: {
                 email,
                 profile: { nickname },
             },
-        } = userInfoResponse.data;
+        } = userInfo;
 
         const user = {
             id,
@@ -48,35 +45,51 @@ export const kakaoLoginController = async (req, res) => {
         });
 
         if (!findUser) {
+            const lastUser = await prisma.users.count();
             const createUser = await prisma.users.create({
                 data: {
                     userCheckId: user.id.toString(),
-                    nickname: user.nickname,
+                    nickname: `고민의 늪에 빠진 곰 ${lastUser + 1}`,
                     email: user.email,
+                    // 'planet' 필드는 스키마에서 기본값 'A'가 정의되어 있으므로 여기서 명시적으로 지정하지 않아도 됩니다.
                 },
             });
 
-            const accessToken = jwt.sign({ userId: createUser.userId }, process.env.ACCESS_TOKEN_SECRET, {
-                expiresIn: process.env.ACCESS_TOKEN_LIFE,
-            });
-            const refreshToken = jwt.sign({ userId: createUser.userId }, process.env.REFRESH_TOKEN_SECRET, {
-                expiresIn: process.env.REFRESH_TOKEN_LIFE,
-            });
+            const accessToken = jwt.sign(
+                { userId: createUser.userId, planet: createUser.planet },
+                process.env.ACCESS_TOKEN_SECRET,
+                {
+                    expiresIn: process.env.ACCESS_TOKEN_LIFE,
+                },
+            );
+            const refreshToken = jwt.sign(
+                { userId: createUser.userId, planet: createUser.planet },
+                process.env.REFRESH_TOKEN_SECRET,
+                {
+                    expiresIn: process.env.REFRESH_TOKEN_LIFE,
+                },
+            );
             return res
                 .status(200)
                 .json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}` });
-            //return res.status(200).json(userInfo);
         }
 
-        const accessToken = jwt.sign({ userId: findUser.userId }, process.env.ACCESS_TOKEN_SECRET, {
-            expiresIn: process.env.ACCESS_TOKEN_LIFE,
-        });
-        const refreshToken = jwt.sign({ userId: findUser.userId }, process.env.REFRESH_TOKEN_SECRET, {
-            expiresIn: process.env.REFRESH_TOKEN_LIFE,
-        });
+        const accessToken = jwt.sign(
+            { userId: findUser.userId, planet: findUser.planet },
+            process.env.ACCESS_TOKEN_SECRET,
+            {
+                expiresIn: process.env.ACCESS_TOKEN_LIFE,
+            },
+        );
+        const refreshToken = jwt.sign(
+            { userId: findUser.userId, planet: findUser.planet },
+            process.env.REFRESH_TOKEN_SECRET,
+            {
+                expiresIn: process.env.REFRESH_TOKEN_LIFE,
+            },
+        );
 
         return res.status(200).json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}` });
-        //return res.status(200).json(ID);
     } catch (error) {
         console.error(error);
         return res.status(405).json({ message: '카카오 인증 및 사용자 정보 가져오기 오류' });
@@ -124,10 +137,11 @@ export const naverLoginController = async (req, res) => {
         });
 
         if (!findUser) {
+            const lastUser = await prisma.users.count();
             const createUser = await prisma.users.create({
                 data: {
-                    userCheckId: user.id,
-                    nickname: user.nickname,
+                    userCheckId: user.id.toString(),
+                    nickname: `고민의 늪에 빠진 곰 ${lastUser + 1}`,
                     email: user.email,
                 },
             });
