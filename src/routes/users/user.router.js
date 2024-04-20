@@ -190,7 +190,7 @@ router.post('/buyPlanet', authMiddleware, async (req, res) => {
 });
 
 // 사용자가 보유한 행성 조회하는 API
-router.get('/purchased-planets', authMiddleware, async (req, res) => {
+router.get('/getPlanets', authMiddleware, async (req, res) => {
     const userId = res.locals.user.userId;  // 인증 미들웨어를 통해 얻은 사용자 ID
 
     try {
@@ -218,6 +218,54 @@ router.get('/purchased-planets', authMiddleware, async (req, res) => {
         console.error("행성 유형 조회 중 오류 발생:", error);
         res.status(500).json({
             message: "행성 유형 조회 중 서버 오류가 발생했습니다.",
+            errorMessage: error.message
+        });
+    }
+});
+
+// 행성 교체하는 API
+router.put('/changePlanet', authMiddleware, async (req, res) => {
+    const userId = res.locals.user.userId;  // 인증 미들웨어를 통해 얻은 사용자 ID
+    const { newPlanetType } = req.body;  // 클라이언트로부터 받은 새 행성 유형
+
+    try {
+        // 먼저 사용자가 구매한 모든 행성 유형을 조회
+        const purchasedPlanets = await prisma.planetBuyHistory.findMany({
+            where: { userId: userId },
+            select: { planetType: true }
+        });
+
+        const purchasedTypes = purchasedPlanets.map(p => p.planetType);
+
+        // 사용자가 구매한 행성 유형 중에서 요청된 행성 유형이 있는지 검증
+        if (!purchasedTypes.includes(newPlanetType)) {
+            return res.status(400).json({
+                message: "요청된 행성 유형은 사용자가 구매한 행성 중에 없습니다. 교체할 수 없습니다."
+            });
+        }
+
+        // 검증 후, 행성 유형 업데이트
+        const updatedUser = await prisma.users.update({
+            where: {
+                userId: userId,
+            },
+            data: {
+                planet: newPlanetType
+            },
+            select: {
+                planet: true  // 업데이트된 행성 유형만 반환
+            }
+        });
+
+        // 클라이언트에 업데이트된 행성 유형을 응답
+        res.status(200).json({
+            message: "행성 유형이 성공적으로 변경되었습니다.",
+            newPlanetType: updatedUser.planet
+        });
+    } catch (error) {
+        console.error("행성 유형 변경 실패:", error);
+        res.status(500).json({
+            message: "행성 유형 변경 중 내부 오류가 발생했습니다.",
             errorMessage: error.message
         });
     }
