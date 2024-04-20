@@ -51,7 +51,6 @@ export const kakaoLoginController = async (req, res) => {
                     userCheckId: user.id.toString(),
                     nickname: `고민의 늪에 빠진 곰 ${lastUser + 1}`,
                     email: user.email,
-                    // 'planet' 필드는 스키마에서 기본값 'A'가 정의되어 있으므로 여기서 명시적으로 지정하지 않아도 됩니다.
                 },
             });
 
