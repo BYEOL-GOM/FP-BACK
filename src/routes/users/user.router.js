@@ -268,4 +268,3 @@ router.put('/changePlanet', authMiddleware, async (req, res) => {
         });
     }
 });
-// 제발되라

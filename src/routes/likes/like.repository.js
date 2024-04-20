@@ -379,9 +379,66 @@ export const findTopLikedCommentAuthors = async (userId) => {
     });
 
     // 최종적으로 반환된 상위 사용자 목록에 순위를 할당
-    sortedAuthors.forEach((author, index) => {
-        author.rank = index + 1; // 각 사용자에게 순위 할당
-    });
+    // sortedAuthors.forEach((author, index) => {
+    //     author.rank = index + 1; // 각 사용자에게 순위 할당
+    // });
 
     return topFiveAuthors;
 };
+//------------------------------------------------------------------------------------------------
+// 좋아요 0개 받은 유저도 상황에 따라 랭커에 포함 시킬 수 있게 수정
+// export const findTopLikedCommentAuthors = async (userId) => {
+//     // 모든 사용자와 초기 좋아요 수를 불러옴
+//     const allUsers = await prisma.users.findMany({
+//         select: { userId: true, nickname: true },
+//     });
+
+//     // 모든 사용자에 대해 좋아요 수를 0으로 초기화
+//     const commentAuthorLikesCount = allUsers.reduce((acc, user) => {
+//         acc[user.userId] = 0; // 초기 좋아요 수 0
+//         return acc;
+//     }, {});
+
+//     // 좋아요 데이터를 포함하여 모든 댓글을 조회
+//     const likes = await prisma.likes.findMany({
+//         include: {
+//             comment: {
+//                 include: {
+//                     user: { select: { userId: true } },
+//                 },
+//             },
+//         },
+//     });
+
+//     // 좋아요 받은 각 댓글 작성자 ID 별로 좋아요 수를 계산
+//     likes.forEach((like) => {
+//         const commentAuthorId = like.comment.user.userId;
+//         commentAuthorLikesCount[commentAuthorId]++; // 해당 ID의 좋아요 수를 누적
+//     });
+
+//     // 좋아요 수에 따라 사용자를 내림차순으로 정렬
+//     let sortedAuthors = Object.entries(commentAuthorLikesCount)
+//         .map(([commentAuthorId, likes]) => ({
+//             commentAuthorId: parseInt(commentAuthorId),
+//             likes,
+//             nickname: allUsers.find((u) => u.userId === parseInt(commentAuthorId)).nickname,
+//         }))
+//         .sort((a, b) => b.likes - a.likes);
+
+//     // 좋아요 수가 가장 많은 상위 5명을 추출
+//     let topFiveAuthors = sortedAuthors.slice(0, 5);
+
+//     // 로그인한 사용자의 정보 추가 및 순위 계산
+//     const userIndex = sortedAuthors.findIndex((author) => author.commentAuthorId === userId);
+//     const userRank = userIndex !== -1 ? userIndex + 1 : sortedAuthors.length + 1;
+//     const userLikes = commentAuthorLikesCount[userId];
+
+//     topFiveAuthors.push({
+//         userId: userId,
+//         likes: userLikes,
+//         nickname: allUsers.find((u) => u.userId === userId).nickname,
+//         rank: userRank,
+//     });
+
+//     return topFiveAuthors;
+// };
