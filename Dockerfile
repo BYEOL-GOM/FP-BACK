@@ -1,10 +1,13 @@
 # 기반 이미지 선택 (Node.js 안정된 최신버전)
-FROM node:alpine 
+FROM node:alpine
 
 # 애플리케이션 디렉토리 생성
 WORKDIR /app
 
-# package.json 과 package-lock.json을 /app 디렉토리로 복사
+# PM2 글로벌 설치
+RUN yarn global add pm2
+
+# package.json 과 yarn.lock을 /app 디렉토리로 복사
 COPY package.json yarn.lock ./
 
 # 의존성 설치
@@ -19,7 +22,5 @@ RUN yarn prisma generate
 # 애플리케이션 실행을 위한 포트 열기
 EXPOSE 3000
 
-# 환경 변수에 따라 애플리케이션 실행 명령 선택
-CMD ["sh", "-c", "yarn docker"]
-
-
+# 애플리케이션 실행
+CMD ["pm2-runtime", "src/app.js"]
