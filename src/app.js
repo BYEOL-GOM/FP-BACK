@@ -12,8 +12,9 @@ import { swaggerUi, specs } from './swagger/swaggerOptions.js';
 import './scheduler.js';
 
 const app = express();
-// 환경 변수에서 PORT를 불러옵니다. 없다면 기본값으로 3000을 사용합니다.
-const PORT = process.env.PORT || 3000;
+
+// 환경 변수에서 CONTAINER_PORT를 불러옵니다. 없다면 기본값으로 3000을 사용합니다.
+const PORT = process.env.CONTAINER_PORT || 3000;
 
 // CORS 미들웨어 설정
 const corsOptions = {
