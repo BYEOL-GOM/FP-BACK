@@ -370,12 +370,6 @@ export const findTopLikedCommentAuthors = async (userId) => {
     //     });
     // }
 
-    // // 최종적으로 반환된 상위 사용자 목록에 순위를 할당
-    // sortedAuthors.forEach((author, index) => {
-    //     author.rank = index + 1; // 각 사용자에게 순위 할당
-    // });
-
-    // return topFiveAuthors;
     // 로그인한 사용자의 정보를 항상 목록에 추가
     topFiveAuthors.push({
         userId: userId,
