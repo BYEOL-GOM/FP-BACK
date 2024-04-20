@@ -1,10 +1,9 @@
 name: Deploy on dev Push or Merge
 
 on:
-    pull_request:
+    push:
         branches:
             - dev
-        types: [closed]
 
 jobs:
     prettier-check:

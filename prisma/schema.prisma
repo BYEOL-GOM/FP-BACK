@@ -18,6 +18,8 @@ model Users {
   fruit         Int     @default(0)
   remainingWorries Int @default(5) //  최대 고민작성 가능 개수 5
   remainingAnswers Int @default(5) // 답변 가능 개수 5개
+  remainingStars  Int      @default(0) // 별의 개수 
+
 
   worry Worries[]
   reports     Reports[]  // 신고
