@@ -147,8 +147,8 @@ export const getHelpedSolveWorryDetails = async (req, res, next) => {
 export const getTopLikedCommentAuthors = async (req, res, next) => {
     try {
         // 로그인한 사용자가 있다면, 그 사용자의 ID를 가져오기.
-        // const userId = parseInt(res.locals.user.userId);
-        const userId = parseInt(req.body.userId);
+        const userId = parseInt(res.locals.user.userId);
+        // const userId = parseInt(req.body.userId);
 
         const topUsers = await LikeService.getTopLikedCommentAuthors(userId);
 
