@@ -48,10 +48,11 @@ export const kakaoLoginController = async (req, res) => {
         });
 
         if (!findUser) {
+            const lastUser = await prisma.users.count();
             const createUser = await prisma.users.create({
                 data: {
                     userCheckId: user.id.toString(),
-                    nickname: user.nickname,
+                    nickname: `고민의 늪에 빠진 곰 ${lastUser + 1}`,
                     email: user.email,
                 },
             });
@@ -124,10 +125,11 @@ export const naverLoginController = async (req, res) => {
         });
 
         if (!findUser) {
+            const lastUser = await prisma.users.count();
             const createUser = await prisma.users.create({
                 data: {
-                    userCheckId: user.id,
-                    nickname: user.nickname,
+                    userCheckId: user.id.toString(),
+                    nickname: `고민의 늪에 빠진 곰 ${lastUser + 1}`,
                     email: user.email,
                 },
             });
@@ -190,12 +192,16 @@ export const refreshController = async (req, res, next) => {
             throw err;
         }
 
-        const newAccessToken = jwt.sign({ userId: user.userId }, process.env.ACCESS_TOKEN_SECRET, {
+        const newAccessToken = jwt.sign({ userId: user.userId, planet: user.planet }, process.env.ACCESS_TOKEN_SECRET, {
             expiresIn: process.env.ACCESS_TOKEN_LIFE,
         });
-        const newRefreshToken = jwt.sign({ userId: user.userId }, process.env.REFRESH_TOKEN_SECRET, {
-            expiresIn: process.env.REFRESH_TOKEN_LIFE,
-        });
+        const newRefreshToken = jwt.sign(
+            { userId: user.userId, planet: user.planet },
+            process.env.REFRESH_TOKEN_SECRET,
+            {
+                expiresIn: process.env.REFRESH_TOKEN_LIFE,
+            },
+        );
 
         return res.status(200).json({
             message: '토큰이 재발급 되었습니다',
