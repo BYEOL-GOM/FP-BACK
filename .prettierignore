@@ -1,2 +1,3 @@
 logs/
 README.md
+.github/workflows/deploy.yml
