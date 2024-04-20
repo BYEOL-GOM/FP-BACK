@@ -12,7 +12,7 @@ import { swaggerUi, specs } from './swagger/swaggerOptions.js';
 import './scheduler.js';
 
 const app = express();
-const PORT = 3000; // 환경 변수에서 포트를 설정할 수 있도록 변경
+const PORT = 3000;
 
 // CORS 미들웨어 설정
 const corsOptions = {
