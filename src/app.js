@@ -23,7 +23,7 @@ const corsOptions = {
     allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 // CORS Preflight 요청 처리
 app.use((req, res, next) => {
