@@ -204,12 +204,16 @@ export const refreshController = async (req, res, next) => {
             throw err;
         }
 
-        const newAccessToken = jwt.sign({ userId: user.userId }, process.env.ACCESS_TOKEN_SECRET, {
+        const newAccessToken = jwt.sign({ userId: user.userId, planet: user.planet }, process.env.ACCESS_TOKEN_SECRET, {
             expiresIn: process.env.ACCESS_TOKEN_LIFE,
         });
-        const newRefreshToken = jwt.sign({ userId: user.userId }, process.env.REFRESH_TOKEN_SECRET, {
-            expiresIn: process.env.REFRESH_TOKEN_LIFE,
-        });
+        const newRefreshToken = jwt.sign(
+            { userId: user.userId, planet: user.planet },
+            process.env.REFRESH_TOKEN_SECRET,
+            {
+                expiresIn: process.env.REFRESH_TOKEN_LIFE,
+            },
+        );
 
         return res.status(200).json({
             message: '토큰이 재발급 되었습니다',

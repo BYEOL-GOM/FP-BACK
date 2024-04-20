@@ -60,11 +60,7 @@
             "name": "logs\\info\\2024-04-19-info.log",
             "hash": "4fd3e30df9f1de79020a551c970df64dc2d5646756d0a6c6c07184d981ba7b8d"
         },
-        {
-            "date": 1713584377755,
-            "name": "logs\\info\\2024-04-20-info.log",
-            "hash": "c8aafcae4b5ef7b8d266ce9947941bb062dce6ae3ab96d9a90b77200af81c122"
-        }
+
     ],
     "hashType": "sha256"
 }
