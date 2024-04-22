@@ -2,8 +2,55 @@ import * as commentRepository from './comment.repository.js';
 
 //  # 유저에게 온 전체 최신 메세지
 export const getAllLatestMessages = async (userId) => {
-    return await commentRepository.getAllLatestMessages(userId);
+    const allWorriesAndComments = await commentRepository.getAllWorriesAndComments(userId);
+    const filteredMessages = filterLatestMessages(allWorriesAndComments, userId);
+
+    if (filteredMessages.length === 0) {
+        const error = new Error('아직 메세지가 도착하지 않았습니다');
+        error.status = 204;
+        throw error;
+    }
+
+    return filteredMessages;
 };
+
+// worries와 comments를 필터링하는 private 함수
+function filterLatestMessages(allWorriesAndComments, userId) {
+    return allWorriesAndComments.flatMap((worry) => {
+        const latestComment = worry.comments[0] || null; // 첫 고민일 경우는 lastestComment는 null, 그 외에는 0번째(가장 최신) 답변가져오기
+
+        // 답변자가 userId이고, 아직 답변이 없는 경우
+        if (worry.commentAuthorId === userId && !latestComment) {
+            return [
+                {
+                    worryId: worry.worryId,
+                    icon: worry.icon,
+                    commentId: null,
+                    createdAt: worry.createdAt,
+                    unRead: worry.unRead,
+                },
+            ];
+        }
+        // userId가 최초 고민 작성자이거나 답변자이고, 최신 답장이 다른 사람에 의해 작성된 경우
+        if (
+            (worry.userId === userId || worry.commentAuthorId === userId) &&
+            latestComment &&
+            latestComment.userId !== userId
+        ) {
+            return [
+                {
+                    worryId: worry.worryId,
+                    icon: worry.icon,
+                    commentId: latestComment.commentId,
+                    createdAt: latestComment.createdAt,
+                    unRead: latestComment.unRead,
+                },
+            ];
+        }
+        // 위 조건에 맞지 않는 경우 빈 배열
+        return [];
+    });
+}
 
 // # 답장 상세조회
 export const getCommentDetail = async (commentId, userId) => {

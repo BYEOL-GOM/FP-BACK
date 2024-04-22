@@ -6,11 +6,6 @@ export const getAllLatestMessagesController = async (req, res, next) => {
         const userId = res.locals.user.userId;
         // const { userId } = req.body;
         const latestMessages = await commentService.getAllLatestMessages(+userId);
-        if (latestMessages.length === 0) {
-            const error = new Error('아직 메세지가 도착하지 않았습니다');
-            error.status = 204;
-            throw error;
-        }
         return res.json(latestMessages);
     } catch (error) {
         next(error);
