@@ -25,6 +25,7 @@
         "prisma": "^5.12.1",
         "swagger-jsdoc": "^6.2.8",
         "swagger-ui-express": "^5.0.0",
+        "valid-url": "^1.0.9",
         "winston": "^3.13.0",
         "winston-daily-rotate-file": "^5.0.0"
     },

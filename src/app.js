@@ -10,11 +10,19 @@ import bodyParser from 'body-parser';
 import { loadBannedWords } from './utils/bannedWordsLoader.js';
 import { swaggerUi, specs } from './swagger/swaggerOptions.js';
 import './scheduler.js';
+import validUrl from 'valid-url';
 
 const app = express();
 
 // 환경 변수에서 CONTAINER_PORT를 불러옵니다. 없다면 기본값으로 3000을 사용합니다.
 const PORT = process.env.CONTAINER_PORT || 3000;
+
+// CORS_ORIGIN 환경 변수가 유효한 URL 형식인지 검증
+const corsOrigin = process.env.CORS_ORIGIN;
+if (!validUrl.isWebUri(corsOrigin)) {
+    console.error('Invalid CORS_ORIGIN:', corsOrigin);
+    process.exit(1);
+}
 
 // CORS 미들웨어 설정
 app.use(
@@ -44,6 +52,11 @@ app.use(cookieParser());
 
 app.use('/', router);
 
+// AWS Health Check
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'success', message: 'Server is healthy' });
+});
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use(generalErrorHandler);
@@ -59,3 +72,5 @@ loadBannedWords()
 app.listen(PORT, () => {
     console.log(`${PORT} 포트로 서버가 열렸어요!`);
 });
+
+//
