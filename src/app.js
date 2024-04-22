@@ -10,6 +10,7 @@ import bodyParser from 'body-parser';
 import { loadBannedWords } from './utils/bannedWordsLoader.js';
 import { swaggerUi, specs } from './swagger/swaggerOptions.js';
 import './scheduler.js';
+import validUrl from 'valid-url';
 
 const app = express();
 
@@ -17,7 +18,6 @@ const app = express();
 const PORT = process.env.CONTAINER_PORT || 3000;
 
 // CORS_ORIGIN 환경 변수가 유효한 URL 형식인지 검증
-const validUrl = require('valid-url');
 const corsOrigin = process.env.CORS_ORIGIN;
 if (!validUrl.isWebUri(corsOrigin)) {
     console.error('Invalid CORS_ORIGIN:', corsOrigin);
