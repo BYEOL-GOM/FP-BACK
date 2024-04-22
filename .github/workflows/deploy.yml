@@ -52,6 +52,7 @@ jobs:
                     echo "CONTAINER_PORT=${{ secrets.PROD_PORT }}" >> $GITHUB_ENV
                     echo "IMAGE_TAG=latest-prod" >> $GITHUB_ENV
                     echo "PREVIOUS_IMAGE_TAG=previous-prod" >> $GITHUB_ENV
+                  fi
             - uses: appleboy/ssh-action@v0.1.6
               with:
                   host: ${{ secrets.REMOTE_IP }}
