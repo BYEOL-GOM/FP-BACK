@@ -1,4 +1,5 @@
 import * as commentService from './comment.service.js';
+import { replyParamsSchema, replyBodySchema, commentDetailSchema } from './comment.joi.js';
 
 // # 로그인한 유저에게 온 전체 메세지 조회 (매칭된 첫고민 or 이후 답장)
 export const getAllLatestMessagesController = async (req, res, next) => {
@@ -15,15 +16,16 @@ export const getAllLatestMessagesController = async (req, res, next) => {
 // # 답장 상세조회
 export const getCommentDetailController = async (req, res, next) => {
     try {
-        const { commentId } = req.params;
+        const { value, error } = commentDetailSchema.validate(req.params);
+        if (error) {
+            const customError = new Error('데이터 형식이 일치하지 않습니다');
+            customError.status = 400;
+            throw customError;
+        }
+        const { commentId } = value;
         const userId = res.locals.user.userId;
         // const { userId } = req.body;
 
-        if (!commentId) {
-            const error = new Error('데이터 형식이 일치하지 않습니다');
-            error.status = 400;
-            throw error;
-        }
         const details = await commentService.getCommentDetail(+commentId, +userId);
         res.json(details);
     } catch (error) {
@@ -34,17 +36,18 @@ export const getCommentDetailController = async (req, res, next) => {
 // # 답장 보내기
 export const createReplyController = async (req, res, next) => {
     try {
-        const { worryId, commentId } = req.params;
-        const userId = res.locals.user.userId;
-        // const { content, fontColor } = req.body;
-        const { content, fontColor } = req.body;
-
-        if (!worryId || !content || !fontColor) {
-            const error = new Error('데이터 형식이 일치하지 않습니다');
-            error.status = 400;
-            throw error;
+        const { value: paramsValue, error: paramsError } = replyParamsSchema.validate(req.params);
+        const { value: bodyValue, error: bodyError } = replyBodySchema.validate(req.body);
+        if (paramsError || bodyError) {
+            const customError = new Error('데이터 형식이 일치하지 않습니다');
+            customError.status = 400;
+            throw customError;
         }
 
+        const { worryId, commentId } = paramsValue;
+        const { content, fontColor } = bodyValue;
+        const userId = res.locals.user.userId;
+        // const { userId } = req.body;
         const comment = await commentService.createReply(+worryId, +commentId, content, +userId, fontColor);
 
         return res.status(201).json({ message: '답변이 전송되었습니다.', comment });
