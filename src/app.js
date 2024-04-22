@@ -44,6 +44,11 @@ app.use(cookieParser());
 
 app.use('/', router);
 
+// AWS Health Check
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'success', message: 'Server is healthy' });
+});
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use(generalErrorHandler);

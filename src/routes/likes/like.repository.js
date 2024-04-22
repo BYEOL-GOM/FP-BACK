@@ -297,13 +297,103 @@ export const findHelpedSolveWorryDetailsById = async (worryId, userId) => {
 };
 
 // 좋아요(답례)를 가장 많이 받은 상위 5명 유저 조회
+// export const findTopLikedCommentAuthors = async (userId) => {
+//     // 좋아요 데이터를 포함하여 모든 댓글을 조회, 각 좋아요에 대한 댓글 작성자의 ID, nickname을 추출
+//     const likes = await prisma.likes.findMany({
+//         include: {
+//             comment: {
+//                 include: {
+//                     user: { select: { userId: true, nickname: true } }, // 댓글 작성자의 ID와 닉네임 포함하여 조회
+//                 },
+//             },
+//         },
+//     });
+
+//     // 좋아요 받은 각 댓글 작성자 ID 별로 좋아요 수를 계산
+//     const commentAuthorLikesCount = likes.reduce((acc, like) => {
+//         const commentAuthorId = like.comment.user.userId; // 댓글 작성자의 ID 추출
+//         // 초기화와 증가: acc[commentAuthorId] 값이 존재하지 않으면 0을 사용하고, 존재하는 경우 그 값을 사용. 그리고 이 값을 1 증가.
+//         acc[commentAuthorId] = (acc[commentAuthorId] || 0) + 1; // 해당 ID의 좋아요 수를 누적
+//         return acc;
+//     }, {});
+
+//     // 좋아요 수에 따라 사용자를 내림차순으로 정렬
+//     let sortedAuthors = Object.entries(commentAuthorLikesCount)
+//         .map(([commentAuthorId, likes]) => ({ commentAuthorId: parseInt(commentAuthorId), likes }))
+//         .sort((a, b) => b.likes - a.likes);
+
+//     // 좋아요 수가 가장 많은 상위 5명을 추출
+//     let topFiveAuthors = sortedAuthors.slice(0, 5);
+
+//     // 상위 5명의 각 작성자에 대해 추가 정보를 데이터베이스에서 조회
+//     for (const author of topFiveAuthors) {
+//         const user = await prisma.users.findUnique({
+//             where: {
+//                 userId: author.commentAuthorId,
+//             },
+//             select: {
+//                 nickname: true,
+//             },
+//         });
+//         // 데이터베이스에서 상위 5명의 댓글 작성자의 정보를 가져와서, 각 작성자의 닉네임을 추가하고, 현재 로그인한 사용자가 해당 리스트에 포함되어 있는지 확인.
+//         if (user) {
+//             // 만약 해당 작성자가 로그인한 사용자라면, userId 필드에 사용자 ID 추가
+//             author.nickname = user.nickname; // 사용자 정보가 있으면 닉네임 설정
+//             if (author.commentAuthorId === userId) {
+//                 author.userId = userId; // 현재 로그인한 사용자일 경우 userId 추가
+//             }
+//         }
+//     }
+
+//     // 로그인한 사용자의 닉네임을 데이터베이스에서 조회
+//     const loginUser = await prisma.users.findUnique({
+//         where: {
+//             userId: userId,
+//         },
+//         select: {
+//             nickname: true, // 닉네임만 선택적으로 조회
+//         },
+//     });
+
+//     // 로그인한 사용자의 전체 순위를 찾기
+//     const userIndex = sortedAuthors.findIndex((author) => author.commentAuthorId === userId); // sortedAuthors 배열에서 로그인한 사용자의 ID (userId)와 일치하는 댓글 작성자 ID를 가진 요소의 인덱스를 찾는다.
+//     const userLikes = commentAuthorLikesCount[userId] || 0; //  로그인한 사용자의 ID를 키로 사용하여 좋아요 수를 조회. 만약 해당 키에 대한 값이 존재하지 않으면 0을 기본 값으로 사용
+//     const userRank = userIndex !== -1 ? userIndex + 1 : sortedAuthors.length + 1; // 삼항 연산자를 사용하여 사용자의 순위 계산. 배열은 0부터 인덱스를 시작하므로 실제 순위를 얻기 위해 1을 더함.
+
+//     // // 로그인한 사용자가 상위 5명에 포함되지 않은 경우 목록에 추가
+//     // if (userIndex >= 5 || userIndex === -1) {
+//     //     topFiveAuthors.push({
+//     //         userId: userId,
+//     //         likes: userLikes,
+//     //         nickname: loginUser.nickname,
+//     //         rank: userRank, // 계산된 전체 순위
+//     //     });
+//     // }
+
+//     // 로그인한 사용자의 정보를 항상 목록에 추가
+//     topFiveAuthors.push({
+//         userId: userId,
+//         likes: userLikes,
+//         nickname: loginUser.nickname,
+//         rank: userRank, // 계산된 전체 순위
+//     });
+
+//     // 최종적으로 반환된 상위 사용자 목록에 순위를 할당
+//     sortedAuthors.forEach((author, index) => {
+//         author.rank = index + 1; // 각 사용자에게 순위 할당
+//     });
+
+//     return topFiveAuthors;
+// };
+//------------------------------------------------------------------------------------------------
+// 좋아요(답례)를 가장 많이 받은 상위 5명 유저 조회, 좋아요가 0개라도 랭커에 반영
 export const findTopLikedCommentAuthors = async (userId) => {
     // 좋아요 데이터를 포함하여 모든 댓글을 조회, 각 좋아요에 대한 댓글 작성자의 ID, nickname을 추출
     const likes = await prisma.likes.findMany({
         include: {
             comment: {
                 include: {
-                    user: { select: { userId: true, nickname: true } }, // 댓글 작성자의 ID와 닉네임 포함하여 조회
+                    user: { select: { userId: true, nickname: true } },
                 },
             },
         },
@@ -313,37 +403,32 @@ export const findTopLikedCommentAuthors = async (userId) => {
     const commentAuthorLikesCount = likes.reduce((acc, like) => {
         const commentAuthorId = like.comment.user.userId; // 댓글 작성자의 ID 추출
         // 초기화와 증가: acc[commentAuthorId] 값이 존재하지 않으면 0을 사용하고, 존재하는 경우 그 값을 사용. 그리고 이 값을 1 증가.
-        acc[commentAuthorId] = (acc[commentAuthorId] || 0) + 1; // 해당 ID의 좋아요 수를 누적
-        return acc;
+        acc[commentAuthorId] = (acc[commentAuthorId] || 0) + 1;
+        return acc; // 해당 ID의 좋아요 수를 누적
     }, {});
 
-    // 좋아요 수에 따라 사용자를 내림차순으로 정렬
-    let sortedAuthors = Object.entries(commentAuthorLikesCount)
-        .map(([commentAuthorId, likes]) => ({ commentAuthorId: parseInt(commentAuthorId), likes }))
-        .sort((a, b) => b.likes - a.likes);
+    // 모든 사용자를 조회하여 좋아요 수가 없는 사용자도 목록에 포함
+    const allUsers = await prisma.users.findMany({
+        select: { userId: true, nickname: true },
+    });
+
+    // 모든 사용자에 대해 좋아요 수를 매핑
+    allUsers.forEach((user) => {
+        user.likes = commentAuthorLikesCount[user.userId] || 0; // 해당 사용자 ID에 대응되는 좋아요 수를 찾는다. 해당 사용자가 좋아요를 받지 못했다면, undefined가 될 것. 이 경우 || 연산자(논리 OR)가 작동하여 user.likes에 0을 할당.
+    });
+
+    // 사용자를 좋아요 수에 따라 내림차순으로 정렬하고, 좋아요가 0인 경우 userId 기준 오름차순으로 정렬
+    const sortedAuthors = allUsers.sort((a, b) => {
+        // 좋아요가 둘 다 0인 경우, userId 기준 오름차순 정렬
+        if (a.likes === 0 && b.likes === 0) {
+            return a.userId - b.userId;
+        }
+        // 그 외의 경우, 좋아요 수 기준 내림차순 정렬
+        return b.likes - a.likes;
+    });
 
     // 좋아요 수가 가장 많은 상위 5명을 추출
-    let topFiveAuthors = sortedAuthors.slice(0, 5);
-
-    // 상위 5명의 각 작성자에 대해 추가 정보를 데이터베이스에서 조회
-    for (const author of topFiveAuthors) {
-        const user = await prisma.users.findUnique({
-            where: {
-                userId: author.commentAuthorId,
-            },
-            select: {
-                nickname: true,
-            },
-        });
-        // 데이터베이스에서 상위 5명의 댓글 작성자의 정보를 가져와서, 각 작성자의 닉네임을 추가하고, 현재 로그인한 사용자가 해당 리스트에 포함되어 있는지 확인.
-        if (user) {
-            // 만약 해당 작성자가 로그인한 사용자라면, userId 필드에 사용자 ID 추가
-            author.nickname = user.nickname; // 사용자 정보가 있으면 닉네임 설정
-            if (author.commentAuthorId === userId) {
-                author.userId = userId; // 현재 로그인한 사용자일 경우 userId 추가
-            }
-        }
-    }
+    const topFiveAuthors = sortedAuthors.slice(0, 5);
 
     // 로그인한 사용자의 닉네임을 데이터베이스에서 조회
     const loginUser = await prisma.users.findUnique({
@@ -351,37 +436,43 @@ export const findTopLikedCommentAuthors = async (userId) => {
             userId: userId,
         },
         select: {
-            nickname: true, // 닉네임만 선택적으로 조회
+            nickname: true,
         },
     });
 
-    // 로그인한 사용자의 전체 순위를 찾기
-    const userIndex = sortedAuthors.findIndex((author) => author.commentAuthorId === userId); // sortedAuthors 배열에서 로그인한 사용자의 ID (userId)와 일치하는 댓글 작성자 ID를 가진 요소의 인덱스를 찾는다.
-    const userLikes = commentAuthorLikesCount[userId] || 0; //  로그인한 사용자의 ID를 키로 사용하여 좋아요 수를 조회. 만약 해당 키에 대한 값이 존재하지 않으면 0을 기본 값으로 사용
-    const userRank = userIndex !== -1 ? userIndex + 1 : sortedAuthors.length + 1; // 삼항 연산자를 사용하여 사용자의 순위 계산. 배열은 0부터 인덱스를 시작하므로 실제 순위를 얻기 위해 1을 더함.
+    // 로그인한 사용자의 상세 정보 생성 및 전체 순위 지정
+    sortedAuthors.forEach((user, index) => {
+        user.rank = index + 1; // 전체 정렬된 목록에 대해 순위 지정
+    });
 
-    // // 로그인한 사용자가 상위 5명에 포함되지 않은 경우 목록에 추가
-    // if (userIndex >= 5 || userIndex === -1) {
-    //     topFiveAuthors.push({
-    //         userId: userId,
-    //         likes: userLikes,
-    //         nickname: loginUser.nickname,
-    //         rank: userRank, // 계산된 전체 순위
-    //     });
-    // }
-
-    // 로그인한 사용자의 정보를 항상 목록에 추가
-    topFiveAuthors.push({
+    // 로그인한 사용자의 상세 정보 생성
+    const loggedInUserDetails = {
         userId: userId,
-        likes: userLikes,
+        likes: commentAuthorLikesCount[userId] || 0,
         nickname: loginUser.nickname,
-        rank: userRank, // 계산된 전체 순위
-    });
+        rank: sortedAuthors.find((user) => user.userId === userId).rank, // 로그인한 사용자의 순위를 찾아서 할당
+    };
 
-    // 최종적으로 반환된 상위 사용자 목록에 순위를 할당
-    sortedAuthors.forEach((author, index) => {
-        author.rank = index + 1; // 각 사용자에게 순위 할당
-    });
+    // // 상위 5명 목록과 로그인한 사용자 정보 모두 반환
+    // const results = {
+    //     topAuthors: topFiveAuthors.map((author) => ({
+    //         userId: author.userId,
+    //         nickname: author.nickname,
+    //         likes: author.likes,
+    //         rank: sortedAuthors.find((user) => user.userId === author.userId).rank, // 각 상위 사용자의 순위 정보를 포함
+    //     })),
+    //     loggedInUser: loggedInUserDetails,
+    // };
 
-    return topFiveAuthors;
+    // return results;
+
+    // 상위 5명 목록과 로그인한 사용자 정보를 하나의 배열로 결합하여 반환
+    const combinedResults = [...topFiveAuthors, loggedInUserDetails].map((user) => ({
+        userId: user.userId,
+        nickname: user.nickname,
+        likes: user.likes,
+        rank: user.rank,
+    }));
+
+    return combinedResults;
 };
