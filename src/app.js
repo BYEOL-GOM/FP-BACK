@@ -16,6 +16,14 @@ const app = express();
 // 환경 변수에서 CONTAINER_PORT를 불러옵니다. 없다면 기본값으로 3000을 사용합니다.
 const PORT = process.env.CONTAINER_PORT || 3000;
 
+// CORS_ORIGIN 환경 변수가 유효한 URL 형식인지 검증
+const validUrl = require('valid-url');
+const corsOrigin = process.env.CORS_ORIGIN;
+if (!validUrl.isWebUri(corsOrigin)) {
+    console.error('Invalid CORS_ORIGIN:', corsOrigin);
+    process.exit(1);
+}
+
 // CORS 미들웨어 설정
 app.use(
     cors({
