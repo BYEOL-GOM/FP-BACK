@@ -1,17 +1,18 @@
 import * as worryService from './worry.service.js';
+import { createWorrySchema, worryIdSchema, worryParamsSchema, reportReasonSchema } from './worry.joi.js';
 
 // # 고민 등록
 export const createWorryController = async (req, res, next) => {
     try {
-        const { content, icon, fontColor } = req.body;
-        const userId = res.locals.user.userId;
-        // const { userId, content, icon, fontColor } = req.body;
-
-        if (!content || !icon || !fontColor) {
-            const error = new Error('데이터 형식이 올바르지 않습니다');
-            error.status = 400;
-            throw error;
+        const { value, error } = createWorrySchema.validate(req.body);
+        if (error) {
+            const customError = new Error('데이터 형식이 일치하지 않습니다');
+            customError.status = 400;
+            throw customError;
         }
+        const { content, icon, fontColor } = value;
+        const userId = res.locals.user.userId;
+        // const { userId } = req.body;
 
         const worry = await worryService.createWorry(content, icon, +userId, fontColor);
 
@@ -27,15 +28,16 @@ export const createWorryController = async (req, res, next) => {
 // # 고민메세지 상세조회
 export const worryDetailController = async (req, res, next) => {
     try {
-        const { worryId } = req.params;
+        const { value, error } = worryIdSchema.validate(req.params);
+        if (error) {
+            const customError = new Error('데이터 형식이 일치하지 않습니다');
+            customError.status = 400;
+            throw customError;
+        }
+        const { worryId } = value;
         const userId = res.locals.user.userId;
         // const { userId } = req.body;
 
-        if (!worryId) {
-            const error = new Error('데이터 형식이 올바르지 않습니다');
-            error.status = 400;
-            throw error;
-        }
         const worryDetail = await worryService.getWorryDetail(+worryId, +userId);
         res.status(200).json(worryDetail);
     } catch (error) {
@@ -56,15 +58,15 @@ export const deleteOldMessagesController = async (req, res, next) => {
 // # 곤란한 메세지 선택 삭제
 export const deleteSelectedWorryController = async (req, res, next) => {
     try {
-        const { worryId, commentId } = req.params;
+        const { value, error } = worryParamsSchema.validate(req.params);
+        if (error) {
+            const customError = new Error('데이터 형식이 일치하지 않습니다');
+            customError.status = 400;
+            throw customError;
+        }
+        const { worryId, commentId } = value;
         const userId = res.locals.user.userId;
         // const { userId } = req.body;
-
-        if (!worryId) {
-            const error = new Error('데이터 형식이 올바르지 않습니다');
-            error.status = 400;
-            throw error;
-        }
 
         await worryService.deleteSelectedWorry(+worryId, +userId, +commentId);
 
@@ -77,15 +79,24 @@ export const deleteSelectedWorryController = async (req, res, next) => {
 // #불쾌한 메세지 신고하기
 export const reportMessageController = async (req, res, next) => {
     try {
-        const { worryId, commentId } = req.params;
-        const userId = res.locals.user.userId;
-        const { reportReason } = req.body;
-
-        if (!reportReason) {
-            const error = new Error('신고 이유를 작성해주세요.');
-            error.status = 400;
-            throw error;
+        const { value: paramsValue, error: paramsError } = worryParamsSchema.validate(req.params);
+        if (paramsError) {
+            const customError = new Error('데이터 형식이 일치하지 않습니다');
+            customError.status = 400;
+            throw customError;
         }
+        const { worryId, commentId } = paramsValue;
+        const userId = res.locals.user.userId;
+        // const { userId } = req.body;
+
+        const { value: bodyValue, error: bodyError } = reportReasonSchema.validate(req.body);
+        if (bodyError) {
+            const customError = new Error('신고 이유를 작성해주세요.');
+            customError.status = 400;
+            throw customError;
+        }
+        const { reportReason } = bodyValue;
+
         await worryService.reportMessage(+worryId, userId, +commentId || null, reportReason);
 
         res.status(200).json({ message: '신고가 성공적으로 이루어졌습니다.' });
