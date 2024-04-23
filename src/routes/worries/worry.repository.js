@@ -178,8 +178,8 @@ export const reportComment = async (commentId, userId, reportReason, prismaClien
 };
 
 // # 로켓 개수 확인
-export const findRemainingWorriesByUserId = async (userId, prismaClient) => {
-    const user = await prismaClient.users.findUnique({
+export const findRemainingWorriesByUserId = async (userId) => {
+    const user = await prisma.users.findUnique({
         where: { userId },
         select: { remainingWorries: true },
     });
