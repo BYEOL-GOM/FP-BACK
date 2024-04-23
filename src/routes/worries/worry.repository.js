@@ -1,106 +1,85 @@
 import { prisma } from '../../utils/prisma/index.js';
 
 // # 랜덤으로 답변자 선택
-export const getRandomUser = async (userId) => {
-    try {
-        // 답변 가능한 사용자 조회 (remainingAnswers가 0보다 큰 사용자)
-        const potentialResponders = await prisma.users.findMany({
-            where: {
-                userId: { not: userId },
-                remainingAnswers: { gt: 0 },
-            },
-        });
-
-        // // 사용 가능한 답변자가 없는 경우 에러 처리
-        if (potentialResponders.length === 0) {
-            const error = new Error('모든 답변자가 답장을 작성중입니다');
-            error.status = 400;
-            throw error;
-        }
-        // 랜덤 답변자 선택
-        const randomIndex = Math.floor(Math.random() * potentialResponders.length);
-        return potentialResponders[randomIndex].userId;
-    } catch (error) {
-        throw new Error(error.message);
-    }
+export const getRandomUser = async (userId, prismaClient) => {
+    // 답변 가능한 사용자 조회 (remainingAnswers가 0보다 큰 사용자)
+    const potentialResponders = await prismaClient.users.findMany({
+        where: {
+            userId: { not: userId },
+            remainingAnswers: { gt: 0 },
+        },
+    });
+    return potentialResponders;
 };
 
 // # userId 로 유저 정보 조회
-export const getUserById = async (userId) => {
-    return await prisma.users.findUnique({ where: { userId } });
+export const getUserById = async (userId, prismaClient) => {
+    //트랜잭션 & 비트랜잭션 컨텐스트에서 모두 활용
+    return await prismaClient.users.findUnique({ where: { userId } });
 };
 
 // # 고민 작성자의 remainingWorries -1 하기
-export const decreaseRemainingWorries = async (userId) => {
-    await prisma.users.update({
+export const decreaseRemainingWorries = async (userId, prismaClient) => {
+    await prismaClient.users.update({
         where: { userId },
         data: { remainingWorries: { decrement: 1 } },
     });
 };
 
 // # 답변자의 remainingAnswers -1하기
-export const decreaseRemainingAnswers = async (userId) => {
-    await prisma.users.update({
+export const decreaseRemainingAnswers = async (userId, prismaClient) => {
+    await prismaClient.users.update({
         where: { userId },
         data: { remainingAnswers: { decrement: 1 } },
     });
 };
 
 // # 고민 등록
-export const createWorry = async (content, icon, userId, randomAuthorId, fontColor) => {
-    try {
-        const createdWorry = await prisma.worries.create({
-            data: {
-                content,
-                icon,
-                userId,
-                commentAuthorId: randomAuthorId,
-                fontColor,
-            },
-        });
-        return createdWorry;
-    } catch (error) {
-        throw new Error('고민등록에 실패하였습니다. ' + error.message);
-    }
+export const createWorry = async (content, icon, userId, randomAuthorId, fontColor, prismaClient) => {
+    return await prismaClient.worries.create({
+        data: {
+            content,
+            icon,
+            userId,
+            commentAuthorId: randomAuthorId,
+            fontColor,
+        },
+    });
 };
 
 // # 고민 상세조회(삭제된 고민 제외)
-export const getWorryDetail = async (worryId) => {
-    try {
-        return await prisma.worries.findUnique({
-            where: {
-                worryId,
-                deletedAt: null,
-            },
-            select: {
-                worryId: true,
-                userId: true,
-                createdAt: true,
-                content: true,
-                icon: true,
-                fontColor: true,
-                commentAuthorId: true,
-                unRead: true,
-            },
-        });
-    } catch (error) {
-        throw new Error('고민 상세조회에 실패하였습니다 ' + error.message);
-    }
+export const getWorryDetail = async (worryId, prismaClient) => {
+    return await prismaClient.worries.findUnique({
+        where: {
+            worryId,
+            deletedAt: null,
+        },
+        select: {
+            worryId: true,
+            userId: true,
+            createdAt: true,
+            content: true,
+            icon: true,
+            fontColor: true,
+            commentAuthorId: true,
+            unRead: true,
+        },
+    });
 };
 
 // # 고민을 '읽음' 상태로 업데이트
-export const updateWorryStatus = async (worryId) => {
-    await prisma.worries.update({
+export const updateWorryStatus = async (worryId, prismaClient) => {
+    await prismaClient.worries.update({
         where: { worryId },
         data: { unRead: false },
     });
 };
 
 // # 생성된후 12시간 동안 답변이 없는 고민 or 12시간동안 답장이 오지 않는 메세지 조회
-export const findOldMessages = async () => {
+export const findOldMessages = async (prismaClient) => {
     const twentyFourHoursAgo = new Date(new Date().getTime() - 12 * 60 * 60 * 1000);
 
-    return await prisma.worries.findMany({
+    return await prismaClient.worries.findMany({
         where: {
             OR: [
                 {
@@ -121,8 +100,8 @@ export const findOldMessages = async () => {
 };
 
 // # worryId로 고민 조회 (삭제/미삭제 모두 포함)
-export const getWorry = async (worryId) => {
-    return await prisma.worries.findUnique({
+export const getWorry = async (worryId, prismaClient) => {
+    return await prismaClient.worries.findUnique({
         where: { worryId },
         select: {
             worryId: true,
@@ -134,40 +113,40 @@ export const getWorry = async (worryId) => {
 };
 
 // # commentId로 답장 조회
-export const getComment = async (commentId) => {
-    return await prisma.comments.findUnique({
+export const getComment = async (commentId, prismaClient) => {
+    return await prismaClient.comments.findUnique({
         where: { commentId },
     });
 };
 
 // # worryId에 해당하는 comments 모두 소프트 삭제
-export const deleteAllCommentsForWorry = async (worryId) => {
+export const deleteAllCommentsForWorry = async (worryId, prismaClient) => {
     // worryId에 속한 모든 댓글을 소프트 삭제
-    await prisma.comments.updateMany({
+    await prismaClient.comments.updateMany({
         where: { worryId },
         data: { deletedAt: new Date() },
     });
 };
 
 // # worryId에 해당하는 고민 메세지 삭제
-export const deleteSelectedWorry = async (worryId) => {
-    await prisma.worries.updateMany({
+export const deleteSelectedWorry = async (worryId, prismaClient) => {
+    await prismaClient.worries.updateMany({
         where: { worryId },
         data: { deletedAt: new Date() },
     });
 };
 
 // # 사용자 카운트 업데이트
-export const updateUserCounts = async (worryAuthorId, commentAuthorId) => {
+export const updateUserCounts = async (worryAuthorId, commentAuthorId, prismaClient) => {
     // 고민 작성자의 remainingWorries 증가
-    await prisma.users.updateMany({
+    await prismaClient.users.updateMany({
         where: { userId: worryAuthorId, remainingWorries: { lt: 5 } },
         data: { remainingWorries: { increment: 1 } },
     });
 
     // 답변 작성자가 고민 작성자와 다를 경우, 답변 작성자의 remainingAnswers 증가
     if (commentAuthorId !== worryAuthorId) {
-        await prisma.users.updateMany({
+        await prismaClient.users.updateMany({
             where: { userId: commentAuthorId, remainingAnswers: { lt: 5 } },
             data: { remainingAnswers: { increment: 1 } },
         });
@@ -175,8 +154,8 @@ export const updateUserCounts = async (worryAuthorId, commentAuthorId) => {
 };
 
 // # 신고 정보 저장하기
-export const reportWorry = async (worryId, userId, reportReason) => {
-    await prisma.reports.create({
+export const reportWorry = async (worryId, userId, reportReason, prismaClient) => {
+    await prismaClient.reports.create({
         data: {
             worryId,
             userId,
@@ -187,8 +166,8 @@ export const reportWorry = async (worryId, userId, reportReason) => {
 };
 
 // # 답장 신고 정보 저장하기
-export const reportComment = async (commentId, userId, reportReason) => {
-    await prisma.reports.create({
+export const reportComment = async (commentId, userId, reportReason, prismaClient) => {
+    await prismaClient.reports.create({
         data: {
             commentId,
             userId,
@@ -199,8 +178,8 @@ export const reportComment = async (commentId, userId, reportReason) => {
 };
 
 // # 로켓 개수 확인
-export const findRemainingWorriesByUserId = async (userId) => {
-    const user = await prisma.users.findUnique({
+export const findRemainingWorriesByUserId = async (userId, prismaClient) => {
+    const user = await prismaClient.users.findUnique({
         where: { userId },
         select: { remainingWorries: true },
     });
