@@ -62,6 +62,8 @@ export const markWorryAsSolvedAndCreateLike = async (worryId, commentId, userId,
             orderBy: { createdAt: 'desc' },
         });
 
+        console.log('🩷🩷🩷lastReply : ', lastReply);
+
         // 최신 답변에 대한 답변 생성
         const replyCreationResult = await prisma.comments.create({
             data: {
@@ -112,10 +114,22 @@ export const findSolvedWorriesByUserId = async (userId, page, limit) => {
 
     // 사용자 ID에 따라 모든 고민을 조회하되, 고민의 상태 정보를 포함. (좋아요 여부, 신고 여부, 삭제 여부)
     const worriesResponse = await prisma.worries.findMany({
+        // where: {
+        //     // isSolved: true,
+        //     userId: userId,
+        //     // deletedAt: null, // 신고,삭제되지 않은 고민만 검색
+        // },
         where: {
-            // isSolved: true,
-            userId: userId,
-            // deletedAt: null, // 신고,삭제되지 않은 고민만 검색
+            OR: [
+                {
+                    userId: userId,
+                    deletedAt: null, // 삭제되지 않은 고민
+                },
+                {
+                    userId: userId,
+                    deletedAt: { not: null }, // 소프트 삭제된 고민
+                },
+            ],
         },
         select: {
             worryId: true,
@@ -154,10 +168,22 @@ export const findSolvedWorriesByUserId = async (userId, page, limit) => {
 
     // 전체 항목 수를 조회. 삭제되지 않은 항목만을 카운트.
     const totalCount = await prisma.worries.count({
+        // where: {
+        //     // isSolved: true,
+        //     userId: userId,
+        //     // deletedAt: null, // 신고,삭제되지 않은 고민에 대한 전체 항목 수를 조회
+        // },
         where: {
-            // isSolved: true,
-            userId: userId,
-            // deletedAt: null, // 신고,삭제되지 않은 고민에 대한 전체 항목 수를 조회
+            OR: [
+                {
+                    userId: userId,
+                    deletedAt: null, // 삭제되지 않은 고민
+                },
+                {
+                    userId: userId,
+                    deletedAt: { not: null }, // 소프트 삭제된 고민
+                },
+            ],
         },
     });
 
@@ -175,13 +201,25 @@ export const findHelpedSolveWorriesByUserId = async (userId, page, limit) => {
 
     // 사용자 ID에 따라 모든 고민을 조회하되, 고민의 상태 정보를 포함. (좋아요 여부, 신고 여부, 삭제 여부)
     const worriesResponse = await prisma.worries.findMany({
+        // where: {
+        //     // isSolved: true,
+        //     commentAuthorId: userId,
+        //     // deletedAt: null, // 신고,삭제되지 않은 고민만 검색
+        //     // solvingComment: {
+        //     //     userId: userId,
+        //     // },
+        // },
         where: {
-            // isSolved: true,
-            commentAuthorId: userId,
-            // deletedAt: null, // 신고,삭제되지 않은 고민만 검색
-            // solvingComment: {
-            //     userId: userId,
-            // },
+            OR: [
+                {
+                    commentAuthorId: userId,
+                    deletedAt: null, // 삭제되지 않은 고민
+                },
+                {
+                    commentAuthorId: userId,
+                    deletedAt: { not: null }, // 소프트 삭제된 고민
+                },
+            ],
         },
         select: {
             worryId: true,
@@ -220,13 +258,25 @@ export const findHelpedSolveWorriesByUserId = async (userId, page, limit) => {
 
     // 전체 항목 수를 조회합니다.
     const totalCount = await prisma.worries.count({
+        // where: {
+        //     // isSolved: true,
+        //     // deletedAt: null, // 신고,삭제되지 않은 고민에 대한 전체 항목 수를 조회
+        //     commentAuthorId: userId,
+        //     // solvingComment: {
+        //     //     commentAuthorId: userId,
+        //     // },
+        // },
         where: {
-            // isSolved: true,
-            // deletedAt: null, // 신고,삭제되지 않은 고민에 대한 전체 항목 수를 조회
-            commentAuthorId: userId,
-            // solvingComment: {
-            //     commentAuthorId: userId,
-            // },
+            OR: [
+                {
+                    commentAuthorId: userId,
+                    deletedAt: null, // 삭제되지 않은 고민
+                },
+                {
+                    commentAuthorId: userId,
+                    deletedAt: { not: null }, // 소프트 삭제된 고민
+                },
+            ],
         },
     });
 
@@ -239,54 +289,55 @@ export const findHelpedSolveWorriesByUserId = async (userId, page, limit) => {
 };
 
 // 재귀함수
-async function fetchCommentsRecursively(commentId) {
-    const comment = await prisma.comments.findUnique({
-        where: { commentId },
-        select: {
-            commentId: true,
-            userId: true, // 댓글 작성자 ID
-            content: true,
-            createdAt: true,
-            // updatedAt: true,
-            deletedAt: true, // 댓글 삭제 여부 추가
-            reports: {
-                select: {
-                    reportId: true, // 댓글에 대한 신고 ID
-                },
-            },
-            parentId: true, // 부모 댓글 ID
-            children: true, // 자식 댓글 선택
-        },
-    });
+// async function fetchCommentsRecursively(commentId) {
+//     const comment = await prisma.comments.findUnique({
+//         where: { commentId },
+//         select: {
+//             commentId: true,
+//             userId: true, // 댓글 작성자 ID
+//             content: true,
+//             createdAt: true,
+//             // updatedAt: true,
+//             deletedAt: true, // 댓글 삭제 여부 추가
+//             reports: {
+//                 select: {
+//                     reportId: true, // 댓글에 대한 신고 ID
+//                 },
+//             },
+//             parentId: true, // 부모 댓글 ID
+//             children: true, // 자식 댓글 선택
+//         },
+//     });
 
-    // if (comment && comment.children && comment.children.length > 0) {
-    //     for (let i = 0; i < comment.children.length; i++) {
-    //         // 각 자식 댓글에 대해 재귀적으로 처리
-    //         comment.children[i] = await fetchCommentsRecursively(comment.children[i].commentId);
-    //     }
-    // }
-    // return comment;
+//     // if (comment && comment.children && comment.children.length > 0) {
+//     //     for (let i = 0; i < comment.children.length; i++) {
+//     //         // 각 자식 댓글에 대해 재귀적으로 처리
+//     //         comment.children[i] = await fetchCommentsRecursively(comment.children[i].commentId);
+//     //     }
+//     // }
+//     // return comment;
 
-    console.log('🩷🩷🩷fetchCommentsRecursively - comment:', comment);
+//     console.log('🩷🩷🩷fetchCommentsRecursively - comment:', comment);
 
-    // 신고 배열에서 첫 번째 신고 ID를 추출하거나 없을 경우 null
-    const reportId = comment.reports && comment.reports.length > 0 ? comment.reports[0].reportId : null;
-    console.log('🩷🩷🩷reports:', comment.reports);
+//     // 신고 배열에서 첫 번째 신고 ID를 추출하거나 없을 경우 null
+//     const reportId = comment.reports && comment.reports.length > 0 ? comment.reports[0].reportId : null;
+//     console.log('🩷🩷🩷reports:', comment.reports);
 
-    // // if (comment && comment.children && comment.children.length > 0) {
-    if (comment.children && comment.children.length > 0) {
-        const children = await Promise.all(comment.children.map((child) => fetchCommentsRecursively(child.commentId)));
-        comment.children = children;
-    }
-    console.log('🩷🩷🩷children:', comment.children);
+//     // // if (comment && comment.children && comment.children.length > 0) {
+//     if (comment.children && comment.children.length > 0) {
+//         const children = await Promise.all(comment.children.map((child) => fetchCommentsRecursively(child.commentId)));
+//         comment.children = children;
+//     }
+//     console.log('🩷🩷🩷children:', comment.children);
 
-    // 신고 ID를 포함한 댓글 객체를 반환
-    return {
-        reportId: reportId, // 명시적으로 신고 ID 포함
-        ...comment,
-    };
-}
+//     // 신고 ID를 포함한 댓글 객체를 반환
+//     return {
+//         reportId: reportId, // 명시적으로 신고 ID 포함
+//         ...comment,
+//     };
+// }
 //----------------------------------------------------------------------------------------
+// 재귀함수
 // async function fetchCommentsRecursively(commentId) {
 //     const comment = await prisma.comments.findUnique({
 //         where: { commentId },
@@ -331,7 +382,55 @@ async function fetchCommentsRecursively(commentId) {
 //         children: children,
 //     };
 // }
+//----------------------------------------------------------------------------------------
+// 재귀함수
+async function fetchCommentsRecursively(commentId) {
+    const comment = await prisma.comments.findUnique({
+        where: { commentId },
+        select: {
+            commentId: true,
+            userId: true, // 댓글 작성자 ID
+            content: true,
+            createdAt: true,
+            deletedAt: true, // 댓글 삭제 여부 추가
+            reports: {
+                select: {
+                    reportId: true, // 댓글에 대한 신고 ID
+                },
+            },
+            parentId: true, // 부모 댓글 ID
+            children: true, // 자식 댓글 선택
+        },
+    });
 
+    console.log('🩷🩷🩷fetchCommentsRecursively - comment:', comment);
+
+    // 신고 배열에서 첫 번째 신고 ID를 추출하거나 없을 경우 null
+    const reportId = comment.reports && comment.reports.length > 0 ? comment.reports[0].reportId : null;
+    console.log('🩷🩷🩷reports:', comment.reports);
+
+    if (comment.children && comment.children.length > 0) {
+        const children = await Promise.all(
+            comment.children.map((child) =>
+                fetchCommentsRecursively(child.commentId).catch((e) => {
+                    console.error('Error fetching child comment:', e);
+                    return null; // 에러가 발생한 자식 댓글에 대해 null 반환
+                }),
+            ),
+        );
+        comment.children = children.filter((child) => child !== null); // null이 아닌 자식 댓글만 유지
+    } else {
+        comment.children = []; // children 필드가 항상 배열인지 확인
+    }
+    console.log('🩷🩷🩷children:', comment.children);
+
+    // 신고 ID를 포함한 댓글 객체를 반환
+    return {
+        reportId: reportId, // 명시적으로 신고 ID 포함
+        ...comment,
+        children: comment.children || [], // children 필드가 항상 배열인지 확인
+    };
+}
 //----------------------------------------------------------------------------------------
 
 // 나의 해결된 고민 상세 조회 -> '내가 등록한 고민' 상세 조회
@@ -341,6 +440,14 @@ export const findSolvedWorryDetailsById = async (worryId, userId) => {
             worryId: worryId,
             userId: userId,
             // isSolved: true,
+            OR: [
+                {
+                    deletedAt: null, // 삭제되지 않은 고민
+                },
+                {
+                    deletedAt: { not: null }, // 소프트 삭제된 고민
+                },
+            ],
         },
         select: {
             worryId: true,
@@ -400,9 +507,9 @@ export const findSolvedWorryDetailsById = async (worryId, userId) => {
         );
 
         return {
-            ...rest,
             deletedAt: worryDetails.deletedAt,
             reportId,
+            ...rest,
             comments: modifiedComments,
         };
     }
@@ -416,6 +523,14 @@ export const findHelpedSolveWorryDetailsById = async (worryId, userId) => {
             worryId: worryId,
             commentAuthorId: userId,
             // isSolved: true,
+            OR: [
+                {
+                    deletedAt: null, // 삭제되지 않은 고민
+                },
+                {
+                    deletedAt: { not: null }, // 소프트 삭제된 고민
+                },
+            ],
         },
         select: {
             worryId: true,

@@ -55,7 +55,15 @@ export const sendLike = async (worryId, commentId, userId, content) => {
     // 해당 worryId에 대한 최신 답변 조회
     const lastReply = await CommentRepository.findLastReplyByWorryId(worryId);
 
-    // 최신 답변 정보를 포함하여 결과 반환
+    // lastReply 값이 null 또는 undefined인 경우를 처리
+    if (!lastReply) {
+        console.error('No replies found for the given worryId:', worryId);
+        const err = new Error('해당 고민 ID에 대한 답변을 찾을 수 없습니다.');
+        err.status = 404;
+        throw err;
+    }
+
+    // // 최신 답변 정보를 포함하여 결과 반환
     return {
         present,
         lastReply: lastReply
@@ -67,6 +75,16 @@ export const sendLike = async (worryId, commentId, userId, content) => {
               }
             : null, // 최신 답변이 없을 경우를 대비한 처리
     };
+    // // 최신 답변 정보를 포함하여 결과 반환
+    // return {
+    //     present,
+    //     lastReply: {
+    //         commentId: lastReply.commentId,
+    //         content: lastReply.content,
+    //         userId: lastReply.userId,
+    //         createdAt: lastReply.createdAt,
+    //     },
+    // };
 };
 
 // '나의 해결된 고민' 목록 전체 조회 -> '내가 등록한 고민' 목록 전체 조회
