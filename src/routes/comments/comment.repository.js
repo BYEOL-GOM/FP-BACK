@@ -30,8 +30,8 @@ export const getAllWorriesAndComments = async (userId) => {
 };
 
 // # commentId에 해당하는 답장 상세
-export const getComment = async (commentId) => {
-    return await prisma.comments.findUnique({
+export const getComment = async (commentId, prismaClient) => {
+    return await prismaClient.comments.findUnique({
         where: { commentId },
         select: {
             commentId: true,
@@ -58,39 +58,39 @@ export const getComment = async (commentId) => {
 };
 
 // # 메세지를 '읽음'상태로 업데이트
-export const updateCommentStatus = async (commentId) => {
-    await prisma.comments.update({
+export const updateCommentStatus = async (commentId, prismaClient) => {
+    await prismaClient.comments.update({
         where: { commentId },
         data: { unRead: false },
     });
 };
 
 // # worryId로 해당하는 고민찾기
-export const findWorryById = async (worryId) => {
-    return await prisma.worries.findUnique({ where: { worryId: parseInt(worryId) } });
+export const findWorryById = async (worryId, prismaClient) => {
+    return await prismaClient.worries.findUnique({ where: { worryId: parseInt(worryId) } });
 };
 
 // # worryId에 해당하는 마지막 답장
-export const findLastReplyByWorryId = async (worryId) => {
-    return await prisma.comments.findFirst({
+export const findLastReplyByWorryId = async (worryId, prismaClient) => {
+    return await prismaClient.comments.findFirst({
         where: { worryId: parseInt(worryId) },
         orderBy: { createdAt: 'desc' },
     });
 };
 
 // # 중복 답변 존재 여부
-export const checkForExistingReply = async (worryId, userId, parentId = null) => {
+export const checkForExistingReply = async (worryId, userId, parentId = null, prismaClient) => {
     const condition = parentId
         ? { parentId, userId: parseInt(userId) } // 재고민 or 재답변인 경우, parentId 와 userId
         : { worryId: parseInt(worryId), userId: parseInt(userId) }; // 첫번째 답변인 경우, worryId 와 userId
-    return await prisma.comments.findFirst({
+    return await prismaClient.comments.findFirst({
         where: condition,
     });
 };
 
 // # 답변 생성
-export const createReply = async ({ worryId, content, userId, parentId, fontColor }) => {
-    return await prisma.comments.create({
+export const createReply = async (worryId, content, userId, parentId, fontColor, prismaClient) => {
+    return await prismaClient.comments.create({
         data: {
             worryId: parseInt(worryId),
             content,
@@ -103,22 +103,22 @@ export const createReply = async ({ worryId, content, userId, parentId, fontColo
 };
 
 // # 고민 테이블 updatedAt 업데이트
-export const updateWorryUpdatedAt = async (worryId) => {
-    return prisma.worries.update({
+export const updateWorryUpdatedAt = async (worryId, prismaClient) => {
+    return prismaClient.worries.update({
         where: { worryId: parseInt(worryId) },
         data: { updatedAt: new Date() },
     });
 };
 // # 사용자 정보 가져오기
-export const getUserById = async (userId) => {
-    return await prisma.users.findUnique({
+export const getUserById = async (userId, prismaClient) => {
+    return await prismaClient.users.findUnique({
         where: { userId },
     });
 };
 
 // # 유저의 별 개수 업데이트
-export const updateRemainingStars = async (userId, remainingStars) => {
-    return await prisma.users.update({
+export const updateRemainingStars = async (userId, remainingStars, prismaClient) => {
+    return await prismaClient.users.update({
         where: { userId },
         data: { remainingStars },
     });
