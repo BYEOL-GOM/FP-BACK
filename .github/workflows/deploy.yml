@@ -48,6 +48,7 @@ jobs:
                     echo "DATABASE_URL=${{ secrets.PROD_DATABASE_URL }}" >> $GITHUB_ENV
                     echo "CONTAINER_NAME=my-app-prod" >> $GITHUB_ENV
                     echo "CONTAINER_PORT=${{ secrets.PROD_PORT }}" >> $GITHUB_ENV
+                    echo "NAVER_REDIRECT_URI=${{ secrets.NAVER_REDIRECT_URI }}" >> $GITHUB_ENV
                   fi
             - uses: appleboy/ssh-action@v0.1.6
               with:
@@ -66,6 +67,9 @@ jobs:
                         -e KAKAO_REDIRECT_URI="${{ env.KAKAO_REDIRECT_URI }}" \
                         -e DATABASE_URL="${{ env.DATABASE_URL }}" \
                         -e KAKAO_REST_API_KEY="${{ secrets.KAKAO_REST_API_KEY }}" \
+                        -e NAVER_REDIRECT_URI="${{ env.NAVER_REDIRECT_URI }}" \
+                        -e NAVER_CLIENT_SECRET="${{ secrets.NAVER_CLIENT_SECRET }}" \  
+                        -e NAVER_REST_API_ID="${{ secrets.NAVER_REST_API_ID }}" \  
                         -e SESSION_SECRET="${{ secrets.SESSION_SECRET }}" \
                         -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
                         -e ACCESS_TOKEN_SECRET="${{ secrets.ACCESS_TOKEN_SECRET }}" \
