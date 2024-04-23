@@ -1,5 +1,6 @@
 import * as commentService from './comment.service.js';
 import { replyParamsSchema, replyBodySchema, commentDetailSchema } from './comment.joi.js';
+import { AppError } from '../../utils/AppError.js';
 
 // # 로그인한 유저에게 온 전체 메세지 조회 (매칭된 첫고민 or 이후 답장)
 export const getAllLatestMessagesController = async (req, res, next) => {
@@ -18,9 +19,7 @@ export const getCommentDetailController = async (req, res, next) => {
     try {
         const { value, error } = commentDetailSchema.validate(req.params);
         if (error) {
-            const customError = new Error('데이터 형식이 일치하지 않습니다');
-            customError.status = 400;
-            throw customError;
+            throw new AppError('데이터 형식이 일치하지 않습니다', 400);
         }
         const { commentId } = value;
         const userId = res.locals.user.userId;
@@ -39,9 +38,7 @@ export const createReplyController = async (req, res, next) => {
         const { value: paramsValue, error: paramsError } = replyParamsSchema.validate(req.params);
         const { value: bodyValue, error: bodyError } = replyBodySchema.validate(req.body);
         if (paramsError || bodyError) {
-            const customError = new Error('데이터 형식이 일치하지 않습니다');
-            customError.status = 400;
-            throw customError;
+            throw new AppError('데이터 형식이 일치하지 않습니다', 400);
         }
 
         const { worryId, commentId } = paramsValue;
