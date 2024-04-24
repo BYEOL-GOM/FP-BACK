@@ -1,21 +1,35 @@
 import * as LikeService from './like.service.js';
-import { likeSchema, worryIdSchema } from './like.joi.js';
+import { paramsSchema, likeSchema, worryIdSchema } from './like.joi.js';
 
 // 마음에 드는 댓글에 선물 보내기
 export const sendLike = async (req, res, next) => {
     try {
-        // Joi로 요청 본문의 유효성 검사
+        // URL 파라미터 검사
+        const { error: paramsError } = paramsSchema.validate(req.params);
+        if (paramsError) {
+            const err = new Error('URL 파라미터 검증 실패');
+            err.status = 400;
+            err.details = paramsError.details; // Joi에서 제공하는 상세 에러 정보 추가
+            throw err; // 에러를 throw
+        }
+
+        // 요청 본문의 유효성 검사
         const { error } = likeSchema.validate(req.body, { abortEarly: false });
         if (error) {
-            return res.status(400).json({ message: '입력 값 검증 실패', details: error.details });
+            const err = new Error('입력 값 검증 실패');
+            err.status = 400;
+            err.details = error.details; // Joi에서 제공하는 상세 에러 정보 추가
+            throw err; // 에러를 throw
         }
 
         const { worryId, commentId } = req.params;
         const content = req.body.content;
-        const userId = parseInt(res.locals.user.userId);
-        // const userId = parseInt(req.body.userId, 10);
+        // const userId = parseInt(res.locals.user.userId);
+        const userId = parseInt(req.body.userId, 10);
 
         const result = await LikeService.sendLike(worryId, commentId, userId, content);
+
+        console.log('🩵🩵🩵컨트롤러 result : ', result);
 
         return res.status(201).json({ message: '선물을 성공적으로 전달했습니다.', result });
     } catch (error) {
@@ -26,8 +40,8 @@ export const sendLike = async (req, res, next) => {
 // '나의 해결된 고민' 목록 전체 조회 -> '내가 등록한 고민' 목록 전체 조회
 export const getSolvedWorries = async (req, res, next) => {
     try {
-        const userId = parseInt(res.locals.user.userId);
-        // const userId = parseInt(req.body.userId);
+        // const userId = parseInt(res.locals.user.userId);
+        const userId = parseInt(req.body.userId);
 
         // 페이지네이션
         const page = parseInt(req.query.page) || 1; // 페이지 번호, 기본값은 1
@@ -60,8 +74,8 @@ export const getSolvedWorries = async (req, res, next) => {
 // '내가 해결한 고민' 목록 전체 조회 -> '내가 답변한 고민' 목록 전체 조회
 export const getHelpedSolveWorries = async (req, res, next) => {
     try {
-        const userId = parseInt(res.locals.user.userId);
-        // const userId = parseInt(req.body.userId);
+        // const userId = parseInt(res.locals.user.userId);
+        const userId = parseInt(req.body.userId);
 
         // 페이지네이션
         const page = parseInt(req.query.page) || 1; // 페이지 번호, 기본값은 1
@@ -100,8 +114,8 @@ export const getSolvedWorryDetails = async (req, res, next) => {
         }
 
         const worryId = value.worryId; // 직접 변환된 값 사용
-        const userId = parseInt(res.locals.user.userId);
-        // const userId = parseInt(req.body.userId);
+        // const userId = parseInt(res.locals.user.userId);
+        const userId = parseInt(req.body.userId);
 
         const worryDetails = await LikeService.getSolvedWorryDetailsById(+worryId, +userId);
 
@@ -137,8 +151,8 @@ export const getHelpedSolveWorryDetails = async (req, res, next) => {
         }
 
         const worryId = value.worryId; // 직접 변환된 값 사용
-        const userId = parseInt(res.locals.user.userId);
-        // const userId = parseInt(req.body.userId);
+        // const userId = parseInt(res.locals.user.userId);
+        const userId = parseInt(req.body.userId);
 
         const worryDetails = await LikeService.getHelpedSolveWorryDetailsById(+worryId, +userId);
 

@@ -23,12 +23,14 @@ export const verifyCommentExists = async (commentId, worryId) => {
     return !!comment;
 };
 
-// 좋아요 받은 답변 작성자 remainingStars +1 해주기
-export const incrementStars = async (commentAuthorId) => {
-    return await prisma.users.update({
-        where: { userId: parseInt(commentAuthorId) },
-        data: { remainingStars: { increment: 1 } },
+// 최신 답변 가져오기
+export const findLastReplyByWorryId = async (worryId) => {
+    const lastReply = await prisma.comments.findFirst({
+        where: { worryId: parseInt(worryId) },
+        orderBy: { createdAt: 'desc' },
     });
+
+    return lastReply;
 };
 
 // 선물 보내기
@@ -61,19 +63,20 @@ export const markWorryAsSolvedAndCreateLike = async (worryId, commentId, userId,
         const lastReply = await prisma.comments.findFirst({
             where: { worryId: parseInt(worryId) },
             orderBy: { createdAt: 'desc' },
+            // select: { commentId: true }, // commentId만 선택하도록 변경
         });
 
-        console.log('🩷🩷🩷레포지토리 - lastReply : ', lastReply);
+        console.log('🩷🩷🩷1️⃣1️⃣1️⃣  레포지토리 - lastReply : ', lastReply);
 
         // 최신 답변에 대한 답변 생성
         const replyCreationResult = await prisma.comments.create({
             data: {
                 worryId: parseInt(worryId),
-                content: content, // 답변 내용
                 userId: parseInt(userId), // 답변 작성자
                 parentId: lastReply ? lastReply.commentId : null, // 최신 답변의 ID를 부모 ID로 설정
                 fontColor: 'default', // 기본 폰트 색상 or 요청에서 받은 값 사용
                 unRead: true,
+                content: content, // 답변 내용
             },
         });
 
@@ -94,18 +97,22 @@ export const markWorryAsSolvedAndCreateLike = async (worryId, commentId, userId,
             data: { remainingAnswers: { increment: 1 } },
         });
 
-        return { worryUpdateResult, likeCreationResult };
+        console.log('🩷🩷🩷2️⃣2️⃣2️⃣  레포지토리 - replyCreationResult : ', replyCreationResult);
+        console.log('🩷🩷🩷3️⃣3️⃣3️⃣  레포지토리 - worryUpdateResult : ', worryUpdateResult);
+        console.log('🩷🩷🩷4️⃣4️⃣4️⃣  레포지토리 - likeCreationResult : ', likeCreationResult);
+
+        return { worryUpdateResult, likeCreationResult, replyCreationResult };
     } catch (error) {
         console.error('트랜잭션 중 오류 발생 : ', error);
         throw error;
     }
 };
 
-// commentId에 해당하는 댓글 찾기
-export const findCommentById = async (commentId) => {
-    return await prisma.comments.findUnique({
-        where: { commentId: parseInt(commentId) },
-        include: { worry: true },
+// 좋아요 받은 답변 작성자 remainingStars +1 해주기
+export const incrementStars = async (commentAuthorId) => {
+    return await prisma.users.update({
+        where: { userId: parseInt(commentAuthorId) },
+        data: { remainingStars: { increment: 1 } },
     });
 };
 
@@ -115,22 +122,8 @@ export const findSolvedWorriesByUserId = async (userId, page, limit) => {
 
     // 사용자 ID에 따라 모든 고민을 조회하되, 고민의 상태 정보를 포함. (좋아요 여부, 신고 여부, 삭제 여부)
     const worriesResponse = await prisma.worries.findMany({
-        // where: {
-        //     userId: userId,
-        //     // deletedAt: null, // 신고,삭제되지 않은 고민만 검색
-        // },
-        // where: {
-        //     OR: [
-        //         { userId: userId, deletedAt: null }, // 삭제되지 않은 고민
-        //         { userId: userId, deletedAt: { not: null } }, // 소프트 삭제된 고민
-        //     ],
-        // },
         where: {
             userId: userId, // userId를 고정
-            // OR: [
-            //     { deletedAt: null }, // 삭제되지 않은 고민
-            //     { deletedAt: { not: null } }, // 소프트 삭제된 고민
-            // ],
         },
         select: {
             worryId: true,
@@ -178,19 +171,8 @@ export const findSolvedWorriesByUserId = async (userId, page, limit) => {
 
     // 전체 항목 수를 조회. 삭제되지 않은 항목만을 카운트.
     const totalCount = await prisma.worries.count({
-        // where: {
-        //     userId: userId,
-        //     // deletedAt: null, // 신고,삭제되지 않은 고민에 대한 전체 항목 수를 조회
-        // },
-        // where: {
-        //     OR: [
-        //         { userId: userId, deletedAt: null },
-        //         { userId: userId, deletedAt: { not: null } },
-        //     ],
-        // },
         where: {
             userId: userId,
-            // OR: [{ deletedAt: null }, { deletedAt: { not: null } }],
         },
     });
 
@@ -210,19 +192,8 @@ export const findHelpedSolveWorriesByUserId = async (userId, page, limit) => {
 
     // 사용자 ID에 따라 모든 고민을 조회하되, 고민의 상태 정보를 포함. (좋아요 여부, 신고 여부, 삭제 여부)
     const worriesResponse = await prisma.worries.findMany({
-        // where: {
-        //     commentAuthorId: userId,
-        //     // deletedAt: null, // 신고,삭제되지 않은 고민만 검색
-        //     // solvingComment: {
-        //     //     userId: userId,
-        //     // },
-        // },
         where: {
             commentAuthorId: userId, // userId를 고정
-            // OR: [
-            //     { deletedAt: null }, // 삭제되지 않은 고민
-            //     { deletedAt: { not: null } }, // 소프트 삭제된 고민
-            // ],
         },
         select: {
             worryId: true,
@@ -247,6 +218,8 @@ export const findHelpedSolveWorriesByUserId = async (userId, page, limit) => {
 
     // reports 배열을 제거하고 reportId만을 직접 포함시킵니다.
     const worries = worriesResponse.map((worry) => {
+        const formattedDeletedAt = worry.deletedAt ? moment(worry.deletedAt).format('YYYY-MM-DD HH:mm:ss') : null;
+
         return {
             worryId: worry.worryId,
             commentAuthorId: worry.commentAuthorId, // 'commentAuthorId' 필드를 올바르게 매핑합니다.
@@ -254,26 +227,16 @@ export const findHelpedSolveWorriesByUserId = async (userId, page, limit) => {
             content: worry.content,
             createdAt: worry.createdAt,
             isSolved: worry.isSolved,
-            deletedAt: worry.deletedAt,
+            // deletedAt: worry.deletedAt,
+            deletedAt: formattedDeletedAt,
             reportId: worry.reports.length > 0 ? worry.reports[0].reportId : null, // 신고된 ID 추출
         };
     });
 
     // 전체 항목 수를 조회합니다.
     const totalCount = await prisma.worries.count({
-        // where: {
-        //     // deletedAt: null, // 신고,삭제되지 않은 고민에 대한 전체 항목 수를 조회
-        //     commentAuthorId: userId,
-        //     // solvingComment: {
-        //     //     commentAuthorId: userId,
-        //     // },
-        // },
         where: {
             commentAuthorId: userId, // userId를 고정
-            // OR: [
-            //     { deletedAt: null }, // 삭제되지 않은 고민
-            //     { deletedAt: { not: null } }, // 소프트 삭제된 고민
-            // ],
         },
     });
 
