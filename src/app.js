@@ -29,22 +29,20 @@ if (!validUrl.isWebUri(corsOrigin)) {
 // CORS 미들웨어 설정
 app.use(
     cors({
-        origin: process.env.CORS_ORIGIN || '*', // 환경 변수 CORS_ORIGIN을 사용하거나 기본값으로 모든 도메인 허용
+        origin: function (origin, callback) {
+            const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : [];
+            if (!origin || allowedOrigins.includes(origin)) {
+                callback(null, true);
+            } else {
+                callback(new Error('CORS not allowed'), false);
+            }
+        },
         methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-        allowedHeaders: ['Content-Type', 'Authorization'],
+        allowedHeaders: ['Content-Type', 'Authorization', 'X-Sentry-Auth'],
+        credentials: true,
+        optionsSuccessStatus: 204,
     }),
 );
-
-// CORS Preflight 요청 처리
-app.use((req, res, next) => {
-    if (req.method === 'OPTIONS') {
-        res.header('Access-Control-Allow-Origin', req.headers.origin); // 요청이 온 원점(origin)을 허용
-        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-        res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-        return res.status(204).json({});
-    }
-    next();
-});
 
 app.use(bodyParser.json());
 app.use(express.json());
