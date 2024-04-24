@@ -35,6 +35,10 @@ export const getSolvedWorries = async (req, res, next) => {
 
         const solvedWorries = await LikeService.getSolvedWorriesByUserId(parseInt(userId), page, limit);
 
+        // API 응답 전에 데이터 로깅
+        console.log('🩵🩵🩵Final response data:', JSON.stringify(solvedWorries, null, 2));
+        console.log('🩵🩵', solvedWorries);
+
         // 고민이 없을 때 빈 배열 반환
         if (solvedWorries.worries.length === 0) {
             return res.status(200).json([]);
