@@ -78,5 +78,5 @@ jobs:
                         -e ACCESS_TOKEN_LIFE="${{ secrets.ACCESS_TOKEN_LIFE }}" \
                         -e REFRESH_TOKEN_LIFE="${{ secrets.REFRESH_TOKEN_LIFE }}" \
                         -e CLIENT_SECRET="${{ secrets.CLIENT_SECRET }}" \
-                        -e SENTRY_DSN="${{ env.SENTRY_DSN }}" \  # Sentry DSN 환경변수 추가
+                        -e SENTRY_DSN="$SENTRY_DSN" \
                         leticia0408/byeol_gom:${{ github.ref == 'refs/heads/dev' && 'latest-dev' || 'latest-prod' }}
