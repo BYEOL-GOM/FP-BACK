@@ -1,14 +1,13 @@
 import * as worryService from './worry.service.js';
 import { createWorrySchema, worryIdSchema, worryParamsSchema, reportReasonSchema } from './worry.joi.js';
+import { AppError } from '../../utils/AppError.js';
 
 // # 고민 등록
 export const createWorryController = async (req, res, next) => {
     try {
         const { value, error } = createWorrySchema.validate(req.body);
         if (error) {
-            const customError = new Error('데이터 형식이 일치하지 않습니다');
-            customError.status = 400;
-            throw customError;
+            throw new AppError('데이터 형식이 일치하지 않습니다', 400);
         }
         const { content, icon, fontColor } = value;
         const userId = res.locals.user.userId;
@@ -30,9 +29,7 @@ export const worryDetailController = async (req, res, next) => {
     try {
         const { value, error } = worryIdSchema.validate(req.params);
         if (error) {
-            const customError = new Error('데이터 형식이 일치하지 않습니다');
-            customError.status = 400;
-            throw customError;
+            throw new AppError('데이터 형식이 일치하지 않습니다', 400);
         }
         const { worryId } = value;
         const userId = res.locals.user.userId;
@@ -60,9 +57,7 @@ export const deleteSelectedWorryController = async (req, res, next) => {
     try {
         const { value, error } = worryParamsSchema.validate(req.params);
         if (error) {
-            const customError = new Error('데이터 형식이 일치하지 않습니다');
-            customError.status = 400;
-            throw customError;
+            throw new AppError('데이터 형식이 일치하지 않습니다', 400);
         }
         const { worryId, commentId } = value;
         const userId = res.locals.user.userId;
@@ -81,9 +76,7 @@ export const reportMessageController = async (req, res, next) => {
     try {
         const { value: paramsValue, error: paramsError } = worryParamsSchema.validate(req.params);
         if (paramsError) {
-            const customError = new Error('데이터 형식이 일치하지 않습니다');
-            customError.status = 400;
-            throw customError;
+            throw new AppError('데이터 형식이 일치하지 않습니다', 400);
         }
         const { worryId, commentId } = paramsValue;
         const userId = res.locals.user.userId;
@@ -91,9 +84,7 @@ export const reportMessageController = async (req, res, next) => {
 
         const { value: bodyValue, error: bodyError } = reportReasonSchema.validate(req.body);
         if (bodyError) {
-            const customError = new Error('신고 이유를 작성해주세요.');
-            customError.status = 400;
-            throw customError;
+            throw new AppError('신고 이유를 작성해주세요.', 400);
         }
         const { reportReason } = bodyValue;
 
