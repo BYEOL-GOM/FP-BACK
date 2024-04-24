@@ -29,20 +29,25 @@ if (!validUrl.isWebUri(corsOrigin)) {
 // CORS 미들웨어 설정
 app.use(
     cors({
-        origin: function (origin, callback) {
-            const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : [];
-            if (!origin || allowedOrigins.includes(origin)) {
-                callback(null, true);
-            } else {
-                callback(new Error('CORS not allowed'), false);
-            }
-        },
+        origin: process.env.CORS_ORIGIN || '*', // Adjusted to allow all or specific origins
         methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-        allowedHeaders: ['Content-Type', 'Authorization', 'X-Sentry-Auth'],
+        allowedHeaders: ['Content-Type', 'Authorization', 'X-Sentry-Auth', 'X-Requested-With'], // Including Sentry headers
         credentials: true,
+        preflightContinue: false,
         optionsSuccessStatus: 204,
     }),
 );
+
+// CORS Preflight 요청 처리
+app.use((req, res, next) => {
+    if (req.method === 'OPTIONS') {
+        res.header('Access-Control-Allow-Origin', req.headers.origin); // 요청이 온 원점(origin)을 허용
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+        return res.status(204).json({});
+    }
+    next();
+});
 
 app.use(bodyParser.json());
 app.use(express.json());
@@ -52,14 +57,12 @@ app.use(cookieParser());
 
 app.use('/', router);
 
-// Sentry 초기화
 Sentry.init({
     dsn: process.env.SENTRY_DSN,
     integrations: [new Integrations.Http({ tracing: true }), new Sentry.Integrations.Express({ app })],
     tracesSampleRate: 1.0,
 });
 
-// Sentry 미들웨어
 app.use(Sentry.Handlers.requestHandler()); // Sentry 요청 핸들러
 app.use(Sentry.Handlers.tracingHandler()); // Sentry 트레이싱 핸들러
 
@@ -69,6 +72,7 @@ app.get('/health', (req, res) => {
 });
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+
 app.use(generalErrorHandler);
 app.use(Sentry.Handlers.errorHandler());
 
