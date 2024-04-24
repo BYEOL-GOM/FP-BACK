@@ -16,15 +16,6 @@ import { Integrations } from '@sentry/tracing';
 
 const app = express();
 
-Sentry.init({
-    dsn: process.env.SENTRY_DSN,
-    integrations: [new Integrations.Http({ tracing: true }), new Sentry.Integrations.Express({ app })],
-    tracesSampleRate: 1.0,
-});
-
-app.use(Sentry.Handlers.requestHandler()); // Sentry 요청 핸들러
-app.use(Sentry.Handlers.tracingHandler()); // Sentry 트레이싱 핸들러
-
 // 환경 변수에서 CONTAINER_PORT를 불러옵니다. 없다면 기본값으로 3000을 사용
 const PORT = process.env.CONTAINER_PORT || 3000;
 
@@ -55,6 +46,14 @@ app.use((req, res, next) => {
     next();
 });
 
+Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    integrations: [new Integrations.Http({ tracing: true }), new Sentry.Integrations.Express({ app })],
+    tracesSampleRate: 1.0,
+});
+
+app.use(Sentry.Handlers.requestHandler()); // Sentry 요청 핸들러
+app.use(Sentry.Handlers.tracingHandler()); // Sentry 트레이싱 핸들러
 app.use(bodyParser.json());
 app.use(express.json());
 
