@@ -476,7 +476,6 @@ export const findSolvedWorryDetailsById = async (worryId, userId) => {
         where: {
             worryId: worryId,
             userId: userId,
-            // isSolved: true,
             // OR: [
             //     {
             //         deletedAt: null, // 삭제되지 않은 고민
@@ -559,7 +558,6 @@ export const findHelpedSolveWorryDetailsById = async (worryId, userId) => {
         where: {
             worryId: worryId,
             commentAuthorId: userId,
-            // isSolved: true,
             // OR: [
             //     {
             //         deletedAt: null, // 삭제되지 않은 고민

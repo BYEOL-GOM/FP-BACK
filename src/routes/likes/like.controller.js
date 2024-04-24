@@ -1,8 +1,15 @@
 import * as LikeService from './like.service.js';
+import { likeSchema, worryIdSchema } from './like.joi.js';
 
 // 마음에 드는 댓글에 선물 보내기
 export const sendLike = async (req, res, next) => {
     try {
+        // Joi로 요청 본문의 유효성 검사
+        const { error } = likeSchema.validate(req.body, { abortEarly: false });
+        if (error) {
+            return res.status(400).json({ message: '입력 값 검증 실패', details: error.details });
+        }
+
         const { worryId, commentId } = req.params;
         const content = req.body.content;
         const userId = parseInt(res.locals.user.userId);
@@ -83,15 +90,18 @@ export const getHelpedSolveWorries = async (req, res, next) => {
 // '나의 해결된 고민' 상세 조회 -> '내가 등록한 고민' 상세 조회
 export const getSolvedWorryDetails = async (req, res, next) => {
     try {
-        const { worryId } = req.params;
-        const userId = parseInt(res.locals.user.userId);
-        // const userId = parseInt(req.body.userId);
-
-        if (!worryId) {
-            const err = new Error('고민 게시글 ID가 제공되지 않았습니다.');
+        // 요청의 params에서 worryId 추출 및 유효성 검사
+        const { value, error } = worryIdSchema.validate({ worryId: req.params.worryId });
+        if (error) {
+            const err = new Error('유효하지 않은 고민 게시글 ID입니다.');
             err.status = 400;
+            err.details = error.details;
             throw err;
         }
+
+        const worryId = value.worryId; // 직접 변환된 값 사용
+        const userId = parseInt(res.locals.user.userId);
+        // const userId = parseInt(req.body.userId);
 
         const worryDetails = await LikeService.getSolvedWorryDetailsById(+worryId, +userId);
 
@@ -117,15 +127,18 @@ export const getSolvedWorryDetails = async (req, res, next) => {
 // '내가 해결한 고민' 상세 조회 -> '내가 답변한 고민' 상세 조회
 export const getHelpedSolveWorryDetails = async (req, res, next) => {
     try {
-        const { worryId } = req.params;
-        const userId = parseInt(res.locals.user.userId);
-        // const userId = parseInt(req.body.userId);
-
-        if (!worryId) {
-            const err = new Error('고민 게시글 ID가 제공되지 않았습니다.');
+        // 요청의 params에서 worryId 추출 및 유효성 검사
+        const { value, error } = worryIdSchema.validate({ worryId: req.params.worryId });
+        if (error) {
+            const err = new Error('유효하지 않은 고민 게시글 ID입니다.');
             err.status = 400;
+            err.details = error.details;
             throw err;
         }
+
+        const worryId = value.worryId; // 직접 변환된 값 사용
+        const userId = parseInt(res.locals.user.userId);
+        // const userId = parseInt(req.body.userId);
 
         const worryDetails = await LikeService.getHelpedSolveWorryDetailsById(+worryId, +userId);
 
