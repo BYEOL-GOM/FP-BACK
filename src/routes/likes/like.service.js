@@ -1,5 +1,4 @@
 import * as LikeRepository from './like.repository.js';
-import * as CommentRepository from '../comments/comment.repository.js';
 
 // // 해당 고민 게시글 가져오기
 export const getWorryById = async (worryId) => {
@@ -46,15 +45,8 @@ export const sendLike = async (worryId, commentId, userId, content) => {
         throw err;
     }
 
-    // 좋아요(답례) 보내기. (고민(worry)을 해결된 상태로 변경)
-    const present = await LikeRepository.markWorryAsSolvedAndCreateLike(worryId, commentId, userId, content);
-
-    // 답변 작성자의 별 개수 (remainingStars) +1 추가하기
-    const incrementStar = await LikeRepository.incrementStars(worry.commentAuthorId);
-
     // 해당 worryId에 대한 최신 답변 조회
-    const lastReply = await CommentRepository.findLastReplyByWorryId(worryId);
-
+    const lastReply = await LikeRepository.findLastReplyByWorryId(worryId);
     // lastReply 값이 null 또는 undefined인 경우를 처리
     if (!lastReply) {
         console.error('No replies found for the given worryId:', worryId);
@@ -63,7 +55,16 @@ export const sendLike = async (worryId, commentId, userId, content) => {
         throw err;
     }
 
-    // // 최신 답변 정보를 포함하여 결과 반환
+    // 좋아요(답례) 보내기. (고민(worry)을 해결된 상태로 변경)
+    const present = await LikeRepository.markWorryAsSolvedAndCreateLike(worryId, commentId, userId, content);
+
+    // 답변 작성자의 별 개수 (remainingStars) +1 추가하기
+    const incrementStar = await LikeRepository.incrementStars(worry.commentAuthorId);
+
+    console.log('💛💛💛서비스 - present : ', present);
+    console.log('💛💛💛서비스 - lastReply : ', lastReply);
+
+    // 최신 답변 정보를 포함하여 결과 반환
     return {
         present,
         lastReply: lastReply
@@ -75,16 +76,6 @@ export const sendLike = async (worryId, commentId, userId, content) => {
               }
             : null, // 최신 답변이 없을 경우를 대비한 처리
     };
-    // // 최신 답변 정보를 포함하여 결과 반환
-    // return {
-    //     present,
-    //     lastReply: {
-    //         commentId: lastReply.commentId,
-    //         content: lastReply.content,
-    //         userId: lastReply.userId,
-    //         createdAt: lastReply.createdAt,
-    //     },
-    // };
 };
 
 // '나의 해결된 고민' 목록 전체 조회 -> '내가 등록한 고민' 목록 전체 조회

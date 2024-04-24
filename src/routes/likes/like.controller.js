@@ -1,13 +1,25 @@
 import * as LikeService from './like.service.js';
-import { likeSchema, worryIdSchema } from './like.joi.js';
+import { paramsSchema, likeSchema, worryIdSchema } from './like.joi.js';
 
 // 마음에 드는 댓글에 선물 보내기
 export const sendLike = async (req, res, next) => {
     try {
-        // Joi로 요청 본문의 유효성 검사
+        // URL 파라미터 검사
+        const { error: paramsError } = paramsSchema.validate(req.params);
+        if (paramsError) {
+            const err = new Error('URL 파라미터 검증 실패');
+            err.status = 400;
+            err.details = paramsError.details; // Joi에서 제공하는 상세 에러 정보 추가
+            throw err; // 에러를 throw
+        }
+
+        // 요청 본문의 유효성 검사
         const { error } = likeSchema.validate(req.body, { abortEarly: false });
         if (error) {
-            return res.status(400).json({ message: '입력 값 검증 실패', details: error.details });
+            const err = new Error('입력 값 검증 실패');
+            err.status = 400;
+            err.details = error.details; // Joi에서 제공하는 상세 에러 정보 추가
+            throw err; // 에러를 throw
         }
 
         const { worryId, commentId } = req.params;
@@ -16,6 +28,8 @@ export const sendLike = async (req, res, next) => {
         // const userId = parseInt(req.body.userId, 10);
 
         const result = await LikeService.sendLike(worryId, commentId, userId, content);
+
+        console.log('🩵🩵🩵컨트롤러 result : ', result);
 
         return res.status(201).json({ message: '선물을 성공적으로 전달했습니다.', result });
     } catch (error) {
