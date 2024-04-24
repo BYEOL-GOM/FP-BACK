@@ -11,8 +11,8 @@ import { loadBannedWords } from './utils/bannedWordsLoader.js';
 import { swaggerUi, specs } from './swagger/swaggerOptions.js';
 import './scheduler.js';
 import validUrl from 'valid-url';
-// import * as Sentry from '@sentry/node';
-// import { Integrations } from '@sentry/tracing';
+import * as Sentry from '@sentry/node';
+import { Integrations } from '@sentry/tracing';
 
 const app = express();
 
@@ -46,14 +46,6 @@ app.use((req, res, next) => {
     next();
 });
 
-// Sentry.init({
-//     dsn: process.env.SENTRY_DSN,
-//     integrations: [new Integrations.Http({ tracing: true }), new Sentry.Integrations.Express({ app })],
-//     tracesSampleRate: 1.0,
-// });
-
-// app.use(Sentry.Handlers.requestHandler()); // Sentry 요청 핸들러
-// app.use(Sentry.Handlers.tracingHandler()); // Sentry 트레이싱 핸들러
 app.use(bodyParser.json());
 app.use(express.json());
 
@@ -62,15 +54,25 @@ app.use(cookieParser());
 
 app.use('/', router);
 
+// Sentry 초기화
+Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    integrations: [new Integrations.Http({ tracing: true }), new Sentry.Integrations.Express({ app })],
+    tracesSampleRate: 1.0,
+});
+
+// Sentry 미들웨어
+app.use(Sentry.Handlers.requestHandler()); // Sentry 요청 핸들러
+app.use(Sentry.Handlers.tracingHandler()); // Sentry 트레이싱 핸들러
+
 // AWS Health Check
 app.get('/health', (req, res) => {
     res.status(200).json({ status: 'success', message: 'Server is healthy' });
 });
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
-
-// app.use(Sentry.Handlers.errorHandler());
 app.use(generalErrorHandler);
+app.use(Sentry.Handlers.errorHandler());
 
 loadBannedWords()
     .then(() => {
@@ -81,9 +83,9 @@ loadBannedWords()
     });
 
 // sentry 확인을 위해 의도적으로 에러 발생시키기
-// app.get('/debug-sentry', function mainHandler(req, res) {
-//     throw new Error('My first Sentry error!');
-// });
+app.get('/debug-sentry', function mainHandler(req, res) {
+    throw new Error('My first Sentry error!');
+});
 
 app.listen(PORT, () => {
     console.log(`${PORT} 포트로 서버가 열렸어요!`);
