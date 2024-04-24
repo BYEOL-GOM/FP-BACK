@@ -11,8 +11,8 @@ import { loadBannedWords } from './utils/bannedWordsLoader.js';
 import { swaggerUi, specs } from './swagger/swaggerOptions.js';
 import './scheduler.js';
 import validUrl from 'valid-url';
-import * as Sentry from '@sentry/node';
-import { Integrations } from '@sentry/tracing';
+// import * as Sentry from '@sentry/node';
+// import { Integrations } from '@sentry/tracing';
 
 const app = express();
 
@@ -29,9 +29,9 @@ if (!validUrl.isWebUri(corsOrigin)) {
 // CORS 미들웨어 설정
 app.use(
     cors({
-        origin: process.env.CORS_ORIGIN || '*', // Adjusted to allow all or specific origins
+        origin: process.env.CORS_ORIGIN || '*', // 환경 변수 CORS_ORIGIN을 사용하거나 기본값으로 모든 도메인 허용
         methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-        allowedHeaders: ['Content-Type', 'Authorization', 'X-Sentry-Auth', 'X-Requested-With'], // Including Sentry headers
+        allowedHeaders: ['Content-Type', 'Authorization'],
     }),
 );
 
@@ -40,7 +40,7 @@ app.use((req, res, next) => {
     if (req.method === 'OPTIONS') {
         res.header('Access-Control-Allow-Origin', req.headers.origin); // 요청이 온 원점(origin)을 허용
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-        res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Sentry-Auth, X-Requested-With');
+        res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
         return res.status(204).json({});
     }
     next();
@@ -54,14 +54,14 @@ app.use(cookieParser());
 
 app.use('/', router);
 
-Sentry.init({
-    dsn: process.env.SENTRY_DSN,
-    integrations: [new Integrations.Http({ tracing: true }), new Sentry.Integrations.Express({ app })],
-    tracesSampleRate: 1.0,
-});
+// Sentry.init({
+//     dsn: process.env.SENTRY_DSN,
+//     integrations: [new Integrations.Http({ tracing: true }), new Sentry.Integrations.Express({ app })],
+//     tracesSampleRate: 1.0,
+// });
 
-app.use(Sentry.Handlers.requestHandler()); // Sentry 요청 핸들러
-app.use(Sentry.Handlers.tracingHandler()); // Sentry 트레이싱 핸들러
+// app.use(Sentry.Handlers.requestHandler()); // Sentry 요청 핸들러
+// app.use(Sentry.Handlers.tracingHandler()); // Sentry 트레이싱 핸들러
 
 // AWS Health Check
 app.get('/health', (req, res) => {
@@ -71,7 +71,7 @@ app.get('/health', (req, res) => {
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use(generalErrorHandler);
-app.use(Sentry.Handlers.errorHandler());
+// app.use(Sentry.Handlers.errorHandler());
 
 loadBannedWords()
     .then(() => {
@@ -82,9 +82,9 @@ loadBannedWords()
     });
 
 // sentry 확인을 위해 의도적으로 에러 발생시키기
-app.get('/debug-sentry', function mainHandler(req, res) {
-    throw new Error('My first Sentry error!');
-});
+// app.get('/debug-sentry', function mainHandler(req, res) {
+//     throw new Error('My first Sentry error!');
+// });
 
 app.listen(PORT, () => {
     console.log(`${PORT} 포트로 서버가 열렸어요!`);
