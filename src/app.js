@@ -32,9 +32,6 @@ app.use(
         origin: process.env.CORS_ORIGIN || '*', // Adjusted to allow all or specific origins
         methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
         allowedHeaders: ['Content-Type', 'Authorization', 'X-Sentry-Auth', 'X-Requested-With'], // Including Sentry headers
-        credentials: true,
-        preflightContinue: false,
-        optionsSuccessStatus: 204,
     }),
 );
 
@@ -43,7 +40,7 @@ app.use((req, res, next) => {
     if (req.method === 'OPTIONS') {
         res.header('Access-Control-Allow-Origin', req.headers.origin); // 요청이 온 원점(origin)을 허용
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-        res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+        res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Sentry-Auth, X-Requested-With');
         return res.status(204).json({});
     }
     next();
