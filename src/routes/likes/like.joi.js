@@ -8,8 +8,9 @@ export const paramsSchema = Joi.object({
 
 // 답례 보내기의 body 유효성 검증 스키마 정의
 export const likeSchema = Joi.object({
+    content: Joi.string().allow('', null),
     // content: Joi.string().allow('', null).allow(Joi.number()),
-    content: Joi.alternatives().try(Joi.string(), Joi.number()).allow('', null),
+    // content: Joi.alternatives().try(Joi.string(), Joi.number()).allow('', null),
     // userId: Joi.number().integer(), // * 로컬에서 테스트 할때(=userId 바디로 넣을때) 이부분 살려서 하지 않으면 '데이터 형식 불일치 오류'가 납니다 :)
 });
 
