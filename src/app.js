@@ -23,7 +23,7 @@ Sentry.init({
     dsn: process.env.SENTRY_DSN,
     integrations: [
         // new Integrations.Http({ tracing: true }), // 이 부분을 주석 처리합니다.
-        new Integrations.Cors(), // Cors 통합을 추가하여 CORS 문제를 해결합니다.
+        // new Integrations.Cors(), // Cors 통합을 추가하여 CORS 문제를 해결합니다.
     ],
     tracesSampleRate: 1.0,
 });
@@ -58,8 +58,8 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 app.use(express.json());
 
-app.use(Sentry.Handlers.requestHandler()); // Sentry 요청 핸들러
-app.use(Sentry.Handlers.tracingHandler()); // Sentry 트레이싱 핸들러
+// app.use(Sentry.Handlers.requestHandler()); // Sentry 요청 핸들러
+// app.use(Sentry.Handlers.tracingHandler()); // Sentry 트레이싱 핸들러
 
 app.use(LogMiddleware);
 app.use(cookieParser());
