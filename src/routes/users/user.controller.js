@@ -57,24 +57,40 @@ export const kakaoLoginController = async (req, res) => {
                 },
             });
 
-            const accessToken = jwt.sign({ userId: createUser.userId }, process.env.ACCESS_TOKEN_SECRET, {
-                expiresIn: process.env.ACCESS_TOKEN_LIFE,
-            });
-            const refreshToken = jwt.sign({ userId: createUser.userId }, process.env.REFRESH_TOKEN_SECRET, {
-                expiresIn: process.env.REFRESH_TOKEN_LIFE,
-            });
+            const accessToken = jwt.sign(
+                { userId: createUser.userId, planet: createUser.planet },
+                process.env.ACCESS_TOKEN_SECRET,
+                {
+                    expiresIn: process.env.ACCESS_TOKEN_LIFE,
+                },
+            );
+            const refreshToken = jwt.sign(
+                { userId: createUser.userId, planet: createUser.planet },
+                process.env.REFRESH_TOKEN_SECRET,
+                {
+                    expiresIn: process.env.REFRESH_TOKEN_LIFE,
+                },
+            );
             return res
                 .status(200)
                 .json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}` });
             //return res.status(200).json(userInfo);
         }
 
-        const accessToken = jwt.sign({ userId: findUser.userId }, process.env.ACCESS_TOKEN_SECRET, {
-            expiresIn: process.env.ACCESS_TOKEN_LIFE,
-        });
-        const refreshToken = jwt.sign({ userId: findUser.userId }, process.env.REFRESH_TOKEN_SECRET, {
-            expiresIn: process.env.REFRESH_TOKEN_LIFE,
-        });
+        const accessToken = jwt.sign(
+            { userId: findUser.userId, planet: findUser.planet },
+            process.env.ACCESS_TOKEN_SECRET,
+            {
+                expiresIn: process.env.ACCESS_TOKEN_LIFE,
+            },
+        );
+        const refreshToken = jwt.sign(
+            { userId: findUser.userId, planet: findUser.planet },
+            process.env.REFRESH_TOKEN_SECRET,
+            {
+                expiresIn: process.env.REFRESH_TOKEN_LIFE,
+            },
+        );
 
         return res.status(200).json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}` });
         //return res.status(200).json(ID);
@@ -134,24 +150,40 @@ export const naverLoginController = async (req, res) => {
                 },
             });
 
-            const accessToken = jwt.sign({ userId: createUser.userId }, process.env.ACCESS_TOKEN_SECRET, {
-                expiresIn: process.env.ACCESS_TOKEN_LIFE,
-            });
-            const refreshToken = jwt.sign({ userId: createUser.userId }, process.env.REFRESH_TOKEN_SECRET, {
-                expiresIn: process.env.REFRESH_TOKEN_LIFE,
-            });
+            const accessToken = jwt.sign(
+                { userId: createUser.userId, planet: createUser.planet },
+                process.env.ACCESS_TOKEN_SECRET,
+                {
+                    expiresIn: process.env.ACCESS_TOKEN_LIFE,
+                },
+            );
+            const refreshToken = jwt.sign(
+                { userId: createUser.userId, planet: createUser.planet },
+                process.env.REFRESH_TOKEN_SECRET,
+                {
+                    expiresIn: process.env.REFRESH_TOKEN_LIFE,
+                },
+            );
             return res
                 .status(200)
                 .json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}` });
             //return res.status(200).json(userInfo);
         }
 
-        const accessToken = jwt.sign({ userId: findUser.userId }, process.env.ACCESS_TOKEN_SECRET, {
-            expiresIn: process.env.ACCESS_TOKEN_LIFE,
-        });
-        const refreshToken = jwt.sign({ userId: findUser.userId }, process.env.REFRESH_TOKEN_SECRET, {
-            expiresIn: process.env.REFRESH_TOKEN_LIFE,
-        });
+        const accessToken = jwt.sign(
+            { userId: findUser.userId, planet: findUser.planet },
+            process.env.ACCESS_TOKEN_SECRET,
+            {
+                expiresIn: process.env.ACCESS_TOKEN_LIFE,
+            },
+        );
+        const refreshToken = jwt.sign(
+            { userId: findUser.userId, planet: findUser.planet },
+            process.env.REFRESH_TOKEN_SECRET,
+            {
+                expiresIn: process.env.REFRESH_TOKEN_LIFE,
+            },
+        );
 
         return res.status(200).json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}` });
         //return res.status(200).json(user);

@@ -28,27 +28,6 @@ router.post('/refresh', refreshController);
 // 좋아요된 고민의 갯수 조회하기
 router.get('/count', authMiddleware, WorryCountController);
 
-// 임시 회원가입 API
-router.post('/sign-up', async (req, res, next) => {
-    try {
-        const { nickname, email, userCheckId } = req.body;
-        // 비밀번호 해싱
-        const user = await prisma.users.create({
-            data: {
-                nickname,
-                email,
-                userCheckId,
-            },
-        });
-        // Use the newly created userId as authorId
-
-        return res.status(201).json({ user });
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: '서버 오류' });
-    }
-});
-
 // 닉네임 변경
 router.put('/nickname', authMiddleware, async (req, res, next) => {
     const { nickname } = req.body; // 요청 본문에서 닉네임 가져오기

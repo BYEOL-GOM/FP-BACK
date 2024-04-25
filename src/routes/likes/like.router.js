@@ -11,23 +11,23 @@ import authMiddleware from '../../middlewares/authMiddleware.js';
 
 let router = express.Router({ mergeParams: true });
 
-// 선물 보내기
+// 좋아요(선물) 보내기
 router.post('/worries/:worryId/comments/:commentId/sendLike', authMiddleware, sendLike);
 // router.post('/worries/:worryId/comments/:commentId/sendLike', sendLike);
 
-// '나의 해결된 고민' 목록 전체 조회 -> '내가 등록한 고민' 목록 전체 조회
+// '내가 등록한 고민' 목록 전체 조회
 router.get('/mySolvedWorry', authMiddleware, getSolvedWorries);
 // router.get('/mySolvedWorry', getSolvedWorries);
 
-// '내가 해결한 고민' 목록 전체 조회 -> '내가 답변한 고민' 목록 전체 조회
+// '내가 답변한 고민' 목록 전체 조회
 router.get('/myHelpedSolvedWorry', authMiddleware, getHelpedSolveWorries);
 // router.get('/myHelpedSolvedWorry', getHelpedSolveWorries);
 
-// '나의 해결된 고민' 상세 조회 -> '내가 등록한 고민' 상세 조회
+// '내가 등록한 고민' 상세 조회
 router.get('/mySolvedWorry/:worryId', authMiddleware, getSolvedWorryDetails);
 // router.get('/mySolvedWorry/:worryId', getSolvedWorryDetails);
 
-// '내가 해결한 고민' 상세 조회 -> '내가 답변한 고민' 상세 조회
+// '내가 답변한 고민' 상세 조회
 router.get('/myHelpedSolvedWorry/:worryId', authMiddleware, getHelpedSolveWorryDetails);
 // router.get('/myHelpedSolvedWorry/:worryId', getHelpedSolveWorryDetails);
 
