@@ -62,8 +62,8 @@ app.use(
 app.use(bodyParser.json());
 app.use(express.json());
 
-// app.use(Sentry.Handlers.requestHandler()); // Sentry 요청 핸들러
-// app.use(Sentry.Handlers.tracingHandler()); // Sentry 트레이싱 핸들러
+app.use(Sentry.Handlers.requestHandler()); // Sentry 요청 핸들러
+app.use(Sentry.Handlers.tracingHandler()); // Sentry 트레이싱 핸들러
 
 app.use(LogMiddleware);
 app.use(cookieParser());
