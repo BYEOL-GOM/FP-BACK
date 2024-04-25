@@ -36,7 +36,7 @@ if (!validUrl.isWebUri(corsOrigin)) {
 // CORS 미들웨어 설정
 app.use(
     cors({
-        origin: process.env.CORS_ORIGIN || '*', // 환경 변수 CORS_ORIGIN을 사용하거나 기본값으로 모든 도메인 허용
+        origin: process.env.CORS_ORIGIN,
         methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
         allowedHeaders: ['Content-Type', 'Authorization'],
     }),
