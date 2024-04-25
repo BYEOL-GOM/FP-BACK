@@ -21,7 +21,10 @@ const PORT = process.env.CONTAINER_PORT || 3000;
 
 Sentry.init({
     dsn: process.env.SENTRY_DSN,
-    integrations: [new Integrations.Http({ tracing: true })], // 추가
+    integrations: [
+        // new Integrations.Http({ tracing: true }), // 이 부분을 주석 처리합니다.
+        new Integrations.Cors(), // Cors 통합을 추가하여 CORS 문제를 해결합니다.
+    ],
     tracesSampleRate: 1.0,
 });
 
