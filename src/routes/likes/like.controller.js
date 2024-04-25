@@ -4,6 +4,8 @@ import { paramsSchema, likeSchema, worryIdSchema } from './like.joi.js';
 // 마음에 드는 댓글에 좋아요(선물) 보내기
 export const sendLike = async (req, res, next) => {
     try {
+        console.log('Received body:', req.body);
+
         // URL 파라미터 검사
         const { error: paramsError } = paramsSchema.validate(req.params);
         if (paramsError) {
