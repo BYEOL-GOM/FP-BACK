@@ -1,7 +1,7 @@
 import * as LikeService from './like.service.js';
 import { paramsSchema, likeSchema, worryIdSchema } from './like.joi.js';
 
-// 마음에 드는 댓글에 선물 보내기
+// 마음에 드는 댓글에 좋아요(선물) 보내기
 export const sendLike = async (req, res, next) => {
     try {
         // URL 파라미터 검사
@@ -37,7 +37,7 @@ export const sendLike = async (req, res, next) => {
     }
 };
 
-// '나의 해결된 고민' 목록 전체 조회 -> '내가 등록한 고민' 목록 전체 조회
+// '내가 등록한 고민' 목록 전체 조회
 export const getSolvedWorries = async (req, res, next) => {
     try {
         const userId = parseInt(res.locals.user.userId);
@@ -71,7 +71,7 @@ export const getSolvedWorries = async (req, res, next) => {
     }
 };
 
-// '내가 해결한 고민' 목록 전체 조회 -> '내가 답변한 고민' 목록 전체 조회
+// '내가 답변한 고민' 목록 전체 조회
 export const getHelpedSolveWorries = async (req, res, next) => {
     try {
         const userId = parseInt(res.locals.user.userId);
@@ -101,7 +101,7 @@ export const getHelpedSolveWorries = async (req, res, next) => {
     }
 };
 
-// '나의 해결된 고민' 상세 조회 -> '내가 등록한 고민' 상세 조회
+// '내가 등록한 고민' 상세 조회
 export const getSolvedWorryDetails = async (req, res, next) => {
     try {
         // 요청의 params에서 worryId 추출 및 유효성 검사
@@ -138,7 +138,7 @@ export const getSolvedWorryDetails = async (req, res, next) => {
     }
 };
 
-// '내가 해결한 고민' 상세 조회 -> '내가 답변한 고민' 상세 조회
+// '내가 답변한 고민' 상세 조회
 export const getHelpedSolveWorryDetails = async (req, res, next) => {
     try {
         // 요청의 params에서 worryId 추출 및 유효성 검사
