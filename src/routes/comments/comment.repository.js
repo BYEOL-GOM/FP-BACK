@@ -12,7 +12,7 @@ export const getAllWorriesAndComments = async (userId) => {
             NOT: {
                 isSolved: true, // 해결된 고민은 제외
                 comments: {
-                    every: { unRead: false }, // 모든 답변이 읽힌 경우 제외
+                    some: { unRead: false }, // 모든 답변이 읽힌 경우 제외
                 },
             },
         },
