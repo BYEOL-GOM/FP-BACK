@@ -11,13 +11,19 @@ import { loadBannedWords } from './utils/bannedWordsLoader.js';
 import { swaggerUi, specs } from './swagger/swaggerOptions.js';
 import './scheduler.js';
 import validUrl from 'valid-url';
-// import * as Sentry from '@sentry/node';
-// import { Integrations } from '@sentry/tracing';
+import * as Sentry from '@sentry/node';
+import { Integrations } from '@sentry/tracing';
 
 const app = express();
 
 // 환경 변수에서 CONTAINER_PORT를 불러옵니다. 없다면 기본값으로 3000을 사용
 const PORT = process.env.CONTAINER_PORT || 3000;
+
+Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    integrations: [new Integrations.Http({ tracing: true })], // 추가
+    tracesSampleRate: 1.0,
+});
 
 // CORS_ORIGIN 환경 변수가 유효한 URL 형식인지 검증
 const corsOrigin = process.env.CORS_ORIGIN;
@@ -49,19 +55,15 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 app.use(express.json());
 
+app.use(Sentry.Handlers.requestHandler()); // Sentry 요청 핸들러
+app.use(Sentry.Handlers.tracingHandler()); // Sentry 트레이싱 핸들러
+
 app.use(LogMiddleware);
 app.use(cookieParser());
 
 app.use('/', router);
 
-// Sentry.init({
-//     dsn: process.env.SENTRY_DSN,
-//     integrations: [new Integrations.Http({ tracing: true }), new Sentry.Integrations.Express({ app })],
-//     tracesSampleRate: 1.0,
-// });
-
-// app.use(Sentry.Handlers.requestHandler()); // Sentry 요청 핸들러
-// app.use(Sentry.Handlers.tracingHandler()); // Sentry 트레이싱 핸들러
+app.use(Sentry.Handlers.errorHandler());
 
 // AWS Health Check
 app.get('/health', (req, res) => {
@@ -71,7 +73,6 @@ app.get('/health', (req, res) => {
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use(generalErrorHandler);
-// app.use(Sentry.Handlers.errorHandler());
 
 loadBannedWords()
     .then(() => {
@@ -82,9 +83,9 @@ loadBannedWords()
     });
 
 // sentry 확인을 위해 의도적으로 에러 발생시키기
-// app.get('/debug-sentry', function mainHandler(req, res) {
-//     throw new Error('My first Sentry error!');
-// });
+app.get('/debug-sentry', function mainHandler(req, res) {
+    throw new Error('My first Sentry error!');
+});
 
 app.listen(PORT, () => {
     console.log(`${PORT} 포트로 서버가 열렸어요!`);
