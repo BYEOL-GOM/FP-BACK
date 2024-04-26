@@ -1,16 +1,5 @@
 import * as LikeRepository from './like.repository.js';
 
-// // 해당 고민 게시글 가져오기
-export const getWorryById = async (worryId) => {
-    const worry = await LikeRepository.findWorryById(worryId);
-    if (!worry) {
-        const err = new Error('해당하는 답변의 고민 게시글이 존재하지 않습니다.');
-        err.status = 404;
-        throw err;
-    }
-    return worry;
-};
-
 // 선물 보내기
 export const sendLike = async (worryId, commentId, userId, content) => {
     console.log('💛💛💛서비스 : ', worryId, commentId, userId, content);

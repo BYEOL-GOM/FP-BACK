@@ -10,16 +10,30 @@ import bodyParser from 'body-parser';
 import { loadBannedWords } from './utils/bannedWordsLoader.js';
 import { swaggerUi, specs } from './swagger/swaggerOptions.js';
 import './scheduler.js';
+import * as Sentry from '@sentry/node';
+import { Integrations } from '@sentry/tracing';
 
 const app = express();
 
-// 환경 변수에서 CONTAINER_PORT를 불러옵니다. 없다면 기본값으로 3000을 사용합니다.
 const PORT = process.env.CONTAINER_PORT || 3000;
+
+// Sentry 초기화
+if (process.env.SENTRY_DSN) {
+    Sentry.init({
+        dsn: process.env.SENTRY_DSN,
+        integrations: [new Sentry.Integrations.Http({ tracing: false })],
+        tracesSampleRate: 1.0,
+    });
+
+    // Sentry 요청 및 트레이싱 핸들러를 사용
+    app.use(Sentry.Handlers.requestHandler());
+    app.use(Sentry.Handlers.tracingHandler());
+}
 
 // CORS 미들웨어 설정
 app.use(
     cors({
-        origin: process.env.CORS_ORIGIN || '*', // 환경 변수 CORS_ORIGIN을 사용하거나 기본값으로 모든 도메인 허용
+        origin: process.env.CORS_ORIGIN,
         methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
         allowedHeaders: ['Content-Type', 'Authorization'],
     }),
@@ -28,7 +42,7 @@ app.use(
 // CORS Preflight 요청 처리
 app.use((req, res, next) => {
     if (req.method === 'OPTIONS') {
-        res.header('Access-Control-Allow-Origin', req.headers.origin); // 요청이 온 원점(origin)을 허용
+        res.header('Access-Control-Allow-Origin', req.headers.origin);
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
         res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
         return res.status(204).json({});
@@ -43,6 +57,10 @@ app.use(LogMiddleware);
 app.use(cookieParser());
 
 app.use('/', router);
+
+if (process.env.SENTRY_DSN) {
+    app.use(Sentry.Handlers.errorHandler());
+}
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
