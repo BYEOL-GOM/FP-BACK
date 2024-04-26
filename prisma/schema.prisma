@@ -13,18 +13,28 @@ datasource db {
 model Users {
   userId        Int      @id @default(autoincrement())
   userCheckId   String
-  nickname      String @default("고민의 미로가 된 곰")
-  email         String
-  fruit         String?
+  nickname      String
+  email         String?
+  fruit         Int     @default(0)
   remainingWorries Int @default(5) //  최대 고민작성 가능 개수 5
-  remainingAnswers Int @default(10) // 답변 가능 개수 10개
+  remainingAnswers Int @default(5) // 답변 가능 개수 5개
+  remainingStars  Int      @default(0) // 별의 개수 
+  planet          PlanetType  @default(A)
+  darkMode          Boolean   @default(true) // 다크모드 사용 여부
 
   worry Worries[]
   reports     Reports[]  // 신고
 
-  comments      Comments[]
-  likesSent     Likes[]     @relation("LikeSender")     // 선물을 보낸 사람 
-  sentChattings Chattings[] @relation("SentChattings")  // 사용자가 보낸 메시지
+  comments  Comments[]
+  likesSent     Likes[] @relation("LikeSender")
+  planetHistory PlanetBuyHistory[]     // 선물을 보낸 사람 
+}
+
+enum PlanetType {
+  A
+  B
+  C
+  D
 }
 
 
@@ -131,6 +141,14 @@ model Reports {
   commentId   Int?     
   comment     Comments? @relation(fields: [commentId], references: [commentId])
 }
+
+model PlanetBuyHistory {
+  HistoryId Int             @id @default(autoincrement())
+  userId    Int
+  user      Users           @relation(fields: [userId], references: [userId])
+  planetType PlanetType     @default(A)
+}
+
 
 // 채팅방
 model Rooms {

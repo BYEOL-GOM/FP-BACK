@@ -1,16 +1,4 @@
 import * as LikeRepository from './like.repository.js';
-import * as CommentRepository from '../comments/comment.repository.js';
-
-// // 해당 고민 게시글 가져오기
-export const getWorryById = async (worryId) => {
-    const worry = await LikeRepository.findWorryById(worryId);
-    if (!worry) {
-        const err = new Error('해당하는 답변의 고민 게시글이 존재하지 않습니다.');
-        err.status = 404;
-        throw err;
-    }
-    return worry;
-};
 
 // 선물 보내기
 export const sendLike = async (worryId, commentId, userId, content) => {
@@ -46,11 +34,24 @@ export const sendLike = async (worryId, commentId, userId, content) => {
         throw err;
     }
 
+    // 해당 worryId에 대한 최신 답변 조회
+    const lastReply = await LikeRepository.findLastReplyByWorryId(worryId);
+    // lastReply 값이 null 또는 undefined인 경우를 처리
+    if (!lastReply) {
+        console.error('No replies found for the given worryId:', worryId);
+        const err = new Error('해당 고민 ID에 대한 답변을 찾을 수 없습니다.');
+        err.status = 404;
+        throw err;
+    }
+
     // 좋아요(답례) 보내기. (고민(worry)을 해결된 상태로 변경)
     const present = await LikeRepository.markWorryAsSolvedAndCreateLike(worryId, commentId, userId, content);
 
-    // 해당 worryId에 대한 최신 답변 조회
-    const lastReply = await CommentRepository.findLastReplyByWorryId(worryId);
+    // 답변 작성자의 별 개수 (remainingStars) +1 추가하기
+    const incrementStar = await LikeRepository.incrementStars(worry.commentAuthorId);
+
+    console.log('💛💛💛서비스 - present : ', present);
+    console.log('💛💛💛서비스 - lastReply : ', lastReply);
 
     // 최신 답변 정보를 포함하여 결과 반환
     return {
@@ -66,22 +67,22 @@ export const sendLike = async (worryId, commentId, userId, content) => {
     };
 };
 
-// '나의 해결된 고민' 목록 전체 조회
+// '나의 해결된 고민' 목록 전체 조회 -> '내가 등록한 고민' 목록 전체 조회
 export const getSolvedWorriesByUserId = async (userId, page, limit) => {
     return LikeRepository.findSolvedWorriesByUserId(userId, page, limit);
 };
 
-// '나의 해결된 고민' 상세 조회
-export const getSolvedWorryDetailsById = async (worryId, userId) => {
-    return LikeRepository.findSolvedWorryDetailsById(worryId, userId);
-};
-
-// '내가 해결한 고민' 목록 전체 조회
+// '내가 해결한 고민' 목록 전체 조회 -> '내가 답변한 고민' 목록 전체 조회
 export const getHelpedSolveWorriesByUserId = async (userId, page, limit) => {
     return LikeRepository.findHelpedSolveWorriesByUserId(userId, page, limit);
 };
 
-// '내가 해결한 고민' 상세 조회
+// '나의 해결된 고민' 상세 조회 -> '내가 등록한 고민' 상세 조회
+export const getSolvedWorryDetailsById = async (worryId, userId) => {
+    return LikeRepository.findSolvedWorryDetailsById(worryId, userId);
+};
+
+// '내가 해결한 고민' 상세 조회 -> '내가 답변한 고민' 상세 조회
 export const getHelpedSolveWorryDetailsById = async (worryId, userId) => {
     return LikeRepository.findHelpedSolveWorryDetailsById(worryId, userId);
 };
