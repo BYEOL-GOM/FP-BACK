@@ -111,9 +111,8 @@ router.put('/getStar', authMiddleware, async (req, res, next) => {
 
 // 행성 구입하는 API
 router.post('/buyPlanet', authMiddleware, async (req, res) => {
-    // 사용자 인증 확인 (미들웨어를 통해 처리된 상태라고 가정)
-    const userId = res.locals.user.userId; // 'req.user'는 인증 미들웨어를 통해 설정된 사용자 정보
-    const { planetType } = req.body; // 클라이언트로부터 받은 행성 유형
+    const userId = res.locals.user.userId;
+    const { planetType } = req.body;
 
     // 입력값 검증
     if (!planetType || !['A', 'B', 'C', 'D'].includes(planetType)) {
@@ -121,46 +120,74 @@ router.post('/buyPlanet', authMiddleware, async (req, res) => {
     }
 
     try {
-        // 트랜잭션 시작: 행성 구매 기록 생성 및 별 차감
-        const result = await prisma.$transaction(async (prisma) => {
-            // 사용자의 remainingStars 확인 및 업데이트
-            const user = await prisma.users.findUnique({
-                where: { userId: userId },
-                select: { remainingStars: true },
-            });
+        // 사용자의 행성 구매 기록 확인
+        const existingPurchase = await prisma.planetBuyHistory.findFirst({
+            where: {
+                userId: userId,
+                planetType: planetType,
+            },
+        });
 
-            if (!user || user.remainingStars < 5) {
-                throw new Error('구매를 완료하기에 충분한 별이 없습니다.');
-            }
+        if (existingPurchase) {
+            return res.status(400).json({ message: '이미 해당 유형의 행성을 구매하셨습니다.' });
+        }
 
-            // 별 5개 차감
-            const updatedUser = await prisma.users.update({
-                where: { userId: userId },
-                data: { remainingStars: { decrement: 5 } },
-                select: { remainingStars: true },
-            });
+        // 사용자의 remainingStars 확인
+        const user = await prisma.users.findUnique({
+            where: { userId: userId },
+            select: { remainingStars: true },
+        });
 
-            // 행성 구매 기록 생성
-            const newPlanetPurchase = await prisma.planetBuyHistory.create({
-                data: {
-                    userId: userId,
-                    planetType: planetType,
-                },
-            });
+        if (!user) {
+            return res.status(404).json({ message: '사용자 정보를 찾을 수 없습니다.' });
+        }
 
-            return { updatedUser, newPlanetPurchase };
+        // 행성 유형에 따른 별 차감 계산
+        let starCost = 0; // A 행성의 별 차감 없음
+        switch (planetType) {
+            case 'B':
+                starCost = 1;
+                break;
+            case 'C':
+                starCost = 3;
+                break;
+            case 'D':
+                starCost = 5;
+                break;
+        }
+
+        if (user.remainingStars < starCost) {
+            return res.status(400).json({ message: '구매를 완료하기에 충분한 별이 없습니다.' });
+        }
+
+        // 별 차감 (A 행성을 제외하고)
+        const updatedUser =
+            starCost > 0
+                ? await prisma.users.update({
+                      where: { userId: userId },
+                      data: { remainingStars: { decrement: starCost } },
+                      select: { remainingStars: true },
+                  })
+                : user;
+
+        // 행성 구매 기록 생성
+        const newPlanetPurchase = await prisma.planetBuyHistory.create({
+            data: {
+                userId: userId,
+                planetType: planetType,
+            },
         });
 
         // 응답 반환
         res.status(201).json({
-            message: '행성 구매 및 별 차감이 성공적으로 완료되었습니다.',
-            purchaseDetails: result.newPlanetPurchase,
-            remainingStars: result.updatedUser.remainingStars,
+            message: '행성 구매가 성공적으로 완료되었습니다.',
+            purchaseDetails: newPlanetPurchase,
+            remainingStars: updatedUser.remainingStars,
         });
     } catch (error) {
-        console.error('행성 구매 트랜잭션 중 오류 발생:', error);
+        console.error('행성 구매 중 오류 발생:', error);
         res.status(500).json({
-            message: '행성 구매 중 오류가 발생했습니다. 별이 충분한지 확인하세요.',
+            message: '행성 구매 중 오류가 발생했습니다.',
             errorMessage: error.message,
         });
     }
