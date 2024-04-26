@@ -10,10 +10,25 @@ import bodyParser from 'body-parser';
 import { loadBannedWords } from './utils/bannedWordsLoader.js';
 import { swaggerUi, specs } from './swagger/swaggerOptions.js';
 import './scheduler.js';
+import * as Sentry from '@sentry/node';
+import { Integrations } from '@sentry/tracing';
 
 const app = express();
 
 const PORT = process.env.CONTAINER_PORT || 3000;
+
+// Sentry 초기화
+if (process.env.SENTRY_DSN) {
+    Sentry.init({
+        dsn: process.env.SENTRY_DSN,
+        integrations: [new Sentry.Integrations.Http({ tracing: false })],
+        tracesSampleRate: 1.0,
+    });
+
+    // Sentry 요청 및 트레이싱 핸들러를 사용
+    app.use(Sentry.Handlers.requestHandler());
+    app.use(Sentry.Handlers.tracingHandler());
+}
 
 // CORS 미들웨어 설정
 app.use(
@@ -42,6 +57,10 @@ app.use(LogMiddleware);
 app.use(cookieParser());
 
 app.use('/', router);
+
+if (process.env.SENTRY_DSN) {
+    app.use(Sentry.Handlers.errorHandler());
+}
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
