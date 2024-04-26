@@ -32,6 +32,7 @@ if (process.env.SENTRY_DSN) {
     app.use(Sentry.Handlers.tracingHandler());
 }
 // // // CORS_ORIGIN 환경 변수가 유효한 URL 형식인지 검증
+
 // const corsOrigin = process.env.CORS_ORIGIN;
 // if (!validUrl.isWebUri(corsOrigin)) {
 //     console.error('Invalid CORS_ORIGIN:', corsOrigin);
