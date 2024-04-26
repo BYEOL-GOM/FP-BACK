@@ -39,11 +39,11 @@ if (process.env.SENTRY_DSN) {
 }
 
 // // CORS_ORIGIN 환경 변수가 유효한 URL 형식인지 검증
-const corsOrigin = process.env.CORS_ORIGIN;
-if (!validUrl.isWebUri(corsOrigin)) {
-    console.error('Invalid CORS_ORIGIN:', corsOrigin);
-    process.exit(1);
-}
+// const corsOrigin = process.env.CORS_ORIGIN;
+// if (!validUrl.isWebUri(corsOrigin)) {
+//     console.error('Invalid CORS_ORIGIN:', corsOrigin);
+//     process.exit(1);
+// }
 
 // 모든 요청에 대한 로그 구성
 app.use(
