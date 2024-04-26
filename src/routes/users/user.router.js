@@ -109,6 +109,7 @@ router.put('/getStar', authMiddleware, async (req, res, next) => {
     }
 });
 
+// 화이팅
 // 행성 구입하는 API
 router.post('/buyPlanet', authMiddleware, async (req, res) => {
     const userId = res.locals.user.userId;
