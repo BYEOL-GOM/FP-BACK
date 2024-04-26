@@ -232,11 +232,11 @@ router.get('/getPlanets', authMiddleware, async (req, res) => {
 
 // 행성 교체하는 API
 router.put('/changePlanet', authMiddleware, async (req, res) => {
-    const userId = res.locals.user.userId; // 인증 미들웨어를 통해 얻은 사용자 ID
-    const { newPlanetType } = req.body; // 클라이언트로부터 받은 새 행성 유형
+    const userId = res.locals.user.userId;
+    const { newPlanetType } = req.body;
 
     try {
-        // 먼저 사용자가 구매한 모든 행성 유형을 조회
+        // 사용자가 구매한 모든 행성 유형을 조회
         const purchasedPlanets = await prisma.planetBuyHistory.findMany({
             where: { userId: userId },
             select: { planetType: true },
@@ -244,8 +244,8 @@ router.put('/changePlanet', authMiddleware, async (req, res) => {
 
         const purchasedTypes = purchasedPlanets.map((p) => p.planetType);
 
-        // 사용자가 구매한 행성 유형 중에서 요청된 행성 유형이 있는지 검증
-        if (!purchasedTypes.includes(newPlanetType)) {
+        // A 행성은 구매 기록이 없어도 교체할 수 있도록 예외 처리
+        if (newPlanetType !== 'A' && !purchasedTypes.includes(newPlanetType)) {
             return res.status(400).json({
                 message: '요청된 행성 유형은 사용자가 구매한 행성 중에 없습니다. 교체할 수 없습니다.',
             });
