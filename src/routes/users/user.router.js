@@ -109,8 +109,21 @@ router.put('/getStar', authMiddleware, async (req, res, next) => {
     }
 });
 
-// 화이팅
-// 행성 구입하는 API
+// 별 차감 계산 함수
+function calculateStarCost(planetType) {
+    switch (planetType) {
+        case 'B':
+            return 1;
+        case 'C':
+            return 3;
+        case 'D':
+            return 5;
+        default:
+            return 0; // A 행성
+    }
+}
+
+// 헹성 구입
 router.post('/buyPlanet', authMiddleware, async (req, res) => {
     const userId = res.locals.user.userId;
     const { planetType } = req.body;
@@ -121,7 +134,7 @@ router.post('/buyPlanet', authMiddleware, async (req, res) => {
     }
 
     try {
-        // 사용자의 행성 구매 기록 확인
+        // 중복 구매 검사
         const existingPurchase = await prisma.planetBuyHistory.findFirst({
             where: {
                 userId: userId,
@@ -130,63 +143,52 @@ router.post('/buyPlanet', authMiddleware, async (req, res) => {
         });
 
         if (existingPurchase) {
-            return res.status(400).json({ message: '이미 해당 유형의 행성을 구매하셨습니다.' });
+            return res.status(409).json({ message: '이미 해당 유형의 행성을 구매하셨습니다.' });
         }
 
-        // 사용자의 remainingStars 확인
-        const user = await prisma.users.findUnique({
-            where: { userId: userId },
-            select: { remainingStars: true },
+        // 트랜잭션 시작
+        const result = await prisma.$transaction(async (prisma) => {
+            const user = await prisma.users.findUnique({
+                where: { userId: userId },
+                select: { remainingStars: true },
+            });
+
+            if (!user) {
+                throw new Error('사용자 정보를 찾을 수 없습니다.');
+            }
+
+            const starCost = calculateStarCost(planetType);
+
+            if (user.remainingStars < starCost) {
+                throw new Error('구매를 완료하기에 충분한 별이 없습니다.');
+            }
+
+            const updatedUser =
+                starCost > 0
+                    ? await prisma.users.update({
+                          where: { userId: userId },
+                          data: { remainingStars: { decrement: starCost } },
+                          select: { remainingStars: true },
+                      })
+                    : user;
+
+            const newPlanetPurchase = await prisma.planetBuyHistory.create({
+                data: {
+                    userId: userId,
+                    planetType: planetType,
+                },
+            });
+
+            return { updatedUser, newPlanetPurchase };
         });
 
-        if (!user) {
-            return res.status(404).json({ message: '사용자 정보를 찾을 수 없습니다.' });
-        }
-
-        // 행성 유형에 따른 별 차감 계산
-        let starCost = 0; // A 행성의 별 차감 없음
-        switch (planetType) {
-            case 'B':
-                starCost = 1;
-                break;
-            case 'C':
-                starCost = 3;
-                break;
-            case 'D':
-                starCost = 5;
-                break;
-        }
-
-        if (user.remainingStars < starCost) {
-            return res.status(400).json({ message: '구매를 완료하기에 충분한 별이 없습니다.' });
-        }
-
-        // 별 차감 (A 행성을 제외하고)
-        const updatedUser =
-            starCost > 0
-                ? await prisma.users.update({
-                      where: { userId: userId },
-                      data: { remainingStars: { decrement: starCost } },
-                      select: { remainingStars: true },
-                  })
-                : user;
-
-        // 행성 구매 기록 생성
-        const newPlanetPurchase = await prisma.planetBuyHistory.create({
-            data: {
-                userId: userId,
-                planetType: planetType,
-            },
-        });
-
-        // 응답 반환
         res.status(201).json({
             message: '행성 구매가 성공적으로 완료되었습니다.',
-            purchaseDetails: newPlanetPurchase,
-            remainingStars: updatedUser.remainingStars,
+            purchaseDetails: result.newPlanetPurchase,
+            remainingStars: result.updatedUser.remainingStars,
         });
     } catch (error) {
-        console.error('행성 구매 중 오류 발생:', error);
+        console.error('행성 구매 트랜잭션 중 오류 발생:', error);
         res.status(500).json({
             message: '행성 구매 중 오류가 발생했습니다.',
             errorMessage: error.message,
