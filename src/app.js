@@ -30,7 +30,7 @@ if (process.env.SENTRY_DSN) {
     // Sentry 요청 및 트레이싱 핸들러를 사용
     app.use(Sentry.Handlers.requestHandler());
     app.use(Sentry.Handlers.tracingHandler());
-
+}
 // // CORS_ORIGIN 환경 변수가 유효한 URL 형식인지 검증
 const corsOrigin = process.env.CORS_ORIGIN;
 if (!validUrl.isWebUri(corsOrigin)) {
@@ -66,7 +66,6 @@ app.use(
 
 app.use(bodyParser.json());
 app.use(express.json());
-
 
 app.use(LogMiddleware);
 app.use(cookieParser());
