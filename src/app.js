@@ -13,7 +13,7 @@ import './scheduler.js';
 
 const app = express();
 
-const PORT = process.env.CONTAINER_PORT;
+const PORT = process.env.CONTAINER_PORT || 3000;
 
 // CORS 미들웨어 설정
 app.use(
