@@ -130,7 +130,7 @@ export const naverLoginController = async (req, res) => {
                 data: {
                     userCheckId: user.id.toString(), // 'toString()' 추가
                     nickname: `고민의 늪에 빠진 곰 ${lastUser + 1}`,
-                    email: user.email,
+                    email: `a1234@naver.com`,
                 },
             });
 
