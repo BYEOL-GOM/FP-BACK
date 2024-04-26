@@ -167,7 +167,6 @@ export const naverLoginController = async (req, res) => {
             return res
                 .status(200)
                 .json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}` });
-            //return res.status(200).json(userInfo);
         }
 
         const accessToken = jwt.sign(
@@ -186,7 +185,6 @@ export const naverLoginController = async (req, res) => {
         );
 
         return res.status(200).json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}` });
-        //return res.status(200).json(user);
     } catch (error) {
         console.error(error);
         return res.status(405).json({ message: '네이버 인증 및 사용자 정보 가져오기 오류' });
@@ -224,16 +222,12 @@ export const refreshController = async (req, res, next) => {
             throw err;
         }
 
-        const newAccessToken = jwt.sign({ userId: user.userId, planet: user.planet }, process.env.ACCESS_TOKEN_SECRET, {
+        const newAccessToken = jwt.sign({ userId: user.userId }, process.env.ACCESS_TOKEN_SECRET, {
             expiresIn: process.env.ACCESS_TOKEN_LIFE,
         });
-        const newRefreshToken = jwt.sign(
-            { userId: user.userId, planet: user.planet },
-            process.env.REFRESH_TOKEN_SECRET,
-            {
-                expiresIn: process.env.REFRESH_TOKEN_LIFE,
-            },
-        );
+        const newRefreshToken = jwt.sign({ userId: user.userId }, process.env.REFRESH_TOKEN_SECRET, {
+            expiresIn: process.env.REFRESH_TOKEN_LIFE,
+        });
 
         return res.status(200).json({
             message: '토큰이 재발급 되었습니다',
