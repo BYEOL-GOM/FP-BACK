@@ -277,3 +277,56 @@ router.put('/changePlanet', authMiddleware, async (req, res) => {
         });
     }
 });
+
+// 유저 정보 조회
+router.get('/getUser', authMiddleware, async (req, res) => {
+    const userId = res.locals.user.userId;
+
+    try {
+        const user = await prisma.users.findUnique({
+            where: {
+                userId: userId,
+            },
+            select: {
+                planet: true,
+                darkMode: true,
+            },
+        });
+
+        if (user) {
+            res.status(200).json(user);
+        } else {
+            res.status(404).json({ message: '헤당 유저가 존재 하지 않습니다.' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: '사용자 정보를 검색하는 중 오류가 발생했습니다', error: error.message });
+    }
+});
+
+// 다크모드 변경
+router.put('/updateDarkMode', authMiddleware, async (req, res) => {
+    const userId = res.locals.user.userId;
+    const { darkMode } = req.body; // 클라이언트로부터 받은 새로운 다크모드 설정
+
+    if (typeof darkMode !== 'boolean') {
+        return res.status(400).json({ message: '잘못된 요청: darkMode는 boolean 타입이어야 합니다.' });
+    }
+
+    try {
+        const updatedUser = await prisma.users.update({
+            where: {
+                userId: userId,
+            },
+            data: {
+                darkMode: darkMode,
+            },
+        });
+
+        res.status(200).json({
+            message: '다크모드 설정이 업데이트되었습니다.',
+            darkMode: updatedUser.darkMode,
+        });
+    } catch (error) {
+        res.status(500).json({ message: '다크모드 설정을 업데이트하는 중 오류가 발생했습니다', error: error.message });
+    }
+});

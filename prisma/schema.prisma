@@ -20,6 +20,7 @@ model Users {
   remainingAnswers Int @default(5) // 답변 가능 개수 5개
   remainingStars  Int      @default(0) // 별의 개수 
   planet          PlanetType  @default(A)
+  darkMode          Boolean   @default(true) // 다크모드 사용 여부
 
   worry Worries[]
   reports     Reports[]  // 신고
