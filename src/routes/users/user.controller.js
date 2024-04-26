@@ -126,7 +126,7 @@ export const naverLoginController = async (req, res) => {
             },
         });
 
-        const userInfo = userInfoResponse.data;
+        const userInfo = userInfoResponse.data.response; // 'response' 추가
 
         const { id, email, nickname } = userInfo;
 
@@ -137,14 +137,14 @@ export const naverLoginController = async (req, res) => {
         };
 
         const findUser = await prisma.users.findFirst({
-            where: { userCheckId: user.id },
+            where: { userCheckId: user.id.toString() }, // 'toString()' 추가
         });
 
         if (!findUser) {
             const lastUser = await prisma.users.count();
             const createUser = await prisma.users.create({
                 data: {
-                    userCheckId: user.id.toString(),
+                    userCheckId: user.id.toString(), // 'toString()' 추가
                     nickname: `고민의 늪에 빠진 곰 ${lastUser + 1}`,
                     email: user.email,
                 },
