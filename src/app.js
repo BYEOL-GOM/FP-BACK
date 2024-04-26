@@ -37,7 +37,7 @@ const corsOrigin = process.env.CORS_ORIGIN;
 if (!validUrl.isWebUri(corsOrigin)) {
     console.error('Invalid CORS_ORIGIN:', corsOrigin);
     process.exit(1);
-
+}
 
 // CORS 미들웨어 설정
 app.use(
