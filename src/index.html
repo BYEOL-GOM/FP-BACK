@@ -3,6 +3,30 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>1:1 채팅</title>
+        <link rel="stylesheet" href="css/style.css" />
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="display-container">
+                <ul class="chatting-list"></ul>
+            </div>
+            <div class="input-container">
+                <input type="text" class="chatting-input" />
+                <button class="send-button">전송</button>
+            </div>
+        </div>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="chat.js"></script>
+    </body>
+</html>
+
+<!-- <!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <link rel="stylesheet" href="css/style.css" />
     </head>
@@ -28,9 +52,11 @@
         </div>
 
         <script src="/socket.io/socket.io.js"></script>
+        <script src="/socket.js"></script>
         <script src="chat.js"></script>
     </body>
 </html>
+<!-- ------------------------------------------------------------------------------------------------------ -->
 <!-- 
 <!doctype html>
 <html lang="en">
