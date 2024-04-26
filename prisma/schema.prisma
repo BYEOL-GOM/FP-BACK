@@ -27,7 +27,9 @@ model Users {
 
   comments  Comments[]
   likesSent     Likes[] @relation("LikeSender")
-  planetHistory PlanetBuyHistory[]     // 선물을 보낸 사람 
+  planetHistory PlanetBuyHistory[]     // 선물을 보낸 사람
+
+  sentChattings Chattings[] @relation("SentChattings") // 보낸 채팅
 }
 
 enum PlanetType {
