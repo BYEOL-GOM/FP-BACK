@@ -296,7 +296,7 @@ router.get('/getUser', authMiddleware, async (req, res) => {
         if (user) {
             res.status(200).json(user);
         } else {
-            res.status(404).json({ message: '헤당 유저가 존재 하지 않습니다.' });
+            res.status(404).json({ message: '해당 유저가 존재 하지 않습니다.' });
         }
     } catch (error) {
         res.status(500).json({ message: '사용자 정보를 검색하는 중 오류가 발생했습니다', error: error.message });

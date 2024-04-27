@@ -1,3 +1,11 @@
+console.log('Hello JS');
+
+// const socket = io('http://127.0.0.1:5500');
+const socket = io('http://localhost:3000');
+
+// 방에 조인
+socket.emit('join room', 'chat_room');
+
 const chatInput = document.querySelector('.chatting-input');
 const sendButton = document.querySelector('.send-button');
 const chatList = document.querySelector('.chatting-list'); // 채팅 목록 DOM 참조
@@ -6,9 +14,11 @@ const leaveRoomButton = document.querySelector('.leave-room-button'); // 퇴장 
 // 메시지 전송 함수
 function send() {
     const msg = chatInput.value.trim();
+    // console.log(msg); // 입력된 메시지 로그 확인
     if (msg !== '') {
-        socket.emit('chatting', { msg });
-        chatInput.value = ''; // 전송 후 입력창 비우기
+        console.log('Sending message:', msg);
+        socket.emit('chatting', { msg: msg });
+        chatInput.value = '';
     }
 }
 
@@ -32,9 +42,9 @@ socket.on('chatting', (data) => {
 
 // 채팅방 입장 메시지 처리
 socket.on('room message', (message) => {
+    console.log(message);
     displayRoomMessage(message);
 });
-
 // 채팅방 메시지 표시 함수
 function displayRoomMessage(message) {
     const li = document.createElement('li');
@@ -45,12 +55,10 @@ function displayRoomMessage(message) {
 
 // 채팅방 퇴장 처리 함수
 function leaveRoom() {
-    // 랜덤한 방 ID 생성
-    const roomId = `room_${Math.floor(Math.random() * 1000)}`;
-    socket.emit('leave room', roomId);
-    console.log(`방 ${roomId}에서 퇴장 처리되었습니다.`);
+    const roomName = 'chat_room'; // 이 변수를 명시적으로 정의
+    socket.emit('leave room', roomName);
+    console.log(`방 ${roomName}에서 퇴장 처리되었습니다.`);
 }
-
 // 퇴장 버튼 클릭 이벤트 리스너
 leaveRoomButton.addEventListener('click', leaveRoom);
 
@@ -67,7 +75,7 @@ function LiModel(userId, msg, time) {
 
     this.makeLi = () => {
         const li = document.createElement('li');
-        li.classList.add(nickname.value === this.userId ? 'sent' : 'received'); // 현재 사용자 구분을 위한 클래스 추가
+        li.classList.add('received'); // 일단 모든 메시지를 'received'로 처리
         const dom = `<span class="profile">
             <span class="user">${this.userId}</span>
             <img src="https://placeimg.com/50/50/any" alt="any" />
@@ -78,7 +86,6 @@ function LiModel(userId, msg, time) {
         chatList.appendChild(li);
     };
 }
-
 //---------------------------------------------------------------------------------------------
 // console.log('Hello JS');
 // ('use strict');
