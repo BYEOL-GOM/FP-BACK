@@ -38,8 +38,7 @@ if (process.env.SENTRY_DSN) {
     app.use(Sentry.Handlers.requestHandler());
     app.use(Sentry.Handlers.tracingHandler());
 }
-// // // CORS_ORIGIN 환경 변수가 유효한 URL 형식인지 검증
-
+// CORS_ORIGIN 환경 변수가 유효한 URL 형식인지 검증
 // const corsOrigin = process.env.CORS_ORIGIN;
 // if (!validUrl.isWebUri(corsOrigin)) {
 //     console.error('Invalid CORS_ORIGIN:', corsOrigin);
@@ -110,6 +109,11 @@ loadBannedWords()
 // sentry 확인을 위해 의도적으로 에러 발생시키기
 app.get('/debug-sentry', function mainHandler(req, res) {
     throw new Error('My first Sentry error!');
+});
+
+// 웹소켓 기본 라우터
+app.get('/', (req, res) => {
+    res.status(200).json({ message: 'test' });
 });
 
 io.on('connect', (socket) => {
