@@ -1,91 +1,91 @@
-console.log('Hello JS');
+// console.log('Hello JS');
 
-// const socket = io('http://127.0.0.1:5500');
-const socket = io('http://localhost:3000');
+// // const socket = io('http://127.0.0.1:5500');
+// const socket = io('http://localhost:3000');
 
-// 방에 조인
-socket.emit('join room', 'chat_room');
+// // 방에 조인
+// socket.emit('join room', 'chat_room');
 
-const chatInput = document.querySelector('.chatting-input');
-const sendButton = document.querySelector('.send-button');
-const chatList = document.querySelector('.chatting-list'); // 채팅 목록 DOM 참조
-const leaveRoomButton = document.querySelector('.leave-room-button'); // 퇴장 버튼 DOM 참조
+// const chatInput = document.querySelector('.chatting-input');
+// const sendButton = document.querySelector('.send-button');
+// const chatList = document.querySelector('.chatting-list'); // 채팅 목록 DOM 참조
+// const leaveRoomButton = document.querySelector('.leave-room-button'); // 퇴장 버튼 DOM 참조
 
-// 메시지 전송 함수
-function send() {
-    const msg = chatInput.value.trim();
-    // console.log(msg); // 입력된 메시지 로그 확인
-    if (msg !== '') {
-        console.log('Sending message:', msg);
-        socket.emit('chatting', { msg: msg });
-        chatInput.value = '';
-    }
-}
+// // 메시지 전송 함수
+// function send() {
+//     const msg = chatInput.value.trim();
+//     // console.log(msg); // 입력된 메시지 로그 확인
+//     if (msg !== '') {
+//         console.log('Sending message:', msg);
+//         socket.emit('chatting', { msg: msg });
+//         chatInput.value = '';
+//     }
+// }
 
-// 키보드 이벤트 리스너
-chatInput.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter') {
-        send();
-    }
-});
+// // 키보드 이벤트 리스너
+// chatInput.addEventListener('keypress', (event) => {
+//     if (event.key === 'Enter') {
+//         send();
+//     }
+// });
 
-// 전송 버튼 클릭 이벤트 리스너
-sendButton.addEventListener('click', send);
+// // 전송 버튼 클릭 이벤트 리스너
+// sendButton.addEventListener('click', send);
 
-// 서버로부터의 채팅 메시지 수신 처리
-socket.on('chatting', (data) => {
-    console.log(data);
-    const { userId, msg, time } = data;
-    const item = new LiModel(userId, msg, time);
-    item.makeLi();
-});
+// // 서버로부터의 채팅 메시지 수신 처리
+// socket.on('chatting', (data) => {
+//     console.log(data);
+//     const { userId, msg, time } = data;
+//     const item = new LiModel(userId, msg, time);
+//     item.makeLi();
+// });
 
-// 채팅방 입장 메시지 처리
-socket.on('room message', (message) => {
-    console.log(message);
-    displayRoomMessage(message);
-});
-// 채팅방 메시지 표시 함수
-function displayRoomMessage(message) {
-    const li = document.createElement('li');
-    li.classList.add('room-message'); // 채팅방 메시지와 구별되는 스타일 적용
-    li.textContent = message;
-    chatList.appendChild(li);
-}
+// // 채팅방 입장 메시지 처리
+// socket.on('room message', (message) => {
+//     console.log(message);
+//     displayRoomMessage(message);
+// });
+// // 채팅방 메시지 표시 함수
+// function displayRoomMessage(message) {
+//     const li = document.createElement('li');
+//     li.classList.add('room-message'); // 채팅방 메시지와 구별되는 스타일 적용
+//     li.textContent = message;
+//     chatList.appendChild(li);
+// }
 
-// 채팅방 퇴장 처리 함수
-function leaveRoom() {
-    const roomName = 'chat_room'; // 이 변수를 명시적으로 정의
-    socket.emit('leave room', roomName);
-    console.log(`방 ${roomName}에서 퇴장 처리되었습니다.`);
-}
-// 퇴장 버튼 클릭 이벤트 리스너
-leaveRoomButton.addEventListener('click', leaveRoom);
+// // 채팅방 퇴장 처리 함수
+// function leaveRoom() {
+//     const roomName = 'chat_room'; // 이 변수를 명시적으로 정의
+//     socket.emit('leave room', roomName);
+//     console.log(`방 ${roomName}에서 퇴장 처리되었습니다.`);
+// }
+// // 퇴장 버튼 클릭 이벤트 리스너
+// leaveRoomButton.addEventListener('click', leaveRoom);
 
-// 서버로부터의 에러 메시지 수신 및 표시
-socket.on('error', (error) => {
-    alert(error.message);
-});
+// // 서버로부터의 에러 메시지 수신 및 표시
+// socket.on('error', (error) => {
+//     alert(error.message);
+// });
 
-// 리스트 아이템 모델
-function LiModel(userId, msg, time) {
-    this.userId = userId;
-    this.msg = msg;
-    this.time = time;
+// // 리스트 아이템 모델
+// function LiModel(userId, msg, time) {
+//     this.userId = userId;
+//     this.msg = msg;
+//     this.time = time;
 
-    this.makeLi = () => {
-        const li = document.createElement('li');
-        li.classList.add('received'); // 일단 모든 메시지를 'received'로 처리
-        const dom = `<span class="profile">
-            <span class="user">${this.userId}</span>
-            <img src="https://placeimg.com/50/50/any" alt="any" />
-        </span>
-        <span class="message">${this.msg}</span>
-        <span class="time">${this.time}</span>`;
-        li.innerHTML = dom;
-        chatList.appendChild(li);
-    };
-}
+//     this.makeLi = () => {
+//         const li = document.createElement('li');
+//         li.classList.add('received'); // 일단 모든 메시지를 'received'로 처리
+//         const dom = `<span class="profile">
+//             <span class="user">${this.userId}</span>
+//             <img src="https://placeimg.com/50/50/any" alt="any" />
+//         </span>
+//         <span class="message">${this.msg}</span>
+//         <span class="time">${this.time}</span>`;
+//         li.innerHTML = dom;
+//         chatList.appendChild(li);
+//     };
+// }
 //---------------------------------------------------------------------------------------------
 // console.log('Hello JS');
 // ('use strict');
