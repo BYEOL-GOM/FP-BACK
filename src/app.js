@@ -50,7 +50,7 @@ if (process.env.SENTRY_DSN) {
 app.use(
     cors({
         // origin: '*',
-        origin: 'http://localhost:3000/chatroom',
+        origin: 'http://localhost:3000',
         methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
         allowedHeaders: ['Content-Type', 'Authorization'],
         credentials: true,
