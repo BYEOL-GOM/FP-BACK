@@ -166,6 +166,7 @@ export const refreshController = async (req, res, next) => {
         if (!authorization) {
             return res.status(401).json({ message: 'Refresh Token을 전달받지 못했습니다.' });
         }
+        console.log(authorization);
 
         const [bearer, refreshToken] = authorization.split(' ');
         if (bearer !== 'Bearer') {
