@@ -28,27 +28,6 @@ router.post('/refresh', refreshController);
 // 좋아요된 고민의 갯수 조회하기
 router.get('/count', authMiddleware, WorryCountController);
 
-// 임시 회원가입 API
-router.post('/sign-up', async (req, res, next) => {
-    try {
-        const { nickname, email, userCheckId } = req.body;
-        // 비밀번호 해싱
-        const user = await prisma.users.create({
-            data: {
-                nickname,
-                email,
-                userCheckId,
-            },
-        });
-        // Use the newly created userId as authorId
-
-        return res.status(201).json({ user });
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: '서버 오류' });
-    }
-});
-
 // 닉네임 변경
 router.put('/nickname', authMiddleware, async (req, res, next) => {
     const { nickname } = req.body; // 요청 본문에서 닉네임 가져오기
@@ -130,11 +109,24 @@ router.put('/getStar', authMiddleware, async (req, res, next) => {
     }
 });
 
-// 행성 구입하는 API
+// 별 차감 계산 함수
+function calculateStarCost(planetType) {
+    switch (planetType) {
+        case 'B':
+            return 1;
+        case 'C':
+            return 3;
+        case 'D':
+            return 5;
+        default:
+            return 0; // A 행성
+    }
+}
+
+// 헹성 구입
 router.post('/buyPlanet', authMiddleware, async (req, res) => {
-    // 사용자 인증 확인 (미들웨어를 통해 처리된 상태라고 가정)
-    const userId = res.locals.user.userId; // 'req.user'는 인증 미들웨어를 통해 설정된 사용자 정보
-    const { planetType } = req.body; // 클라이언트로부터 받은 행성 유형
+    const userId = res.locals.user.userId;
+    const { planetType } = req.body;
 
     // 입력값 검증
     if (!planetType || !['A', 'B', 'C', 'D'].includes(planetType)) {
@@ -142,26 +134,44 @@ router.post('/buyPlanet', authMiddleware, async (req, res) => {
     }
 
     try {
-        // 트랜잭션 시작: 행성 구매 기록 생성 및 별 차감
+        // 중복 구매 검사
+        const existingPurchase = await prisma.planetBuyHistory.findFirst({
+            where: {
+                userId: userId,
+                planetType: planetType,
+            },
+        });
+
+        if (existingPurchase) {
+            return res.status(409).json({ message: '이미 해당 유형의 행성을 구매하셨습니다.' });
+        }
+
+        // 트랜잭션 시작
         const result = await prisma.$transaction(async (prisma) => {
-            // 사용자의 remainingStars 확인 및 업데이트
             const user = await prisma.users.findUnique({
                 where: { userId: userId },
                 select: { remainingStars: true },
             });
 
-            if (!user || user.remainingStars < 5) {
+            if (!user) {
+                throw new Error('사용자 정보를 찾을 수 없습니다.');
+            }
+
+            const starCost = calculateStarCost(planetType);
+
+            if (user.remainingStars < starCost) {
                 throw new Error('구매를 완료하기에 충분한 별이 없습니다.');
             }
 
-            // 별 5개 차감
-            const updatedUser = await prisma.users.update({
-                where: { userId: userId },
-                data: { remainingStars: { decrement: 5 } },
-                select: { remainingStars: true },
-            });
+            const updatedUser =
+                starCost > 0
+                    ? await prisma.users.update({
+                          where: { userId: userId },
+                          data: { remainingStars: { decrement: starCost } },
+                          select: { remainingStars: true },
+                      })
+                    : user;
 
-            // 행성 구매 기록 생성
             const newPlanetPurchase = await prisma.planetBuyHistory.create({
                 data: {
                     userId: userId,
@@ -172,16 +182,15 @@ router.post('/buyPlanet', authMiddleware, async (req, res) => {
             return { updatedUser, newPlanetPurchase };
         });
 
-        // 응답 반환
         res.status(201).json({
-            message: '행성 구매 및 별 차감이 성공적으로 완료되었습니다.',
+            message: '행성 구매가 성공적으로 완료되었습니다.',
             purchaseDetails: result.newPlanetPurchase,
             remainingStars: result.updatedUser.remainingStars,
         });
     } catch (error) {
         console.error('행성 구매 트랜잭션 중 오류 발생:', error);
         res.status(500).json({
-            message: '행성 구매 중 오류가 발생했습니다. 별이 충분한지 확인하세요.',
+            message: '행성 구매 중 오류가 발생했습니다.',
             errorMessage: error.message,
         });
     }
@@ -223,11 +232,11 @@ router.get('/getPlanets', authMiddleware, async (req, res) => {
 
 // 행성 교체하는 API
 router.put('/changePlanet', authMiddleware, async (req, res) => {
-    const userId = res.locals.user.userId; // 인증 미들웨어를 통해 얻은 사용자 ID
-    const { newPlanetType } = req.body; // 클라이언트로부터 받은 새 행성 유형
+    const userId = res.locals.user.userId;
+    const { newPlanetType } = req.body;
 
     try {
-        // 먼저 사용자가 구매한 모든 행성 유형을 조회
+        // 사용자가 구매한 모든 행성 유형을 조회
         const purchasedPlanets = await prisma.planetBuyHistory.findMany({
             where: { userId: userId },
             select: { planetType: true },
@@ -235,8 +244,8 @@ router.put('/changePlanet', authMiddleware, async (req, res) => {
 
         const purchasedTypes = purchasedPlanets.map((p) => p.planetType);
 
-        // 사용자가 구매한 행성 유형 중에서 요청된 행성 유형이 있는지 검증
-        if (!purchasedTypes.includes(newPlanetType)) {
+        // A 행성은 구매 기록이 없어도 교체할 수 있도록 예외 처리
+        if (newPlanetType !== 'A' && !purchasedTypes.includes(newPlanetType)) {
             return res.status(400).json({
                 message: '요청된 행성 유형은 사용자가 구매한 행성 중에 없습니다. 교체할 수 없습니다.',
             });
@@ -266,5 +275,58 @@ router.put('/changePlanet', authMiddleware, async (req, res) => {
             message: '행성 유형 변경 중 내부 오류가 발생했습니다.',
             errorMessage: error.message,
         });
+    }
+});
+
+// 유저 정보 조회
+router.get('/getUser', authMiddleware, async (req, res) => {
+    const userId = res.locals.user.userId;
+
+    try {
+        const user = await prisma.users.findUnique({
+            where: {
+                userId: userId,
+            },
+            select: {
+                planet: true,
+                darkMode: true,
+            },
+        });
+
+        if (user) {
+            res.status(200).json(user);
+        } else {
+            res.status(404).json({ message: '헤당 유저가 존재 하지 않습니다.' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: '사용자 정보를 검색하는 중 오류가 발생했습니다', error: error.message });
+    }
+});
+
+// 다크모드 변경
+router.put('/updateDarkMode', authMiddleware, async (req, res) => {
+    const userId = res.locals.user.userId;
+    const { darkMode } = req.body; // 클라이언트로부터 받은 새로운 다크모드 설정
+
+    if (typeof darkMode !== 'boolean') {
+        return res.status(400).json({ message: '잘못된 요청: darkMode는 boolean 타입이어야 합니다.' });
+    }
+
+    try {
+        const updatedUser = await prisma.users.update({
+            where: {
+                userId: userId,
+            },
+            data: {
+                darkMode: darkMode,
+            },
+        });
+
+        res.status(200).json({
+            message: '다크모드 설정이 업데이트되었습니다.',
+            darkMode: updatedUser.darkMode,
+        });
+    } catch (error) {
+        res.status(500).json({ message: '다크모드 설정을 업데이트하는 중 오류가 발생했습니다', error: error.message });
     }
 });
