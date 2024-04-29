@@ -3,12 +3,16 @@ import jwt from 'jsonwebtoken';
 import { prisma } from './utils/prisma/index.js';
 import moment from 'moment';
 
-const initializeSocket = (httpServer) => {
-    const io = new SocketIOServer(httpServer, {
-        cors: {
-            origin: '*',
-            methods: ['GET', 'POST'],
-        },
+// const initializeSocket = (httpServer) => {
+//     const io = new SocketIOServer(httpServer, {
+//         cors: {
+//             origin: '*',
+//             methods: ['GET', 'POST'],
+//         },
+//     });
+const initializeSocket = (server, corsOptions) => {
+    const io = new SocketIOServer(server, {
+        cors: corsOptions,
     });
 
     // '/chatroom' 경로에 대한 네임스페이스 설정
@@ -19,6 +23,7 @@ const initializeSocket = (httpServer) => {
     // io.on('connection', async (socket) => {
     chatNamespace.on('connection', async (socket) => {
         console.log('사용자가 연결되었습니다.', socket.id);
+        socket.emit('연결 성공!', { message: '소켓 연결에 성공했습니다!' });
 
         // 인증 토큰 검증
         const token = socket.handshake.auth.token; // 클라이언트로부터 받은 토큰
@@ -56,7 +61,8 @@ const initializeSocket = (httpServer) => {
             }
         }
 
-        socket.on('join room', (roomId) => {
+        // socket.on('join room', (roomId) => {
+        socket.on('join room', ({ roomId }, callback) => {
             if (!socket.user) {
                 socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
                 return;
