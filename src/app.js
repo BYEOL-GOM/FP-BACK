@@ -48,7 +48,8 @@ if (process.env.SENTRY_DSN) {
 // CORS 미들웨어 설정
 app.use(
     cors({
-        origin: '*',
+        // origin: '*',
+        origin: 'http://localhost:3000/chatroom',
         methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
         allowedHeaders: ['Content-Type', 'Authorization'],
         credentials: true,
