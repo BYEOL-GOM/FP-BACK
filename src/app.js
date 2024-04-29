@@ -131,7 +131,7 @@ app.get('/', (req, res) => {
 });
 
 // io.on('connection', (socket) => {
-//     console.log('새로운 유저가 접속했습니다.');
+//     console.log('사용자가 연결되었습니다.');
 //     console.log(socket.id);
 //     socket.emit('연결 성공!', { message: '소켓 연결에 성공했습니다!' });
 //     socket.on('join room', ({ roomId }, callback) => {

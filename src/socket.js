@@ -16,12 +16,12 @@ const initializeSocket = (server, corsOptions) => {
     });
 
     // '/chatroom' 경로에 대한 네임스페이스 설정
-    const chatNamespace = io.of('/chatroom');
+    // const chatNamespace = io.of('/chatroom');
 
     let userRooms = {};
 
-    // io.on('connection', async (socket) => {
-    chatNamespace.on('connection', async (socket) => {
+    io.on('connection', async (socket) => {
+        // chatNamespace.on('connection', async (socket) => {
         console.log('사용자가 연결되었습니다.', socket.id);
         socket.emit('연결 성공!', { message: '소켓 연결에 성공했습니다!' });
 
@@ -132,6 +132,7 @@ const initializeSocket = (server, corsOptions) => {
             }
         });
     });
+    return io; // 필요에 따라 io 객체 반환
 };
 
 export default initializeSocket;
