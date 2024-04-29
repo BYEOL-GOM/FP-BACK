@@ -122,10 +122,15 @@ app.get('/', (req, res) => {
 io.on('connection', (socket) => {
     console.log('새로운 유저가 접속했습니다.');
     console.log(socket.id);
-    // socket.emit('연결 성공!', { message: '소켓 연결에 성공했습니다!' });
-    socket.on('join', ({ name, room }, callback) => {});
-    socket.on('message', (data) => {
-        console.log(data);
+    socket.emit('연결 성공!', { message: '소켓 연결에 성공했습니다!' });
+    socket.on('join room', ({ roomId }, callback) => {
+        // 'join room' 이벤트를 수신하여 해당 방에 입장 처리를 수행.
+        console.log(`유저가 ${roomId} 방에 입장했습니다.`);
+        // 입장 처리 후 필요한 작업 수행
+    });
+    socket.on('chatting', (data) => {
+        console.log('메시지 수신:', data);
+        // 받은 메시지를 처리하고 필요한 작업을 수행합니다.
     });
     socket.on('disconnect', () => {
         console.log('유저가 나갔습니다.');
