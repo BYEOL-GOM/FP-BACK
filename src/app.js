@@ -114,7 +114,7 @@ app.get('/debug-sentry', function mainHandler(req, res) {
 
 io.on('connection', (socket) => {
     console.log('새로운 유저가 접속했습니다.');
-    socket.emit('연결 성공!', { message: '소켓 연결에 성공했습니다!' });
+    // socket.emit('연결 성공!', { message: '소켓 연결에 성공했습니다!' });
     socket.on('join', ({ name, room }, callback) => {});
     socket.on('message', (data) => {
         console.log(data);
