@@ -10,6 +10,7 @@ import router from './routes/index.js';
 import { loadBannedWords } from './utils/bannedWordsLoader.js';
 import { swaggerUi, specs } from './swagger/swaggerOptions.js';
 import initializeSocket from './socket.js';
+import { Server as SocketIOServer } from 'socket.io';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import './scheduler.js';
@@ -21,9 +22,9 @@ import { Integrations } from '@sentry/tracing';
 // 환경 변수 설정 로드
 dotenv.config();
 
-const app = express();
-
 const PORT = process.env.CONTAINER_PORT || 3000;
+
+const app = express();
 
 // Sentry 초기화
 if (process.env.SENTRY_DSN) {
@@ -80,13 +81,17 @@ app.get('/health', (req, res) => {
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // // ES 모듈에서 __dirname을 구현하는 방법
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-// 이제 __dirname을 사용하여 정적 파일 경로를 설정할 수 있습니다.
-app.use(express.static(path.join(__dirname, '..', 'src')));
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
+// // 이제 __dirname을 사용하여 정적 파일 경로를 설정할 수 있습니다.
+// app.use(express.static(path.join(__dirname, '..', 'src')));
 
-const httpServer = new HttpServer(app); // Express 애플리케이션에 대한 HTTP 서버를 생성
-initializeSocket(httpServer); // 여기서 Socket.IO 서버를 초기화하고, 필요한 경우 httpServer를 전달
+//---------------------------------------------------------------------------------------
+// const httpServer = new HttpServer(app); // Express 애플리케이션에 대한 HTTP 서버를 생성
+// initializeSocket(httpServer); // 여기서 Socket.IO 서버를 초기화하고, 필요한 경우 httpServer를 전달
+//---------------------------------------------------------------------------------------
+const server = HttpServer(app);
+const io = new SocketIOServer(server);
 
 if (process.env.SENTRY_DSN) {
     app.use(Sentry.Handlers.errorHandler());
@@ -107,6 +112,17 @@ app.get('/debug-sentry', function mainHandler(req, res) {
     throw new Error('My first Sentry error!');
 });
 
-httpServer.listen(PORT, () => {
-    console.log(`${PORT} 포트로 서버가 열렸어요!`);
+io.on('connection', (socket) => {
+    console.log('새로운 유저가 접속했습니다.');
+    socket.on('join', ({ name, room }, callback) => {});
+    socket.on('disconnect', () => {
+        console.log('유저가 나갔습니다.');
+    });
 });
+
+//---------------------------------------------------------------------------------------
+// httpServer.listen(PORT, () => {
+//     console.log(`${PORT} 포트로 서버가 열렸어요!`);
+// });
+server.listen(PORT, () => console.log(`${PORT} 포트로 서버가 열렸어요!`));
+//---------------------------------------------------------------------------------------
