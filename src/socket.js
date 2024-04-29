@@ -11,15 +11,22 @@ const initializeSocket = (httpServer) => {
         },
     });
 
+    // '/chatroom' 경로에 대한 네임스페이스 설정
+    const chatNamespace = io.of('/chatroom');
+
     let userRooms = {};
 
-    io.on('connection', async (socket) => {
+    // io.on('connection', async (socket) => {
+    chatNamespace.on('connection', async (socket) => {
         console.log('사용자가 연결되었습니다.', socket.id);
 
         // 인증 토큰 검증
         const token = socket.handshake.auth.token; // 클라이언트로부터 받은 토큰
+        console.log('🩵🩵🩵token', token);
         if (!token) {
-            return next(new Error('인증 토큰이 없습니다.'));
+            socket.emit('error', { message: '인증 토큰이 없습니다.' });
+            socket.disconnect();
+            return;
         }
         try {
             const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
@@ -31,16 +38,21 @@ const initializeSocket = (httpServer) => {
             console.log('🤍🤍🤍user : ', user);
             console.log('🤍🤍🤍user.userId : ', user.userId);
             if (!user) {
-                return next(new Error('인증 오류: 사용자를 찾을 수 없습니다.'));
+                socket.emit('error', { message: '인증 오류: 사용자를 찾을 수 없습니다.' });
+                socket.disconnect();
+                return;
             }
             socket.user = user; // 소켓 객체에 사용자 정보 추가
             userSockets[user.userId] = socket.id; // 사용자 ID와 소켓 ID 매핑
             next();
         } catch (error) {
             if (error.name === 'TokenExpiredError') {
-                return next(new Error('Access Token이 만료되었습니다.'));
-            } else {
-                return next(new Error('인증 오류'));
+                //     return next(new Error('Access Token이 만료되었습니다.'));
+                // } else {
+                //     return next(new Error('인증 오류'));
+                // }
+                socket.emit('error', { message: '인증 오류: ' + error.message });
+                socket.disconnect();
             }
         }
 
