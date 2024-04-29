@@ -37,25 +37,18 @@ if (process.env.SENTRY_DSN) {
     app.use(Sentry.Handlers.requestHandler());
     app.use(Sentry.Handlers.tracingHandler());
 }
+// // // CORS_ORIGIN 환경 변수가 유효한 URL 형식인지 검증
 
-// // CORS_ORIGIN 환경 변수가 유효한 URL 형식인지 검증
 // const corsOrigin = process.env.CORS_ORIGIN;
 // if (!validUrl.isWebUri(corsOrigin)) {
 //     console.error('Invalid CORS_ORIGIN:', corsOrigin);
 //     process.exit(1);
 // }
 
-// 모든 요청에 대한 로그 구성
-app.use(
-    morgan(
-        ':method :url :status :res[content-length] - :response-time ms :req[origin] :res[access-control-allow-origin]',
-    ),
-);
-
 // CORS 미들웨어 설정
 app.use(
     cors({
-        origin: process.env.CORS_ORIGIN,
+        origin: '*',
         methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
         allowedHeaders: ['Content-Type', 'Authorization'],
         credentials: true,
