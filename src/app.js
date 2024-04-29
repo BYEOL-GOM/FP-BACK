@@ -112,13 +112,17 @@ app.get('/debug-sentry', function mainHandler(req, res) {
     throw new Error('My first Sentry error!');
 });
 
-// io.on('connection', (socket) => {
-//     console.log('새로운 유저가 접속했습니다.');
-//     socket.on('join', ({ name, room }, callback) => {});
-//     socket.on('disconnect', () => {
-//         console.log('유저가 나갔습니다.');
-//     });
-// });
+io.on('connection', (socket) => {
+    console.log('새로운 유저가 접속했습니다.');
+    socket.emit('연결 성공!', { message: '소켓 연결에 성공했습니다!' });
+    socket.on('join', ({ name, room }, callback) => {});
+    socket.on('message', (data) => {
+        console.log(data);
+    });
+    socket.on('disconnect', () => {
+        console.log('유저가 나갔습니다.');
+    });
+});
 
 //---------------------------------------------------------------------------------------
 // httpServer.listen(PORT, () => {
