@@ -1,5 +1,6 @@
 import express from 'express';
 import { Server as HttpServer } from 'http';
+import { Server as SocketIOServer } from 'socket.io';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import cors from 'cors';
@@ -10,7 +11,6 @@ import router from './routes/index.js';
 import { loadBannedWords } from './utils/bannedWordsLoader.js';
 import { swaggerUi, specs } from './swagger/swaggerOptions.js';
 import initializeSocket from './socket.js';
-import { Server as SocketIOServer } from 'socket.io';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import './scheduler.js';
@@ -90,7 +90,10 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 // initializeSocket(httpServer); // 여기서 Socket.IO 서버를 초기화하고, 필요한 경우 httpServer를 전달
 //---------------------------------------------------------------------------------------
 const server = HttpServer(app);
-const io = new SocketIOServer(server);
+// const io = new SocketIOServer(server);
+const io = SocketIOServer(server);
+
+app.use(cors());
 
 if (process.env.SENTRY_DSN) {
     app.use(Sentry.Handlers.errorHandler());
@@ -116,7 +119,7 @@ app.get('/', (req, res) => {
     res.status(200).json({ message: 'test' });
 });
 
-io.on('connect', (socket) => {
+io.on('connection', (socket) => {
     console.log('새로운 유저가 접속했습니다.');
     // socket.emit('연결 성공!', { message: '소켓 연결에 성공했습니다!' });
     socket.on('join', ({ name, room }, callback) => {});
