@@ -23,7 +23,7 @@ const PORT = process.env.CONTAINER_PORT || 3000;
 if (process.env.SENTRY_DSN) {
     Sentry.init({
         dsn: process.env.SENTRY_DSN,
-        integrations: [new Sentry.Integrations.Http({ tracing: false })],
+        integrations: [new Sentry.Integrations.Http({ tracing: true })],
         tracesSampleRate: 1.0,
     });
 
@@ -99,6 +99,9 @@ app.get('/debug-sentry', function mainHandler(req, res) {
     throw new Error('My first Sentry error!');
 });
 
+app.get('/', (req, res) => {
+    res.status(200).json({ message: 'test' });
+});
 app.listen(PORT, () => {
     console.log(`${PORT} 포트로 서버가 열렸어요!`);
 });
