@@ -46,25 +46,35 @@ if (process.env.SENTRY_DSN) {
 // }
 
 // CORS 미들웨어 설정
-app.use(
-    cors({
-        origin: '*',
-        // origin: 'http://localhost:3000',
-        methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-        allowedHeaders: ['Content-Type', 'Authorization'],
-        credentials: true,
-    }),
-);
+// app.use(
+//     cors({
+//         origin: '*',
+//         // origin: 'http://localhost:3000',
+//         methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+//         allowedHeaders: ['Content-Type', 'Authorization'],
+//         credentials: true,
+//     }),
+// );
+// CORS 미들웨어 설정
+const corsOptions = {
+    origin: ['http://localhost:3000', 'https://friendj.store'], // 여러 출처 허용
+    methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+};
+app.use(cors(corsOptions));
+// // CORS Preflight 요청 처리
+// app.use((req, res, next) => {
+//     if (req.method === 'OPTIONS') {
+//         res.header('Access-Control-Allow-Origin', req.headers.origin);
+//         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+//         res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+//         return res.status(204).json({});
+//     }
+//     next();
+// });
 // CORS Preflight 요청 처리
-app.use((req, res, next) => {
-    if (req.method === 'OPTIONS') {
-        res.header('Access-Control-Allow-Origin', req.headers.origin);
-        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-        res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-        return res.status(204).json({});
-    }
-    next();
-});
+app.options('*', cors(corsOptions)); // 모든 preflight 요청에 대해 응답
 
 app.use(express.json());
 // app.use(bodyParser.json());
@@ -90,8 +100,10 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 // initializeSocket(httpServer); // 여기서 Socket.IO 서버를 초기화하고, 필요한 경우 httpServer를 전달
 //---------------------------------------------------------------------------------------
 const server = HttpServer(app);
-const io = new SocketIOServer(server);
-// const io = SocketIOServer(server);
+// Socket.IO 서버에도 CORS 적용
+const io = new SocketIOServer(server, {
+    cors: corsOptions,
+});
 
 app.use(cors());
 
