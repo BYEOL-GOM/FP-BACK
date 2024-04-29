@@ -90,8 +90,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 // initializeSocket(httpServer); // 여기서 Socket.IO 서버를 초기화하고, 필요한 경우 httpServer를 전달
 //---------------------------------------------------------------------------------------
 const server = HttpServer(app);
-// const io = new SocketIOServer(server);
-const io = SocketIOServer(server);
+const io = new SocketIOServer(server);
+// const io = SocketIOServer(server);
 
 app.use(cors());
 
@@ -121,6 +121,7 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
     console.log('새로운 유저가 접속했습니다.');
+    console.log(socket.id);
     // socket.emit('연결 성공!', { message: '소켓 연결에 성공했습니다!' });
     socket.on('join', ({ name, room }, callback) => {});
     socket.on('message', (data) => {
