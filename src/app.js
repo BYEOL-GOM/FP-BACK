@@ -49,8 +49,8 @@ if (process.env.SENTRY_DSN) {
 // CORS 미들웨어 설정
 app.use(
     cors({
-        // origin: '*',
-        origin: 'http://localhost:3000',
+        origin: '*',
+        // origin: 'http://localhost:3000',
         methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
         allowedHeaders: ['Content-Type', 'Authorization'],
         credentials: true,
