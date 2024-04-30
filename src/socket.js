@@ -15,7 +15,7 @@ import moment from 'moment';
 //     // connection이 수립되면 event handler function의 인자로 socket이 들어온다
 //     io.on('connection', async (socket) => {
 //         console.log('사용자가 연결되었습니다.', socket.id);
-//         socket.emit('백엔드 연결->', { message: '소켓 연결에 성공했습니다!' });
+//         socket.emit('connected', { message: '백엔드 소켓 연결에 성공했습니다!' });
 
 //         // 인증 토큰 검증
 //         const token = socket.handshake.auth.token; // 클라이언트로부터 받은 토큰
