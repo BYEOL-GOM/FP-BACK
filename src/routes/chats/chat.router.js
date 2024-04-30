@@ -11,7 +11,8 @@ router.post('/createChatRoom', async (req, res) => {
     const parsedUserId = parseInt(userId);
     const parsedCommentAuthorId = parseInt(commentAuthorId);
 
-    console.log('대화 요청 정보:', worryId, userId, commentAuthorId);
+    console.log('대화 요청 정보(body):', worryId, userId, commentAuthorId);
+    console.log('대화 요청 정보(Int):', parsedWorryId, parsedUserId, parsedCommentAuthorId);
     // console.log('대화 요청 정보:', worryId, userId, commentAuthorId);
 
     try {
@@ -21,9 +22,12 @@ router.post('/createChatRoom', async (req, res) => {
                 userId: userId,
             },
         });
+        console.log('⭐⭐⭐테스트 1번. userWorry >> ', userWorry);
 
         // 고민이 존재하면 해당하는 worryId 사용, 존재하지 않으면 null
         const worryId = userWorry ? userWorry.worryId : null;
+
+        console.log('⭐⭐⭐테스트 2번. worryId >> ', worryId);
 
         // 이미 존재하는 방 검색
         let room = await prisma.rooms.findFirst({
@@ -31,6 +35,8 @@ router.post('/createChatRoom', async (req, res) => {
                 OR: [{ userIds: `${userId}-${commentAuthorId}` }, { userIds: `${commentAuthorId}-${userId}` }],
             },
         });
+
+        console.log('⭐⭐⭐테스트 3번. room >> ', room);
 
         // 방이 없다면 새로운 방 생성
         if (!room) {
@@ -41,6 +47,7 @@ router.post('/createChatRoom', async (req, res) => {
                 },
             });
         }
+        console.log('⭐⭐⭐테스트 4번. room >> ', room);
         // 새로운 채팅방 생성
         // const room = await prisma.rooms.create({
         //     data: {
@@ -59,6 +66,7 @@ router.post('/createChatRoom', async (req, res) => {
             message: '대화방이 생성되었습니다.',
         });
     } catch (error) {
+        console.log('⭐⭐⭐테스트 5번. 에러 >> ', error.message);
         console.error('대화방 생성 중 에러 발생:', error);
         res.status(500).json({ message: '서버 오류 발생' });
     }
@@ -68,6 +76,8 @@ router.post('/createChatRoom', async (req, res) => {
 router.get('/chatRooms', async (req, res) => {
     // const { userId } = req.query;
     const userId = parseInt(req.body.userId, 10);
+
+    console.log('userId : ', userId);
 
     try {
         const rooms = await prisma.rooms.findMany({
@@ -80,6 +90,7 @@ router.get('/chatRooms', async (req, res) => {
                 createdAt: 'desc',
             },
         });
+        console.log('⭐⭐⭐테스트 6번. rooms >> ', rooms);
         // try {
         //     const rooms = await prisma.rooms.findMany({
         //         where: {
@@ -96,6 +107,7 @@ router.get('/chatRooms', async (req, res) => {
 
         res.status(200).json(rooms);
     } catch (error) {
+        console.log('⭐⭐⭐테스트 7번. error >> ', error.message);
         console.error('채팅방 조회 중 에러 발생:', error);
         res.status(500).json({ message: '서버 오류 발생' });
     }
