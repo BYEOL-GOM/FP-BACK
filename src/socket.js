@@ -215,6 +215,7 @@ const initializeSocket = (server, corsOptions) => {
                 socket.emit('error', { message: '인증 오류: ' + error.message });
             } else {
                 console.log('기타 오류 발생');
+                console.log('error', { message: '인증 오류: ' + error.message });
                 socket.emit('error', { message: '인증 오류: ' + error.message });
             }
             socket.disconnect();
