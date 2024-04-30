@@ -70,9 +70,9 @@ router.post('/createChatRoom', async (req, res) => {
 
 // src/routes/chats/chat.router.js
 // 로그인한 유저에 해당하는 채팅방 전체 조회
-// router.get('/chatRooms', async (req, res) => {
-router.get('/chatRooms/:userId', async (req, res) => {
-    const userId = parseInt(req.params.userId, 10); // Query string에서 userId를 받아야 합니다.
+router.get('/chatRooms', authMiddleware, async (req, res) => {
+    // router.get('/chatRooms', async (req, res) => {
+    const userId = parseInt(res.locals.user.userId);
     // const userId = parseInt(req.body.userId, 10);
     console.log('userId : ', userId);
 
@@ -125,6 +125,7 @@ router.get('/chatRooms/:userId', async (req, res) => {
         //         return { ...room, lastComment };
         //     }),
         // );
+        // 각 방의 최신 코멘트 정보를 추가
         const roomsWithLastComment = await Promise.all(
             rooms.map(async (room) => {
                 const lastComment = await prisma.comments.findFirst({
@@ -178,45 +179,5 @@ router.get('/chatRooms/:userId', async (req, res) => {
         res.status(500).json({ message: '서버 오류 발생' });
     }
 });
-// 로그인한 유저에 해당하는 채팅방 전체 조회
-// router.get('/chatRooms', async (req, res) => {
-//     // const { userId } = req.query;
-//     const userId = parseInt(req.body.userId, 10);
-
-//     console.log('userId : ', userId);
-
-//     try {
-//         const rooms = await prisma.rooms.findMany({
-//             where: {
-//                 userIds: {
-//                     contains: userId.toString(),
-//                 },
-//             },
-//             orderBy: {
-//                 createdAt: 'desc',
-//             },
-//         });
-//         console.log('⭐⭐⭐테스트 6번. rooms >> ', rooms);
-//         // try {
-//         //     const rooms = await prisma.rooms.findMany({
-//         //         where: {
-//         //             participants: {
-//         //                 some: {
-//         //                     userId: userId,
-//         //                 },
-//         //             },
-//         //         },
-//         //         orderBy: {
-//         //             createdAt: 'desc',
-//         //         },
-//         //     });
-
-//         res.status(200).json(rooms);
-//     } catch (error) {
-//         console.log('⭐⭐⭐테스트 7번. error >> ', error.message);
-//         console.error('채팅방 조회 중 에러 발생:', error);
-//         res.status(500).json({ message: '서버 오류 발생' });
-//     }
-// });
 
 export default router;
