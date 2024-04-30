@@ -16,21 +16,19 @@ model Users {
   nickname      String
   email         String?
   fruit         Int     @default(0)
-  remainingWorries Int @default(5) //  최대 고민작성 가능 개수 5개
-  remainingAnswers Int @default(5) // 답변 가능 개수 5개
-  remainingStars  Int      @default(0) // 별의 개수 
+  remainingWorries Int @default(5)            // 최대 고민작성 가능 개수 5개
+  remainingAnswers Int @default(5)            // 답변 가능 개수 5개
+  remainingStars  Int      @default(0)        // 별의 개수 
   planet          PlanetType  @default(A)
-  darkMode          Boolean   @default(true) // 다크모드 사용 여부
+  darkMode          Boolean   @default(true)  // 다크모드 사용 여부
 
-  worry Worries[]
-  reports     Reports[]  // 신고
+  worry         Worries[]
+  reports       Reports[]  // 신고
+  comments      Comments[]
+  likesSent     Likes[]   @relation("LikeSender")         // 선물을 보낸 사람
+  planetHistory PlanetBuyHistory[]
 
-  comments  Comments[]
-  likesSent     Likes[] @relation("LikeSender")
-  planetHistory PlanetBuyHistory[]     // 선물을 보낸 사람
-
-  rooms     Rooms[]   @relation("ParticipantInRoom")     // 참여하는 채팅방들
-  sentChattings Chattings[] @relation("SentChattings") // 보낸 채팅 메시지들
+  sentChattings Chattings[] @relation("SentChattings")    // 보낸 채팅 메시지들
 }
 
 enum PlanetType {
@@ -51,10 +49,9 @@ model Worries {
   updatedAt             DateTime? @map("updatedAt") 
   deletedAt             DateTime? @map("deletedAt")                    // 소프트 삭제 
 
-
   icon                  Icon?     @map("icon")
   unRead                Boolean   @default(true)  @map("unRead")       // 아직 안읽음
- 
+
   isSolved              Boolean   @default(false)                      // 고민이 해결됐는지에 대한 여부 확인
   reportReason          String?       @map("reportReason")             // 신고 이유
 
@@ -69,7 +66,7 @@ model Worries {
   solvingCommentId Int?       @unique @map("solvingCommentId")
   solvingComment   Comments?  @relation("SolvingComment", fields: [solvingCommentId], references: [commentId])
 
-  // room  Rooms? // 이 고민에 대한 채팅방
+  room    Rooms? // 이 고민에 대한 채팅방
 }
 
 enum Icon{
@@ -155,19 +152,19 @@ model PlanetBuyHistory {
 
 // 채팅방
 model Rooms {
-  roomId      Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  userIds     String      
-  // userIds     String   @unique // 유저 ID 조합으로 unique key 생성
+  roomId      Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
-  participants Users[]   @relation("ParticipantInRoom") // 채팅방에 참여하는 사용자들
-  chattings    Chattings[]                            // 채팅 메시지
+  worryId     Int       @unique
+  worry       Worries   @relation(fields: [worryId], references: [worryId])
+
+  chattings   Chattings[] // 채팅 메시지
 }
 
 // 채팅
 model Chattings {
-  chatId   Int      @id @default(autoincrement())
+  chatId      Int      @id @default(autoincrement())
   text        String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

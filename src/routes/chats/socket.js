@@ -239,7 +239,7 @@ const initializeSocket = (server, corsOptions) => {
 
             // 사용자 인증 확인
             if (!socket.user) {
-                console.error('socket.user : ', error);
+                console.error('socket.user error:', error);
                 socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
                 return;
             }
@@ -263,6 +263,7 @@ const initializeSocket = (server, corsOptions) => {
                 } else {
                     console.log('🚨🚨🚨비상비상 에러에러 9-1번.');
                     socket.emit('error', { message: '채팅방이 존재하지 않습니다.' });
+                    socket.disconnect();
                 }
             } catch (error) {
                 console.error('🚨🚨🚨비상비상 에러에러 9-2번.', error);
