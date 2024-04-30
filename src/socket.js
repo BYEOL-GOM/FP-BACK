@@ -171,56 +171,68 @@ const initializeSocket = (server, corsOptions) => {
         console.log('token : ', token);
         console.log('🚨🚨🚨여기까지 와? 0번.');
         socket.emit('connected', { message: '백엔드 소켓 연결에 성공했습니다!' });
-        if (!token) {
-            socket.emit('error', { message: '인증 토큰이 없습니다.' });
-            socket.disconnect();
-            return;
-        }
-        console.log('🚨🚨🚨여기까지 와? 1번.');
-        try {
-            const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-            console.log('💚💚💚decoded userId : ', decoded.userId);
-            const user = await prisma.users.findUnique({
-                where: {
-                    userId: decoded.userId,
-                },
-            });
-            console.log('🚨🚨🚨여기까지 와? 2번.');
-            // 유저 정보를 프론트엔드에게 전달
-            socket.emit('connected', { userId: user.userId, username: user.nickname, email: user.email });
-            console.log('🤍🤍🤍0user : ', user);
-            console.log('🤍🤍🤍0user 정보 ', { userId: user.userId, username: user.nickname, email: user.email });
-            if (!user) {
-                socket.emit('error', { message: '인증 오류: 사용자를 찾을 수 없습니다.' });
+
+        // 토큰이 존재하는 경우에만 처리
+        if (token) {
+            const [bearer, tokenValue] = token.split(' ');
+            if (bearer !== 'Bearer') {
+                socket.emit('error', { message: '토큰 타입이 Bearer 형식이 아닙니다' });
+                console.log('👎👎👎error', { message: '토큰 타입이 Bearer 형식이 아닙니다' });
                 socket.disconnect();
                 return;
             }
-            console.log('🚨🚨🚨여기까지 와? 3번.');
+            console.log('tokenWithoutBearer : ', tokenValue);
+            console.log('🚨🚨🚨여기까지 와? 1번.');
+            try {
+                const decoded = jwt.verify(tokenValue, process.env.ACCESS_TOKEN_SECRET);
+                console.log('🙆‍♂️🙆‍♂️🙆‍♂️decoded userId : ', decoded.userId);
+                const user = await prisma.users.findUnique({
+                    where: {
+                        userId: decoded.userId,
+                    },
+                });
+                console.log('🚨🚨🚨여기까지 와? 2번.');
 
-            socket.emit('connected', { userId: user.userId, username: user.nickname, email: user.email });
-            console.log('🤍🤍🤍1user : ', user);
-            console.log('🤍🤍🤍1user 정보 ', { userId: user.userId, username: user.nickname, email: user.email });
+                // 유저 정보를 프론트엔드에게 전달
+                socket.emit('connected', { userId: user.userId, username: user.nickname, email: user.email });
+                console.log('🤍🤍🤍0user : ', user);
+                console.log('🤍🤍🤍0user 정보 ', { userId: user.userId, username: user.nickname, email: user.email });
 
-            // 유저 정보 설정
-            socket.user = user; // 소켓 객체에 사용자 정보 추가
-            userSockets[user.userId] = socket.id; // 사용자 ID와 소켓 ID 매핑
-        } catch (error) {
-            console.log('🚨🚨🚨여기까지 와? 4번.');
-            //     return next(new Error('Access Token이 만료되었습니다.'));
-            // } else {
-            //     return next(new Error('인증 오류'));
-            // }
-            if (error.name === 'TokenExpiredError') {
-                console.log('TokenExpiredError 발생');
-                socket.emit('error', { message: '인증 오류: ' + error.message });
-            } else {
-                console.log('기타 오류 발생');
-                console.log('error', { message: '인증 오류: ' + error.message });
-                socket.emit('error', { message: '인증 오류: ' + error.message });
+                if (!user) {
+                    socket.emit('error', { message: '인증 오류: 사용자를 찾을 수 없습니다.' });
+                    socket.disconnect();
+                    return;
+                }
+                console.log('🚨🚨🚨여기까지 와? 3번.');
+
+                socket.emit('connected', { userId: user.userId, username: user.nickname, email: user.email });
+                console.log('🤍🤍🤍1user : ', user);
+                console.log('🤍🤍🤍1user 정보 ', { userId: user.userId, username: user.nickname, email: user.email });
+
+                // 유저 정보 설정
+                socket.user = user; // 소켓 객체에 사용자 정보 추가
+                userSockets[user.userId] = socket.id; // 사용자 ID와 소켓 ID 매핑
+            } catch (error) {
+                console.log('🚨🚨🚨여기까지 와? 4-0번.');
+                if (error.name === 'TokenExpiredError') {
+                    console.log('🚨🚨🚨여기까지 와? 4-1번.');
+                    console.error('인증 오류:', error);
+                    socket.emit('error', { message: '인증 오류: ' + error.message });
+                    socket.disconnect();
+                } else {
+                    console.log('🚨🚨🚨여기까지 와? 4-2번.');
+                    console.error('기타 에러 발생:', error);
+                    socket.emit('error', { message: '인증 오류: ' + error.message });
+                    socket.disconnect();
+                }
             }
+        } else {
+            // 토큰이 없는 경우 에러 처리
+            console.log('👎👎👎error', { message: '인증 토큰이 없습니다.' });
+            socket.emit('error', { message: '인증 토큰이 없습니다.' });
             socket.disconnect();
-            return;
         }
+
         console.log('🚨🚨🚨여기까지 와? 5번.');
 
         socket.on('join room', ({ roomId }, callback) => {
