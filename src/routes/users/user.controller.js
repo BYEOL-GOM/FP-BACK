@@ -57,40 +57,24 @@ export const kakaoLoginController = async (req, res) => {
                 },
             });
 
-            const accessToken = jwt.sign(
-                { userId: createUser.userId, planet: createUser.planet },
-                process.env.ACCESS_TOKEN_SECRET,
-                {
-                    expiresIn: process.env.ACCESS_TOKEN_LIFE,
-                },
-            );
-            const refreshToken = jwt.sign(
-                { userId: createUser.userId, planet: createUser.planet },
-                process.env.REFRESH_TOKEN_SECRET,
-                {
-                    expiresIn: process.env.REFRESH_TOKEN_LIFE,
-                },
-            );
+            const accessToken = jwt.sign({ userId: createUser.userId }, process.env.ACCESS_TOKEN_SECRET, {
+                expiresIn: process.env.ACCESS_TOKEN_LIFE,
+            });
+            const refreshToken = jwt.sign({ userId: createUser.userId }, process.env.REFRESH_TOKEN_SECRET, {
+                expiresIn: process.env.REFRESH_TOKEN_LIFE,
+            });
             return res
                 .status(200)
                 .json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}` });
             //return res.status(200).json(userInfo);
         }
 
-        const accessToken = jwt.sign(
-            { userId: findUser.userId, planet: findUser.planet },
-            process.env.ACCESS_TOKEN_SECRET,
-            {
-                expiresIn: process.env.ACCESS_TOKEN_LIFE,
-            },
-        );
-        const refreshToken = jwt.sign(
-            { userId: findUser.userId, planet: findUser.planet },
-            process.env.REFRESH_TOKEN_SECRET,
-            {
-                expiresIn: process.env.REFRESH_TOKEN_LIFE,
-            },
-        );
+        const accessToken = jwt.sign({ userId: findUser.userId }, process.env.ACCESS_TOKEN_SECRET, {
+            expiresIn: process.env.ACCESS_TOKEN_LIFE,
+        });
+        const refreshToken = jwt.sign({ userId: findUser.userId }, process.env.REFRESH_TOKEN_SECRET, {
+            expiresIn: process.env.REFRESH_TOKEN_LIFE,
+        });
 
         return res.status(200).json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}` });
         //return res.status(200).json(ID);
@@ -126,7 +110,7 @@ export const naverLoginController = async (req, res) => {
             },
         });
 
-        const userInfo = userInfoResponse.data;
+        const userInfo = userInfoResponse.data.response; // 'response' 추가
 
         const { id, email, nickname } = userInfo;
 
@@ -137,56 +121,38 @@ export const naverLoginController = async (req, res) => {
         };
 
         const findUser = await prisma.users.findFirst({
-            where: { userCheckId: user.id },
+            where: { userCheckId: user.id.toString() }, // 'toString()' 추가
         });
 
         if (!findUser) {
             const lastUser = await prisma.users.count();
             const createUser = await prisma.users.create({
                 data: {
-                    userCheckId: user.id.toString(),
+                    userCheckId: user.id.toString(), // 'toString()' 추가
                     nickname: `고민의 늪에 빠진 곰 ${lastUser + 1}`,
                     email: user.email,
                 },
             });
 
-            const accessToken = jwt.sign(
-                { userId: createUser.userId, planet: createUser.planet },
-                process.env.ACCESS_TOKEN_SECRET,
-                {
-                    expiresIn: process.env.ACCESS_TOKEN_LIFE,
-                },
-            );
-            const refreshToken = jwt.sign(
-                { userId: createUser.userId, planet: createUser.planet },
-                process.env.REFRESH_TOKEN_SECRET,
-                {
-                    expiresIn: process.env.REFRESH_TOKEN_LIFE,
-                },
-            );
+            const accessToken = jwt.sign({ userId: createUser.userId }, process.env.ACCESS_TOKEN_SECRET, {
+                expiresIn: process.env.ACCESS_TOKEN_LIFE,
+            });
+            const refreshToken = jwt.sign({ userId: createUser.userId }, process.env.REFRESH_TOKEN_SECRET, {
+                expiresIn: process.env.REFRESH_TOKEN_LIFE,
+            });
             return res
                 .status(200)
                 .json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}` });
-            //return res.status(200).json(userInfo);
         }
 
-        const accessToken = jwt.sign(
-            { userId: findUser.userId, planet: findUser.planet },
-            process.env.ACCESS_TOKEN_SECRET,
-            {
-                expiresIn: process.env.ACCESS_TOKEN_LIFE,
-            },
-        );
-        const refreshToken = jwt.sign(
-            { userId: findUser.userId, planet: findUser.planet },
-            process.env.REFRESH_TOKEN_SECRET,
-            {
-                expiresIn: process.env.REFRESH_TOKEN_LIFE,
-            },
-        );
+        const accessToken = jwt.sign({ userId: findUser.userId }, process.env.ACCESS_TOKEN_SECRET, {
+            expiresIn: process.env.ACCESS_TOKEN_LIFE,
+        });
+        const refreshToken = jwt.sign({ userId: findUser.userId }, process.env.REFRESH_TOKEN_SECRET, {
+            expiresIn: process.env.REFRESH_TOKEN_LIFE,
+        });
 
         return res.status(200).json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}` });
-        //return res.status(200).json(user);
     } catch (error) {
         console.error(error);
         return res.status(405).json({ message: '네이버 인증 및 사용자 정보 가져오기 오류' });
@@ -196,10 +162,11 @@ export const naverLoginController = async (req, res) => {
 // 리프레시 토큰 검증 및 재발급 로직
 export const refreshController = async (req, res, next) => {
     try {
-        const { authorization } = req.body.headers;
+        const authorization = req.headers.authorization;
         if (!authorization) {
             return res.status(401).json({ message: 'Refresh Token을 전달받지 못했습니다.' });
         }
+        console.log(authorization);
 
         const [bearer, refreshToken] = authorization.split(' ');
         if (bearer !== 'Bearer') {
@@ -224,16 +191,12 @@ export const refreshController = async (req, res, next) => {
             throw err;
         }
 
-        const newAccessToken = jwt.sign({ userId: user.userId, planet: user.planet }, process.env.ACCESS_TOKEN_SECRET, {
+        const newAccessToken = jwt.sign({ userId: user.userId }, process.env.ACCESS_TOKEN_SECRET, {
             expiresIn: process.env.ACCESS_TOKEN_LIFE,
         });
-        const newRefreshToken = jwt.sign(
-            { userId: user.userId, planet: user.planet },
-            process.env.REFRESH_TOKEN_SECRET,
-            {
-                expiresIn: process.env.REFRESH_TOKEN_LIFE,
-            },
-        );
+        const newRefreshToken = jwt.sign({ userId: user.userId }, process.env.REFRESH_TOKEN_SECRET, {
+            expiresIn: process.env.REFRESH_TOKEN_LIFE,
+        });
 
         return res.status(200).json({
             message: '토큰이 재발급 되었습니다',
