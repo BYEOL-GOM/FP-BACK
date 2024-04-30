@@ -193,11 +193,6 @@ const initializeSocket = (server, corsOptions) => {
                 });
                 console.log('🚨🚨🚨여기까지 와? 2번.');
 
-                // 유저 정보를 프론트엔드에게 전달
-                socket.emit('connected', { userId: user.userId, username: user.nickname, email: user.email });
-                console.log('🤍🤍🤍0user : ', user);
-                console.log('🤍🤍🤍0user 정보 ', { userId: user.userId, username: user.nickname, email: user.email });
-
                 if (!user) {
                     socket.emit('error', { message: '인증 오류: 사용자를 찾을 수 없습니다.' });
                     socket.disconnect();
@@ -205,9 +200,9 @@ const initializeSocket = (server, corsOptions) => {
                 }
                 console.log('🚨🚨🚨여기까지 와? 3번.');
 
-                socket.emit('connected', { userId: user.userId, username: user.nickname, email: user.email });
-                console.log('🤍🤍🤍1user : ', user);
-                console.log('🤍🤍🤍1user 정보 ', { userId: user.userId, username: user.nickname, email: user.email });
+                // 유저 정보를 프론트엔드에게 전달
+                socket.emit('userInfo', { userId: user.userId, username: user.nickname });
+                console.log('🩷🩷🩷userInfo', { userId: user.userId, username: user.nickname, email: user.email });
 
                 // 유저 정보 설정
                 socket.user = user; // 소켓 객체에 사용자 정보 추가
