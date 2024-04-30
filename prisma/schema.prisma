@@ -29,7 +29,8 @@ model Users {
   likesSent     Likes[] @relation("LikeSender")
   planetHistory PlanetBuyHistory[]     // 선물을 보낸 사람
 
-  sentChattings Chattings[] @relation("SentChattings") // 보낸 채팅
+  rooms     Rooms[]   @relation("ParticipantInRoom")     // 참여하는 채팅방들
+  sentChattings Chattings[] @relation("SentChattings") // 보낸 채팅 메시지들
 }
 
 enum PlanetType {
@@ -155,19 +156,18 @@ model PlanetBuyHistory {
 // 채팅방
 model Rooms {
   roomId      Int      @id @default(autoincrement())
-  title       String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  userIds     String      
+  // userIds     String   @unique // 유저 ID 조합으로 unique key 생성
 
-  // worryId             Int       @unique // 채팅방이 연결된 고민의 ID
-  // worries             Worries   @relation(fields: [worryId], references: [worryId])
-
-  chattings    Chattings[]
+  participants Users[]   @relation("ParticipantInRoom") // 채팅방에 참여하는 사용자들
+  chattings    Chattings[]                            // 채팅 메시지
 }
 
 // 채팅
 model Chattings {
-  chatId      Int      @id @default(autoincrement())
+  chatId   Int      @id @default(autoincrement())
   text        String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
