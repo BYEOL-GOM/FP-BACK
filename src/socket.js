@@ -256,60 +256,6 @@ const initializeSocket = (server, corsOptions) => {
                 console.log(`사용자 ${socket.user.id}는 어떤 방에도 속해있지 않습니다.`);
             }
         });
-            userSockets[user.userId] = socket.id; // 사용자 ID와 소켓 ID 매핑
-            next();
-        } catch (error) {
-            if (error.name === 'TokenExpiredError') {
-                //     return next(new Error('Access Token이 만료되었습니다.'));
-                // } else {
-                //     return next(new Error('인증 오류'));
-                // }
-                socket.emit('error', { message: '인증 오류: ' + error.message });
-                socket.disconnect();
-            }
-        }
-
-        socket.on('join room', ({ roomId }, callback) => {
-            if (!socket.user) {
-                socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
-                return;
-            }
-            console.log(roomId);
-            const occupants = Object.values(userRooms).filter((id) => id === roomId).length;
-            if (occupants < 2) {
-                socket.join(roomId.toString());
-                userRooms[socket.id] = roomId;
-                socket.emit('joined room', { roomId: roomId });
-                io.to(roomId.toString()).emit(
-                    'room message',
-                    `사용자 ${socket.user.id} (Socket ID: ${socket.id})가 ${roomId}방에 입장했습니다.`,
-                );
-            } else {
-                socket.emit('error', { message: `방 ${roomId}이 꽉 찼습니다.` });
-                console.log(`방 ${roomId}이(가) 꽉 찼습니다.`);
-            }
-        });
-
-        socket.on('chatting', function (data) {
-            if (!socket.user) {
-                socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
-                return;
-            }
-            const roomName = userRooms[socket.id];
-            if (roomName) {
-                console.log('🩵🩵🩵백엔드 chatting-data', data);
-                if (typeof data === 'string') {
-                    data = JSON.parse(data);
-                }
-                io.to(roomName).emit('chatting', {
-                    userId: socket.user.id,
-                    msg: data.msg,
-                    time: new Date().toISOString(),
-                });
-            } else {
-                console.log(`사용자 ${socket.user.id}는 어떤 방에도 속해있지 않습니다.`);
-            }
-        });
 
         socket.on('leave room', () => {
             if (!socket.user) {
