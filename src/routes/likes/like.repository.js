@@ -23,7 +23,7 @@ export const verifyCommentExists = async (commentId, worryId) => {
     return !!comment;
 };
 
-// 최신 답변 가져오기
+// 최신(마지막) 답변 가져오기
 export const findLastReplyByWorryId = async (worryId) => {
     const lastReply = await prisma.comments.findFirst({
         where: { worryId: parseInt(worryId) },

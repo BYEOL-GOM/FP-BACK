@@ -154,6 +154,7 @@ model PlanetBuyHistory {
 // 채팅방
 model Rooms {
   roomId      Int       @id @default(autoincrement())
+  status      RoomStatus  @default(PENDING) @map("status")  // Enum 타입으로 상태 관리
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
@@ -164,6 +165,11 @@ model Rooms {
   commentAuthorId Int       // 댓글 작성자 ID
 
   chattings   Chattings[]   // 채팅 메시지
+}
+enum RoomStatus {
+  PENDING   // 요청중
+  ACCEPTED  // 수락됨
+  REJECTED  // 거절됨
 }
 
 // 채팅
