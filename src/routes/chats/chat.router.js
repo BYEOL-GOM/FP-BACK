@@ -6,11 +6,15 @@ const router = express.Router();
 
 // 채팅방 생성
 router.post('/createChatRoom', async (req, res) => {
-    const { worryId } = req.body;
+    // const { worryId } = req.body;
+    // const parsedWorryId = parseInt(worryId);
+    const { worryId, userId, commentAuthorId } = req.body;
     const parsedWorryId = parseInt(worryId);
+    const parsedUserId = parseInt(userId);
+    const parsedCommentAuthorId = parseInt(commentAuthorId);
 
-    console.log('대화 요청 정보(body):', worryId);
-    console.log('대화 요청 정보(Int):', parsedWorryId);
+    console.log('대화 요청 정보(body):', worryId, userId, commentAuthorId);
+    console.log('대화 요청 정보(Int):', parsedWorryId, parsedUserId, parsedCommentAuthorId);
 
     try {
         // 해당 고민이 존재하는지 확인
@@ -18,11 +22,17 @@ router.post('/createChatRoom', async (req, res) => {
             where: {
                 worryId: parsedWorryId,
             },
+            select: {
+                userId: true,
+                commentAuthorId: true,
+            },
         });
 
         if (!existingWorry) {
             return res.status(404).json({ message: '해당 고민이 존재하지 않습니다.' });
         }
+
+        const { userId, commentAuthorId } = existingWorry;
 
         // 방이 이미 존재하는지 검사
         let room = await prisma.rooms.findUnique({
@@ -38,6 +48,9 @@ router.post('/createChatRoom', async (req, res) => {
             room = await prisma.rooms.create({
                 data: {
                     worryId: parsedWorryId,
+                    users: {
+                        connect: [{ userId }, { commentAuthorId: commentAuthorId }],
+                    },
                 },
             });
         }
