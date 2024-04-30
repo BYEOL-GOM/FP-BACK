@@ -27,12 +27,11 @@ router.post('/createChatRoom', async (req, res) => {
                 commentAuthorId: true,
             },
         });
+        console.log('⭐⭐⭐existingWorry >> ', existingWorry);
 
         if (!existingWorry) {
             return res.status(404).json({ message: '해당 고민이 존재하지 않습니다.' });
         }
-
-        const { userId, commentAuthorId } = existingWorry;
 
         // 방이 이미 존재하는지 검사
         let room = await prisma.rooms.findUnique({
@@ -43,21 +42,22 @@ router.post('/createChatRoom', async (req, res) => {
 
         console.log('⭐⭐⭐테스트 1번. room >> ', room);
 
-        // 방이 없다면 새로운 방 생성
+        // 채팅방이 존재하지 않는 경우, 새로운 채팅방 생성
         if (!room) {
             room = await prisma.rooms.create({
                 data: {
                     worryId: parsedWorryId,
-                    users: {
-                        connect: [{ userId }, { commentAuthorId: commentAuthorId }],
-                    },
+                    userId: parsedUserId, // 고민을 등록한 사용자 ID 할당
+                    commentAuthorId: parsedCommentAuthorId, // 댓글 작성자 ID 할당
                 },
             });
         }
         console.log('⭐⭐⭐테스트 2번. room >> ', room);
 
         res.status(201).json({
-            worryId: parsedWorryId,
+            worryId: room.worryId,
+            userId: parsedUserId,
+            commentAuthorId: parsedCommentAuthorId,
             roomId: room.roomId,
             message: '대화방이 생성되었습니다.',
         });
@@ -138,10 +138,11 @@ router.post('/createChatRoom', async (req, res) => {
 //------------------------------------------------------------------------------------------------
 
 // src/routes/chats/chat.router.js
-// // 로그인한 유저에 해당하는 채팅방 전체 조회
-router.get('/chatRooms', async (req, res) => {
-    const userId = parseInt(req.query.userId, 10); // Query string에서 userId를 받아야 합니다.
-
+// 로그인한 유저에 해당하는 채팅방 전체 조회
+// router.get('/chatRooms', async (req, res) => {
+router.get('/chatRooms/:userId', async (req, res) => {
+    const userId = parseInt(req.params.userId, 10); // Query string에서 userId를 받아야 합니다.
+    // const userId = parseInt(req.body.userId, 10);
     console.log('userId : ', userId);
 
     try {
@@ -150,7 +151,7 @@ router.get('/chatRooms', async (req, res) => {
                 OR: [{ worry: { userId: userId } }, { worry: { commentAuthorId: userId } }],
             },
             include: {
-                worry: true, // Worry 정보도 포함하여 반환
+                worry: false, // worry 필드를 제외합니다.
             },
             orderBy: {
                 createdAt: 'desc',
@@ -158,7 +159,7 @@ router.get('/chatRooms', async (req, res) => {
         });
         console.log('⭐⭐⭐테스트 6번. rooms >> ', rooms);
 
-        res.status(200).json(rooms);
+        res.status(200).json(...rooms);
     } catch (error) {
         console.log('⭐⭐⭐테스트 7번. error >> ', error.message);
         console.error('채팅방 조회 중 에러 발생:', error);

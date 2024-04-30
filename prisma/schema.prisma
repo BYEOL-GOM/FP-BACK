@@ -66,7 +66,8 @@ model Worries {
   solvingCommentId Int?       @unique @map("solvingCommentId")
   solvingComment   Comments?  @relation("SolvingComment", fields: [solvingCommentId], references: [commentId])
 
-  room    Rooms? // 이 고민에 대한 채팅방
+  // Worries와 Rooms 간의 1:1 관계 설정
+  room          Rooms?
 }
 
 enum Icon{
@@ -159,7 +160,10 @@ model Rooms {
   worryId     Int       @unique
   worry       Worries   @relation(fields: [worryId], references: [worryId])
 
-  chattings   Chattings[] // 채팅 메시지
+  userId          Int       // 고민을 등록한 사용자 ID
+  commentAuthorId Int       // 댓글 작성자 ID
+
+  chattings   Chattings[]   // 채팅 메시지
 }
 
 // 채팅

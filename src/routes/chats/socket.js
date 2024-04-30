@@ -179,7 +179,7 @@ const initializeSocket = (server, corsOptions) => {
             const [bearer, tokenValue] = token.split(' ');
             if (bearer !== 'Bearer') {
                 socket.emit('error', { message: '토큰 타입이 Bearer 형식이 아닙니다' });
-                console.log('👎👎👎error', { message: '토큰 타입이 Bearer 형식이 아닙니다' });
+                console.log('token error', { message: '토큰 타입이 Bearer 형식이 아닙니다' });
                 socket.disconnect();
                 return;
             }
@@ -212,12 +212,12 @@ const initializeSocket = (server, corsOptions) => {
             } catch (error) {
                 console.log('🚨🚨🚨여기까지 와? 4-0번.');
                 if (error.name === 'TokenExpiredError') {
-                    console.log('🚨🚨🚨여기까지 와? 4-1번.');
+                    console.log('🚨🚨🚨여기까지 와? 4-1번.', error.message);
                     console.error('인증 오류:', error);
                     socket.emit('error', { message: '인증 오류: ' + error.message });
                     socket.disconnect();
                 } else {
-                    console.log('🚨🚨🚨여기까지 와? 4-2번.');
+                    console.log('🚨🚨🚨여기까지 와? 4-2번.', error.message);
                     console.error('기타 에러 발생:', error);
                     socket.emit('error', { message: '인증 오류: ' + error.message });
                     socket.disconnect();
@@ -225,7 +225,7 @@ const initializeSocket = (server, corsOptions) => {
             }
         } else {
             // 토큰이 없는 경우 에러 처리
-            console.log('🚨🚨🚨여기까지 와? 4-3번.');
+            console.log('🚨🚨🚨여기까지 와? 4-3번.', error.message);
             console.error('error', error);
             socket.emit('error', { message: '인증 토큰이 없습니다.' });
             socket.disconnect();
@@ -239,6 +239,7 @@ const initializeSocket = (server, corsOptions) => {
 
             // 사용자 인증 확인
             if (!socket.user) {
+                console.log('🚨🚨🚨여기까지 와? 6.5번.', error.message);
                 console.error('socket.user error:', error);
                 socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
                 return;
@@ -261,12 +262,12 @@ const initializeSocket = (server, corsOptions) => {
                         `사용자 ${socket.user.userId} (Socket ID: ${socket.id})가 ${room.roomId || '채팅방'}에 입장했습니다.`,
                     );
                 } else {
-                    console.log('🚨🚨🚨비상비상 에러에러 9-1번.');
+                    console.log('🚨🚨🚨비상비상 에러에러 9-1번.', error.message);
                     socket.emit('error', { message: '채팅방이 존재하지 않습니다.' });
                     socket.disconnect();
                 }
             } catch (error) {
-                console.error('🚨🚨🚨비상비상 에러에러 9-2번.', error);
+                console.error('🚨🚨🚨비상비상 에러에러 9-2번.', error.message);
                 socket.emit('error', { message: '채팅방 참여 중 에러 발생.' });
                 socket.disconnect();
             }
