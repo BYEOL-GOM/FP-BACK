@@ -241,7 +241,9 @@ const initializeSocket = (server, corsOptions) => {
             console.log('socket.user : ', socket.user);
             console.log('🚨🚨🚨여기까지 와? 7번.');
             try {
-                let room;
+                let room = null; // 변수 초기화
+
+                // worryId가 주어진 경우에만 채팅방 조회
                 if (worryId) {
                     room = await prisma.rooms.findUnique({
                         where: {

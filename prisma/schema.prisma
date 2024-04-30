@@ -68,7 +68,7 @@ model Worries {
   solvingCommentId Int?       @unique @map("solvingCommentId")
   solvingComment   Comments?  @relation("SolvingComment", fields: [solvingCommentId], references: [commentId])
 
-  room  Rooms? // 이 고민에 대한 채팅방
+  // room  Rooms? // 이 고민에 대한 채팅방
 }
 
 enum Icon{
@@ -159,15 +159,15 @@ model Rooms {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  worryId             Int       @unique // 채팅방이 연결된 고민의 ID
-  worries             Worries   @relation(fields: [worryId], references: [worryId])
+  // worryId             Int       @unique // 채팅방이 연결된 고민의 ID
+  // worries             Worries   @relation(fields: [worryId], references: [worryId])
 
   chattings    Chattings[]
 }
 
 // 채팅
 model Chattings {
-  chatId   Int      @id @default(autoincrement())
+  chatId      Int      @id @default(autoincrement())
   text        String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
