@@ -141,10 +141,10 @@ const initializeSocket = (server, corsOptions) => {
     io.on('connection', async (socket) => {
         // chatNamespace.on('connection', async (socket) => {
         console.log('사용자가 연결되었습니다.', socket.id);
-        socket.emit('connected', { message: '백엔드 소켓 연결에 성공했습니다!' });
 
         // 인증 토큰 검증
         const token = socket.handshake.auth.token; // 클라이언트로부터 받은 토큰
+        socket.emit('connected', { message: '백엔드 소켓 연결에 성공했습니다!' });
         console.log('token : ', token);
         if (!token) {
             socket.emit('error', { message: '인증 토큰이 없습니다.' });
