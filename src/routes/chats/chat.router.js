@@ -70,10 +70,10 @@ router.post('/createChatRoom', async (req, res) => {
 
 // src/routes/chats/chat.router.js
 // 로그인한 유저에 해당하는 채팅방 전체 조회
-router.get('/chatRooms', async (req, res) => {
-    // router.get('/chatRooms/:userId', async (req, res) => {
-    // const userId = parseInt(req.params.userId, 10); // Query string에서 userId를 받아야 합니다.
-    const userId = parseInt(req.body.userId, 10);
+// router.get('/chatRooms', async (req, res) => {
+router.get('/chatRooms/:userId', async (req, res) => {
+    const userId = parseInt(req.params.userId, 10); // Query string에서 userId를 받아야 합니다.
+    // const userId = parseInt(req.body.userId, 10);
     console.log('userId : ', userId);
 
     // 페이지네이션
@@ -92,6 +92,7 @@ router.get('/chatRooms', async (req, res) => {
         const rooms = await prisma.rooms.findMany({
             where: {
                 OR: [{ worry: { userId: userId } }, { worry: { commentAuthorId: userId } }],
+                // OR: [{ userId: userId }, { commentAuthorId: userId }],
                 status: {
                     in: ['ACCEPTED', 'PENDING'], // 'ACCEPTED'와 'PENDING' 상태만 포함
                 },
@@ -161,7 +162,6 @@ router.get('/chatRooms', async (req, res) => {
             },
         });
         console.log('⭐⭐⭐roomsWithLastComment : ', roomsWithLastComment);
-        console.log('🖤🖤🖤page, limit, totalCount : ', page, limit, totalCount);
         const pagination = { page, limit, totalCount };
         console.log('🖤🖤🖤pagination : ', pagination);
 
