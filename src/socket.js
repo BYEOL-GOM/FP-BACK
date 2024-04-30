@@ -3,135 +3,10 @@ import jwt from 'jsonwebtoken';
 import { prisma } from './utils/prisma/index.js';
 import moment from 'moment';
 
-const initializeSocket = (server, corsOptions) => {
-    const io = new SocketIOServer(server, {
-        cors: corsOptions,
-    });
-
-    // 사용자의 방 정보를 저장할 객체
-    let userRooms = {};
-
-    // connection event handler
-    // connection이 수립되면 event handler function의 인자로 socket이 들어온다
-    io.on('connection', async (socket) => {
-        console.log('사용자가 연결되었습니다.', socket.id);
-        socket.emit('연결 성공!', { message: '소켓 연결에 성공했습니다!' });
-
-        // 인증 토큰 검증
-        const token = socket.handshake.auth.token; // 클라이언트로부터 받은 토큰
-        console.log('token : ', token);
-        if (!token) {
-            socket.emit('error', { message: '인증 토큰이 없습니다.' });
-            socket.disconnect();
-            return;
-        }
-        try {
-            const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-            const user = await prisma.users.findUnique({
-                where: {
-                    userId: decoded.userId,
-                },
-            });
-            console.log('🤍🤍🤍user : ', user);
-            console.log('🤍🤍🤍user.userId : ', user.userId);
-            if (!user) {
-                socket.emit('error', { message: '인증 오류: 사용자를 찾을 수 없습니다.' });
-                socket.disconnect();
-                return;
-            }
-            socket.user = user; // 소켓 객체에 사용자 정보 추가
-
-            // 사용자가 채팅하기 버튼을 누르면 실행
-            socket.on('join room', async () => {
-                // 새로운 채팅방 생성
-                const newRoom = await prisma.rooms.create({
-                    data: {
-                        // title: 'New Chat Room', // 제목은 수정 가능
-                        // worryId: worryId, // worryId 포함
-                    },
-                });
-
-                // 방에 입장
-                socket.join(newRoom.roomId.toString());
-                userRooms[socket.id] = newRoom.roomId;
-                console.log('roomId : ', newRoom.roomId);
-
-                // 입장 성공 메시지 및 방 입장 알림 메시지 전송
-                io.to(newRoom.roomId.toString()).emit('join room', {
-                    message: `사용자 ${socket.user.id} (Socket ID: ${socket.id})가 방 ${newRoom.roomId}에 입장했습니다.`,
-                    roomId: newRoom.roomId,
-                });
-            });
-
-            // 기타 이벤트 핸들러들...
-            socket.on('chatting', function (data) {
-                if (!socket.user) {
-                    socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
-                    return;
-                }
-                const roomName = userRooms[socket.id];
-                if (roomName) {
-                    console.log('🩵🩵🩵백엔드 chatting-data', data);
-                    if (typeof data === 'string') {
-                        data = JSON.parse(data);
-                    }
-                    io.to(roomName).emit('chatting', {
-                        userId: socket.user.id,
-                        msg: data.msg,
-                        time: new Date().toISOString(),
-                    });
-                } else {
-                    console.log(`사용자 ${socket.user.id}는 어떤 방에도 속해있지 않습니다.`);
-                }
-            });
-        } catch (error) {
-            socket.emit('error', { message: '인증 오류: ' + error.message });
-            socket.disconnect();
-        }
-
-        // disconnect 및 기타 이벤트 핸들러들...
-        socket.on('leave room', () => {
-            if (!socket.user) {
-                socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
-                return;
-            }
-            const roomId = userRooms[socket.id];
-            if (roomId) {
-                socket.leave(roomId.toString());
-                socket.emit('leaved room', { roomId: roomId });
-                io.to(roomId.toString()).emit(
-                    'room message',
-                    `사용자 ${socket.user.id} (Socket ID: ${socket.id})가 방 ${roomId}에서 퇴장했습니다.`,
-                );
-                delete userRooms[socket.id];
-            }
-        });
-
-        socket.on('disconnect', () => {
-            const room = userRooms[socket.id];
-            if (room && socket.user) {
-                io.to(room).emit(
-                    'room message',
-                    `사용자 ${socket.user.id} (Socket ID: ${socket.id})가 방에서 퇴장했습니다.`,
-                );
-                delete userRooms[socket.id];
-            }
-        });
-    });
-    return io; // 필요에 따라 io 객체 반환
-};
-
-export default initializeSocket;
-
-//--------------------------------------------------------------------------------------------
-// 20240430 첫 연결 성공. 토큰 확인. 에러 : 'join room' - 인증되지 않은 사용자입니다.
 // const initializeSocket = (server, corsOptions) => {
 //     const io = new SocketIOServer(server, {
 //         cors: corsOptions,
 //     });
-
-//     // '/chatroom' 경로에 대한 네임스페이스 설정
-//     // const chatNamespace = io.of('/chatroom');
 
 //     // 사용자의 방 정보를 저장할 객체
 //     let userRooms = {};
@@ -139,13 +14,13 @@ export default initializeSocket;
 //     // connection event handler
 //     // connection이 수립되면 event handler function의 인자로 socket이 들어온다
 //     io.on('connection', async (socket) => {
-//         // chatNamespace.on('connection', async (socket) => {
 //         console.log('사용자가 연결되었습니다.', socket.id);
-//         socket.emit('연결 성공!', { message: '소켓 연결에 성공했습니다!' });
+//         socket.emit('connected', { message: '백엔드 소켓 연결에 성공했습니다!' });
 
 //         // 인증 토큰 검증
 //         const token = socket.handshake.auth.token; // 클라이언트로부터 받은 토큰
 //         console.log('token : ', token);
+//         socket.emit('token : ', token);
 //         if (!token) {
 //             socket.emit('error', { message: '인증 토큰이 없습니다.' });
 //             socket.disconnect();
@@ -158,69 +33,90 @@ export default initializeSocket;
 //                     userId: decoded.userId,
 //                 },
 //             });
-//             console.log('🤍🤍🤍user : ', user);
-//             console.log('🤍🤍🤍user.userId : ', user.userId);
+//             console.log('🩵🩵🩵user : ', user);
+//             console.log('🩵🩵🩵user.userId : ', user.userId);
 //             if (!user) {
 //                 socket.emit('error', { message: '인증 오류: 사용자를 찾을 수 없습니다.' });
 //                 socket.disconnect();
 //                 return;
 //             }
 //             socket.user = user; // 소켓 객체에 사용자 정보 추가
-//             userSockets[user.userId] = socket.id; // 사용자 ID와 소켓 ID 매핑
-//             next();
+
+//             // 사용자가 채팅하기 버튼을 누르면 실행
+//             socket.on('join room', async (otherUserId) => {
+//                 let room = await prisma.roomParticipants.findFirst({
+//                     where: {
+//                         userId: otherUserId,
+//                         roomId: {
+//                             in: prisma.roomParticipants
+//                                 .findMany({
+//                                     where: { userId: socket.user.userId },
+//                                     select: { roomId: true },
+//                                 })
+//                                 .map((participant) => participant.roomId),
+//                         },
+//                     },
+//                     include: { room: true },
+//                 });
+//                 if (!room) {
+//                     // 방이 없으면 생성
+//                     const newRoom = await prisma.rooms.create({ data: {} });
+//                     // 두 사용자를 방에 추가
+//                     await prisma.roomParticipants.createMany({
+//                         data: [
+//                             { roomId: newRoom.roomId, userId: socket.user.userId },
+//                             { roomId: newRoom.roomId, userId: otherUserId },
+//                         ],
+//                     });
+//                     room = newRoom;
+//                 }
+//                 // // 새로운 채팅방 생성
+//                 // const newRoom = await prisma.rooms.create({
+//                 //     data: {
+//                 //         // title: 'New Chat Room', // 제목은 수정 가능
+//                 //         // worryId: worryId, // worryId 포함
+//                 //     },
+//                 // });
+
+//                 // 방에 입장
+//                 socket.join(room.roomId.toString());
+//                 userRooms[socket.id] = room.roomId;
+//                 console.log('roomId : ', room.roomId);
+
+//                 // 입장 성공 메시지 및 방 입장 알림 메시지 전송
+//                 io.to(room.roomId.toString()).emit('room message', {
+//                     message: `사용자 ${socket.user.id} (Socket ID: ${socket.id})가 방${newRoom.roomId}에 입장했습니다.`,
+//                     roomId: room.roomId,
+//                 });
+//             });
+
+//             // 기타 이벤트 핸들러들...
+//             socket.on('chatting', function (data) {
+//                 if (!socket.user) {
+//                     socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
+//                     return;
+//                 }
+//                 const roomName = userRooms[socket.id];
+//                 if (roomName) {
+//                     console.log('🩵🩵🩵백엔드 chatting-data', data);
+//                     if (typeof data === 'string') {
+//                         data = JSON.parse(data);
+//                     }
+//                     io.to(roomName).emit('chatting', {
+//                         userId: socket.user.id,
+//                         msg: data.msg,
+//                         time: new Date().toISOString(),
+//                     });
+//                 } else {
+//                     console.log(`사용자 ${socket.user.id}는 어떤 방에도 속해있지 않습니다.`);
+//                 }
+//             });
 //         } catch (error) {
-//             if (error.name === 'TokenExpiredError') {
-//                 //     return next(new Error('Access Token이 만료되었습니다.'));
-//                 // } else {
-//                 //     return next(new Error('인증 오류'));
-//                 // }
-//                 socket.emit('error', { message: '인증 오류: ' + error.message });
-//                 socket.disconnect();
-//             }
+//             socket.emit('error', { message: '인증 오류: ' + error.message });
+//             socket.disconnect();
 //         }
 
-//         socket.on('join room', ({ roomId }, callback) => {
-//             if (!socket.user) {
-//                 socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
-//                 return;
-//             }
-//             console.log(roomId);
-//             const occupants = Object.values(userRooms).filter((id) => id === roomId).length;
-//             if (occupants < 2) {
-//                 socket.join(roomId.toString());
-//                 userRooms[socket.id] = roomId;
-//                 socket.emit('joined room', { roomId: roomId });
-//                 io.to(roomId.toString()).emit(
-//                     'room message',
-//                     `사용자 ${socket.user.id} (Socket ID: ${socket.id})가 ${roomId}방에 입장했습니다.`,
-//                 );
-//             } else {
-//                 socket.emit('error', { message: `방 ${roomId}이 꽉 찼습니다.` });
-//                 console.log(`방 ${roomId}이(가) 꽉 찼습니다.`);
-//             }
-//         });
-
-//         socket.on('chatting', function (data) {
-//             if (!socket.user) {
-//                 socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
-//                 return;
-//             }
-//             const roomName = userRooms[socket.id];
-//             if (roomName) {
-//                 console.log('🩵🩵🩵백엔드 chatting-data', data);
-//                 if (typeof data === 'string') {
-//                     data = JSON.parse(data);
-//                 }
-//                 io.to(roomName).emit('chatting', {
-//                     userId: socket.user.id,
-//                     msg: data.msg,
-//                     time: new Date().toISOString(),
-//                 });
-//             } else {
-//                 console.log(`사용자 ${socket.user.id}는 어떤 방에도 속해있지 않습니다.`);
-//             }
-//         });
-
+//         // disconnect 및 기타 이벤트 핸들러들...
 //         socket.on('leave room', () => {
 //             if (!socket.user) {
 //                 socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
@@ -253,6 +149,141 @@ export default initializeSocket;
 // };
 
 // export default initializeSocket;
+
+//--------------------------------------------------------------------------------------------
+// 20240430 첫 연결 성공. 토큰 확인. 에러 : 'join room' - 인증되지 않은 사용자입니다.
+const initializeSocket = (server, corsOptions) => {
+    const io = new SocketIOServer(server, {
+        cors: corsOptions,
+    });
+
+    // '/chatroom' 경로에 대한 네임스페이스 설정
+    // const chatNamespace = io.of('/chatroom');
+
+    // 사용자의 방 정보를 저장할 객체
+    let userRooms = {};
+
+    // connection event handler
+    // connection이 수립되면 event handler function의 인자로 socket이 들어온다
+    io.on('connection', async (socket) => {
+        // chatNamespace.on('connection', async (socket) => {
+        console.log('사용자가 연결되었습니다.', socket.id); // 소켓마다 고유의 식별자를 가짐 ( 20자 )
+        console.log('연결 횟수 >> ', socket.engine.clientsCount); // 연결된 소켓의 개수
+
+        // 인증 토큰 검증
+        const token = socket.handshake.auth.token; // 클라이언트로부터 받은 토큰
+        console.log('token : ', token);
+        socket.emit('connected', { message: '백엔드 소켓 연결에 성공했습니다!' });
+        if (!token) {
+            socket.emit('error', { message: '인증 토큰이 없습니다.' });
+            socket.disconnect();
+            return;
+        }
+        try {
+            const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+            console.log('💚💚💚decoded userId : ', decoded.userId);
+            const user = await prisma.users.findUnique({
+                where: {
+                    userId: decoded.userId,
+                },
+            });
+            // 유저 정보를 프론트엔드에게 전달
+            socket.emit('connected', { userId: user.userId, username: user.username, email: user.email });
+            console.log('🤍🤍🤍user : ', user);
+            console.log('🤍🤍🤍user.userId : ', user.userId);
+            if (!user) {
+                socket.emit('error', { message: '인증 오류: 사용자를 찾을 수 없습니다.' });
+                socket.disconnect();
+                return;
+            }
+            socket.user = user; // 소켓 객체에 사용자 정보 추가
+            userSockets[user.userId] = socket.id; // 사용자 ID와 소켓 ID 매핑
+            next();
+        } catch (error) {
+            if (error.name === 'TokenExpiredError') {
+                //     return next(new Error('Access Token이 만료되었습니다.'));
+                // } else {
+                //     return next(new Error('인증 오류'));
+                // }
+                socket.emit('error', { message: '인증 오류: ' + error.message });
+                socket.disconnect();
+            }
+        }
+
+        socket.on('join room', ({ roomId }, callback) => {
+            if (!socket.user) {
+                socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
+                return;
+            }
+            console.log(roomId);
+            const occupants = Object.values(userRooms).filter((id) => id === roomId).length;
+            if (occupants < 2) {
+                socket.join(roomId.toString());
+                userRooms[socket.id] = roomId;
+                socket.emit('joined room', { roomId: roomId });
+                io.to(roomId.toString()).emit(
+                    'room message',
+                    `사용자 ${socket.user.id} (Socket ID: ${socket.id})가 ${roomId}방에 입장했습니다.`,
+                );
+            } else {
+                socket.emit('error', { message: `방 ${roomId}이 꽉 찼습니다.` });
+                console.log(`방 ${roomId}이(가) 꽉 찼습니다.`);
+            }
+        });
+
+        socket.on('chatting', function (data) {
+            if (!socket.user) {
+                socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
+                return;
+            }
+            const roomName = userRooms[socket.id];
+            if (roomName) {
+                console.log('🩵🩵🩵백엔드 chatting-data', data);
+                if (typeof data === 'string') {
+                    data = JSON.parse(data);
+                }
+                io.to(roomName).emit('chatting', {
+                    userId: socket.user.id,
+                    msg: data.msg,
+                    time: new Date().toISOString(),
+                });
+            } else {
+                console.log(`사용자 ${socket.user.id}는 어떤 방에도 속해있지 않습니다.`);
+            }
+        });
+
+        socket.on('leave room', () => {
+            if (!socket.user) {
+                socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
+                return;
+            }
+            const roomId = userRooms[socket.id];
+            if (roomId) {
+                socket.leave(roomId.toString());
+                socket.emit('leaved room', { roomId: roomId });
+                io.to(roomId.toString()).emit(
+                    'room message',
+                    `사용자 ${socket.user.id} (Socket ID: ${socket.id})가 방 ${roomId}에서 퇴장했습니다.`,
+                );
+                delete userRooms[socket.id];
+            }
+        });
+
+        socket.on('disconnect', () => {
+            const room = userRooms[socket.id];
+            if (room && socket.user) {
+                io.to(room).emit(
+                    'room message',
+                    `사용자 ${socket.user.id} (Socket ID: ${socket.id})가 방에서 퇴장했습니다.`,
+                );
+                delete userRooms[socket.id];
+            }
+        });
+    });
+    return io; // 필요에 따라 io 객체 반환
+};
+
+export default initializeSocket;
 
 //--------------------------------------------------------------------------------------------
 // const initializeSocket = (httpServer) => {
