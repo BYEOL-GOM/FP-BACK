@@ -1,6 +1,7 @@
+// src/routes/chats/socket.js
 import { Server as SocketIOServer } from 'socket.io';
 import jwt from 'jsonwebtoken';
-import { prisma } from './utils/prisma/index.js';
+import { prisma } from '../../utils/prisma/index.js';
 import moment from 'moment';
 
 // const initializeSocket = (server, corsOptions) => {
@@ -231,52 +232,92 @@ const initializeSocket = (server, corsOptions) => {
         }
         console.log('🚨🚨🚨여기까지 와? 5번.');
 
-        socket.on('join room', async ({ worryId }, callback) => {
+        // 채팅방 참여 요청 처리
+        socket.on('join room', async ({ roomId }) => {
             console.log('🚨🚨🚨여기까지 와? 6번.');
+            console.log('Room join request for:', roomId);
+
+            // 사용자 인증 확인
             if (!socket.user) {
                 console.error('socket.user : ', error);
                 socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
                 return;
             }
+
             console.log('socket.user : ', socket.user);
             console.log('🚨🚨🚨여기까지 와? 7번.');
+
             try {
-                let room = null; // 변수 초기화
+                const room = await prisma.rooms.findUnique({
+                    where: { roomId: parseInt(roomId) },
+                });
 
-                // worryId가 주어진 경우에만 채팅방 조회
-                if (worryId) {
-                    room = await prisma.rooms.findUnique({
-                        where: {
-                            worryId: worryId,
-                        },
-                    });
+                if (room) {
+                    console.log('🚨🚨🚨여기까지 와? 8번.');
+                    socket.join(room.roomId.toString());
+                    console.log(`User joined room: ${room.roomId}`);
+                    io.to(room.roomId.toString()).emit(
+                        'room message',
+                        `사용자 ${socket.user.userId} (Socket ID: ${socket.id})가 ${room.roomId || '채팅방'}에 입장했습니다.`,
+                    );
+                } else {
+                    console.log('🚨🚨🚨비상비상 에러에러 9-1번.');
+                    socket.emit('error', { message: '채팅방이 존재하지 않습니다.' });
                 }
-                if (!room) {
-                    room = await prisma.rooms.create({
-                        data: {
-                            // worryId: worryId,
-                        },
-                    });
-                }
-                console.log('🚨🚨🚨여기까지 와? 8번.');
-
-                socket.join(room.roomId.toString());
-                userRooms[socket.user.userId] = room.roomId;
-                socket.emit('joined room', { roomId: room.roomId });
-
-                console.log('🏠🏠🏠roomId', room.roomId);
-
-                io.to(room.roomId.toString()).emit(
-                    'room message',
-                    `사용자 ${socket.user.userId} (Socket ID: ${socket.id})가 ${room.roomId || '채팅방'}에 입장했습니다.`,
-                );
             } catch (error) {
-                console.log('🚨🚨🚨비상비상 에러에러 9번.');
-                console.error('채팅방 입장 중 에러:', error);
-                socket.emit('error', { message: '채팅방 입장 중 에러가 발생했습니다.' });
+                console.error('🚨🚨🚨비상비상 에러에러 9-2번.', error);
+                socket.emit('error', { message: '채팅방 참여 중 에러 발생.' });
+                socket.disconnect();
             }
         });
+        //-----------------------------------------------------------------------------------
+        // socket.on('join room', async ({ worryId }, callback) => {
+        //     console.log('🚨🚨🚨여기까지 와? 6번.');
+        //     if (!socket.user) {
+        //         console.error('socket.user : ', error);
+        //         socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
+        //         return;
+        //     }
+        //     console.log('socket.user : ', socket.user);
+        //     console.log('🚨🚨🚨여기까지 와? 7번.');
+        //     try {
+        //         let room = null; // 변수 초기화
+
+        //         // worryId가 주어진 경우에만 채팅방 조회
+        //         if (worryId) {
+        //             room = await prisma.rooms.findUnique({
+        //                 where: {
+        //                     worryId: worryId,
+        //                 },
+        //             });
+        //         }
+        //         if (!room) {
+        //             room = await prisma.rooms.create({
+        //                 data: {
+        //                     // worryId: worryId,
+        //                 },
+        //             });
+        //         }
+        //         console.log('🚨🚨🚨여기까지 와? 8번.');
+
+        //         socket.join(room.roomId.toString());
+        //         userRooms[socket.user.userId] = room.roomId;
+        //         socket.emit('joined room', { roomId: room.roomId });
+
+        //         console.log('🏠🏠🏠roomId', room.roomId);
+
+        //         io.to(room.roomId.toString()).emit(
+        //             'room message',
+        //             `사용자 ${socket.user.userId} (Socket ID: ${socket.id})가 ${room.roomId || '채팅방'}에 입장했습니다.`,
+        //         );
+        //     } catch (error) {
+        //         console.log('🚨🚨🚨비상비상 에러에러 9번.');
+        //         console.error('채팅방 입장 중 에러:', error);
+        //         socket.emit('error', { message: '채팅방 입장 중 에러가 발생했습니다.' });
+        //     }
+        // });
         console.log('🚨🚨🚨여기까지 와? 10번.');
+        //-----------------------------------------------------------------------------------
         //     if (occupants < 2) {
         //         console.log('🚨🚨🚨여기까지 와? 8번.');
         //         try {
