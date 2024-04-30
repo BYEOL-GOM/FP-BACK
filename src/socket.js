@@ -171,7 +171,7 @@ const initializeSocket = (server, corsOptions) => {
     io.on('connection', async (socket) => {
         // chatNamespace.on('connection', async (socket) => {
         console.log('사용자가 연결되었습니다.', socket.id); // 소켓마다 고유의 식별자를 가짐 ( 20자 )
-        console.log('연결 횟수 >> ', socket.engine.clientsCount); // 연결된 소켓의 개수
+        console.log('연결 횟수 >> ', io.engine.clientsCount); // 연결된 소켓의 개수
 
         // 인증 토큰 검증
         const token = socket.handshake.auth.token; // 클라이언트로부터 받은 토큰
