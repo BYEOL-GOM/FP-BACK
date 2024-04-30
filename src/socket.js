@@ -157,13 +157,15 @@ const initializeSocket = (server, corsOptions) => {
         cors: corsOptions,
     });
 
+    // 사용자와 소켓 간의 매핑을 저장할 객체
+    const userSockets = {}; // 사용자와 소켓 간의 매핑을 저장할 객체
     // 사용자의 방 정보를 저장할 객체
     let userRooms = {};
 
     // connection event handler
     // connection이 수립되면 event handler function의 인자로 socket이 들어온다
     io.on('connection', async (socket) => {
-        console.log('사용자가 연결되었습니다.', socket.id); // 소켓마다 고유의 식별자를 가짐 ( 20자 )
+        console.log('사용자가 연결되었습니다.', socket.id); // 소켓마다 고유의 식별자를 가짐 (20자)
         console.log('연결 횟수 >> ', io.engine.clientsCount); // 연결된 소켓의 개수
 
         // 인증 토큰 검증
