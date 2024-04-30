@@ -170,7 +170,6 @@ const initializeSocket = (server, corsOptions) => {
         const token = socket.handshake.auth.token; // 클라이언트로부터 받은 토큰
         socket.emit('connected', { message: '백엔드 소켓 연결에 성공했습니다!' });
         console.log('token : ', token);
-        socket.emit('connected', { userId: user.userId, username: user.username, email: user.email });
         console.log('🚨🚨🚨여기까지 와? 0번.');
         if (!token) {
             socket.emit('error', { message: '인증 토큰이 없습니다.' });
