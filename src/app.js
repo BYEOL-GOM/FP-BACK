@@ -57,7 +57,7 @@ if (process.env.SENTRY_DSN) {
 // );
 // CORS 미들웨어 설정
 const corsOptions = {
-    origin: ['http://localhost:3000', 'https://friendj.store'], // 여러 출처 허용
+    origin: '*', // 여러 출처 허용
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
