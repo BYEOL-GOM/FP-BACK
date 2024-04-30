@@ -157,19 +157,12 @@ const initializeSocket = (server, corsOptions) => {
         cors: corsOptions,
     });
 
-    // '/chatroom' 경로에 대한 네임스페이스 설정
-    // const chatNamespace = io.of('/chatroom');
-
-    // '/chatroom' 경로에 대한 네임스페이스 설정
-    // const chatNamespace = io.of('/chatroom');
-
     // 사용자의 방 정보를 저장할 객체
     let userRooms = {};
 
     // connection event handler
     // connection이 수립되면 event handler function의 인자로 socket이 들어온다
     io.on('connection', async (socket) => {
-        // chatNamespace.on('connection', async (socket) => {
         console.log('사용자가 연결되었습니다.', socket.id); // 소켓마다 고유의 식별자를 가짐 ( 20자 )
         console.log('연결 횟수 >> ', io.engine.clientsCount); // 연결된 소켓의 개수
 
@@ -177,23 +170,26 @@ const initializeSocket = (server, corsOptions) => {
         const token = socket.handshake.auth.token; // 클라이언트로부터 받은 토큰
         socket.emit('connected', { message: '백엔드 소켓 연결에 성공했습니다!' });
         console.log('token : ', token);
-        socket.emit('connected', { message: '백엔드 소켓 연결에 성공했습니다!' });
+        socket.emit('connected', { userId: user.userId, username: user.username, email: user.email });
+        console.log('🚨🚨🚨여기까지 와? 0번.');
         if (!token) {
             socket.emit('error', { message: '인증 토큰이 없습니다.' });
             socket.disconnect();
             return;
         }
+        console.log('🚨🚨🚨여기까지 와? 1번.');
         try {
             const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-            console.log('💚💚💚decoded userId : ', decoded.userId);
             console.log('💚💚💚decoded userId : ', decoded.userId);
             const user = await prisma.users.findUnique({
                 where: {
                     userId: decoded.userId,
                 },
             });
+            console.log('🚨🚨🚨여기까지 와? 2번.');
             // 유저 정보를 프론트엔드에게 전달
-            socket.emit('connected', { userId: user.userId, username: user.username, email: user.email });
+            socket.emit('connected', { userId: user.userId, username: user.nickname, email: user.email });
+            console.log('🤍🤍🤍user 정보 ', { userId: user.userId, username: user.nickname, email: user.email });
             console.log('🤍🤍🤍user : ', user);
             console.log('🤍🤍🤍user.userId : ', user.userId);
             if (!user) {
@@ -201,11 +197,13 @@ const initializeSocket = (server, corsOptions) => {
                 socket.disconnect();
                 return;
             }
+            console.log('🚨🚨🚨여기까지 와? 3번.');
             socket.user = user; // 소켓 객체에 사용자 정보 추가
             userSockets[user.userId] = socket.id; // 사용자 ID와 소켓 ID 매핑
             next();
         } catch (error) {
             if (error.name === 'TokenExpiredError') {
+                console.log('🚨🚨🚨여기까지 와? 4번.');
                 //     return next(new Error('Access Token이 만료되었습니다.'));
                 // } else {
                 //     return next(new Error('인증 오류'));
@@ -216,10 +214,12 @@ const initializeSocket = (server, corsOptions) => {
         }
 
         socket.on('join room', ({ roomId }, callback) => {
+            console.log('🚨🚨🚨여기까지 와? 5번.');
             if (!socket.user) {
                 socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
                 return;
             }
+            console.log('🚨🚨🚨여기까지 와? 6번.');
             console.log(roomId);
             const occupants = Object.values(userRooms).filter((id) => id === roomId).length;
             if (occupants < 2) {
