@@ -153,6 +153,7 @@ const initializeSocket = (server, corsOptions) => {
         }
         try {
             const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+            console.log('💚💚💚decoded userId : ', decoded.userId);
             const user = await prisma.users.findUnique({
                 where: {
                     userId: decoded.userId,
