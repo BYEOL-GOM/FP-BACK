@@ -241,15 +241,18 @@ const initializeSocket = (server, corsOptions) => {
             console.log('socket.user : ', socket.user);
             console.log('🚨🚨🚨여기까지 와? 7번.');
             try {
-                let room = await prisma.rooms.findUnique({
-                    where: {
-                        worryId: worryId,
-                    },
-                });
+                let room;
+                if (worryId) {
+                    room = await prisma.rooms.findUnique({
+                        where: {
+                            worryId: worryId,
+                        },
+                    });
+                }
                 if (!room) {
                     room = await prisma.rooms.create({
                         data: {
-                            worryId: worryId,
+                            // worryId: worryId,
                         },
                     });
                 }
