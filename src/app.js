@@ -14,8 +14,8 @@ import router from './routes/index.js';
 import { loadBannedWords } from './utils/bannedWordsLoader.js';
 import { swaggerUi, specs } from './swagger/swaggerOptions.js';
 import './scheduler.js';
-// import { Server as SocketIOServer } from 'socket.io';
 import initializeSocket from './socket.js'; // socket.js 파일에서 함수 가져오기
+// import { Server as SocketIOServer } from 'socket.io';
 // import bodyParser from 'body-parser';
 // import { fileURLToPath } from 'url';
 // import path from 'path';
@@ -46,20 +46,10 @@ if (process.env.SENTRY_DSN) {
 // }
 
 // CORS 미들웨어 설정
-// app.use(
-//     cors({
-//         origin: '*',
-//         // origin: 'http://localhost:3000',
-//         methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-//         allowedHeaders: ['Content-Type', 'Authorization'],
-//         credentials: true,
-//     }),
-// );
-// CORS 미들웨어 설정
 const corsOptions = {
     // origin: '*', // 여러 출처 허용
     origin: 'http://localhost:3000', // 여러 출처 허용
-    // origin: ['http://localhost:3000', 'https://friendj.store'], // 여러 출처 허용
+    // origin: 'http://localhost:3000',
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
