@@ -59,13 +59,13 @@ jobs:
                   key: ${{ secrets.REMOTE_PRIVATE_KEY }}
                   port: ${{ secrets.REMOTE_SSH_PORT }}
                   script: |
+                      docker pull leticia0408/byeol_gom:${{ github.ref == 'refs/heads/dev' && 'latest-dev' || 'latest-prod' }}
                       CURRENT_IMAGE=$(docker inspect --format='{{.Config.Image}}' ${{ env.CONTAINER_NAME }} || echo "")
                       docker system prune -a -f --volumes
                       echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-                      docker pull leticia0408/byeol_gom:${{ github.ref == 'refs/heads/dev' && 'latest-dev' || 'latest-prod' }}
                       docker stop ${{ env.CONTAINER_NAME }} || true
                       docker rm ${{ env.CONTAINER_NAME }} || true
-                      if docker run -d --name ${{ env.CONTAINER_NAME }} -p ${{ env.CONTAINER_PORT }}:3000 \
+                      if ! docker run -d --name ${{ env.CONTAINER_NAME }} -p ${{ env.CONTAINER_PORT }}:3000 \
                         -e CORS_ORIGIN="${{ env.CORS_ORIGIN }}" \
                         -e KAKAO_REDIRECT_URI="${{ env.KAKAO_REDIRECT_URI }}" \
                         -e DATABASE_URL="${{ env.DATABASE_URL }}" \
@@ -82,10 +82,10 @@ jobs:
                         -e CLIENT_SECRET="${{ secrets.CLIENT_SECRET }}" \
                         -e SENTRY_DSN="${{ env.SENTRY_DSN }}" \
                         leticia0408/byeol_gom:${{ github.ref == 'refs/heads/dev' && 'latest-dev' || 'latest-prod' }}; then
-                        echo "Deployment successful."
-                      else
-                        echo "Deployment failed, rolling back to previous image."
+                        echo "Deployment failed, notifying Slack and attempting rollback."
                         docker run -d --name ${{ env.CONTAINER_NAME }} -p ${{ env.CONTAINER_PORT }}:3000 $CURRENT_IMAGE
                         echo "Sending Slack notification..."
                         curl -X POST -H 'Content-type: application/json' --data '{"text":"🚨 Deployment to ${{ github.ref }} failed and rollback was initiated."}' ${{ secrets.SLACK_WEBHOOK_URL }}
+                      else
+                        echo "Deployment successful."
                       fi
