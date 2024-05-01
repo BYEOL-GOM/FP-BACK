@@ -13,9 +13,6 @@ router.post('/createChatRoom', async (req, res) => {
     const parsedUserId = parseInt(userId);
     const parsedCommentAuthorId = parseInt(commentAuthorId);
 
-    console.log('대화 요청 정보(body):', worryId, userId, commentAuthorId);
-    console.log('대화 요청 정보(Int):', parsedWorryId, parsedUserId, parsedCommentAuthorId);
-
     try {
         // 해당 고민이 존재하는지 확인
         const existingWorry = await prisma.worries.findUnique({
@@ -40,8 +37,6 @@ router.post('/createChatRoom', async (req, res) => {
             },
         });
 
-        console.log('⭐⭐⭐테스트 1번. room >> ', room);
-
         // 채팅방이 존재하지 않는 경우, 새로운 채팅방 생성
         if (!room) {
             room = await prisma.rooms.create({
@@ -52,7 +47,7 @@ router.post('/createChatRoom', async (req, res) => {
                 },
             });
         }
-        console.log('⭐⭐⭐테스트 2번. room >> ', room);
+        console.log('⭐⭐⭐테스트 room >> ', room);
 
         res.status(201).json({
             worryId: room.worryId,

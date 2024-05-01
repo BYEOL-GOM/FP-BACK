@@ -71,7 +71,6 @@ const initializeSocket = (server, corsOptions) => {
 
         // 인증 토큰 검증
         const token = socket.handshake.auth.token; // 클라이언트로부터 받은 토큰
-        console.log('token : ', token);
         socket.emit('connected', { message: '백엔드 소켓 연결에 성공했습니다!' });
 
         // 토큰이 존재하는 경우에만 처리
@@ -83,7 +82,6 @@ const initializeSocket = (server, corsOptions) => {
                 socket.disconnect();
                 return;
             }
-            console.log('tokenWithoutBearer : ', tokenValue);
             console.log('⭐⭐⭐여기까지 와? 1번.');
             try {
                 const decoded = jwt.verify(tokenValue, process.env.ACCESS_TOKEN_SECRET);
@@ -225,7 +223,8 @@ const initializeSocket = (server, corsOptions) => {
                         data = JSON.parse(data);
                     }
                     // DB 저장용 한국 시간 포맷
-                    const formattedDate = moment().tz('Asia/Seoul').format('YYYY-MM-DD HH:mm:ss');
+                    const formattedDate = moment().tz('Asia/Seoul').format('YYYY-MM-DDTHH:mm:ssZ'); // 시간대 오프셋이 포함된 ISO-8601 형식
+
                     // 채팅 메시지 데이터베이스에 저장
                     const newChat = await prisma.chattings.create({
                         data: {
