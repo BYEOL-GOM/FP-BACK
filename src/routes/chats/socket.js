@@ -260,7 +260,9 @@ const initializeSocket = (server, corsOptions) => {
 
                 // 해당 소켓이 과거 메시지 정보를 가지고 있다면 해당 정보 삭제
                 // clearSocketPastMessages(socket.id);
-                clearSocketPastMessages(socket.id, pastMessages);
+                // clearSocketPastMessages(socket.id, pastMessages);
+                // 해당 소켓의 과거 메시지 정보를 삭제
+                clearSocketPastMessages(socket.id, lastMessageTimestamps);
             }
         });
     });
