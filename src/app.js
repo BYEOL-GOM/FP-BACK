@@ -97,7 +97,7 @@ app.get('/', (req, res) => {
     res.status(200).json({ message: 'test' });
 });
 app.get('/just', (req, res) => {
-    res.status(200).json({ message: 'good! ' });
+    res.status(200).json({ message: 'yess!' });
 });
 app.listen(PORT, () => {
     console.log(`${PORT} 포트로 서버가 열렸어요!`);
