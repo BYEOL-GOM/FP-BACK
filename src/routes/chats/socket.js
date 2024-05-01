@@ -85,7 +85,6 @@ const initializeSocket = (server, corsOptions) => {
         // 채팅방 참여 로직 및 과거 메시지 처리
         socket.on('join room', async ({ roomId }) => {
             console.log('여기까지 와? 6번.');
-            console.log('Room join request for:', roomId);
 
             // 사용자 소켓이 특정 방에 입장할 때
             socket.join(roomId.toString(), () => {
@@ -99,8 +98,6 @@ const initializeSocket = (server, corsOptions) => {
                 socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
                 return;
             }
-
-            console.log('socket.user : ', socket.user);
             console.log('여기까지 와? 7번.');
 
             try {
@@ -114,7 +111,6 @@ const initializeSocket = (server, corsOptions) => {
                         where: { roomId: parseInt(roomId) },
                         data: { hasEntered: true },
                     });
-
                     console.log(`Room ${roomId} hasEntered flag set to true.`);
                 }
 
@@ -124,7 +120,6 @@ const initializeSocket = (server, corsOptions) => {
 
                     userRooms[socket.id] = room.roomId; // 소켓 ID와 방 ID를 매핑하여 저장
                     // userRooms[socket.user.userId] = room.roomId; // Socket ID가 아닌 사용자의 ID를 키로 사용합니다.
-                    console.log('room.roomId : ', room.roomId);
 
                     // 방에 입장했다는 메시지를 방의 모든 참여자에게 전송
                     io.to(room.roomId.toString()).emit(
@@ -145,6 +140,9 @@ const initializeSocket = (server, corsOptions) => {
                     });
 
                     console.log('여기까지 와???????? 8-2번.');
+                    console.log(
+                        `Loaded messages from ${lastMessageTimestamp} for room ${roomId}, count: ${pastMessages.length}`,
+                    );
 
                     // // 과거 메시지를 클라이언트에 전송
                     // pastMessages.forEach((message) => {
@@ -159,6 +157,7 @@ const initializeSocket = (server, corsOptions) => {
                     //     setLastMessageTimestamp(socket.id, roomId, message.createdAt); // 마지막 메시지 타임스탬프 업데이트
                     // });
                     //----------------------------------------------------------------------
+                    // 과거 메시지를 클라이언트에 전송
                     // if (pastMessages.length > 0) {
                     //     pastMessages.forEach((message) => {
                     //         const timeForClient = moment(message.createdAt).tz('Asia/Seoul').format('HH:mm');
@@ -174,6 +173,7 @@ const initializeSocket = (server, corsOptions) => {
                     //     const lastTimestamp = pastMessages[pastMessages.length - 1].createdAt; // 배열의 인덱스는 0부터 시작하기 때문에 -1
                     //     setLastMessageTimestamp(socket.id, roomId, lastTimestamp);
                     // }
+                    // 과거 메시지를 클라이언트에 전송
                     pastMessages.forEach((message) => {
                         const timeForClient = moment(message.createdAt).tz('Asia/Seoul').format('HH:mm');
                         io.to(room.roomId.toString()).emit('past message', {
@@ -186,10 +186,14 @@ const initializeSocket = (server, corsOptions) => {
                     });
 
                     if (pastMessages.length > 0) {
+                        // 마지막으로 받은 메시지의 타임스탬프를 업데이트
                         lastMessageTimestamps.set(
                             `${socket.id}:${roomId}`,
                             pastMessages[pastMessages.length - 1].createdAt,
                         );
+                    } else {
+                        // 새 메시지가 없다면 현재 시간을 타임스탬프로 설정
+                        lastMessageTimestamps.set(`${socket.id}:${roomId}`, new Date());
                     }
                 } else {
                     console.error('비상비상 에러에러 9-1번.9-1번. >> 채팅방이 존재하지 않습니다.');
@@ -251,7 +255,6 @@ const initializeSocket = (server, corsOptions) => {
                         userId: socket.user.userId,
                         text: data.msg,
                         roomId: roomId,
-                        // time: timeForClient,
                         time: timeForClient,
                     });
                     console.log('여기까지 와? 14번.');
@@ -265,7 +268,6 @@ const initializeSocket = (server, corsOptions) => {
                 console.log(`사용자 ${socket.user.userId}는 어떤 방에도 속해있지 않습니다.`);
             }
         });
-
         console.log('여기까지 와? 16번.');
 
         socket.on('leave room', () => {

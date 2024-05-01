@@ -2,6 +2,7 @@
 import express from 'express';
 import { prisma } from '../../utils/prisma/index.js';
 import authMiddleware from '../../middlewares/authMiddleware.js';
+import moment from 'moment-timezone';
 
 const router = express.Router();
 
@@ -152,6 +153,72 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
     } catch (error) {
         console.error('채팅방 조회 중 에러 발생:', error);
         res.status(500).json({ message: '서버 오류 발생' });
+    }
+});
+
+// src/routes/chats/chat.router.js
+// 채팅방 과거 메세지 불러오기
+router.get('/rooms/:roomId', authMiddleware, async (req, res) => {
+    // router.get('/rooms/:roomId', async (req, res) => {
+    const roomId = parseInt(req.params.roomId);
+    const userId = parseInt(res.locals.user.userId);
+    // const userId = parseInt(req.body.userId, 10);
+
+    // 페이지네이션
+    const page = parseInt(req.query.page) || 1; // 페이지 번호, 기본값은 1
+    const limit = parseInt(req.query.limit) || 10; // 페이지당 항목 수, 기본값은 10
+    const skip = (page - 1) * limit;
+
+    // 페이지 번호 유효성 검사
+    if (isNaN(page) || page < 1) {
+        const err = new Error('유효하지 않은 페이지 번호입니다.');
+        err.status = 400;
+        throw err;
+    }
+
+    try {
+        const pastMessages = await prisma.chattings.findMany({
+            where: {
+                roomId: parseInt(roomId),
+            },
+            include: {
+                sender: {
+                    select: {
+                        userId: true,
+                        nickname: true,
+                    },
+                },
+            },
+            skip: skip,
+            take: limit,
+            orderBy: { createdAt: 'asc' },
+        });
+
+        const totalCount = await prisma.chattings.count({
+            where: {
+                roomId: parseInt(roomId),
+            },
+        });
+        const pagination = { page, limit, totalCount };
+
+        // 결과 객체를 새로운 변수에 할당하여 반환 형식을 변경합니다.
+        const formattedPastMessages = pastMessages.map((message) => {
+            return {
+                chatId: message.chatId,
+                userId: message.sender.userId,
+                senderId: message.senderId,
+                roomId: message.roomId,
+                nickname: message.sender.nickname,
+                text: message.text,
+                isRead: message.isRead,
+                createdAt: moment(message.createdAt).tz('Asia/Seoul').format('HH:mm'),
+            };
+        });
+
+        return res.json({ page, limit, totalCount, formattedPastMessages });
+    } catch (error) {
+        console.error('과거 메시지를 가져오는 중 오류 발생:', error);
+        res.status(500).json({ error: '과거 메시지를 가져오는 중 오류가 발생했습니다.' });
     }
 });
 
