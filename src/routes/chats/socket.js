@@ -171,6 +171,13 @@ const initializeSocket = (server, corsOptions) => {
                         'room message',
                         `사용자 ${socket.user.userId} (Socket ID: ${socket.id})가 ${room.roomId || '채팅방'}에 입장했습니다.`,
                     );
+                    io.to(room.roomId.toString()).emit('past message', {
+                        chatId: newChat.chatId,
+                        userId: socket.user.userId,
+                        text: data.msg,
+                        roomId: roomId,
+                        time: timeForClient,
+                    });
                 } else {
                     console.log('🚨🚨🚨비상비상 에러에러 9-1번.9-1번.', error.message);
                     socket.emit('error', { message: '채팅방이 존재하지 않습니다.' });
