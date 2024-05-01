@@ -88,7 +88,10 @@ jobs:
                         -e SENTRY_DSN="${{ env.SENTRY_DSN }}" \
                         leticia0408/byeol_gom:$IMAGE_TAG; then
                           echo "Deployment successful"
-                      else
+                          echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+                          docker tag leticia0408/byeol_gom:$IMAGE_TAG leticia0408/byeol_gom:$PREVIOUS_IMAGE_TAG
+                          docker push leticia0408/byeol_gom:$PREVIOUS_IMAGE_TAG
+                        else
                           echo "Deployment failed, checking for previous version"
                           if docker pull leticia0408/byeol_gom:$PREVIOUS_IMAGE_TAG; then
                             echo "Rolling back to previous version"
@@ -112,4 +115,4 @@ jobs:
                           else
                             echo "No previous version available, manual intervention required."
                           fi
-                      fi
+                        fi
