@@ -5,7 +5,7 @@ import { prisma } from '../../utils/prisma/index.js';
 import moment from 'moment-timezone';
 import axios from 'axios';
 // import { getLastMessageTimestamp, setLastMessageTimestamp } from '../../utils/timestampUtils.js';
-// import { clearSocketPastMessages } from '../../utils/socketMessageHandling.js';
+import { clearSocketPastMessages } from '../../utils/socketMessageHandling.js';
 
 const lastMessageTimestamps = new Map(); // 각 소켓 세션의 마지막 메시지 타임스탬프를 저장하는 Map 객체
 
@@ -138,6 +138,10 @@ const initializeSocket = (server, corsOptions) => {
                     // 클라이언트에게 과거 메시지 전송
                     socket.emit('past messages', pastMessages);
 
+                    // lastMessageTimestamps 초기화
+                    const lastMessageTimestamps = new Map();
+                    // 방 아이디를 키로하여 초기 타임스탬프 설정
+                    lastMessageTimestamps.set(roomId.toString(), new Date());
                     console.log('여기까지 와? 8-2번.');
                 } else {
                     console.error('비상비상 에러에러 9-1번.9-1번. >> 채팅방이 존재하지 않습니다.');
