@@ -162,8 +162,10 @@ const initializeSocket = (server, corsOptions) => {
                     // socket.join(roomId);
                     // socket.join(room.roomId.toString());
 
-                    userRooms[socket.id] = room.roomId; // 소켓 ID와 방 ID를 매핑하여 저장
-                    userRooms[socket.user.userId] = roomId; // 수정된 부분: Socket ID가 아닌 사용자의 ID를 키로 사용합니다.
+                    // userRooms[socket.id] = room.roomId; // 소켓 ID와 방 ID를 매핑하여 저장
+                    userRooms[socket.user.userId] = room.roomId; // 수정된 부분: Socket ID가 아닌 사용자의 ID를 키로 사용합니다.
+                    console.log('room.roomId : ', room.roomId);
+                    console.log('socket.user.userId : ', socket.user.userId);
 
                     io.to(room.roomId.toString()).emit(
                         'room message',
@@ -225,7 +227,9 @@ const initializeSocket = (server, corsOptions) => {
             console.log('여기까지 와? 12번.');
             console.log('socket.user', socket.user);
 
-            const roomId = userRooms[socket.id];
+            // const roomId = userRooms[socket.id];
+            const roomId = userRooms[socket.user.userId];
+
             if (roomId) {
                 console.log('여기까지 와? 13번.');
                 try {
@@ -258,6 +262,7 @@ const initializeSocket = (server, corsOptions) => {
                         roomId: roomId,
                         time: timeForClient,
                     });
+                    console.log('여기까지 와? 14-2번.');
                 } catch (error) {
                     console.error('🚨🚨🚨비상비상 에러에러 15-1번.15-1번.', error.message);
                     console.error('Database error:', error);
@@ -280,7 +285,10 @@ const initializeSocket = (server, corsOptions) => {
                 socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
                 return;
             }
-            const roomId = userRooms[socket.id];
+
+            // const roomId = userRooms[socket.id];
+            const roomId = userRooms[socket.user.userId];
+
             if (roomId) {
                 console.log('여기까지 와? 18번.');
 
@@ -290,20 +298,20 @@ const initializeSocket = (server, corsOptions) => {
                     'room message',
                     `사용자 ${socket.user.userId} (Socket ID: ${socket.id})가 방 ${roomId}에서 퇴장했습니다.`,
                 );
-                delete userRooms[socket.id];
+                delete userRooms[socket.user.userId];
             }
         });
         console.log('여기까지 와? 19번.');
 
         socket.on('disconnect', () => {
             console.log('여기까지 와? 20번.');
-            const roomId = userRooms[socket.id];
+            const roomId = userRooms[socket.user.userId];
             if (roomId) {
                 io.to(roomId.toString()).emit(
                     'room message',
                     `사용자 ${socket.user.userId} (Socket ID: ${socket.id})가 방에서 퇴장했습니다.`,
                 );
-                delete userRooms[socket.id];
+                delete userRooms[socket.user.userId];
             }
         });
     });
