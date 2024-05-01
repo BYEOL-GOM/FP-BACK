@@ -3,7 +3,7 @@ import { deleteOldMessages } from './routes/worries/worry.service.js';
 
 // 매일 자정에 스케줄러 실행
 // cron.schedule('0 0 * * *', async () => {
-cron.schedule('7 13 * * *', async () => {
+cron.schedule('17 4 * * *', async () => {
     console.log('매일 자정에 오래된 고민 삭제 작업을 시작합니다.');
     try {
         await deleteOldMessages();
