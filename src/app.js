@@ -77,13 +77,7 @@ if (process.env.SENTRY_DSN) {
     app.use(Sentry.Handlers.errorHandler());
 }
 
-// AWS Health Check
-app.get('/health', (req, res) => {
-    res.status(200).json({ status: 'success', message: 'Server is healthy' });
-});
-
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
-
 app.use(generalErrorHandler);
 
 loadBannedWords()
