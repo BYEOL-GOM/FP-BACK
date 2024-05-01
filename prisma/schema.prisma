@@ -168,7 +168,7 @@ model Rooms {
 }
 enum RoomStatus {
   PENDING   // 요청중
-  ACCEPTED  // 수락됨
+  ACCEPTED  // 승인됨
   REJECTED  // 거절됨
 }
 

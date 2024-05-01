@@ -6,8 +6,8 @@ import authMiddleware from '../../middlewares/authMiddleware.js';
 const router = express.Router();
 
 // 채팅방 생성
-router.post('/createChatRoom', async (req, res) => {
-    // router.post('/createChatRoom', authMiddleware, async (req, res) => {
+// router.post('/createChatRoom', async (req, res) => {
+router.post('/createChatRoom', authMiddleware, async (req, res) => {
     const { worryId, userId, commentAuthorId } = req.body;
     const parsedWorryId = parseInt(worryId);
     const parsedUserId = parseInt(userId);
@@ -65,10 +65,10 @@ router.post('/createChatRoom', async (req, res) => {
 
 // src/routes/chats/chat.router.js
 // 로그인한 유저에 해당하는 채팅방 전체 조회
-// router.get('/chatRooms', authMiddleware, async (req, res) => {
-router.get('/chatRooms', async (req, res) => {
-    // const userId = parseInt(res.locals.user.userId);
-    const userId = parseInt(req.body.userId, 10);
+router.get('/chatRooms', authMiddleware, async (req, res) => {
+    // router.get('/chatRooms', async (req, res) => {
+    const userId = parseInt(res.locals.user.userId);
+    // const userId = parseInt(req.body.userId, 10);
 
     // 페이지네이션
     const page = parseInt(req.query.page) || 1; // 페이지 번호, 기본값은 1
@@ -118,16 +118,18 @@ router.get('/chatRooms', async (req, res) => {
                     orderBy: { createdAt: 'desc' },
                 });
                 const isOwner = room.userId === userId; // 고민을 등록한 사람인지 여부
+                const isAccepted = room.status === 'ACCEPTED'; // 승인된 상태인지 여부
                 return {
-                    worryId: room.worryId,
                     userId: room.userId,
                     commentAuthorId: room.commentAuthorId,
+                    worryId: room.worryId,
+                    solvingCommentId: room.worry.solvingCommentId,
                     roomId: room.roomId,
                     // unRead: room.worry.unRead,
-                    unRead: lastComment.unRead,
-                    isSolved: room.worry.isSolved,
-                    solvingCommentId: room.worry.solvingCommentId,
+                    unRead: lastComment.unRead, // 안 읽었는지 여부
+                    isSolved: room.worry.isSolved, // 좋아요를 받았는지 여부
                     isOwner: isOwner, // 사용자가 고민을 등록한 사람인지를 나타내는 필드 추가
+                    isAccepted: isAccepted, // 채팅 신청 승인 상태 여부
                     icon: room.worry.icon,
                     status: room.status,
                     updatedAt: room.updatedAt,
