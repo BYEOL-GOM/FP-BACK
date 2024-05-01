@@ -133,7 +133,6 @@ const initializeSocket = (server, corsOptions) => {
         socket.on('join room', async ({ roomId }) => {
             console.log('여기까지 와? 6번.');
             console.log('Room join request for:', roomId);
-            console.log('!!!!!!!!!!!!!!!!!데이터 가져와!!!!!!!!!!!! : ', data);
 
             // 사용자 소켓이 특정 방에 입장할 때
             // socket.join(roomId);
