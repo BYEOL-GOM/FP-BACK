@@ -157,7 +157,7 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
 });
 
 // src/routes/chats/chat.router.js
-// 채팅방 과거 메세지 불러오기
+// 채팅방 과거 메세지 전체 조회
 router.get('/rooms/:roomId', authMiddleware, async (req, res) => {
     // router.get('/rooms/:roomId', async (req, res) => {
     const roomId = parseInt(req.params.roomId);
@@ -211,7 +211,7 @@ router.get('/rooms/:roomId', authMiddleware, async (req, res) => {
                 nickname: message.sender.nickname,
                 text: message.text,
                 isRead: message.isRead,
-                createdAt: moment(message.createdAt).tz('Asia/Seoul').format('HH:mm'),
+                createdAt: moment(message.createdAt).tz('Asia/Seoul').format('HH:mm z'),
             };
         });
 
