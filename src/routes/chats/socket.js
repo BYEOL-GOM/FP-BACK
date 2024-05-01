@@ -324,14 +324,20 @@ const initializeSocket = (server, corsOptions) => {
                     if (typeof data === 'string') {
                         data = JSON.parse(data);
                     }
+                    // DB 저장용 한국 시간 포맷
+                    const formattedDate = moment().tz('Asia/Seoul').format('YYYY-MM-DD HH:mm:ss');
                     // 채팅 메시지 데이터베이스에 저장
                     const newChat = await prisma.chattings.create({
                         data: {
                             text: data.msg,
                             roomId: parseInt(roomId),
                             senderId: socket.user.userId,
+                            createdAt: formattedDate, // moment로 포맷된 시간 저장
                         },
                     });
+                    // 클라이언트에 전송할 메시지 데이터 포맷팅
+                    const timeForClient = moment(newChat.createdAt).tz('Asia/Seoul').format('HH:mm'); // 클라이언트 전송용 포맷
+
                     console.log('⭐⭐⭐여기까지 와? 14번.');
                     console.log('New chat saved :', newChat);
 
@@ -340,7 +346,7 @@ const initializeSocket = (server, corsOptions) => {
                         userId: socket.user.userId,
                         text: data.msg,
                         roomId: roomId,
-                        time: new Date().toISOString(),
+                        time: timeForClient,
                     });
                 } catch (error) {
                     console.error('🚨🚨🚨비상비상 에러에러 15-1번.', error.message);
