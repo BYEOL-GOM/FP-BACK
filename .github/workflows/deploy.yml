@@ -43,15 +43,17 @@ jobs:
                     echo "CONTAINER_NAME=my-app-dev" >> $GITHUB_ENV
                     echo "CONTAINER_PORT=${{ secrets.DEV_PORT }}" >> $GITHUB_ENV
                     echo "NAVER_REDIRECT_URI=${{ secrets.DEV_NAVER_REDIRECT_URI }}" >> $GITHUB_ENV
-
+                    echo "IMAGE_TAG=latest-dev" >> $GITHUB_ENV # 현재 이미지 태그 저장
+                    echo "PREVIOUS_IMAGE_TAG=stable-dev" >> $GITHUB_ENV # 이전 안정 버전 태그
                   else
                     echo "CORS_ORIGIN=${{ secrets.CORS_ORIGIN_PROD }}" >> $GITHUB_ENV
                     echo "KAKAO_REDIRECT_URI=${{ secrets.PROD_KAKAO_REDIRECT_URI }}" >> $GITHUB_ENV
                     echo "DATABASE_URL=${{ secrets.PROD_DATABASE_URL }}" >> $GITHUB_ENV
                     echo "CONTAINER_NAME=my-app-prod" >> $GITHUB_ENV
-                    echo "NAVER_REDIRECT_URI=${{ secrets.NAVER_REDIRECT_URI }}" >> $GITHUB_ENV
                     echo "CONTAINER_PORT=${{ secrets.PROD_PORT }}" >> $GITHUB_ENV
-                    echo "SENTRY_DSN=${{ secrets.SENTRY_DSN }}" >> $GITHUB_ENV
+                    echo "NAVER_REDIRECT_URI=${{ secrets.NAVER_REDIRECT_URI }}" >> $GITHUB_ENV
+                    echo "IMAGE_TAG=latest-prod" >> $GITHUB_ENV # 현재 이미지 태그 저장
+                    echo "PREVIOUS_IMAGE_TAG=stable-prod" >> $GITHUB_ENV # 이전 안정 버전 태그
                   fi
             - uses: appleboy/ssh-action@v0.1.6
               with:
@@ -62,15 +64,19 @@ jobs:
                   script: |
                       docker system prune -a -f --volumes
                       echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-                      docker pull leticia0408/byeol_gom:${{ github.ref == 'refs/heads/dev' && 'latest-dev' || 'latest-prod' }}
-                      docker stop ${{ env.CONTAINER_NAME }} || true
-                      docker rm ${{ env.CONTAINER_NAME }} || true
-                      docker run -d --name ${{ env.CONTAINER_NAME }} -p ${{ env.CONTAINER_PORT }}:3000 \
-                        -e CORS_ORIGIN="${{ env.CORS_ORIGIN }}" \
-                        -e KAKAO_REDIRECT_URI="${{ env.KAKAO_REDIRECT_URI }}" \
-                        -e DATABASE_URL="${{ env.DATABASE_URL }}" \
+                      docker pull leticia0408/byeol_gom:$IMAGE_TAG
+
+                      # Stop and remove old container
+                      docker stop $CONTAINER_NAME || true
+                      docker rm $CONTAINER_NAME || true
+
+                      # Try to start new container
+                      if docker run -d --name $CONTAINER_NAME -p $CONTAINER_PORT:3000 \
+                        -e CORS_ORIGIN="$CORS_ORIGIN" \
+                        -e KAKAO_REDIRECT_URI="$KAKAO_REDIRECT_URI" \
+                        -e DATABASE_URL="$DATABASE_URL" \
                         -e KAKAO_REST_API_KEY="${{ secrets.KAKAO_REST_API_KEY }}" \
-                        -e NAVER_REDIRECT_URI="${{ env.NAVER_REDIRECT_URI }}" \
+                        -e NAVER_REDIRECT_URI="$NAVER_REDIRECT_URI" \
                         -e NAVER_CLIENT_SECRET="${{ secrets.NAVER_CLIENT_SECRET }}" \
                         -e NAVER_REST_API_ID="${{ secrets.NAVER_REST_API_ID }}" \
                         -e SESSION_SECRET="${{ secrets.SESSION_SECRET }}" \
@@ -81,4 +87,25 @@ jobs:
                         -e REFRESH_TOKEN_LIFE="${{ secrets.REFRESH_TOKEN_LIFE }}" \
                         -e CLIENT_SECRET="${{ secrets.CLIENT_SECRET }}" \
                         -e SENTRY_DSN="${{ env.SENTRY_DSN }}" \
-                        leticia0408/byeol_gom:${{ github.ref == 'refs/heads/dev' && 'latest-dev' || 'latest-prod' }}
+                        leticia0408/byeol_gom:$IMAGE_TAG; then
+                          echo "Deployment successful"
+                      else
+                          echo "Deployment failed, rolling back to previous version"
+                          # 롤백을 수행하는 명령
+                          docker run -d --name $CONTAINER_NAME -p $CONTAINER_PORT:3000 \
+                            -e CORS_ORIGIN="$CORS_ORIGIN" \
+                            -e KAKAO_REDIRECT_URI="$KAKAO_REDIRECT_URI" \
+                            -e DATABASE_URL="$DATABASE_URL" \
+                            -e KAKAO_REST_API_KEY="${{ secrets.KAKAO_REST_API_KEY }}" \
+                            -e NAVER_REDIRECT_URI="$NAVER_REDIRECT_URI" \
+                            -e NAVER_CLIENT_SECRET="${{ secrets.NAVER_CLIENT_SECRET }}" \
+                            -e NAVER_REST_API_ID="${{ secrets.NAVER_REST_API_ID }}" \
+                            -e SESSION_SECRET="${{ secrets.SESSION_SECRET }}" \
+                            -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
+                            -e ACCESS_TOKEN_SECRET="${{ secrets.ACCESS_TOKEN_SECRET }}" \
+                            -e REFRESH_TOKEN_SECRET="${{ secrets.REFRESH_TOKEN_SECRET }}" \
+                            -e ACCESS_TOKEN_LIFE="${{ secrets.ACCESS_TOKEN_LIFE }}" \
+                            -e REFRESH_TOKEN_LIFE="${{ secrets.REFRESH_TOKEN_LIFE }}" \
+                            -e CLIENT_SECRET="${{ secrets.CLIENT_SECRET }}" \
+                            -e SENTRY_DSN="${{ env.SENTRY_DSN }}" \
+                            leticia0408/byeol_gom:$PREVIOUS_IMAGE_TAG
