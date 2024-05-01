@@ -258,9 +258,12 @@ const initializeSocket = (server, corsOptions) => {
                     });
 
                     console.log('New chat saved :', newChat);
+                    console.log('여기까지 와줘!!!!!!!!!!');
 
                     // 클라이언트에 전송할 메시지 데이터 포맷팅
                     // const timeForClient = moment(newChat.createdAt).tz('Asia/Seoul').format('HH:mm'); // 클라이언트 전송용 포맷
+
+                    console.log(`Message sent in room ${roomId} by user ${socket.user.userId}: ${data.msg}`);
 
                     // 다른 소켓에게 메시지 전송
                     io.to(roomId).emit('message', {
@@ -274,7 +277,7 @@ const initializeSocket = (server, corsOptions) => {
                     console.log('여기까지 와? 14번.');
                 } catch (error) {
                     console.error('🚨🚨🚨비상비상 에러에러 15-1번.15-1번.', error.message);
-                    console.error('Database error:', error);
+                    console.error(`Database error: ${error}`);
                     socket.emit('error', { message: '채팅 저장 중 에러 발생.' });
                 }
             } else {
