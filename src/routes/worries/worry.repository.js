@@ -77,7 +77,7 @@ export const updateWorryStatus = async (worryId, prismaClient) => {
 
 // # 생성된후 12시간 동안 답변이 없는 고민 or 12시간동안 답장이 오지 않는 메세지 조회
 export const findOldMessages = async (prismaClient) => {
-    const twentyFourHoursAgo = new Date(new Date().getTime() - 1 * 60 * 1000);
+    const twentyFourHoursAgo = new Date(new Date().getTime() - 12 * 60 * 60 * 1000);
 
     return await prismaClient.worries.findMany({
         where: {
