@@ -145,8 +145,7 @@ const initializeSocket = (server, corsOptions) => {
 
             // 사용자 인증 확인
             if (!socket.user) {
-                console.log('🚨🚨🚨비상비상 에러에러 6..5번.6..5번.', error.message);
-                console.error('socket.user error: Authentication failed');
+                console.error('join room-socket.user error: Authentication failed');
                 socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
                 return;
             }
@@ -192,20 +191,35 @@ const initializeSocket = (server, corsOptions) => {
 
                     console.log('여기까지 와???????? 8-2번.');
 
-                    // 과거 메시지를 클라이언트에 전송
-                    pastMessages.forEach((message) => {
-                        const timeForClient = moment(message.createdAt).tz('Asia/Seoul').format('HH:mm');
-                        io.to(room.roomId.toString()).emit('past message', {
-                            chatId: message.chatId, // 고유 식별자 추가
-                            userId: message.senderId,
-                            text: message.text,
-                            roomId: roomId,
-                            time: timeForClient,
+                    // // 과거 메시지를 클라이언트에 전송
+                    // pastMessages.forEach((message) => {
+                    //     const timeForClient = moment(message.createdAt).tz('Asia/Seoul').format('HH:mm');
+                    //     io.to(room.roomId.toString()).emit('past message', {
+                    //         chatId: message.chatId, // 고유 식별자 추가
+                    //         userId: message.senderId,
+                    //         text: message.text,
+                    //         roomId: roomId,
+                    //         time: timeForClient,
+                    //     });
+                    //     setLastMessageTimestamp(socket.id, roomId, message.createdAt); // 마지막 메시지 타임스탬프 업데이트
+                    // });
+                    if (pastMessages.length > 0) {
+                        pastMessages.forEach((message) => {
+                            const timeForClient = moment(message.createdAt).tz('Asia/Seoul').format('HH:mm');
+                            io.to(room.roomId.toString()).emit('past message', {
+                                chatId: message.chatId,
+                                userId: message.senderId,
+                                text: message.text,
+                                roomId: roomId,
+                                time: timeForClient,
+                            });
                         });
-                        setLastMessageTimestamp(socket.id, roomId, message.createdAt); // 마지막 메시지 타임스탬프 업데이트
-                    });
+                        // 마지막 메시지의 시간으로 타임스탬프 업데이트
+                        const lastTimestamp = pastMessages[pastMessages.length - 1].createdAt; // 배열의 인덱스는 0부터 시작하기 때문에 -1
+                        setLastMessageTimestamp(socket.id, roomId, lastTimestamp);
+                    }
                 } else {
-                    console.log('비상비상 에러에러 9-1번.9-1번.', error.message);
+                    console.error('비상비상 에러에러 9-1번.9-1번. >> 채팅방이 존재하지 않습니다.');
                     socket.emit('error', { message: '채팅방이 존재하지 않습니다.' });
                     socket.disconnect();
                 }
@@ -252,7 +266,7 @@ const initializeSocket = (server, corsOptions) => {
             console.log('Received data:', data); // 데이터 수신 확인 로그
 
             if (!socket.user) {
-                console.log('Error: 인증되지 않은 사용자입니다.');
+                console.error('chatting-socket.user error: 인증되지 않은 사용자입니다.');
                 socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
                 return;
             }
