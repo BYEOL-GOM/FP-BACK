@@ -6,6 +6,8 @@ import moment from 'moment-timezone';
 import { getLastMessageTimestamp, setLastMessageTimestamp } from '../../utils/timestampUtils.js';
 import { clearSocketPastMessages } from '../../utils/socketMessageHandling.js';
 
+const lastMessageTimestamps = new Map(); // 각 소켓 세션의 마지막 메시지 타임스탬프를 저장하는 Map 객체
+
 // 20240430 첫 연결 성공. 토큰 확인.
 const initializeSocket = (server, corsOptions) => {
     const io = new SocketIOServer(server, {
@@ -80,7 +82,7 @@ const initializeSocket = (server, corsOptions) => {
         }
         console.log('여기까지 와? 5번.');
 
-        // 채팅방 참여 요청 처리
+        // 채팅방 참여 로직 및 과거 메시지 처리
         socket.on('join room', async ({ roomId }) => {
             console.log('여기까지 와? 6번.');
             console.log('Room join request for:', roomId);
@@ -118,7 +120,7 @@ const initializeSocket = (server, corsOptions) => {
 
                 if (room) {
                     console.log('여기까지 와? 8번.');
-                    console.log(`User joined room: ${room.roomId}`);
+                    console.log(`사용자가 방에 참가하였습니다: ${room.roomId}`);
 
                     userRooms[socket.id] = room.roomId; // 소켓 ID와 방 ID를 매핑하여 저장
                     // userRooms[socket.user.userId] = room.roomId; // Socket ID가 아닌 사용자의 ID를 키로 사용합니다.
@@ -130,7 +132,8 @@ const initializeSocket = (server, corsOptions) => {
                         `사용자 ${socket.user.userId} (Socket ID: ${socket.id})가 ${room.roomId || '채팅방'}에 입장했습니다.`,
                     );
 
-                    const lastMessageTimestamp = getLastMessageTimestamp(socket.id, roomId); // 사용자가 마지막으로 메시지를 받은 시간을 가져옵니다.
+                    // const lastMessageTimestamp = getLastMessageTimestamp(socket.id, roomId); // 사용자가 마지막으로 메시지를 받은 시간을 가져옵니다.
+                    const lastMessageTimestamp = lastMessageTimestamps.get(`${socket.id}:${roomId}`) || new Date(0);
 
                     // 과거 메시지 불러오기
                     const pastMessages = await prisma.chattings.findMany({
@@ -155,20 +158,38 @@ const initializeSocket = (server, corsOptions) => {
                     //     });
                     //     setLastMessageTimestamp(socket.id, roomId, message.createdAt); // 마지막 메시지 타임스탬프 업데이트
                     // });
-                    if (pastMessages.length > 0) {
-                        pastMessages.forEach((message) => {
-                            const timeForClient = moment(message.createdAt).tz('Asia/Seoul').format('HH:mm');
-                            io.to(room.roomId.toString()).emit('past message', {
-                                chatId: message.chatId,
-                                userId: message.senderId,
-                                text: message.text,
-                                roomId: roomId,
-                                time: timeForClient,
-                            });
+                    //----------------------------------------------------------------------
+                    // if (pastMessages.length > 0) {
+                    //     pastMessages.forEach((message) => {
+                    //         const timeForClient = moment(message.createdAt).tz('Asia/Seoul').format('HH:mm');
+                    //         io.to(room.roomId.toString()).emit('past message', {
+                    //             chatId: message.chatId,
+                    //             userId: message.senderId,
+                    //             text: message.text,
+                    //             roomId: roomId,
+                    //             time: timeForClient,
+                    //         });
+                    //     });
+                    //     // 마지막 메시지의 시간으로 타임스탬프 업데이트
+                    //     const lastTimestamp = pastMessages[pastMessages.length - 1].createdAt; // 배열의 인덱스는 0부터 시작하기 때문에 -1
+                    //     setLastMessageTimestamp(socket.id, roomId, lastTimestamp);
+                    // }
+                    pastMessages.forEach((message) => {
+                        const timeForClient = moment(message.createdAt).tz('Asia/Seoul').format('HH:mm');
+                        io.to(room.roomId.toString()).emit('past message', {
+                            chatId: message.chatId,
+                            userId: message.senderId,
+                            text: message.text,
+                            roomId: roomId,
+                            time: timeForClient,
                         });
-                        // 마지막 메시지의 시간으로 타임스탬프 업데이트
-                        const lastTimestamp = pastMessages[pastMessages.length - 1].createdAt; // 배열의 인덱스는 0부터 시작하기 때문에 -1
-                        setLastMessageTimestamp(socket.id, roomId, lastTimestamp);
+                    });
+
+                    if (pastMessages.length > 0) {
+                        lastMessageTimestamps.set(
+                            `${socket.id}:${roomId}`,
+                            pastMessages[pastMessages.length - 1].createdAt,
+                        );
                     }
                 } else {
                     console.error('비상비상 에러에러 9-1번.9-1번. >> 채팅방이 존재하지 않습니다.');
@@ -182,36 +203,6 @@ const initializeSocket = (server, corsOptions) => {
             }
         });
         console.log('여기까지 와? 10번.');
-        //-----------------------------------------------------------------------------------
-        //     if (occupants < 2) {
-        //         console.log('🚨🚨🚨여기까지 와? 8번.');
-        //         try {
-        //             const room = await prisma.rooms.findUnique({
-        //                 where: {
-        //                     roomId: roomId,
-        //                 },
-        //             });
-        //             if (!room) {
-        //                 socket.emit('error', { message: '해당 방을 찾을 수 없습니다.' });
-        //                 return;
-        //             }
-        //             socket.join(roomId.toString());
-        //             userRooms[socket.user.userId] = roomId; // 수정된 부분: Socket ID가 아닌 사용자의 ID를 키로 사용합니다.
-        //             socket.emit('joined room', { roomId: roomId });
-        //             io.to(roomId.toString()).emit(
-        //                 'room message',
-        //                 `사용자 ${socket.user.userId} (Socket ID: ${socket.id})가 ${room.name}방에 입장했습니다.`,
-        //             );
-        //         } catch (error) {
-        //             console.error('방 입장 중 에러:', error);
-        //             socket.emit('error', { message: '방 입장 중 에러가 발생했습니다.' });
-        //         }
-        //     } else {
-        //         socket.emit('error', { message: `방 ${roomId}이 꽉 찼습니다.` });
-        //         console.log(`방 ${roomId}이(가) 꽉 찼습니다.`);
-        //     }
-        // });
-        //-----------------------------------------------------------------------------------
 
         socket.on('chatting', async (data) => {
             console.log('여기까지 와? 11번.');
@@ -227,7 +218,6 @@ const initializeSocket = (server, corsOptions) => {
 
             const roomId = userRooms[socket.id];
             // const roomId = userRooms[socket.user.userId];
-            console.log('roomId', roomId);
 
             if (roomId) {
                 console.log('여기까지 와? 13번.');
@@ -251,7 +241,7 @@ const initializeSocket = (server, corsOptions) => {
                     console.log('New chat saved :', newChat);
 
                     // 클라이언트에 전송할 메시지 데이터 포맷팅
-                    // const timeForClient = moment(newChat.createdAt).tz('Asia/Seoul').format('HH:mm'); // 클라이언트 전송용 포맷
+                    const timeForClient = moment(newChat.createdAt).tz('Asia/Seoul').format('HH:mm'); // 클라이언트 전송용 포맷
 
                     console.log(`Message sent in room ${roomId} by user ${socket.user.userId}: ${data.msg}`);
 
@@ -262,7 +252,7 @@ const initializeSocket = (server, corsOptions) => {
                         text: data.msg,
                         roomId: roomId,
                         // time: timeForClient,
-                        time: moment(newChat.createdAt).tz('Asia/Seoul').format('HH:mm'),
+                        time: timeForClient,
                     });
                     console.log('여기까지 와? 14번.');
                 } catch (error) {
@@ -318,7 +308,8 @@ const initializeSocket = (server, corsOptions) => {
                 // delete userRooms[socket.user.userId];
 
                 // 해당 소켓이 과거 메시지 정보를 가지고 있다면 해당 정보 삭제
-                clearSocketPastMessages(socket.id);
+                // clearSocketPastMessages(socket.id);
+                clearSocketPastMessages(socket.id, lastMessageTimestamps);
             }
         });
     });
