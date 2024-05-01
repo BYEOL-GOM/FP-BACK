@@ -222,10 +222,9 @@ const initializeSocket = (server, corsOptions) => {
         // });
         //-----------------------------------------------------------------------------------
 
-        console.log('여기까지 와? 10-2번.');
         socket.on('chatting', async (data) => {
             console.log('여기까지 와? 11번.');
-            console.log('data : ', data);
+            console.log('Received data:', data); // 데이터 수신 확인 로그
 
             if (!socket.user) {
                 console.log('Error: 인증되지 않은 사용자입니다.');
@@ -237,6 +236,7 @@ const initializeSocket = (server, corsOptions) => {
 
             const roomId = userRooms[socket.id];
             // const roomId = userRooms[socket.user.userId];
+            console.log('roomId', roomId);
 
             if (roomId) {
                 console.log('여기까지 와? 13번.');
@@ -256,11 +256,11 @@ const initializeSocket = (server, corsOptions) => {
                             createdAt: formattedDate, // moment로 포맷된 시간 저장
                         },
                     });
-                    // 클라이언트에 전송할 메시지 데이터 포맷팅
-                    const timeForClient = moment(newChat.createdAt).tz('Asia/Seoul').format('HH:mm'); // 클라이언트 전송용 포맷
 
-                    console.log('여기까지 와? 14번.');
                     console.log('New chat saved :', newChat);
+
+                    // 클라이언트에 전송할 메시지 데이터 포맷팅
+                    // const timeForClient = moment(newChat.createdAt).tz('Asia/Seoul').format('HH:mm'); // 클라이언트 전송용 포맷
 
                     // 다른 소켓에게 메시지 전송
                     io.to(roomId).emit('message', {
@@ -268,9 +268,10 @@ const initializeSocket = (server, corsOptions) => {
                         userId: socket.user.userId,
                         text: data.msg,
                         roomId: roomId,
-                        time: timeForClient,
+                        // time: timeForClient,
+                        time: moment(newChat.createdAt).tz('Asia/Seoul').format('HH:mm'),
                     });
-                    console.log('여기까지 와? 14-2번.');
+                    console.log('여기까지 와? 14번.');
                 } catch (error) {
                     console.error('🚨🚨🚨비상비상 에러에러 15-1번.15-1번.', error.message);
                     console.error('Database error:', error);
