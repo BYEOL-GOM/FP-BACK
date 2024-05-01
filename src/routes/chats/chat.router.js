@@ -101,9 +101,10 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
                         icon: true,
                     },
                 },
+                // 특정 사용자가 속한 채팅방에 다른 사용자가 보낸 메시지만 조회
                 chattings: {
                     where: {
-                        userId: {
+                        senderId: {
                             not: userId, // 사용자 자신이 보낸 메시지 제외
                         },
                     },
@@ -146,16 +147,21 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
         //         };
         //     }),
         // );
+        // 모든 채팅방에 대해 동시에 처리하기 위해 Promise.all()을 사용하여 각 채팅방 정보를 처리하고 결과를 반환
+        // -> 모든 채팅방 정보를 동시에 처리하여 빠르게 결과를 얻을 수 있다.
         const updatedRooms = await Promise.all(
+            // 각 채팅방에 대해 반복
             rooms.map(async (room) => {
-                const unRead = room.chattings.some((chat) => chat.unRead); // 읽지 않은 메시지가 있는지 확인
+                // const unRead = room.chattings.some((chat) => chat.unRead); // 각 채팅방의 읽지 않은 메시지가 있는지 확인
+                const isRead = room.chattings.every((chat) => chat.isRead); // 모든 메시지가 읽혔는지 확인
                 return {
-                    userId: room.userId,
-                    commentAuthorId: room.commentAuthorId,
+                    userId: room.userId, // 채팅방을 생성한 사용자의 ID
+                    commentAuthorId: room.commentAuthorId, // 채팅방에 작성된 댓글의 작성자 ID
                     worryId: room.worryId,
                     solvingCommentId: room.worry.solvingCommentId,
                     roomId: room.roomId,
-                    unRead: unRead,
+                    // unRead: unRead,
+                    isRead: isRead,
                     isSolved: room.worry.isSolved,
                     isOwner: room.userId === userId,
                     isAccepted: room.status === 'ACCEPTED',
