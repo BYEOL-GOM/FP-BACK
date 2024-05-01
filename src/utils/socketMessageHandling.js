@@ -13,6 +13,7 @@ export function clearSocketPastMessages(socketId, lastMessageTimestamps) {
     const keysToDelete = [];
     for (const key of lastMessageTimestamps.keys()) {
         if (key.startsWith(`${socketId}:`)) {
+            // if (key.startsWith(socketId)) { // socketId로 시작하는 모든 키를 찾습니다.
             keysToDelete.push(key);
         }
     }

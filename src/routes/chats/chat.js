@@ -141,7 +141,6 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
             },
         });
         const pagination = { page, limit, totalCount };
-        console.log('updatedRooms : ', updatedRooms);
         console.log('🖤🖤🖤pagination : ', pagination);
 
         return res.status(200).json({

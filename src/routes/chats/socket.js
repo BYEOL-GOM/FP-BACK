@@ -76,8 +76,7 @@ const initializeSocket = (server, corsOptions) => {
             }
         } else {
             // 토큰이 없는 경우 에러 처리
-            console.log('🚨🚨🚨비상비상 에러에러 4--3번.4--3번.', error.message);
-            console.error('error', error);
+            console.log('🚨🚨🚨비상비상 에러에러 4--3번.4--3번. 인증 토큰이 없습니다.');
             socket.emit('error', { message: '인증 토큰이 없습니다.' });
             socket.disconnect();
         }
@@ -128,20 +127,15 @@ const initializeSocket = (server, corsOptions) => {
                         `사용자 ${socket.user.userId} (Socket ID: ${socket.id})가 ${room.roomId || '채팅방'}에 입장했습니다.`,
                     );
 
-                    // // API를 호출하여 과거 메시지를 가져옴
-                    // const pastMessages = await axios.get(`/rooms/${roomId}`);
-                    // // 클라이언트에게 과거 메시지 전송
-                    // socket.emit('past messages', pastMessages.data);
-
                     // API를 호출하여 과거 메시지를 가져옴
-                    const { data: pastMessages } = await axios.get(`/rooms/${roomId}`);
+                    const { data: pastMessages } = await axios.get(`http://localhost:3000/rooms/${roomId}`);
                     // 클라이언트에게 과거 메시지 전송
                     socket.emit('past messages', pastMessages);
 
-                    // lastMessageTimestamps 초기화
-                    const lastMessageTimestamps = new Map();
                     // 방 아이디를 키로하여 초기 타임스탬프 설정
-                    lastMessageTimestamps.set(roomId.toString(), new Date());
+                    // lastMessageTimestamps.set(roomId.toString(), new Date());
+                    lastMessageTimestamps.set(`${socket.id}:${roomId}`, new Date());
+                    console.log('lastMessageTimestamps', lastMessageTimestamps);
                     console.log('여기까지 와? 8-2번.');
                 } else {
                     console.error('비상비상 에러에러 9-1번.9-1번. >> 채팅방이 존재하지 않습니다.');
@@ -227,19 +221,23 @@ const initializeSocket = (server, corsOptions) => {
             }
 
             const roomId = userRooms[socket.id];
-            // const roomId = userRooms[socket.user.userId];
-
             if (roomId) {
                 console.log('여기까지 와? 18번.');
-
-                socket.leave(roomId.toString());
-                socket.emit('leaved room', { roomId: roomId });
-                io.to(roomId.toString()).emit(
-                    'room message',
-                    `사용자 ${socket.user.userId} (Socket ID: ${socket.id})가 방 ${roomId}에서 퇴장했습니다.`,
-                );
-                delete userRooms[socket.id];
-                // delete userRooms[socket.user.userId];
+                try {
+                    socket.leave(roomId.toString());
+                    socket.emit('leaved room', { roomId: roomId });
+                    io.to(roomId.toString()).emit(
+                        'room message',
+                        `사용자 ${socket.user.userId} (Socket ID: ${socket.id})가 방 ${roomId}에서 퇴장했습니다.`,
+                    );
+                    // userRooms에서 삭제
+                    delete userRooms[socket.id];
+                    // userSockets에서 삭제
+                    delete userSockets[socket.user.userId];
+                } catch (error) {
+                    console.error(`방을 나가는 도중 에러가 발생했습니다. ${roomId}:`, error);
+                    socket.emit('error', { message: '방을 나가는 도중 에러가 발생했습니다.' });
+                }
             }
         });
         console.log('여기까지 와? 19번.');
@@ -248,7 +246,6 @@ const initializeSocket = (server, corsOptions) => {
             console.log('여기까지 와? 20번.');
             console.log(`사용자 ${socket.id}가 연결을 해제했습니다.`);
             const roomId = userRooms[socket.id];
-            // const roomId = userRooms[socket.user.userId];
 
             if (roomId) {
                 io.to(roomId.toString()).emit(
@@ -256,13 +253,14 @@ const initializeSocket = (server, corsOptions) => {
                     `사용자 ${socket.user.userId} (Socket ID: ${socket.id})가 방에서 퇴장했습니다.`,
                 );
                 delete userRooms[socket.id];
-                // delete userRooms[socket.user.userId];
 
                 // 해당 소켓이 과거 메시지 정보를 가지고 있다면 해당 정보 삭제
                 // clearSocketPastMessages(socket.id);
-                // clearSocketPastMessages(socket.id, pastMessages);
-                // 해당 소켓의 과거 메시지 정보를 삭제
                 clearSocketPastMessages(socket.id, lastMessageTimestamps);
+            }
+            // 사용자와 소켓 매핑에서 해당 소켓 삭제
+            if (socket.user && userSockets[socket.user.userId]) {
+                delete userSockets[socket.user.userId];
             }
         });
     });
