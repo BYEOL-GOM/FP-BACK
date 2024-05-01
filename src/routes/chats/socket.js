@@ -133,6 +133,9 @@ const initializeSocket = (server, corsOptions) => {
         socket.on('join room', async ({ roomId }) => {
             console.log('⭐⭐⭐여기까지 와? 6번.');
             console.log('Room join request for:', roomId);
+            socket.join(roomId.toString(), () => {
+                console.log(`User ${socket.id} joined room ${roomId}`);
+            });
 
             // 사용자 인증 확인
             if (!socket.user) {
@@ -154,7 +157,10 @@ const initializeSocket = (server, corsOptions) => {
                     console.log('⭐⭐⭐여기까지 와? 8번.');
                     console.log(`User joined room: ${room.roomId}`);
 
-                    socket.join(room.roomId.toString());
+                    // 사용자 소켓이 특정 방에 입장할 때
+                    // socket.join(roomId);
+                    // socket.join(room.roomId.toString());
+
                     userRooms[socket.id] = room.roomId; // 소켓 ID와 방 ID를 매핑하여 저장
 
                     io.to(room.roomId.toString()).emit(
@@ -209,6 +215,7 @@ const initializeSocket = (server, corsOptions) => {
             console.log('data : ', data);
 
             if (!socket.user) {
+                console.log('Error: 인증되지 않은 사용자입니다.');
                 socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
                 return;
             }
@@ -219,9 +226,9 @@ const initializeSocket = (server, corsOptions) => {
             if (roomId) {
                 console.log('⭐⭐⭐여기까지 와? 13번.');
                 try {
-                    if (typeof data === 'string') {
-                        data = JSON.parse(data);
-                    }
+                    // if (typeof data === 'string') {
+                    //     data = JSON.parse(data);
+                    // }
                     // DB 저장용 한국 시간 포맷
                     const formattedDate = moment().tz('Asia/Seoul').format('YYYY-MM-DDTHH:mm:ssZ'); // 시간대 오프셋이 포함된 ISO-8601 형식
 
@@ -241,7 +248,7 @@ const initializeSocket = (server, corsOptions) => {
                     console.log('New chat saved :', newChat);
 
                     // 다른 소켓에게 메시지 전송
-                    io.to(roomId).emit('chatting', {
+                    io.to(roomId).emit('message', {
                         userId: socket.user.userId,
                         text: data.msg,
                         roomId: roomId,
