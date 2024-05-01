@@ -65,10 +65,10 @@ router.post('/createChatRoom', async (req, res) => {
 
 // src/routes/chats/chat.router.js
 // 로그인한 유저에 해당하는 채팅방 전체 조회
-router.get('/chatRooms', authMiddleware, async (req, res) => {
-    // router.get('/chatRooms', async (req, res) => {
-    const userId = parseInt(res.locals.user.userId);
-    // const userId = parseInt(req.body.userId, 10);
+// router.get('/chatRooms', authMiddleware, async (req, res) => {
+router.get('/chatRooms', async (req, res) => {
+    // const userId = parseInt(res.locals.user.userId);
+    const userId = parseInt(req.body.userId, 10);
 
     // 페이지네이션
     const page = parseInt(req.query.page) || 1; // 페이지 번호, 기본값은 1
@@ -98,6 +98,7 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
                         unRead: true,
                         isSolved: true,
                         solvingCommentId: true,
+                        icon: true,
                     },
                 },
             },
@@ -116,16 +117,20 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
                     where: { worryId: room.worryId },
                     orderBy: { createdAt: 'desc' },
                 });
+                const isOwner = room.userId === userId; // 고민을 등록한 사람인지 여부
                 return {
-                    roomId: room.roomId,
-                    status: room.status,
-                    updatedAt: room.updatedAt,
                     worryId: room.worryId,
                     userId: room.userId,
                     commentAuthorId: room.commentAuthorId,
-                    unRead: room.worry.unRead,
+                    roomId: room.roomId,
+                    // unRead: room.worry.unRead,
+                    unRead: lastComment.unRead,
                     isSolved: room.worry.isSolved,
                     solvingCommentId: room.worry.solvingCommentId,
+                    isOwner: isOwner, // 사용자가 고민을 등록한 사람인지를 나타내는 필드 추가
+                    icon: room.worry.icon,
+                    status: room.status,
+                    updatedAt: room.updatedAt,
                 };
             }),
         );

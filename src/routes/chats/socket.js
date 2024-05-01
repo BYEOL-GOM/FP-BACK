@@ -3,6 +3,7 @@ import { Server as SocketIOServer } from 'socket.io';
 import jwt from 'jsonwebtoken';
 import { prisma } from '../../utils/prisma/index.js';
 import moment from 'moment-timezone';
+import { getLastMessageTimestamp, setLastMessageTimestamp } from '../../utils/timestampUtils.js';
 
 //             // 사용자가 채팅하기 버튼을 누르면 실행
 //             socket.on('join room', async (otherUserId) => {
@@ -145,7 +146,7 @@ const initializeSocket = (server, corsOptions) => {
             // 사용자 인증 확인
             if (!socket.user) {
                 console.log('🚨🚨🚨비상비상 에러에러 6..5번.6..5번.', error.message);
-                console.error('socket.user error:', error);
+                console.error('socket.user error: Authentication failed');
                 socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
                 return;
             }
@@ -174,14 +175,22 @@ const initializeSocket = (server, corsOptions) => {
                         `사용자 ${socket.user.userId} (Socket ID: ${socket.id})가 ${room.roomId || '채팅방'}에 입장했습니다.`,
                     );
 
+                    const lastMessageTimestamp = getLastMessageTimestamp(socket.id, roomId); // 사용자가 마지막으로 메시지를 받은 시간을 가져옵니다.
+
                     // 과거 메시지 불러오기
+                    // const pastMessages = await prisma.chattings.findMany({
+                    //     where: { roomId: parseInt(roomId) },
+                    //     orderBy: { createdAt: 'asc' }, // 시간순으로 정렬
+                    // });
                     const pastMessages = await prisma.chattings.findMany({
-                        where: { roomId: parseInt(roomId) },
-                        orderBy: { createdAt: 'asc' }, // 시간순으로 정렬
+                        where: {
+                            roomId: parseInt(roomId),
+                            createdAt: { gt: lastMessageTimestamp }, // 마지막 메시지 이후의 메시지만 조회합니다.
+                        },
+                        orderBy: { createdAt: 'asc' },
                     });
 
                     console.log('여기까지 와???????? 8-2번.');
-                    console.log('pastMessages', pastMessages);
 
                     // 과거 메시지를 클라이언트에 전송
                     pastMessages.forEach((message) => {
@@ -193,6 +202,7 @@ const initializeSocket = (server, corsOptions) => {
                             roomId: roomId,
                             time: timeForClient,
                         });
+                        setLastMessageTimestamp(socket.id, roomId, message.createdAt); // 마지막 메시지 타임스탬프 업데이트
                     });
                 } else {
                     console.log('비상비상 에러에러 9-1번.9-1번.', error.message);
