@@ -140,8 +140,8 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
                 status: { in: ['ACCEPTED', 'PENDING'] },
             },
         });
-        console.log('updatedRooms : ', updatedRooms);
         const pagination = { page, limit, totalCount };
+        console.log('updatedRooms : ', updatedRooms);
         console.log('🖤🖤🖤pagination : ', pagination);
 
         return res.status(200).json({
@@ -206,7 +206,7 @@ router.get('/rooms/:roomId', authMiddleware, async (req, res) => {
             return {
                 chatId: message.chatId,
                 userId: message.sender.userId,
-                senderId: message.senderId,
+                // senderId: message.senderId,
                 roomId: message.roomId,
                 nickname: message.sender.nickname,
                 text: message.text,
