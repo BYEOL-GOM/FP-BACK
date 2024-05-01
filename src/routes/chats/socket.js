@@ -4,8 +4,9 @@ import jwt from 'jsonwebtoken';
 import { prisma } from '../../utils/prisma/index.js';
 import moment from 'moment-timezone';
 import { getLastMessageTimestamp, setLastMessageTimestamp } from '../../utils/timestampUtils.js';
+import { clearSocketPastMessages } from '../../utils/socketMessageHandling.js';
 
-// 20240430 첫 연결 성공. 토큰 확인. 에러 : 'join room' - 인증되지 않은 사용자입니다.
+// 20240430 첫 연결 성공. 토큰 확인.
 const initializeSocket = (server, corsOptions) => {
     const io = new SocketIOServer(server, {
         cors: corsOptions,
@@ -14,7 +15,6 @@ const initializeSocket = (server, corsOptions) => {
     const userSockets = {}; // 사용자와 소켓 간의 매핑을 저장할 객체
     let userRooms = {}; // 사용자의 방 정보를 저장할 객체
 
-    // connection event handler
     // connection이 수립되면 event handler function의 인자로 socket이 들어온다
     io.on('connection', async (socket) => {
         console.log('사용자가 연결되었습니다.', socket.id); // 소켓마다 고유의 식별자를 가짐 (20자)
@@ -106,8 +106,8 @@ const initializeSocket = (server, corsOptions) => {
                     where: { roomId: parseInt(roomId) },
                 });
 
+                // 채팅방의 hasEntered를 true로 설정
                 if (room && !room.hasEntered) {
-                    // 채팅방의 hasEntered를 true로 설정
                     await prisma.rooms.update({
                         where: { roomId: parseInt(roomId) },
                         data: { hasEntered: true },
@@ -122,9 +122,7 @@ const initializeSocket = (server, corsOptions) => {
 
                     userRooms[socket.id] = room.roomId; // 소켓 ID와 방 ID를 매핑하여 저장
                     // userRooms[socket.user.userId] = room.roomId; // Socket ID가 아닌 사용자의 ID를 키로 사용합니다.
-                    // console.log('socket.user.userId : ', socket.user.userId);
                     console.log('room.roomId : ', room.roomId);
-                    console.log('socket.id : ', socket.id);
 
                     // 방에 입장했다는 메시지를 방의 모든 참여자에게 전송
                     io.to(room.roomId.toString()).emit(
@@ -307,6 +305,7 @@ const initializeSocket = (server, corsOptions) => {
 
         socket.on('disconnect', () => {
             console.log('여기까지 와? 20번.');
+            console.log(`사용자 ${socket.id}가 연결을 해제했습니다.`);
             const roomId = userRooms[socket.id];
             // const roomId = userRooms[socket.user.userId];
 
@@ -317,6 +316,9 @@ const initializeSocket = (server, corsOptions) => {
                 );
                 delete userRooms[socket.id];
                 // delete userRooms[socket.user.userId];
+
+                // 해당 소켓이 과거 메시지 정보를 가지고 있다면 해당 정보 삭제
+                clearSocketPastMessages(socket.id);
             }
         });
     });
