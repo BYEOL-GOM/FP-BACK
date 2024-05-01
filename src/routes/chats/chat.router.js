@@ -120,7 +120,6 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
                 return {
                     roomId: room.roomId,
                     status: room.status,
-                    createdAt: room.createdAt,
                     updatedAt: room.updatedAt,
                     worryId: room.worryId,
                     userId: room.userId,
@@ -128,10 +127,6 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
                     unRead: room.worry.unRead,
                     isSolved: room.worry.isSolved,
                     solvingCommentId: room.worry.solvingCommentId,
-                    comment_lastCommentId: lastComment.commentId,
-                    comment_lastContent: lastComment.content,
-                    comment_deletedAt: lastComment.deletedAt,
-                    comment_reportReason: lastComment.reportReason,
                 };
             }),
         );
