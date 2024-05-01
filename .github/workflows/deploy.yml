@@ -87,3 +87,4 @@ jobs:
                       else
                         echo "Deployment failed, rolling back to previous image."
                         docker run -d --name ${{ env.CONTAINER_NAME }} -p ${{ env.CONTAINER_PORT }}:3000 $CURRENT_IMAGE
+                      fi
