@@ -1,0 +1,15 @@
+config:
+    target: 'http://localhost:3000' # Express 서버 URL
+    phases:
+        - duration: 100 # 테스트 지속 시간(초)
+          arrivalRate: 5 # 초당 새로운 가상 사용자 수
+
+scenarios:
+    - flow:
+          - post:
+                url: '/worries' # 고민 메세지 작성 엔드포인트
+                json:
+                    content: '내용' # 작성할 고민 내용
+                    icon: 'A' # 아이콘
+                    userId: ${__random(1,10)} # 1부터 10까지의 무작위 사용자 ID
+                    fontColor: '색상' # 폰트 색상

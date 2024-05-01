@@ -1,5 +1,5 @@
 # 기반 이미지 선택 (Node.js 안정된 최신버전)
-FROM node:alpine
+FROM node:20-alpine
 
 # 애플리케이션 디렉토리 생성
 WORKDIR /app
