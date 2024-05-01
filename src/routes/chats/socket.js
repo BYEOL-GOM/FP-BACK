@@ -130,9 +130,11 @@ const initializeSocket = (server, corsOptions) => {
         console.log('여기까지 와? 5번.');
 
         // 채팅방 참여 요청 처리
-        socket.on('join room', async ({ roomId }) => {
+        socket.on('join room', async ({ roomId, data }) => {
             console.log('여기까지 와? 6번.');
             console.log('Room join request for:', roomId);
+            console.log('!!!!!!!!!!!!!!!!!데이터 가져와!!!!!!!!!!!! : ', data);
+
             socket.join(roomId.toString(), () => {
                 console.log(`User ${socket.id} joined room ${roomId}`);
                 socket.emit('joined room', { roomId: roomId });
@@ -172,13 +174,16 @@ const initializeSocket = (server, corsOptions) => {
                         'room message',
                         `사용자 ${socket.user.userId} (Socket ID: ${socket.id})가 ${room.roomId || '채팅방'}에 입장했습니다.`,
                     );
-                    // io.to(room.roomId.toString()).emit('past message', {
-                    //     // chatId: newChat.chatId,
-                    //     userId: socket.user.userId,
-                    //     text: data.msg,
-                    //     roomId: roomId,
-                    //     time: timeForClient,
-                    // });
+
+                    // 클라이언트에 전송할 메시지 데이터 포맷팅
+                    const timeForClient = moment(data.createdAt).tz('Asia/Seoul').format('HH:mm'); // 클라이언트 전송용 포맷
+                    io.to(room.roomId.toString()).emit('past message', {
+                        // chatId: newChat.chatId,
+                        userId: socket.user.userId,
+                        text: data.msg,
+                        roomId: roomId,
+                        time: timeForClient,
+                    });
                 } else {
                     console.log('🚨🚨🚨비상비상 에러에러 9-1번.9-1번.', error.message);
                     socket.emit('error', { message: '채팅방이 존재하지 않습니다.' });
