@@ -157,6 +157,7 @@ model Rooms {
   status      RoomStatus  @default(PENDING) @map("status")  // Enum 타입으로 상태 관리
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  hasEntered   Boolean  @default(false) // 사용자가 채팅방에 최초로 입장했는지 여부
 
   worryId     Int       @unique
   worry       Worries   @relation(fields: [worryId], references: [worryId])

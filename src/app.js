@@ -15,7 +15,7 @@ import { loadBannedWords } from './utils/bannedWordsLoader.js';
 import { swaggerUi, specs } from './swagger/swaggerOptions.js';
 import './scheduler.js';
 import initializeSocket from './routes/chats/socket.js'; // socket.js 파일에서 함수 가져오기
-import chatRouter from '../src/routes/chats/chat.router.js';
+import chatRouter from '../src/routes/chats/chat.js';
 // import bodyParser from 'body-parser';
 
 // 환경 변수 설정 로드

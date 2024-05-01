@@ -5,64 +5,14 @@ import { prisma } from '../../utils/prisma/index.js';
 import moment from 'moment-timezone';
 import { getLastMessageTimestamp, setLastMessageTimestamp } from '../../utils/timestampUtils.js';
 
-//             // 사용자가 채팅하기 버튼을 누르면 실행
-//             socket.on('join room', async (otherUserId) => {
-//                 let room = await prisma.roomParticipants.findFirst({
-//                     where: {
-//                         userId: otherUserId,
-//                         roomId: {
-//                             in: prisma.roomParticipants
-//                                 .findMany({
-//                                     where: { userId: socket.user.userId },
-//                                     select: { roomId: true },
-//                                 })
-//                                 .map((participant) => participant.roomId),
-//                         },
-//                     },
-//                     include: { room: true },
-//                 });
-//                 if (!room) {
-//                     // 방이 없으면 생성
-//                     const newRoom = await prisma.rooms.create({ data: {} });
-//                     // 두 사용자를 방에 추가
-//                     await prisma.roomParticipants.createMany({
-//                         data: [
-//                             { roomId: newRoom.roomId, userId: socket.user.userId },
-//                             { roomId: newRoom.roomId, userId: otherUserId },
-//                         ],
-//                     });
-//                     room = newRoom;
-//                 }
-//                 // // 새로운 채팅방 생성
-//                 // const newRoom = await prisma.rooms.create({
-//                 //     data: {
-//                 //         // title: 'New Chat Room', // 제목은 수정 가능
-//                 //         // worryId: worryId, // worryId 포함
-//                 //     },
-//                 // });
-
-//                 // 방에 입장
-//                 socket.join(room.roomId.toString());
-//                 userRooms[socket.id] = room.roomId;
-//                 console.log('roomId : ', room.roomId);
-
-//                 // 입장 성공 메시지 및 방 입장 알림 메시지 전송
-//                 io.to(room.roomId.toString()).emit('room message', {
-//                     message: `사용자 ${socket.user.id} (Socket ID: ${socket.id})가 방${newRoom.roomId}에 입장했습니다.`,
-//                     roomId: room.roomId,
-//                 });
-//             });
-//--------------------------------------------------------------------------------------------
 // 20240430 첫 연결 성공. 토큰 확인. 에러 : 'join room' - 인증되지 않은 사용자입니다.
 const initializeSocket = (server, corsOptions) => {
     const io = new SocketIOServer(server, {
         cors: corsOptions,
     });
 
-    // 사용자와 소켓 간의 매핑을 저장할 객체
     const userSockets = {}; // 사용자와 소켓 간의 매핑을 저장할 객체
-    // 사용자의 방 정보를 저장할 객체
-    let userRooms = {};
+    let userRooms = {}; // 사용자의 방 정보를 저장할 객체
 
     // connection event handler
     // connection이 수립되면 event handler function의 인자로 socket이 들어온다
@@ -136,8 +86,6 @@ const initializeSocket = (server, corsOptions) => {
             console.log('Room join request for:', roomId);
 
             // 사용자 소켓이 특정 방에 입장할 때
-            // socket.join(roomId);
-            // socket.join(room.roomId.toString());
             socket.join(roomId.toString(), () => {
                 console.log(`User ${socket.id} joined room ${roomId}`);
                 socket.emit('joined room', { roomId: roomId });
@@ -158,6 +106,16 @@ const initializeSocket = (server, corsOptions) => {
                     where: { roomId: parseInt(roomId) },
                 });
 
+                if (room && !room.hasEntered) {
+                    // 채팅방의 hasEntered를 true로 설정
+                    await prisma.rooms.update({
+                        where: { roomId: parseInt(roomId) },
+                        data: { hasEntered: true },
+                    });
+
+                    console.log(`Room ${roomId} hasEntered flag set to true.`);
+                }
+
                 if (room) {
                     console.log('여기까지 와? 8번.');
                     console.log(`User joined room: ${room.roomId}`);
@@ -177,10 +135,6 @@ const initializeSocket = (server, corsOptions) => {
                     const lastMessageTimestamp = getLastMessageTimestamp(socket.id, roomId); // 사용자가 마지막으로 메시지를 받은 시간을 가져옵니다.
 
                     // 과거 메시지 불러오기
-                    // const pastMessages = await prisma.chattings.findMany({
-                    //     where: { roomId: parseInt(roomId) },
-                    //     orderBy: { createdAt: 'asc' }, // 시간순으로 정렬
-                    // });
                     const pastMessages = await prisma.chattings.findMany({
                         where: {
                             roomId: parseInt(roomId),

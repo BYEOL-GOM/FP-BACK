@@ -1,0 +1,158 @@
+// src/routes/chats/chat.js
+import express from 'express';
+import { prisma } from '../../utils/prisma/index.js';
+import authMiddleware from '../../middlewares/authMiddleware.js';
+
+const router = express.Router();
+
+// 채팅방 생성
+router.post('/createChatRoom', authMiddleware, async (req, res) => {
+    // router.post('/createChatRoom', async (req, res) => {
+    const worryId = parseInt(req.body.worryId);
+    const userId = parseInt(res.locals.user.userId);
+    // const userId = parseInt(req.body.userId, 10);
+
+    if (isNaN(worryId) || worryId < 1) {
+        return res.status(400).json({ message: '유효하지 않은 고민 ID가 제공되었습니다.' });
+    }
+
+    try {
+        // 해당 고민이 존재하는지 확인
+        const existingWorry = await prisma.worries.findUnique({
+            where: { worryId: worryId },
+            select: { userId: true, commentAuthorId: true },
+        });
+        if (!existingWorry) {
+            return res.status(404).json({ message: '해당 고민이 존재하지 않습니다.' });
+        }
+        // 사용자 ID 검증 (고민 등록자 확인)
+        if (existingWorry.userId !== userId) {
+            return res.status(403).json({ message: '고민 등록자만이 채팅방을 생성할 수 있습니다.' });
+        }
+
+        // 방이 이미 존재하는지 검사
+        let room = await prisma.rooms.findUnique({
+            where: { worryId: worryId },
+        });
+
+        // 채팅방이 존재하지 않는 경우, 새로운 채팅방 생성
+        if (!room) {
+            room = await prisma.rooms.create({
+                data: {
+                    worryId: worryId,
+                    userId: existingWorry.userId, // 고민을 등록한 사용자 ID 할당
+                    commentAuthorId: existingWorry.commentAuthorId, // 댓글 작성자 ID 할당
+                },
+            });
+        }
+        console.log('⭐⭐⭐테스트 room >> ', room);
+
+        return res.status(201).json({
+            worryId: room.worryId,
+            userId: room.userId,
+            commentAuthorId: room.commentAuthorId,
+            roomId: room.roomId,
+            status: room.status,
+            message: '대화방이 생성되었습니다.',
+        });
+    } catch (error) {
+        console.error('채팅방 생성 중 에러 발생:', error);
+        res.status(500).json({ message: '서버 오류 발생' });
+    }
+});
+
+// src/routes/chats/chat.router.js
+// 로그인한 유저에 해당하는 채팅방 전체 조회
+router.get('/chatRooms', authMiddleware, async (req, res) => {
+    // router.get('/chatRooms', async (req, res) => {
+    const userId = parseInt(res.locals.user.userId);
+    // const userId = parseInt(req.body.userId, 10);
+
+    // 페이지네이션
+    const page = parseInt(req.query.page) || 1; // 페이지 번호, 기본값은 1
+    const limit = parseInt(req.query.limit) || 10; // 페이지당 항목 수, 기본값은 10
+    const skip = (page - 1) * limit;
+
+    // 페이지 번호 유효성 검사
+    if (isNaN(page) || page < 1) {
+        const err = new Error('유효하지 않은 페이지 번호입니다.');
+        err.status = 400;
+        throw err;
+    }
+
+    try {
+        const rooms = await prisma.rooms.findMany({
+            where: {
+                OR: [{ userId: userId }, { commentAuthorId: userId }],
+                status: { in: ['ACCEPTED', 'PENDING'] },
+            },
+            include: {
+                worry: {
+                    select: {
+                        // 필요한 필드만 선택
+                        solvingCommentId: true,
+                        unRead: true,
+                        isSolved: true,
+                        icon: true,
+                    },
+                },
+                // 특정 사용자가 속한 채팅방에 다른 사용자가 보낸 메시지만 조회
+                chattings: {
+                    where: {
+                        senderId: {
+                            not: userId, // 사용자 자신이 보낸 메시지 제외
+                        },
+                    },
+                    orderBy: { createdAt: 'desc' },
+                },
+            },
+            skip: skip,
+            take: limit,
+            orderBy: { createdAt: 'desc' },
+        });
+        console.log('⭐⭐⭐테스트 6번. rooms >> ', rooms);
+
+        // 각 채팅방에 대해 반복하고, 각 방의 현재 상태를 확인하여 처리
+        const updatedRooms = rooms.map((room) => {
+            const isRead = room.chattings.every((chat) => chat.isRead); // 모든 메시지가 읽혔는지 확인
+            return {
+                userId: room.userId,
+                commentAuthorId: room.commentAuthorId,
+                worryId: room.worryId,
+                solvingCommentId: room.worry.solvingCommentId,
+                roomId: room.roomId,
+                isRead: isRead, // 메시지 읽음 상태 표시
+                isSolved: room.worry.isSolved,
+                isOwner: room.userId === userId,
+                isAccepted: room.status === 'ACCEPTED',
+                hasEntered: room.hasEntered, // 사용자가 방에 입장했는지 여부 표시
+                icon: room.worry.icon,
+                status: room.status,
+                updatedAt: room.updatedAt,
+            };
+        });
+
+        const totalCount = await prisma.rooms.count({
+            where: {
+                // OR: [{ worry: { userId: userId } }, { worry: { commentAuthorId: userId } }],
+                OR: [{ userId: userId }, { commentAuthorId: userId }],
+                status: { in: ['ACCEPTED', 'PENDING'] },
+            },
+        });
+        console.log('updatedRooms : ', updatedRooms);
+        const pagination = { page, limit, totalCount };
+        console.log('🖤🖤🖤pagination : ', pagination);
+
+        return res.status(200).json({
+            page,
+            limit,
+            totalCount,
+            rooms: updatedRooms,
+        });
+    } catch (error) {
+        console.error('채팅방 조회 중 에러 발생:', error);
+        res.status(500).json({ message: '서버 오류 발생' });
+    }
+});
+
+export default router;
