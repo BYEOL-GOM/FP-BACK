@@ -116,16 +116,6 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
         console.log('⭐⭐⭐테스트 6번. rooms >> ', rooms);
 
         // 각 방의 최신 코멘트 정보를 추가
-        // const roomsWithLastComment = await Promise.all(
-        //     rooms.map(async (room) => {
-        //         const lastComment = await prisma.comments.findFirst({
-        //             where: { worryId: room.worryId },
-        //             orderBy: { createdAt: 'desc' },
-        //         });
-        //         return { ...room, lastComment };
-        //     }),
-        // );
-        // 각 방의 최신 코멘트 정보를 추가
         const roomsWithLastComment = await Promise.all(
             rooms.map(async (room) => {
                 const lastComment = await prisma.comments.findFirst({
@@ -145,10 +135,7 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
                     solvingCommentId: room.worry.solvingCommentId,
                     comment_lastCommentId: lastComment.commentId,
                     comment_lastContent: lastComment.content,
-                    // comment_createdAt: lastComment.createdAt,
                     comment_deletedAt: lastComment.deletedAt,
-                    comment_fontColor: lastComment.fontColor,
-                    comment_unRead: lastComment.unRead,
                     comment_reportReason: lastComment.reportReason,
                 };
             }),

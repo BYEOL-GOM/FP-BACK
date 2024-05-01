@@ -19,6 +19,17 @@ export const verifyCommentExists = async (commentId, worryId) => {
         },
     });
 
+    // const commentInfo = await prisma.comments.findUnique({
+    //     where: { commentId: parseInt(commentId) },
+    //     select: {
+    //         userId: true, // 댓글 작성자 ID
+    //         worry: {
+    //             select: {
+    //                 commentAuthorId: true, // 고민을 해결한 답변자 ID
+    //             },
+    //         },
+    //     },
+    // });
     // 존재하면 true, 그렇지 않으면 false 반환
     return !!comment;
 };
@@ -31,6 +42,21 @@ export const findLastReplyByWorryId = async (worryId) => {
     });
 
     return lastReply;
+};
+
+export const getCommentAndWorryInfo = async function getCommentAndWorryInfo(commentId) {
+    const commentInfo = await prisma.comments.findUnique({
+        where: { commentId: parseInt(commentId) },
+        select: {
+            userId: true, // 댓글 작성자 ID
+            worry: {
+                select: {
+                    commentAuthorId: true, // 고민을 해결한 답변자 ID
+                },
+            },
+        },
+    });
+    return commentInfo;
 };
 
 // 좋아요(선물) 보내기
@@ -122,6 +148,7 @@ export const markWorryAsSolvedAndCreateLike = async (worryId, commentId, userId,
                 select: {
                     userId: true, // 업데이트된 worry에서 userId 추출
                     commentAuthorId: true, // 답변을 작성한 사용자 ID
+                    solvingCommentId: true,
                 },
             }),
         ]);
@@ -484,11 +511,6 @@ async function fetchCommentsRecursively(commentId, reportIds) {
         }
     }
 
-    // return {
-    //     reportId, // 신고 ID를 명시적으로 추가
-    //     ...comment,
-    //     reports: undefined, // reports 배열은 필요 없으므로 제거
-    // };
     // 반환 객체 구성 수정
     return {
         userId: comment.userId,
