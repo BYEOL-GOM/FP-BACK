@@ -177,6 +177,7 @@ model Chattings {
   chatId      Int      @id @default(autoincrement())
   text        String
   createdAt   DateTime @default(now())
+  isRead      Boolean  @default(false) // 메시지 읽음 상태를 나타내는 필드, 기본값은 false (아직 읽지 않음)
 
   // 메시지가 속한 채팅방
   roomId      Int

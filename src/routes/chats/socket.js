@@ -210,7 +210,7 @@ const initializeSocket = (server, corsOptions) => {
                     socket.disconnect();
                 }
             } catch (error) {
-                console.error('비상비상 에러에러 9-2번.9-2번.', error.message);
+                console.error('비상비상 에러에러 9-2번.9-2번.', error);
                 socket.emit('error', { message: '채팅방 참여 중 에러 발생.' });
                 socket.disconnect();
             }

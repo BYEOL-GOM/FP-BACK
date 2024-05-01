@@ -6,8 +6,8 @@ import authMiddleware from '../../middlewares/authMiddleware.js';
 const router = express.Router();
 
 // 채팅방 생성
-// router.post('/createChatRoom', async (req, res) => {
 router.post('/createChatRoom', authMiddleware, async (req, res) => {
+    // router.post('/createChatRoom', async (req, res) => {
     const { worryId, userId, commentAuthorId } = req.body;
     const parsedWorryId = parseInt(worryId);
     const parsedUserId = parseInt(userId);
@@ -101,6 +101,16 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
                         icon: true,
                     },
                 },
+                chattings: {
+                    where: {
+                        userId: {
+                            not: userId, // 사용자 자신이 보낸 메시지 제외
+                        },
+                    },
+                    orderBy: {
+                        createdAt: 'desc',
+                    },
+                },
             },
             skip: skip,
             take: limit,
@@ -110,26 +120,45 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
         });
         console.log('⭐⭐⭐테스트 6번. rooms >> ', rooms);
 
-        // 각 방의 최신 코멘트 정보를 추가
-        const roomsWithLastComment = await Promise.all(
+        // // 각 방의 최신 코멘트 정보를 추가
+        // const roomsWithLastComment = await Promise.all(
+        //     rooms.map(async (room) => {
+        //         const lastComment = await prisma.comments.findFirst({
+        //             where: { worryId: room.worryId },
+        //             orderBy: { createdAt: 'desc' },
+        //         });
+        //         const isOwner = room.userId === userId; // 고민을 등록한 사람인지 여부
+        //         const isAccepted = room.status === 'ACCEPTED'; // 승인된 상태인지 여부
+        //         return {
+        //             userId: room.userId,
+        //             commentAuthorId: room.commentAuthorId,
+        //             worryId: room.worryId,
+        //             solvingCommentId: room.worry.solvingCommentId,
+        //             roomId: room.roomId,
+        //             // unRead: room.worry.unRead,
+        //             unRead: lastComment.unRead, // 안 읽었는지 여부
+        //             isSolved: room.worry.isSolved, // 좋아요를 받았는지 여부
+        //             isOwner: isOwner, // 사용자가 고민을 등록한 사람인지를 나타내는 필드 추가
+        //             isAccepted: isAccepted, // 채팅 신청 승인 상태 여부
+        //             icon: room.worry.icon,
+        //             status: room.status,
+        //             updatedAt: room.updatedAt,
+        //         };
+        //     }),
+        // );
+        const updatedRooms = await Promise.all(
             rooms.map(async (room) => {
-                const lastComment = await prisma.comments.findFirst({
-                    where: { worryId: room.worryId },
-                    orderBy: { createdAt: 'desc' },
-                });
-                const isOwner = room.userId === userId; // 고민을 등록한 사람인지 여부
-                const isAccepted = room.status === 'ACCEPTED'; // 승인된 상태인지 여부
+                const unRead = room.chattings.some((chat) => chat.unRead); // 읽지 않은 메시지가 있는지 확인
                 return {
                     userId: room.userId,
                     commentAuthorId: room.commentAuthorId,
                     worryId: room.worryId,
                     solvingCommentId: room.worry.solvingCommentId,
                     roomId: room.roomId,
-                    // unRead: room.worry.unRead,
-                    unRead: lastComment.unRead, // 안 읽었는지 여부
-                    isSolved: room.worry.isSolved, // 좋아요를 받았는지 여부
-                    isOwner: isOwner, // 사용자가 고민을 등록한 사람인지를 나타내는 필드 추가
-                    isAccepted: isAccepted, // 채팅 신청 승인 상태 여부
+                    unRead: unRead,
+                    isSolved: room.worry.isSolved,
+                    isOwner: room.userId === userId,
+                    isAccepted: room.status === 'ACCEPTED',
                     icon: room.worry.icon,
                     status: room.status,
                     updatedAt: room.updatedAt,
@@ -145,19 +174,17 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
                 },
             },
         });
-        console.log('⭐⭐⭐roomsWithLastComment : ', roomsWithLastComment);
+        console.log('updatedRooms : ', updatedRooms);
         const pagination = { page, limit, totalCount };
         console.log('🖤🖤🖤pagination : ', pagination);
 
-        // 개선된 JSON 응답 구조
         return res.status(200).json({
             page,
             limit,
             totalCount,
-            rooms: roomsWithLastComment,
+            rooms: updatedRooms,
         });
     } catch (error) {
-        console.log('⭐⭐⭐테스트 7번. error >> ', error.message);
         console.error('채팅방 조회 중 에러 발생:', error);
         res.status(500).json({ message: '서버 오류 발생' });
     }
