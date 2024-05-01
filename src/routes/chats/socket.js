@@ -162,8 +162,8 @@ const initializeSocket = (server, corsOptions) => {
                     // socket.join(roomId);
                     // socket.join(room.roomId.toString());
 
-                    userRooms[socket.id] = room.roomId; // 소켓 ID와 방 ID를 매핑하여 저장
-                    // userRooms[socket.user.userId] = room.roomId; // 수정된 부분: Socket ID가 아닌 사용자의 ID를 키로 사용합니다.
+                    // userRooms[socket.id] = room.roomId; // 소켓 ID와 방 ID를 매핑하여 저장
+                    userRooms[socket.user.userId] = room.roomId; // 수정된 부분: Socket ID가 아닌 사용자의 ID를 키로 사용합니다.
                     console.log('room.roomId : ', room.roomId);
                     console.log('socket.user.userId : ', socket.user.userId);
 
@@ -172,7 +172,7 @@ const initializeSocket = (server, corsOptions) => {
                         `사용자 ${socket.user.userId} (Socket ID: ${socket.id})가 ${room.roomId || '채팅방'}에 입장했습니다.`,
                     );
                     io.to(room.roomId.toString()).emit('past message', {
-                        chatId: newChat.chatId,
+                        // chatId: newChat.chatId,
                         userId: socket.user.userId,
                         text: data.msg,
                         roomId: roomId,
@@ -234,8 +234,8 @@ const initializeSocket = (server, corsOptions) => {
             console.log('여기까지 와? 12번.');
             console.log('socket.user', socket.user);
 
-            const roomId = userRooms[socket.id];
-            // const roomId = userRooms[socket.user.userId];
+            // const roomId = userRooms[socket.id];
+            const roomId = userRooms[socket.user.userId];
 
             if (roomId) {
                 console.log('여기까지 와? 13번.');
@@ -293,8 +293,8 @@ const initializeSocket = (server, corsOptions) => {
                 return;
             }
 
-            const roomId = userRooms[socket.id];
-            // const roomId = userRooms[socket.user.userId];
+            // const roomId = userRooms[socket.id];
+            const roomId = userRooms[socket.user.userId];
 
             if (roomId) {
                 console.log('여기까지 와? 18번.');
@@ -305,20 +305,24 @@ const initializeSocket = (server, corsOptions) => {
                     'room message',
                     `사용자 ${socket.user.userId} (Socket ID: ${socket.id})가 방 ${roomId}에서 퇴장했습니다.`,
                 );
-                delete userRooms[socket.id];
+                // delete userRooms[socket.id];
+                delete userRooms[socket.user.userId];
             }
         });
         console.log('여기까지 와? 19번.');
 
         socket.on('disconnect', () => {
             console.log('여기까지 와? 20번.');
-            const roomId = userRooms[socket.id];
+            // const roomId = userRooms[socket.id];
+            const roomId = userRooms[socket.user.userId];
+
             if (roomId) {
                 io.to(roomId.toString()).emit(
                     'room message',
                     `사용자 ${socket.user.userId} (Socket ID: ${socket.id})가 방에서 퇴장했습니다.`,
                 );
-                delete userRooms[socket.id];
+                // delete userRooms[socket.id];
+                delete userRooms[socket.user.userId];
             }
         });
     });
