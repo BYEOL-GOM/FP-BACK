@@ -87,5 +87,5 @@ jobs:
                         echo "Deployment failed, rolling back to previous image."
                         docker run -d --name ${{ env.CONTAINER_NAME }} -p ${{ env.CONTAINER_PORT }}:3000 $CURRENT_IMAGE
                         echo "Sending Slack notification..."
-                        curl -X POST -H 'Content-type: application/json' --data '{"text":"🚨 Deployment to ${GITHUB_REF} failed and rollback was initiated."}' ${{ secrets.SLACK_WEBHOOK_URL }}
+                        curl -X POST -H 'Content-type: application/json' --data '{"text":"🚨 Deployment to ${{ github.ref }} failed and rollback was initiated."}' ${{ secrets.SLACK_WEBHOOK_URL }}
                       fi
