@@ -107,14 +107,14 @@ const initializeSocket = (server, corsOptions) => {
                 socket.user = user; // 소켓 객체에 사용자 정보 추가
                 userSockets[user.userId] = socket.id; // 사용자 ID와 소켓 ID 매핑
             } catch (error) {
-                console.log('🚨🚨🚨비상비상 에러에러 4-0번.4-0번.');
+                console.log('🚨🚨🚨비상비상 에러에러 4--0번.4--0번.');
                 if (error.name === 'TokenExpiredError') {
-                    console.log('🚨🚨🚨비상비상 에러에러 4-1번.4-1번.', error.message);
+                    console.log('🚨🚨🚨비상비상 에러에러 4--1번.4--1번.', error.message);
                     console.error('인증 오류:', error);
                     socket.emit('error', { message: '인증 오류: ' + error.message });
                     socket.disconnect();
                 } else {
-                    console.log('🚨🚨🚨비상비상 에러에러 4-2번.4-2번.', error.message);
+                    console.log('🚨🚨🚨비상비상 에러에러 4--2번.4--2번.', error.message);
                     console.error('기타 에러 발생:', error);
                     socket.emit('error', { message: '인증 오류: ' + error.message });
                     socket.disconnect();
@@ -122,7 +122,7 @@ const initializeSocket = (server, corsOptions) => {
             }
         } else {
             // 토큰이 없는 경우 에러 처리
-            console.log('🚨🚨🚨비상비상 에러에러 4-3번.4-3번.', error.message);
+            console.log('🚨🚨🚨비상비상 에러에러 4--3번.4--3번.', error.message);
             console.error('error', error);
             socket.emit('error', { message: '인증 토큰이 없습니다.' });
             socket.disconnect();
@@ -130,11 +130,14 @@ const initializeSocket = (server, corsOptions) => {
         console.log('여기까지 와? 5번.');
 
         // 채팅방 참여 요청 처리
-        socket.on('join room', async ({ roomId, data }) => {
+        socket.on('join room', async ({ roomId }) => {
             console.log('여기까지 와? 6번.');
             console.log('Room join request for:', roomId);
             console.log('!!!!!!!!!!!!!!!!!데이터 가져와!!!!!!!!!!!! : ', data);
 
+            // 사용자 소켓이 특정 방에 입장할 때
+            // socket.join(roomId);
+            // socket.join(room.roomId.toString());
             socket.join(roomId.toString(), () => {
                 console.log(`User ${socket.id} joined room ${roomId}`);
                 socket.emit('joined room', { roomId: roomId });
@@ -142,7 +145,7 @@ const initializeSocket = (server, corsOptions) => {
 
             // 사용자 인증 확인
             if (!socket.user) {
-                console.log('🚨🚨🚨비상비상 에러에러 6.5번.6.5번.', error.message);
+                console.log('🚨🚨🚨비상비상 에러에러 6..5번.6..5번.', error.message);
                 console.error('socket.user error:', error);
                 socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
                 return;
@@ -160,37 +163,45 @@ const initializeSocket = (server, corsOptions) => {
                     console.log('여기까지 와? 8번.');
                     console.log(`User joined room: ${room.roomId}`);
 
-                    // 사용자 소켓이 특정 방에 입장할 때
-                    // socket.join(roomId);
-                    // socket.join(room.roomId.toString());
-
                     userRooms[socket.id] = room.roomId; // 소켓 ID와 방 ID를 매핑하여 저장
-                    // userRooms[socket.user.userId] = room.roomId; // 수정된 부분: Socket ID가 아닌 사용자의 ID를 키로 사용합니다.
+                    // userRooms[socket.user.userId] = room.roomId; // Socket ID가 아닌 사용자의 ID를 키로 사용합니다.
                     // console.log('socket.user.userId : ', socket.user.userId);
                     console.log('room.roomId : ', room.roomId);
                     console.log('socket.id : ', socket.id);
 
+                    // 방에 입장했다는 메시지를 방의 모든 참여자에게 전송
                     io.to(room.roomId.toString()).emit(
                         'room message',
                         `사용자 ${socket.user.userId} (Socket ID: ${socket.id})가 ${room.roomId || '채팅방'}에 입장했습니다.`,
                     );
 
-                    // 클라이언트에 전송할 메시지 데이터 포맷팅
-                    const timeForClient = moment(data.createdAt).tz('Asia/Seoul').format('HH:mm'); // 클라이언트 전송용 포맷
-                    io.to(room.roomId.toString()).emit('past message', {
-                        // chatId: newChat.chatId,
-                        userId: socket.user.userId,
-                        text: data.msg,
-                        roomId: roomId,
-                        time: timeForClient,
+                    // 과거 메시지 불러오기
+                    const pastMessages = await prisma.chattings.findMany({
+                        where: { roomId: parseInt(roomId) },
+                        orderBy: { createdAt: 'asc' }, // 시간순으로 정렬
+                    });
+
+                    console.log('여기까지 와???????? 8-2번.');
+                    console.log('pastMessages', pastMessages);
+
+                    // 과거 메시지를 클라이언트에 전송
+                    pastMessages.forEach((message) => {
+                        const timeForClient = moment(message.createdAt).tz('Asia/Seoul').format('HH:mm');
+                        io.to(room.roomId.toString()).emit('past message', {
+                            chatId: message.chatId, // 고유 식별자 추가
+                            userId: message.senderId,
+                            text: message.text,
+                            roomId: roomId,
+                            time: timeForClient,
+                        });
                     });
                 } else {
-                    console.log('🚨🚨🚨비상비상 에러에러 9-1번.9-1번.', error.message);
+                    console.log('비상비상 에러에러 9-1번.9-1번.', error.message);
                     socket.emit('error', { message: '채팅방이 존재하지 않습니다.' });
                     socket.disconnect();
                 }
             } catch (error) {
-                console.error('🚨🚨🚨비상비상 에러에러 9-2번.9-2번.', error.message);
+                console.error('비상비상 에러에러 9-2번.9-2번.', error.message);
                 socket.emit('error', { message: '채팅방 참여 중 에러 발생.' });
                 socket.disconnect();
             }
@@ -263,7 +274,6 @@ const initializeSocket = (server, corsOptions) => {
                     });
 
                     console.log('New chat saved :', newChat);
-                    console.log('여기까지 와줘!!!!!!!!!!');
 
                     // 클라이언트에 전송할 메시지 데이터 포맷팅
                     // const timeForClient = moment(newChat.createdAt).tz('Asia/Seoul').format('HH:mm'); // 클라이언트 전송용 포맷
@@ -281,15 +291,12 @@ const initializeSocket = (server, corsOptions) => {
                     });
                     console.log('여기까지 와? 14번.');
                 } catch (error) {
-                    console.error('🚨🚨🚨비상비상 에러에러 15-1번.15-1번.', error.message);
+                    console.error('비상비상 에러에러 15-1번.15-1번.', error.message);
                     console.error(`Database error: ${error}`);
                     socket.emit('error', { message: '채팅 저장 중 에러 발생.' });
                 }
             } else {
-                console.error(
-                    '🚨🚨🚨비상비상 에러에러 15-2번.15-2번. >> 어떤 방에도 속해있지 않습니다.',
-                    error.message,
-                );
+                console.error('비상비상 에러에러 15-2번.15-2번. >> 어떤 방에도 속해있지 않습니다.', error.message);
                 console.log(`사용자 ${socket.user.userId}는 어떤 방에도 속해있지 않습니다.`);
             }
         });
