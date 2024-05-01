@@ -16,6 +16,9 @@ dotenv.config();
 
 const router = express.Router();
 
+// 토큰 발사대
+router.get('/myNickname', authMiddleware, async (req, res, next) => {})
+
 // 카카오 로그인
 router.post('/kakao', kakaoLoginController);
 
