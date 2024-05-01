@@ -53,8 +53,7 @@ jobs:
                     echo "SENTRY_DSN=${{ secrets.SENTRY_DSN }}" >> $GITHUB_ENV
                   fi
 
-            - name: Deploy to Remote Server
-              uses: appleboy/ssh-action@v0.1.6
+            - uses: appleboy/ssh-action@v0.1.6
               with:
                   host: ${{ secrets.REMOTE_IP }}
                   username: ${{ secrets.REMOTE_USER }}
@@ -68,11 +67,11 @@ jobs:
                       docker stop ${{ env.CONTAINER_NAME }} || true
                       docker rm ${{ env.CONTAINER_NAME }} || true
                       if docker run -d --name ${{ env.CONTAINER_NAME }} -p ${{ env.CONTAINER_PORT }}:3000 \
-                        -e CORS_ORIGIN="${{ secrets.CORS_ORIGIN_DEV }}" \
-                        -e KAKAO_REDIRECT_URI="${{ secrets.DEV_KAKAO_REDIRECT_URI }}" \
-                        -e DATABASE_URL="${{ secrets.DEV_DATABASE_URL }}" \
+                        -e CORS_ORIGIN="${{ env.CORS_ORIGIN }}" \
+                        -e KAKAO_REDIRECT_URI="${{ env.KAKAO_REDIRECT_URI }}" \
+                        -e DATABASE_URL="${{ env.DATABASE_URL }}" \
                         -e KAKAO_REST_API_KEY="${{ secrets.KAKAO_REST_API_KEY }}" \
-                        -e NAVER_REDIRECT_URI="${{ secrets.DEV_NAVER_REDIRECT_URI }}" \
+                        -e NAVER_REDIRECT_URI="${{ env.NAVER_REDIRECT_URI }}" \
                         -e NAVER_CLIENT_SECRET="${{ secrets.NAVER_CLIENT_SECRET }}" \
                         -e NAVER_REST_API_ID="${{ secrets.NAVER_REST_API_ID }}" \
                         -e SESSION_SECRET="${{ secrets.SESSION_SECRET }}" \
@@ -82,11 +81,10 @@ jobs:
                         -e ACCESS_TOKEN_LIFE="${{ secrets.ACCESS_TOKEN_LIFE }}" \
                         -e REFRESH_TOKEN_LIFE="${{ secrets.REFRESH_TOKEN_LIFE }}" \
                         -e CLIENT_SECRET="${{ secrets.CLIENT_SECRET }}" \
-                        -e SENTRY_DSN="${{ secrets.SENTRY_DSN }}" \
+                        -e SENTRY_DSN="${{ env.SENTRY_DSN }}" \
                         leticia0408/byeol_gom:${{ github.ref == 'refs/heads/dev' && 'latest-dev' || 'latest-prod' }}; then
                         echo "Deployment successful."
                       else
                         echo "Deployment failed, rolling back to previous image."
                         docker run -d --name ${{ env.CONTAINER_NAME }} -p ${{ env.CONTAINER_PORT }}:3000 $CURRENT_IMAGE
-                        curl -X POST -H 'Content-type: application/json' --data '{"text":"🚨 Deployment to ${{ github.ref }} failed and rollback was initiated."}' ${{ secrets.SLACK_WEBHOOK_URL }}
                       fi
