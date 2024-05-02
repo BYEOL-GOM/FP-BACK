@@ -221,11 +221,11 @@ router.get('/rooms/:roomId', authMiddleware, async (req, res) => {
 });
 
 // 채팅 신청 수락
-// router.put('/acceptChat/:roomId', authMiddleware, async (req, res) => {
-router.put('/acceptChat/:roomId', async (req, res) => {
+router.put('/acceptChat/:roomId', authMiddleware, async (req, res) => {
+    // router.put('/acceptChat/:roomId', async (req, res) => {
     const roomId = parseInt(req.params.roomId);
-    // const userId = parseInt(res.locals.user.userId);
-    const userId = parseInt(req.body.userId, 10);
+    const userId = parseInt(res.locals.user.userId);
+    // const userId = parseInt(req.body.userId, 10);
 
     if (isNaN(roomId)) {
         return res.status(400).json({ message: '유효하지 않은 방 ID입니다.' });
@@ -235,6 +235,7 @@ router.put('/acceptChat/:roomId', async (req, res) => {
         const room = await prisma.rooms.findUnique({
             where: { roomId: roomId },
         });
+        console.log('accept-room', room);
 
         if (!room) {
             return res.status(404).json({ message: '채팅방이 존재하지 않습니다.' });
@@ -243,6 +244,7 @@ router.put('/acceptChat/:roomId', async (req, res) => {
         if (room.commentAuthorId !== userId) {
             return res.status(403).json({ message: '이 작업을 수행할 권한이 없습니다.' });
         }
+        console.log('accept-room.commentAuthorId', room.commentAuthorId);
 
         const updatedRoom = await prisma.rooms.update({
             where: { roomId: roomId },
@@ -262,11 +264,11 @@ router.put('/acceptChat/:roomId', async (req, res) => {
 });
 
 // 채팅 신청 거절
-// router.delete('/rejectChat/:roomId', authMiddleware, async (req, res) => {
-router.delete('/rejectChat/:roomId', async (req, res) => {
+router.delete('/rejectChat/:roomId', authMiddleware, async (req, res) => {
+    // router.delete('/rejectChat/:roomId', async (req, res) => {
     const roomId = parseInt(req.params.roomId);
-    // const userId = parseInt(res.locals.user.userId);
-    const userId = parseInt(req.body.userId, 10);
+    const userId = parseInt(res.locals.user.userId);
+    // const userId = parseInt(req.body.userId, 10);
 
     if (isNaN(roomId)) {
         return res.status(400).json({ message: '유효하지 않은 방 ID입니다.' });
@@ -276,6 +278,7 @@ router.delete('/rejectChat/:roomId', async (req, res) => {
         const room = await prisma.rooms.findUnique({
             where: { roomId: roomId },
         });
+        console.log('reject-room', room);
 
         if (!room) {
             return res.status(404).json({ message: '채팅방이 존재하지 않습니다.' });
@@ -284,6 +287,7 @@ router.delete('/rejectChat/:roomId', async (req, res) => {
         if (room.commentAuthorId !== userId) {
             return res.status(403).json({ message: '이 작업을 수행할 권한이 없습니다.' });
         }
+        console.log('reject-room.commentAuthorId', room.commentAuthorId);
 
         await prisma.rooms.delete({
             where: { roomId: roomId },
