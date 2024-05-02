@@ -175,72 +175,60 @@ const initializeSocket = (server, corsOptions) => {
             console.log('여기까지 와? 12번.');
 
             const roomId = userRooms[socket.id];
+            if (!roomId) {
+                console.error('사용자가 참여한 채팅방이 존재하지 않습니다.');
+                socket.emit('error', { message: '사용자가 참여한 채팅방이 존재하지 않습니다.' });
+                return;
+            }
 
-            if (roomId) {
-                console.log('여기까지 와? 13번.');
-                try {
-                    const room = await prisma.rooms.findUnique({
-                        where: { roomId: parseInt(roomId) },
-                        select: { status: true }, // status 필드만 선택
-                    });
+            console.log('여기까지 와? 13번.');
+            try {
+                const room = await prisma.rooms.findUnique({
+                    where: { roomId: parseInt(roomId) },
+                    select: { status: true }, // status 필드만 선택
+                });
+                // // 채팅 요청이 승인(ACCEPTED)일때만 채팅 활성화. 아니면 비활성화
+                // if (!room || room.status !== 'ACCEPTED') {
+                //     console.error('채팅 요청이 승인 되지 않았습니다.');
+                //     socket.emit('error', { message: '채팅 요청이 승인 되지 않았습니다.' });
+                //     return;
+                // }
+                // // 채팅방에 참여자가 1명인지 확인. 1명이면 채팅 비활성화
+                // if (!room || room.userId == null || room.commentAuthorId == null) {
+                //     console.error('채팅방에 다른 사용자가 없어 메시지를 보낼 수 없습니다.');
+                //     socket.emit('error', { message: '채팅방에 다른 사용자가 없어 메시지를 보낼 수 없습니다.' });
+                //     return;
+                // }
 
-                    // // 채팅 요청이 승인(ACCEPTED)일때만 채팅 활성화. 아니면 비활성화
-                    // if (!room || room.status !== 'ACCEPTED') {
-                    //     console.error('채팅 요청이 승인 되지 않았습니다.');
-                    //     socket.emit('error', { message: '채팅 요청이 승인 되지 않았습니다.' });
-                    //     return;
-                    // }
-                    // // 채팅방에 참여자가 1명인지 확인. 1명이면 채팅 비활성화
-                    // if (!room || room.userId == null || room.commentAuthorId == null) {
-                    //     console.error('채팅방에 다른 사용자가 없어 메시지를 보낼 수 없습니다.');
-                    //     socket.emit('error', { message: '채팅방에 다른 사용자가 없어 메시지를 보낼 수 없습니다.' });
-                    //     return;
-                    // }
-
-                    // if (typeof data === 'string') {
-                    //     data = JSON.parse(data);
-                    // }
-                    // // DB 저장용 한국 시간 포맷
-                    // const formattedDate = moment().tz('Asia/Seoul').format('YYYY-MM-DDTHH:mm:ssZ'); // 시간대 오프셋이 포함된 ISO-8601 형식
-                    // console.log('formattedDate', formattedDate);
-                    // DB 저장용 시간 데이터
-                    // const createdAt = new Date(); // 자바스크립트 Date 객체 사용
-                    // console.log('createdAt', createdAt);
-
-                    // 채팅 메시지 데이터베이스에 저장
-                    const newChat = await prisma.chattings.create({
-                        data: {
-                            text: data.msg,
-                            roomId: parseInt(roomId),
-                            senderId: socket.user.userId,
-                            // createdAt: createdAt, // moment로 포맷된 시간 저장
-                        },
-                    });
-
-                    console.log('New chat saved :', newChat);
-
-                    // // 클라이언트에 전송할 메시지 데이터 포맷팅
-                    // const timeForClient = moment(newChat.createdAt).tz('Asia/Seoul').format('HH:mm'); // 클라이언트 전송용 포맷
-
-                    console.log(`Message sent in room ${roomId} by user ${socket.user.userId}: ${data.msg}`);
-
-                    // 다른 소켓에게 메시지 전송
-                    io.to(roomId).emit('message', {
-                        // chatId: newChat.chatId,
-                        userId: socket.user.userId,
-                        text: data.msg,
-                        roomId: roomId,
-                        time: newChat.createdAt, // DB에서 자동 생성된 시간 사용
-                    });
-                    console.log('여기까지 와? 14번.');
-                } catch (error) {
-                    console.error('비상비상 에러에러 15-1번.15-1번.', error.message);
-                    console.error(`Database error: ${error}`);
-                    socket.emit('error', { message: '채팅 저장 중 에러 발생.' });
+                // 데이터가 객체인지 확인 (Socket.io는 일반적으로 이를 자동으로 처리)
+                if (typeof data === 'string') {
+                    data = JSON.parse(data); // JSON 문자열을 안전하게 파싱
                 }
-            } else {
-                console.error('비상비상 에러에러 15-2번.15-2번. >> 어떤 방에도 속해있지 않습니다.', error.message);
-                console.log(`사용자 ${socket.user.userId}는 어떤 방에도 속해있지 않습니다.`);
+                // 채팅 메시지 데이터베이스에 저장
+                const newChat = await prisma.chattings.create({
+                    data: {
+                        text: data.msg,
+                        roomId: parseInt(roomId),
+                        senderId: socket.user.userId,
+                    },
+                });
+
+                console.log('New chat saved :', newChat);
+                console.log(`Message sent in room ${roomId} by user ${socket.user.userId}: ${data.msg}`);
+
+                // roomId 참여한 다른 소켓에게 메시지 전송
+                io.to(roomId).emit('message', {
+                    // chatId: newChat.chatId,
+                    userId: socket.user.userId,
+                    text: data.msg,
+                    roomId: parseInt(roomId),
+                    time: newChat.createdAt, // DB에서 자동 생성된 시간 사용
+                });
+                console.log('여기까지 와? 14번.');
+            } catch (error) {
+                console.error('비상비상 에러에러 15번.', error.message);
+                console.error(`Database error: ${error}`);
+                socket.emit('error', { message: '채팅 저장 중 에러 발생.' });
             }
         });
         console.log('여기까지 와? 16번.');
