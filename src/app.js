@@ -94,7 +94,7 @@ app.get('/debug-sentry', function mainHandler(req, res) {
 });
 
 app.get('/', (req, res) => {
-    res.status(200).json({ message: 'test OK' });
+    res.status(200).json({ message: 'hi, test OK' });
 });
 
 app.listen(PORT, () => {
