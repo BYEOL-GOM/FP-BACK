@@ -81,21 +81,14 @@ const initializeSocket = (server, corsOptions) => {
         }
         console.log('여기까지 와? 5번.');
 
-        const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:3000';
         // 채팅방 참여 로직 및 과거 메시지 처리
         socket.on('join room', async ({ roomId }) => {
             console.log('여기까지 와? 6번.');
 
-            // // 사용자 소켓이 특정 방에 입장할 때
-            // socket.join(roomId.toString(), () => {
-            //     console.log(`User ${socket.id} joined room ${roomId}`);
-            //     socket.emit('joined room', { roomId: roomId });
-            // });
-
             // 사용자 인증 확인
-            if (!socket.user || !socket.user.token) {
-                console.error('Authentication failed - No user or token provided');
-                socket.emit('error', { message: '인증 토큰이 필요합니다.' });
+            if (!socket.user) {
+                console.error('join room-socket.user error: Authentication failed');
+                socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
                 socket.disconnect();
                 return;
             }
@@ -107,13 +100,20 @@ const initializeSocket = (server, corsOptions) => {
                 });
 
                 if (!room) {
-                    console.error('No room found with ID:', roomId);
+                    console.error('비상비상 에러에러 9-1번.9-1번. >> 채팅방이 존재하지 않습니다.');
                     socket.emit('error', { message: '채팅방이 존재하지 않습니다.' });
+                    socket.disconnect();
                     return;
                 }
+                console.log('여기까지 와? 8번.');
 
-                // 채팅방의 hasEntered를 true로 설정
-                if (room && !room.hasEntered) {
+                // 사용자 소켓이 특정 방에 입장할 때
+                socket.join(roomId.toString(), () => {
+                    console.log(`User ${socket.id} joined room ${roomId}`);
+                    socket.emit('joined room', { roomId: roomId });
+                });
+
+                if (!room.hasEntered) {
                     await prisma.rooms.update({
                         where: { roomId: parseInt(roomId) },
                         data: { hasEntered: true },
@@ -121,67 +121,45 @@ const initializeSocket = (server, corsOptions) => {
                     console.log(`Room ${roomId} hasEntered flag set to true.`);
                 }
 
-                // if (room) {
-                //     console.log('여기까지 와? 8번.');
-                //     console.log(`사용자가 방에 참가하였습니다: ${room.roomId}`);
-
-                //     userRooms[socket.id] = room.roomId; // 소켓 ID와 방 ID를 매핑하여 저장
-                //     // userRooms[socket.user.userId] = room.roomId; // Socket ID가 아닌 사용자의 ID를 키로 사용합니다.
-
-                //     // 방에 입장했다는 메시지를 방의 모든 참여자에게 전송
-                //     io.to(room.roomId.toString()).emit(
-                //         'room message',
-                //         `사용자 ${socket.user.userId} (Socket ID: ${socket.id})가 ${room.roomId || '채팅방'}에 입장했습니다.`,
-                //     );
-
-                //     // 토큰 추가하여 API 요청
-                //     const config = {
-                //         headers: {
-                //             Authorization: `Bearer ${socket.user.token}`, // 예: JWT 토큰을 사용하는 경우
-                //         },
-                //     };
-
-                //     // API를 호출하여 과거 메시지를 가져옴
-                //     const { data: pastMessages } = await axios
-                //         .get(`http://localhost:3000/rooms/${roomId}`, config)
-                //         .catch((err) => {
-                //             console.error('Failed to retrieve past messages:', err);
-                //             throw err; // 에러를 다시 throw하여 상위 블록에서 처리하게 함
-                //         });
-                //     // const { data: pastMessages } = await axios.get(`http://localhost:3000/rooms/${roomId}`);
-
-                //     // 클라이언트에게 과거 메시지 전송
-                //     socket.emit('past messages', pastMessages);
-                //     console.log('클라이언트에게 과거 메시지를 전송했습니다.');
-
-                //     // 방 아이디를 키로하여 초기 타임스탬프 설정
-                //     lastMessageTimestamps.set(`${socket.id}:${roomId}`, new Date());
-                //     // lastMessageTimestamps.set(roomId.toString(), new Date());
-                //     console.log('lastMessageTimestamps', lastMessageTimestamps);
-                //     console.log('여기까지 와? 8-2번.');
-                // } else {
-                //     console.error('비상비상 에러에러 9-1번.9-1번. >> 채팅방이 존재하지 않습니다.');
-                //     socket.emit('error', { message: '채팅방이 존재하지 않습니다.' });
-                //     socket.disconnect();
-                // }
-                //------------------------------------------------------------------------
-                console.log('여기까지 와? 8번.');
-                socket.join(roomId.toString());
-                console.log(`User ${socket.id} joined room ${roomId}`);
-                socket.emit('joined room', { roomId: roomId });
-
-                const config = {
-                    headers: {
-                        Authorization: `Bearer ${socket.user.token}`,
-                    },
-                };
-
-                const { data: pastMessages } = await axios.get(`${API_BASE_URL}/rooms/${roomId}`, config);
-                socket.emit('past messages', pastMessages);
-                console.log('Past messages sent to client.');
-
-                lastMessageTimestamps.set(`${socket.id}:${roomId}`, new Date());
                 console.log('여기까지 와? 8-2번.');
+                console.log(`사용자가 방에 참가하였습니다: ${room.roomId}`);
+
+                userRooms[socket.id] = room.roomId; // 소켓 ID와 방 ID를 매핑하여 저장
+
+                // 방에 입장했다는 메시지를 방의 모든 참여자에게 전송
+                io.to(room.roomId.toString()).emit(
+                    'room message',
+                    `사용자 ${socket.user.userId} (Socket ID: ${socket.id})가 ${room.roomId}에 입장했습니다.`,
+                );
+
+                // 방 아이디를 키로하여 초기 타임스탬프 설정
+                const lastMessageTimestamp = lastMessageTimestamps.get(`${socket.id}:${roomId}`) || new Date(0);
+
+                console.log('lastMessageTimestamps', lastMessageTimestamps);
+                console.log('여기까지 와? 8-3번.');
+
+                const pastMessages = await prisma.chattings.findMany({
+                    where: {
+                        roomId: parseInt(roomId),
+                        createdAt: { gt: lastMessageTimestamp },
+                    },
+                    orderBy: { createdAt: 'asc' },
+                });
+
+                console.log(
+                    `Loaded messages from ${lastMessageTimestamp} for room ${roomId}, count: ${pastMessages.length}`,
+                );
+                console.log(`Loaded messages for room ${roomId}, count: ${pastMessages.length}`);
+
+                console.log('여기까지 와? 8-4번.');
+                // // 1번. 사용자가 마지막으로 확인한 메시지의 시점을 기준으로 새 메시지만 불러오길 원한다면 1번.
+                // const lastTimestamp =
+                //     pastMessages.length > 0 ? pastMessages[pastMessages.length - 1].createdAt : new Date();
+                // lastMessageTimestamps.set(`${socket.id}:${roomId}`, lastTimestamp);
+
+                // 2번. 사용자가 방에 재입장하는 시점 이후로 발생한 메시지만 확인하고자 한다면 2번.
+                const newTimestamp = new Date();
+                lastMessageTimestamps.set(`${socket.id}:${roomId}`, newTimestamp);
             } catch (error) {
                 console.error('비상비상 에러에러 9-2번.9-2번.', error);
                 socket.emit('error', { message: '채팅방 참여 중 에러 발생.' });
