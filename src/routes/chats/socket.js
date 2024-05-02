@@ -9,7 +9,6 @@ import { clearSocketPastMessages } from '../../utils/socketMessageHandling.js';
 
 const lastMessageTimestamps = new Map(); // 각 소켓 세션의 마지막 메시지 타임스탬프를 저장하는 Map 객체
 
-// 20240430 첫 연결 성공. 토큰 확인.
 const initializeSocket = (server, corsOptions) => {
     const io = new SocketIOServer(server, {
         cors: corsOptions,
@@ -82,20 +81,22 @@ const initializeSocket = (server, corsOptions) => {
         }
         console.log('여기까지 와? 5번.');
 
+        const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:3000';
         // 채팅방 참여 로직 및 과거 메시지 처리
         socket.on('join room', async ({ roomId }) => {
             console.log('여기까지 와? 6번.');
 
-            // 사용자 소켓이 특정 방에 입장할 때
-            socket.join(roomId.toString(), () => {
-                console.log(`User ${socket.id} joined room ${roomId}`);
-                socket.emit('joined room', { roomId: roomId });
-            });
+            // // 사용자 소켓이 특정 방에 입장할 때
+            // socket.join(roomId.toString(), () => {
+            //     console.log(`User ${socket.id} joined room ${roomId}`);
+            //     socket.emit('joined room', { roomId: roomId });
+            // });
 
-            // 사용자 인증 확인 -> room 찾는 로직 밑에 두어야 더 좋은지 4.0한테 나중에 물어보기.
-            if (!socket.user) {
-                console.error('join room-socket.user error: Authentication failed');
-                socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
+            // 사용자 인증 확인
+            if (!socket.user || !socket.user.token) {
+                console.error('Authentication failed - No user or token provided');
+                socket.emit('error', { message: '인증 토큰이 필요합니다.' });
+                socket.disconnect();
                 return;
             }
             console.log('여기까지 와? 7번.');
@@ -104,6 +105,12 @@ const initializeSocket = (server, corsOptions) => {
                 const room = await prisma.rooms.findUnique({
                     where: { roomId: parseInt(roomId) },
                 });
+
+                if (!room) {
+                    console.error('No room found with ID:', roomId);
+                    socket.emit('error', { message: '채팅방이 존재하지 않습니다.' });
+                    return;
+                }
 
                 // 채팅방의 hasEntered를 true로 설정
                 if (room && !room.hasEntered) {
@@ -114,34 +121,67 @@ const initializeSocket = (server, corsOptions) => {
                     console.log(`Room ${roomId} hasEntered flag set to true.`);
                 }
 
-                if (room) {
-                    console.log('여기까지 와? 8번.');
-                    console.log(`사용자가 방에 참가하였습니다: ${room.roomId}`);
+                // if (room) {
+                //     console.log('여기까지 와? 8번.');
+                //     console.log(`사용자가 방에 참가하였습니다: ${room.roomId}`);
 
-                    userRooms[socket.id] = room.roomId; // 소켓 ID와 방 ID를 매핑하여 저장
-                    // userRooms[socket.user.userId] = room.roomId; // Socket ID가 아닌 사용자의 ID를 키로 사용합니다.
+                //     userRooms[socket.id] = room.roomId; // 소켓 ID와 방 ID를 매핑하여 저장
+                //     // userRooms[socket.user.userId] = room.roomId; // Socket ID가 아닌 사용자의 ID를 키로 사용합니다.
 
-                    // 방에 입장했다는 메시지를 방의 모든 참여자에게 전송
-                    io.to(room.roomId.toString()).emit(
-                        'room message',
-                        `사용자 ${socket.user.userId} (Socket ID: ${socket.id})가 ${room.roomId || '채팅방'}에 입장했습니다.`,
-                    );
+                //     // 방에 입장했다는 메시지를 방의 모든 참여자에게 전송
+                //     io.to(room.roomId.toString()).emit(
+                //         'room message',
+                //         `사용자 ${socket.user.userId} (Socket ID: ${socket.id})가 ${room.roomId || '채팅방'}에 입장했습니다.`,
+                //     );
 
-                    // API를 호출하여 과거 메시지를 가져옴
-                    const { data: pastMessages } = await axios.get(`http://localhost:3000/rooms/${roomId}`);
-                    // 클라이언트에게 과거 메시지 전송
-                    socket.emit('past messages', pastMessages);
+                //     // 토큰 추가하여 API 요청
+                //     const config = {
+                //         headers: {
+                //             Authorization: `Bearer ${socket.user.token}`, // 예: JWT 토큰을 사용하는 경우
+                //         },
+                //     };
 
-                    // 방 아이디를 키로하여 초기 타임스탬프 설정
-                    // lastMessageTimestamps.set(roomId.toString(), new Date());
-                    lastMessageTimestamps.set(`${socket.id}:${roomId}`, new Date());
-                    console.log('lastMessageTimestamps', lastMessageTimestamps);
-                    console.log('여기까지 와? 8-2번.');
-                } else {
-                    console.error('비상비상 에러에러 9-1번.9-1번. >> 채팅방이 존재하지 않습니다.');
-                    socket.emit('error', { message: '채팅방이 존재하지 않습니다.' });
-                    socket.disconnect();
-                }
+                //     // API를 호출하여 과거 메시지를 가져옴
+                //     const { data: pastMessages } = await axios
+                //         .get(`http://localhost:3000/rooms/${roomId}`, config)
+                //         .catch((err) => {
+                //             console.error('Failed to retrieve past messages:', err);
+                //             throw err; // 에러를 다시 throw하여 상위 블록에서 처리하게 함
+                //         });
+                //     // const { data: pastMessages } = await axios.get(`http://localhost:3000/rooms/${roomId}`);
+
+                //     // 클라이언트에게 과거 메시지 전송
+                //     socket.emit('past messages', pastMessages);
+                //     console.log('클라이언트에게 과거 메시지를 전송했습니다.');
+
+                //     // 방 아이디를 키로하여 초기 타임스탬프 설정
+                //     lastMessageTimestamps.set(`${socket.id}:${roomId}`, new Date());
+                //     // lastMessageTimestamps.set(roomId.toString(), new Date());
+                //     console.log('lastMessageTimestamps', lastMessageTimestamps);
+                //     console.log('여기까지 와? 8-2번.');
+                // } else {
+                //     console.error('비상비상 에러에러 9-1번.9-1번. >> 채팅방이 존재하지 않습니다.');
+                //     socket.emit('error', { message: '채팅방이 존재하지 않습니다.' });
+                //     socket.disconnect();
+                // }
+                //------------------------------------------------------------------------
+                console.log('여기까지 와? 8번.');
+                socket.join(roomId.toString());
+                console.log(`User ${socket.id} joined room ${roomId}`);
+                socket.emit('joined room', { roomId: roomId });
+
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${socket.user.token}`,
+                    },
+                };
+
+                const { data: pastMessages } = await axios.get(`${API_BASE_URL}/rooms/${roomId}`, config);
+                socket.emit('past messages', pastMessages);
+                console.log('Past messages sent to client.');
+
+                lastMessageTimestamps.set(`${socket.id}:${roomId}`, new Date());
+                console.log('여기까지 와? 8-2번.');
             } catch (error) {
                 console.error('비상비상 에러에러 9-2번.9-2번.', error);
                 socket.emit('error', { message: '채팅방 참여 중 에러 발생.' });
