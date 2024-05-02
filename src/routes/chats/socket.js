@@ -213,7 +213,7 @@ const initializeSocket = (server, corsOptions) => {
                             text: data.msg,
                             roomId: parseInt(roomId),
                             senderId: socket.user.userId,
-                            createdAt: createdAt, // moment로 포맷된 시간 저장
+                            // createdAt: createdAt, // moment로 포맷된 시간 저장
                         },
                     });
 
@@ -230,7 +230,7 @@ const initializeSocket = (server, corsOptions) => {
                         userId: socket.user.userId,
                         text: data.msg,
                         roomId: roomId,
-                        time: createdAt,
+                        time: newChat.createdAt, // DB에서 자동 생성된 시간 사용
                     });
                     console.log('여기까지 와? 14번.');
                 } catch (error) {
