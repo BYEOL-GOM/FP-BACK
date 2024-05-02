@@ -1,0 +1,13 @@
+config:
+    target: 'http://localhost:3000'
+    phases:
+        - duration: 300 # 테스트 지속 시간(초)
+          arrivalRate: 10 # 초당 새로운 가상 사용자 수
+        - duration: 300
+          arrivalRate: 50
+        - duration: 300
+          arrivalRate: 100
+scenarios:
+    - flow:
+          - get:
+                url: '/' # 테스트할 엔드포인트

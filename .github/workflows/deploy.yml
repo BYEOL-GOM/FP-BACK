@@ -43,7 +43,6 @@ jobs:
                     echo "CONTAINER_NAME=my-app-dev" >> $GITHUB_ENV
                     echo "CONTAINER_PORT=${{ secrets.DEV_PORT }}" >> $GITHUB_ENV
                     echo "NAVER_REDIRECT_URI=${{ secrets.DEV_NAVER_REDIRECT_URI }}" >> $GITHUB_ENV
-
                   else
                     echo "CORS_ORIGIN=${{ secrets.CORS_ORIGIN_PROD }}" >> $GITHUB_ENV
                     echo "KAKAO_REDIRECT_URI=${{ secrets.PROD_KAKAO_REDIRECT_URI }}" >> $GITHUB_ENV
@@ -53,6 +52,7 @@ jobs:
                     echo "CONTAINER_PORT=${{ secrets.PROD_PORT }}" >> $GITHUB_ENV
                     echo "SENTRY_DSN=${{ secrets.SENTRY_DSN }}" >> $GITHUB_ENV
                   fi
+
             - uses: appleboy/ssh-action@v0.1.6
               with:
                   host: ${{ secrets.REMOTE_IP }}
@@ -60,12 +60,12 @@ jobs:
                   key: ${{ secrets.REMOTE_PRIVATE_KEY }}
                   port: ${{ secrets.REMOTE_SSH_PORT }}
                   script: |
+                      CURRENT_IMAGE=$(docker inspect --format='{{.Config.Image}}' ${{ env.CONTAINER_NAME }} || echo "")
                       docker system prune -a -f --volumes
-                      echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
                       docker pull leticia0408/byeol_gom:${{ github.ref == 'refs/heads/dev' && 'latest-dev' || 'latest-prod' }}
                       docker stop ${{ env.CONTAINER_NAME }} || true
                       docker rm ${{ env.CONTAINER_NAME }} || true
-                      docker run -d --name ${{ env.CONTAINER_NAME }} -p ${{ env.CONTAINER_PORT }}:3000 \
+                      if docker run -d --name ${{ env.CONTAINER_NAME }} -p ${{ env.CONTAINER_PORT }}:3000 \
                         -e CORS_ORIGIN="${{ env.CORS_ORIGIN }}" \
                         -e KAKAO_REDIRECT_URI="${{ env.KAKAO_REDIRECT_URI }}" \
                         -e DATABASE_URL="${{ env.DATABASE_URL }}" \
@@ -81,4 +81,11 @@ jobs:
                         -e REFRESH_TOKEN_LIFE="${{ secrets.REFRESH_TOKEN_LIFE }}" \
                         -e CLIENT_SECRET="${{ secrets.CLIENT_SECRET }}" \
                         -e SENTRY_DSN="${{ env.SENTRY_DSN }}" \
-                        leticia0408/byeol_gom:${{ github.ref == 'refs/heads/dev' && 'latest-dev' || 'latest-prod' }}
+                        leticia0408/byeol_gom:${{ github.ref == 'refs/heads/dev' && 'latest-dev' || 'latest-prod' }}; then
+                        echo "Deployment successful."
+                      else
+                        echo "Deployment failed, sending Slack notification."
+                        curl -X POST -H 'Content-type: application/json' --data '{"text":"🚨 Deployment failed for ${GITHUB_REPOSITORY} on ${GITHUB_REF}."}' ${{ secrets.SLACK_WEBHOOK_URL }}
+                        echo "Rolling back to previous image."
+                        docker run -d --name ${{ env.CONTAINER_NAME }} -p ${{ env.CONTAINER_PORT }}:3000 $CURRENT_IMAGE
+                      fi

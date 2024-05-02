@@ -23,7 +23,7 @@ const PORT = process.env.CONTAINER_PORT || 3000;
 if (process.env.SENTRY_DSN) {
     Sentry.init({
         dsn: process.env.SENTRY_DSN,
-        integrations: [new Sentry.Integrations.Http({ tracing: false })],
+        integrations: [new Sentry.Integrations.Http({ tracing: true })],
         tracesSampleRate: 1.0,
     });
 
@@ -77,13 +77,7 @@ if (process.env.SENTRY_DSN) {
     app.use(Sentry.Handlers.errorHandler());
 }
 
-// AWS Health Check
-app.get('/health', (req, res) => {
-    res.status(200).json({ status: 'success', message: 'Server is healthy' });
-});
-
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
-
 app.use(generalErrorHandler);
 
 loadBannedWords()
@@ -97,6 +91,10 @@ loadBannedWords()
 // sentry 확인을 위해 의도적으로 에러 발생시키기
 app.get('/debug-sentry', function mainHandler(req, res) {
     throw new Error('My first Sentry error!');
+});
+
+app.get('/', (req, res) => {
+    res.status(200).json({ message: 'hi, test OK' });
 });
 
 app.listen(PORT, () => {
