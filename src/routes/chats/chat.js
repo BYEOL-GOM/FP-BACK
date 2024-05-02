@@ -90,18 +90,24 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
             include: {
                 worry: {
                     select: {
-                        // 필요한 필드만 선택
                         solvingCommentId: true,
                         unRead: true,
                         isSolved: true,
                         icon: true,
+                        comments: {
+                            // 여기서 comments를 include 대신 select에 추가합니다.
+                            select: {
+                                content: true,
+                            },
+                            take: 1,
+                            orderBy: { createdAt: 'desc' },
+                        },
                     },
                 },
-                // 특정 사용자가 속한 채팅방에 다른 사용자가 보낸 메시지만 조회
                 chattings: {
                     where: {
                         senderId: {
-                            not: userId, // 사용자 자신이 보낸 메시지 제외
+                            not: userId,
                         },
                     },
                     orderBy: { createdAt: 'desc' },
@@ -114,7 +120,9 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
 
         // 각 채팅방에 대해 반복하고, 각 방의 현재 상태를 확인하여 처리
         const updatedRooms = rooms.map((room) => {
+            const lastCommentContent = room.worry.comments.length > 0 ? room.worry.comments[0].content : 'No comments';
             const isRead = room.chattings.every((chat) => chat.isRead); // 모든 메시지가 읽혔는지 확인
+            const formattedUpdatedAt = moment(room.updatedAt).tz('Asia/Seoul').format('YYYY-MM-DDTHH:mm:ssZ');
             return {
                 userId: room.userId,
                 commentAuthorId: room.commentAuthorId,
@@ -126,9 +134,10 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
                 isOwner: room.userId === userId,
                 isAccepted: room.status === 'ACCEPTED',
                 hasEntered: room.hasEntered, // 사용자가 방에 입장했는지 여부 표시
+                lastCommentContent: lastCommentContent,
                 icon: room.worry.icon,
                 status: room.status,
-                updatedAt: room.updatedAt,
+                updatedAt: formattedUpdatedAt,
             };
         });
 
@@ -298,53 +307,5 @@ router.delete('/rejectChat/:roomId', authMiddleware, async (req, res) => {
         res.status(500).json({ message: '서버 오류 발생' });
     }
 });
-
-// // 채팅방 수락 또는 거절
-// // router.put('/respondToChat/:roomId', authMiddleware, async (req, res) => {
-// router.put('/respondToChat/:roomId', async (req, res) => {
-//     const roomId = parseInt(req.params.roomId);
-//     // const userId = parseInt(res.locals.user.userId);
-//     const userId = parseInt(req.body.userId, 10);
-
-//     if (isNaN(roomId)) {
-//         return res.status(400).json({ message: '유효하지 않은 방 ID입니다.' });
-//     }
-
-//     try {
-//         const room = await prisma.rooms.findUnique({
-//             where: { roomId: roomId },
-//         });
-
-//         if (!room) {
-//             return res.status(404).json({ message: '채팅방이 존재하지 않습니다.' });
-//         }
-
-//         // 수락/거절은 답변자만 가능
-//         if (room.commentAuthorId !== userId) {
-//             return res.status(403).json({ message: '이 작업을 수행할 권한이 없습니다.' });
-//         }
-
-//         if (room.status === 'ACCEPTED') {
-//             const updatedRoom = await prisma.rooms.update({
-//                 where: { roomId: roomId },
-//                 data: {
-//                     status: 'ACCEPTED',
-//                     isAccepted: true,
-//                 },
-//             });
-//             return res.status(200).json({ updatedRoom, message: '채팅방이 활성화되었습니다.' });
-//         } else if (decision === 'REJECT') {
-//             await prisma.rooms.delete({
-//                 where: { roomId: roomId },
-//             });
-//             return res.status(200).json({ message: '채팅방이 삭제되었습니다.' });
-//         } else {
-//             return res.status(400).json({ message: '유효하지 않은 결정입니다.' });
-//         }
-//     } catch (error) {
-//         console.error('채팅방 응답 처리 중 에러 발생:', error);
-//         res.status(500).json({ message: '서버 오류 발생' });
-//     }
-// });
 
 export default router;

@@ -103,11 +103,6 @@ const initializeSocket = (server, corsOptions) => {
                     return;
                 }
 
-                if (room.status !== 'ACCEPTED') {
-                    socket.emit('error', { message: '채팅방이 활성화되지 않았습니다.' });
-                    return;
-                }
-
                 // 사용자 소켓이 특정 방에 입장할 때
                 socket.join(roomId.toString(), () => {
                     console.log(`User ${socket.id} joined room ${roomId}`);
@@ -185,6 +180,7 @@ const initializeSocket = (server, corsOptions) => {
 
             if (roomId) {
                 console.log('여기까지 와? 13번.');
+                // room.status !=='ACCEPTED' return error 처리 추가.
                 try {
                     // if (typeof data === 'string') {
                     //     data = JSON.parse(data);
