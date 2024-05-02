@@ -62,7 +62,6 @@ jobs:
                   script: |
                       CURRENT_IMAGE=$(docker inspect --format='{{.Config.Image}}' ${{ env.CONTAINER_NAME }} || echo "")
                       docker system prune -a -f --volumes
-                      echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
                       docker pull leticia0408/byeol_gom:${{ github.ref == 'refs/heads/dev' && 'latest-dev' || 'latest-prod' }}
                       docker stop ${{ env.CONTAINER_NAME }} || true
                       docker rm ${{ env.CONTAINER_NAME }} || true
@@ -70,7 +69,17 @@ jobs:
                         -e CORS_ORIGIN="${{ env.CORS_ORIGIN }}" \
                         -e KAKAO_REDIRECT_URI="${{ env.KAKAO_REDIRECT_URI }}" \
                         -e DATABASE_URL="${{ env.DATABASE_URL }}" \
+                        -e KAKAO_REST_API_KEY="${{ secrets.KAKAO_REST_API_KEY }}" \
                         -e NAVER_REDIRECT_URI="${{ env.NAVER_REDIRECT_URI }}" \
+                        -e NAVER_CLIENT_SECRET="${{ secrets.NAVER_CLIENT_SECRET }}" \
+                        -e NAVER_REST_API_ID="${{ secrets.NAVER_REST_API_ID }}" \
+                        -e SESSION_SECRET="${{ secrets.SESSION_SECRET }}" \
+                        -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
+                        -e ACCESS_TOKEN_SECRET="${{ secrets.ACCESS_TOKEN_SECRET }}" \
+                        -e REFRESH_TOKEN_SECRET="${{ secrets.REFRESH_TOKEN_SECRET }}" \
+                        -e ACCESS_TOKEN_LIFE="${{ secrets.ACCESS_TOKEN_LIFE }}" \
+                        -e REFRESH_TOKEN_LIFE="${{ secrets.REFRESH_TOKEN_LIFE }}" \
+                        -e CLIENT_SECRET="${{ secrets.CLIENT_SECRET }}" \
                         -e SENTRY_DSN="${{ env.SENTRY_DSN }}" \
                         leticia0408/byeol_gom:${{ github.ref == 'refs/heads/dev' && 'latest-dev' || 'latest-prod' }}; then
                         echo "Deployment successful."
