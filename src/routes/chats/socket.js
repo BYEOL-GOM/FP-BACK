@@ -200,9 +200,12 @@ const initializeSocket = (server, corsOptions) => {
                     // if (typeof data === 'string') {
                     //     data = JSON.parse(data);
                     // }
-                    // DB 저장용 한국 시간 포맷
-                    const formattedDate = moment().tz('Asia/Seoul').format('YYYY-MM-DDTHH:mm:ssZ'); // 시간대 오프셋이 포함된 ISO-8601 형식
-                    console.log('formattedDate', formattedDate);
+                    // // DB 저장용 한국 시간 포맷
+                    // const formattedDate = moment().tz('Asia/Seoul').format('YYYY-MM-DDTHH:mm:ssZ'); // 시간대 오프셋이 포함된 ISO-8601 형식
+                    // console.log('formattedDate', formattedDate);
+                    // DB 저장용 시간 데이터
+                    // const createdAt = new Date(); // 자바스크립트 Date 객체 사용
+                    // console.log('createdAt', createdAt);
 
                     // 채팅 메시지 데이터베이스에 저장
                     const newChat = await prisma.chattings.create({
@@ -210,24 +213,24 @@ const initializeSocket = (server, corsOptions) => {
                             text: data.msg,
                             roomId: parseInt(roomId),
                             senderId: socket.user.userId,
-                            createdAt: formattedDate, // moment로 포맷된 시간 저장
+                            createdAt: createdAt, // moment로 포맷된 시간 저장
                         },
                     });
 
                     console.log('New chat saved :', newChat);
 
-                    // 클라이언트에 전송할 메시지 데이터 포맷팅
-                    const timeForClient = moment(newChat.createdAt).tz('Asia/Seoul').format('HH:mm'); // 클라이언트 전송용 포맷
+                    // // 클라이언트에 전송할 메시지 데이터 포맷팅
+                    // const timeForClient = moment(newChat.createdAt).tz('Asia/Seoul').format('HH:mm'); // 클라이언트 전송용 포맷
 
                     console.log(`Message sent in room ${roomId} by user ${socket.user.userId}: ${data.msg}`);
 
                     // 다른 소켓에게 메시지 전송
                     io.to(roomId).emit('message', {
-                        chatId: newChat.chatId,
+                        // chatId: newChat.chatId,
                         userId: socket.user.userId,
                         text: data.msg,
                         roomId: roomId,
-                        time: timeForClient,
+                        time: createdAt,
                     });
                     console.log('여기까지 와? 14번.');
                 } catch (error) {
