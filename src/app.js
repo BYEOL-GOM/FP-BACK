@@ -94,11 +94,9 @@ app.get('/debug-sentry', function mainHandler(req, res) {
 });
 
 app.get('/', (req, res) => {
-    res.status(200).json({ message: 'test' });
+    res.status(200).json({ message: 'test OK' });
 });
-app.get('/just', (req, res) => {
-    res.status(200).json({ message: 'flowers' });
-});
+
 app.listen(PORT, () => {
     console.log(`${PORT} 포트로 서버가 열렸어요!`);
 });
