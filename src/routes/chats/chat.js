@@ -122,7 +122,8 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
         const updatedRooms = rooms.map((room) => {
             const lastCommentContent = room.worry.comments.length > 0 ? room.worry.comments[0].content : 'No comments';
             const isRead = room.chattings.every((chat) => chat.isRead); // 모든 메시지가 읽혔는지 확인
-            const formattedUpdatedAt = moment(room.updatedAt).tz('Asia/Seoul').format('YYYY-MM-DDTHH:mm:ssZ');
+            const formattedUpdatedAt = moment(room.updatedAt).tz('Asia/Seoul').format('YYYY-MM-DDTHH:mm:ssZ'); // 뒤에 +09:00
+            // const formattedUpdatedAt = moment(room.updatedAt).tz('Asia/Seoul').format('YYYY-MM-DDTHH:mm:ss');
             return {
                 userId: room.userId,
                 commentAuthorId: room.commentAuthorId,
@@ -143,7 +144,6 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
 
         const totalCount = await prisma.rooms.count({
             where: {
-                // OR: [{ worry: { userId: userId } }, { worry: { commentAuthorId: userId } }],
                 OR: [{ userId: userId }, { commentAuthorId: userId }],
                 status: { in: ['ACCEPTED', 'PENDING'] },
             },
@@ -213,12 +213,12 @@ router.get('/rooms/:roomId', authMiddleware, async (req, res) => {
             return {
                 chatId: message.chatId,
                 userId: message.sender.userId,
-                // senderId: message.senderId,
                 roomId: message.roomId,
                 nickname: message.sender.nickname,
                 text: message.text,
                 isRead: message.isRead,
-                createdAt: moment(message.createdAt).tz('Asia/Seoul').format('HH:mm z'),
+                // createdAt: moment(message.createdAt).tz('Asia/Seoul').format('HH:mm z'),
+                createdAt: message.createdAt,
             };
         });
 
@@ -229,7 +229,7 @@ router.get('/rooms/:roomId', authMiddleware, async (req, res) => {
     }
 });
 
-// 채팅 신청 수락
+// 채팅 신청 승인
 router.put('/acceptChat/:roomId', authMiddleware, async (req, res) => {
     // router.put('/acceptChat/:roomId', async (req, res) => {
     const roomId = parseInt(req.params.roomId);
@@ -304,6 +304,46 @@ router.delete('/rejectChat/:roomId', authMiddleware, async (req, res) => {
         return res.status(200).json({ message: '채팅방이 삭제되었습니다.' });
     } catch (error) {
         console.error('채팅방 거절 처리 중 에러 발생:', error);
+        res.status(500).json({ message: '서버 오류 발생' });
+    }
+});
+
+// 채팅방 나가기 처리 API
+router.delete('/rooms/:roomId/leave', authMiddleware, async (req, res) => {
+    // router.delete('/rooms/:roomId/leave', async (req, res) => {
+    const roomId = parseInt(req.params.roomId);
+    const userId = parseInt(res.locals.user.userId);
+    // const userId = parseInt(req.body.userId, 10);
+
+    if (isNaN(roomId)) {
+        return res.status(400).json({ message: '유효하지 않은 방 ID입니다.' });
+    }
+
+    try {
+        const room = await prisma.rooms.findUnique({
+            where: { roomId: roomId },
+        });
+
+        if (!room) {
+            return res.status(404).json({ message: '채팅방이 존재하지 않습니다.' });
+        }
+
+        // userId 혹은 commentAuthorId가 현재 유저 ID와 일치하는지 확인 후 해당 필드를 null로 업데이트
+        if (room.userId === userId) {
+            await prisma.rooms.update({
+                where: { roomId: roomId },
+                data: { userId: null },
+            });
+        } else if (room.commentAuthorId === userId) {
+            await prisma.rooms.update({
+                where: { roomId: roomId },
+                data: { commentAuthorId: null },
+            });
+        }
+
+        return res.status(200).json({ message: `채팅방에서 ${userId}가 나갔습니다.` });
+    } catch (error) {
+        console.error('채팅방 나가기 처리 중 에러 발생:', error);
         res.status(500).json({ message: '서버 오류 발생' });
     }
 });

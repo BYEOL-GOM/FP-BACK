@@ -173,15 +173,30 @@ const initializeSocket = (server, corsOptions) => {
                 return;
             }
             console.log('여기까지 와? 12번.');
-            console.log('socket.user', socket.user);
 
             const roomId = userRooms[socket.id];
-            // const roomId = userRooms[socket.user.userId];
 
             if (roomId) {
                 console.log('여기까지 와? 13번.');
-                // room.status !=='ACCEPTED' return error 처리 추가.
                 try {
+                    const room = await prisma.rooms.findUnique({
+                        where: { roomId: parseInt(roomId) },
+                        select: { status: true }, // status 필드만 선택
+                    });
+
+                    // 채팅 요청이 승인(ACCEPTED)일때만 채팅 활성화. 아니면 비활성화
+                    if (!room || room.status !== 'ACCEPTED') {
+                        console.error('채팅 요청이 승인 되지 않았습니다.');
+                        socket.emit('error', { message: '채팅 요청이 승인 되지 않았습니다.' });
+                        return;
+                    }
+                    // 채팅방에 참여자가 1명인지 확인. 1명이면 채팅 비활성화
+                    if (!room || room.userId == null || room.commentAuthorId == null) {
+                        console.error('채팅방에 다른 사용자가 없어 메시지를 보낼 수 없습니다.');
+                        socket.emit('error', { message: '채팅방에 다른 사용자가 없어 메시지를 보낼 수 없습니다.' });
+                        return;
+                    }
+
                     // if (typeof data === 'string') {
                     //     data = JSON.parse(data);
                     // }
@@ -282,33 +297,3 @@ const initializeSocket = (server, corsOptions) => {
 };
 
 export default initializeSocket;
-
-//----------------------------------------------------------------------------------------
-//         // 테스트 메시지를 주기적으로 전송하는 함수
-//         function sendTestMessage() {
-//             io.emit('chat message', '서버에서 보내는 테스트 메시지');
-//             console.log('서버에서 테스트 메시지를 전송했습니다.');
-//         }
-
-//         // // 서버 상태 메시지를 주기적으로 전송하는 함수
-//         // function broadcastServerStatus() {
-//         //     const statusMessage = '현재 서버 상태는 양호합니다.';
-//         //     io.emit('server status', statusMessage);
-//         //     console.log('서버 상태 메시지를 전송했습니다.');
-//         // }
-
-//         // // 서버가 실행된 후 5초 후에 첫 메시지 전송, 그리고 10초마다 반복
-//         // setTimeout(() => {
-//         //     sendTestMessage();
-//         //     setInterval(sendTestMessage, 10000);
-
-//         //     // 서버 상태 메시지 전송 시작
-//         //     broadcastServerStatus();
-//         //     setInterval(broadcastServerStatus, 10000);
-//         // }, 5000);
-
-//         return io; // 필요에 따라 io 객체를 반환하여 외부에서 사용 가능하게 함
-//     });
-// };
-
-// export default initializeSocket;
