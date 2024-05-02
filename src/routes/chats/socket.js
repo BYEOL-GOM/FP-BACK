@@ -184,18 +184,18 @@ const initializeSocket = (server, corsOptions) => {
                         select: { status: true }, // status 필드만 선택
                     });
 
-                    // 채팅 요청이 승인(ACCEPTED)일때만 채팅 활성화. 아니면 비활성화
-                    if (!room || room.status !== 'ACCEPTED') {
-                        console.error('채팅 요청이 승인 되지 않았습니다.');
-                        socket.emit('error', { message: '채팅 요청이 승인 되지 않았습니다.' });
-                        return;
-                    }
-                    // 채팅방에 참여자가 1명인지 확인. 1명이면 채팅 비활성화
-                    if (!room || room.userId == null || room.commentAuthorId == null) {
-                        console.error('채팅방에 다른 사용자가 없어 메시지를 보낼 수 없습니다.');
-                        socket.emit('error', { message: '채팅방에 다른 사용자가 없어 메시지를 보낼 수 없습니다.' });
-                        return;
-                    }
+                    // // 채팅 요청이 승인(ACCEPTED)일때만 채팅 활성화. 아니면 비활성화
+                    // if (!room || room.status !== 'ACCEPTED') {
+                    //     console.error('채팅 요청이 승인 되지 않았습니다.');
+                    //     socket.emit('error', { message: '채팅 요청이 승인 되지 않았습니다.' });
+                    //     return;
+                    // }
+                    // // 채팅방에 참여자가 1명인지 확인. 1명이면 채팅 비활성화
+                    // if (!room || room.userId == null || room.commentAuthorId == null) {
+                    //     console.error('채팅방에 다른 사용자가 없어 메시지를 보낼 수 없습니다.');
+                    //     socket.emit('error', { message: '채팅방에 다른 사용자가 없어 메시지를 보낼 수 없습니다.' });
+                    //     return;
+                    // }
 
                     // if (typeof data === 'string') {
                     //     data = JSON.parse(data);

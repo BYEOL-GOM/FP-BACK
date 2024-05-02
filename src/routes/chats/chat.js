@@ -3,19 +3,24 @@ import express from 'express';
 import { prisma } from '../../utils/prisma/index.js';
 import authMiddleware from '../../middlewares/authMiddleware.js';
 import moment from 'moment-timezone';
+import { createChatRoomSchema } from './chat.joi.js';
 
 const router = express.Router();
 
 // 채팅방 생성
 router.post('/createChatRoom', authMiddleware, async (req, res) => {
     // router.post('/createChatRoom', async (req, res) => {
-    const worryId = parseInt(req.body.worryId);
+
+    // body에서 worryId 추출 및 유효성 검사
+    const { value, error } = createChatRoomSchema.validate({ worryId: req.body.worryId });
+    if (error) {
+        const err = new Error('유효하지 않은 고민 게시글 ID입니다.');
+        err.status = 400;
+        throw err;
+    }
+    const { worryId } = value; // 직접 변환된 값 사용
     const userId = parseInt(res.locals.user.userId);
     // const userId = parseInt(req.body.userId, 10);
-
-    if (isNaN(worryId) || worryId < 1) {
-        return res.status(400).json({ message: '유효하지 않은 고민 ID가 제공되었습니다.' });
-    }
 
     try {
         // 해당 고민이 존재하는지 확인
@@ -24,11 +29,17 @@ router.post('/createChatRoom', authMiddleware, async (req, res) => {
             select: { userId: true, commentAuthorId: true },
         });
         if (!existingWorry) {
-            return res.status(404).json({ message: '해당 고민이 존재하지 않습니다.' });
+            const err = new Error('해당 고민이 존재하지 않습니다.');
+            err.status = 404;
+            err.details = error.details;
+            throw err;
         }
         // 사용자 ID 검증 (고민 등록자 확인)
         if (existingWorry.userId !== userId) {
-            return res.status(403).json({ message: '고민 등록자만이 채팅방을 생성할 수 있습니다.' });
+            const err = new Error('고민을 등록한 유저만 채팅방을 생성할 수 있습니다.');
+            err.status = 403;
+            err.details = error.details;
+            throw err;
         }
 
         // 방이 이미 존재하는지 검사
@@ -45,8 +56,12 @@ router.post('/createChatRoom', authMiddleware, async (req, res) => {
                     commentAuthorId: existingWorry.commentAuthorId, // 댓글 작성자 ID 할당
                 },
             });
+        } else {
+            const err = new Error('이미 해당 고민 ID로 생성된 채팅방이 존재합니다.');
+            err.status = 409;
+            err.details = error.details;
+            throw err;
         }
-        console.log('⭐⭐⭐테스트 room >> ', room);
 
         return res.status(201).json({
             worryId: room.worryId,
@@ -58,11 +73,10 @@ router.post('/createChatRoom', authMiddleware, async (req, res) => {
         });
     } catch (error) {
         console.error('채팅방 생성 중 에러 발생:', error);
-        res.status(500).json({ message: '서버 오류 발생' });
+        next(error);
     }
 });
 
-// src/routes/chats/chat.router.js
 // 로그인한 유저에 해당하는 채팅방 전체 조회
 router.get('/chatRooms', authMiddleware, async (req, res) => {
     // router.get('/chatRooms', async (req, res) => {
@@ -159,7 +173,7 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
         });
     } catch (error) {
         console.error('채팅방 조회 중 에러 발생:', error);
-        res.status(500).json({ message: '서버 오류 발생' });
+        next(error);
     }
 });
 
@@ -225,7 +239,7 @@ router.get('/rooms/:roomId', authMiddleware, async (req, res) => {
         return res.json({ page, limit, totalCount, formattedPastMessages });
     } catch (error) {
         console.error('과거 메시지를 가져오는 중 오류 발생:', error);
-        res.status(500).json({ error: '과거 메시지를 가져오는 중 오류가 발생했습니다.' });
+        next(error);
     }
 });
 
@@ -268,7 +282,7 @@ router.put('/acceptChat/:roomId', authMiddleware, async (req, res) => {
         return res.status(200).json({ ...updatedRoom, message: '채팅방이 활성화되었습니다.' });
     } catch (error) {
         console.error('채팅방 수락 처리 중 에러 발생:', error);
-        res.status(500).json({ message: '서버 오류 발생' });
+        next(error);
     }
 });
 
@@ -304,11 +318,11 @@ router.delete('/rejectChat/:roomId', authMiddleware, async (req, res) => {
         return res.status(200).json({ message: '채팅방이 삭제되었습니다.' });
     } catch (error) {
         console.error('채팅방 거절 처리 중 에러 발생:', error);
-        res.status(500).json({ message: '서버 오류 발생' });
+        next(error);
     }
 });
 
-// 채팅방 나가기 처리 API
+// 채팅방 나가기 API
 router.delete('/rooms/:roomId/leave', authMiddleware, async (req, res) => {
     // router.delete('/rooms/:roomId/leave', async (req, res) => {
     const roomId = parseInt(req.params.roomId);
@@ -316,7 +330,7 @@ router.delete('/rooms/:roomId/leave', authMiddleware, async (req, res) => {
     // const userId = parseInt(req.body.userId, 10);
 
     if (isNaN(roomId)) {
-        return res.status(400).json({ message: '유효하지 않은 방 ID입니다.' });
+        return res.status(400).json({ message: '유효하지 않은 roomId입니다.' });
     }
 
     try {
@@ -341,10 +355,10 @@ router.delete('/rooms/:roomId/leave', authMiddleware, async (req, res) => {
             });
         }
 
-        return res.status(200).json({ message: `채팅방에서 ${userId}가 나갔습니다.` });
+        return res.status(200).json({ message: `채팅방에서 사용자 ${userId}가 나갔습니다.` });
     } catch (error) {
         console.error('채팅방 나가기 처리 중 에러 발생:', error);
-        res.status(500).json({ message: '서버 오류 발생' });
+        next(error);
     }
 });
 

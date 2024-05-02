@@ -10,8 +10,6 @@ export const paramsSchema = Joi.object({
 export const likeSchema = Joi.object({
     fontColor: Joi.string().required(),
     content: Joi.string().allow('', null),
-    // content: Joi.string().allow('', null).allow(Joi.number()),
-    // content: Joi.alternatives().try(Joi.string(), Joi.number()).allow('', null),
     // userId: Joi.number().integer(), // * 로컬에서 테스트 할때(=userId 바디로 넣을때) 이부분 살려서 하지 않으면 '데이터 형식 불일치 오류'가 납니다 :)
 });
 
