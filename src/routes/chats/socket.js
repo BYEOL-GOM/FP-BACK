@@ -3,9 +3,8 @@ import { Server as SocketIOServer } from 'socket.io';
 import jwt from 'jsonwebtoken';
 import { prisma } from '../../utils/prisma/index.js';
 import moment from 'moment-timezone';
-import axios from 'axios';
-// import { getLastMessageTimestamp, setLastMessageTimestamp } from '../../utils/timestampUtils.js';
 import { clearSocketPastMessages } from '../../utils/socketMessageHandling.js';
+// import { getLastMessageTimestamp, setLastMessageTimestamp } from '../../utils/timestampUtils.js';
 
 const lastMessageTimestamps = new Map(); // 각 소켓 세션의 마지막 메시지 타임스탬프를 저장하는 Map 객체
 
@@ -19,64 +18,63 @@ const initializeSocket = (server, corsOptions) => {
 
     // connection이 수립되면 event handler function의 인자로 socket이 들어온다
     io.on('connection', async (socket) => {
+        socket.emit('connected', { message: '백엔드 소켓 연결에 성공했습니다!' });
         console.log('사용자가 연결되었습니다.', socket.id); // 소켓마다 고유의 식별자를 가짐 (20자)
         console.log('연결 횟수 >> ', io.engine.clientsCount); // 연결된 소켓의 개수
 
         // 인증 토큰 검증
         const token = socket.handshake.auth.token; // 클라이언트로부터 받은 토큰
-        socket.emit('connected', { message: '백엔드 소켓 연결에 성공했습니다!' });
+        // 토큰이 없는 경우 바로 에러 처리하고 연결 해제
+        if (!token) {
+            console.log('인증 토큰이 없습니다.');
+            socket.emit('error', { message: '인증 토큰이 없습니다.' });
+            socket.disconnect();
+            return;
+        }
 
-        // 토큰이 존재하는 경우에만 처리
-        if (token) {
-            const [bearer, tokenValue] = token.split(' ');
-            if (bearer !== 'Bearer') {
-                socket.emit('token error', { message: '토큰 타입이 Bearer 형식이 아닙니다' });
-                console.log('token error', { message: '토큰 타입이 Bearer 형식이 아닙니다' });
+        const [bearer, tokenValue] = token.split(' ');
+        if (bearer !== 'Bearer') {
+            socket.emit('token error', { message: '토큰 타입이 Bearer 형식이 아닙니다' });
+            console.log('token error', { message: '토큰 타입이 Bearer 형식이 아닙니다' });
+            socket.disconnect();
+            return;
+        }
+        console.log('여기까지 와? 1번.');
+        try {
+            const decoded = jwt.verify(tokenValue, process.env.ACCESS_TOKEN_SECRET);
+            const user = await prisma.users.findUnique({
+                where: {
+                    userId: decoded.userId,
+                },
+            });
+            console.log('여기까지 와? 2번.');
+
+            if (!user) {
+                socket.emit('error', { message: '인증 오류: 사용자를 찾을 수 없습니다.' });
                 socket.disconnect();
                 return;
             }
-            console.log('여기까지 와? 1번.');
-            try {
-                const decoded = jwt.verify(tokenValue, process.env.ACCESS_TOKEN_SECRET);
-                const user = await prisma.users.findUnique({
-                    where: {
-                        userId: decoded.userId,
-                    },
-                });
-                console.log('여기까지 와? 2번.');
+            console.log('여기까지 와? 3번.');
 
-                if (!user) {
-                    socket.emit('error', { message: '인증 오류: 사용자를 찾을 수 없습니다.' });
-                    socket.disconnect();
-                    return;
-                }
-                console.log('여기까지 와? 3번.');
+            // 유저 정보를 프론트엔드에게 전달
+            socket.emit('userInfo', { userId: user.userId, username: user.nickname });
+            console.log('userInfo', { userId: user.userId, username: user.nickname });
 
-                // 유저 정보를 프론트엔드에게 전달
-                socket.emit('userInfo', { userId: user.userId, username: user.nickname });
-                console.log('userInfo', { userId: user.userId, username: user.nickname });
-
-                // 유저 정보 설정
-                socket.user = user; // 소켓 객체에 사용자 정보 추가
-                userSockets[user.userId] = socket.id; // 사용자 ID와 소켓 ID 매핑
-            } catch (error) {
-                console.log('🚨🚨🚨비상비상 에러에러 4--0번.4--0번.');
-                if (error.name === 'TokenExpiredError') {
-                    console.log('🚨🚨🚨비상비상 에러에러 4--1번.4--1번.', error.message);
-                    console.error('인증 오류:', error);
-                    socket.emit('error', { message: '인증 오류: ' + error.message });
-                    socket.disconnect();
-                } else {
-                    console.log('🚨🚨🚨비상비상 에러에러 4--2번.4--2번.', error.message);
-                    console.error('기타 에러 발생:', error);
-                    socket.emit('error', { message: '인증 오류: ' + error.message });
-                    socket.disconnect();
-                }
+            // 유저 정보 설정
+            socket.user = user; // 소켓 객체에 사용자 정보 추가
+            userSockets[user.userId] = socket.id; // 사용자 ID와 소켓 ID 매핑
+        } catch (error) {
+            if (error.name === 'TokenExpiredError') {
+                console.log('🚨🚨🚨비상비상 에러에러 4--1번.4--1번.', error.message);
+                console.error('인증 오류:', error);
+                socket.emit('error', { message: '인증 오류: ' + error.message });
+                socket.disconnect();
+            } else {
+                console.log('🚨🚨🚨비상비상 에러에러 4--2번.4--2번.', error.message);
+                console.error('기타 에러 발생:', error);
+                socket.emit('error', { message: '인증 오류: ' + error.message });
+                socket.disconnect();
             }
-        } else {
-            // 토큰이 없는 경우 에러 처리
-            console.log('🚨🚨🚨비상비상 에러에러 4--3번.4--3번. 인증 토큰이 없습니다.');
-            socket.emit('error', { message: '인증 토큰이 없습니다.' });
             socket.disconnect();
         }
         console.log('여기까지 와? 5번.');
@@ -98,14 +96,17 @@ const initializeSocket = (server, corsOptions) => {
                 const room = await prisma.rooms.findUnique({
                     where: { roomId: parseInt(roomId) },
                 });
-
                 if (!room) {
                     console.error('비상비상 에러에러 9-1번.9-1번. >> 채팅방이 존재하지 않습니다.');
                     socket.emit('error', { message: '채팅방이 존재하지 않습니다.' });
                     socket.disconnect();
                     return;
                 }
-                console.log('여기까지 와? 8번.');
+
+                if (room.status !== 'ACCEPTED') {
+                    socket.emit('error', { message: '채팅방이 활성화되지 않았습니다.' });
+                    return;
+                }
 
                 // 사용자 소켓이 특정 방에 입장할 때
                 socket.join(roomId.toString(), () => {
@@ -113,6 +114,7 @@ const initializeSocket = (server, corsOptions) => {
                     socket.emit('joined room', { roomId: roomId });
                 });
 
+                // 사용자가 채팅방에 입장할 때, 입장 여부 컬럼 true로 변경
                 if (!room.hasEntered) {
                     await prisma.rooms.update({
                         where: { roomId: parseInt(roomId) },
@@ -121,8 +123,7 @@ const initializeSocket = (server, corsOptions) => {
                     console.log(`Room ${roomId} hasEntered flag set to true.`);
                 }
 
-                console.log('여기까지 와? 8-2번.');
-                console.log(`사용자가 방에 참가하였습니다: ${room.roomId}`);
+                console.log('여기까지 와? 8번.');
 
                 userRooms[socket.id] = room.roomId; // 소켓 ID와 방 ID를 매핑하여 저장
 
@@ -156,7 +157,6 @@ const initializeSocket = (server, corsOptions) => {
                 // const lastTimestamp =
                 //     pastMessages.length > 0 ? pastMessages[pastMessages.length - 1].createdAt : new Date();
                 // lastMessageTimestamps.set(`${socket.id}:${roomId}`, lastTimestamp);
-
                 // 2번. 사용자가 방에 재입장하는 시점 이후로 발생한 메시지만 확인하고자 한다면 2번.
                 const newTimestamp = new Date();
                 lastMessageTimestamps.set(`${socket.id}:${roomId}`, newTimestamp);

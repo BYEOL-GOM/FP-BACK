@@ -111,7 +111,6 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
             take: limit,
             orderBy: { createdAt: 'desc' },
         });
-        console.log('⭐⭐⭐테스트 6번. rooms >> ', rooms);
 
         // 각 채팅방에 대해 반복하고, 각 방의 현재 상태를 확인하여 처리
         const updatedRooms = rooms.map((room) => {
@@ -220,5 +219,128 @@ router.get('/rooms/:roomId', authMiddleware, async (req, res) => {
         res.status(500).json({ error: '과거 메시지를 가져오는 중 오류가 발생했습니다.' });
     }
 });
+
+// 채팅 신청 수락
+// router.put('/acceptChat/:roomId', authMiddleware, async (req, res) => {
+router.put('/acceptChat/:roomId', async (req, res) => {
+    const roomId = parseInt(req.params.roomId);
+    // const userId = parseInt(res.locals.user.userId);
+    const userId = parseInt(req.body.userId, 10);
+
+    if (isNaN(roomId)) {
+        return res.status(400).json({ message: '유효하지 않은 방 ID입니다.' });
+    }
+
+    try {
+        const room = await prisma.rooms.findUnique({
+            where: { roomId: roomId },
+        });
+
+        if (!room) {
+            return res.status(404).json({ message: '채팅방이 존재하지 않습니다.' });
+        }
+
+        if (room.commentAuthorId !== userId) {
+            return res.status(403).json({ message: '이 작업을 수행할 권한이 없습니다.' });
+        }
+
+        const updatedRoom = await prisma.rooms.update({
+            where: { roomId: roomId },
+            data: {
+                status: 'ACCEPTED',
+            },
+        });
+
+        // 응답 객체에 isAccepted를 추가하여 반환
+        updatedRoom.isAccepted = true;
+
+        return res.status(200).json({ ...updatedRoom, message: '채팅방이 활성화되었습니다.' });
+    } catch (error) {
+        console.error('채팅방 수락 처리 중 에러 발생:', error);
+        res.status(500).json({ message: '서버 오류 발생' });
+    }
+});
+
+// 채팅 신청 거절
+// router.delete('/rejectChat/:roomId', authMiddleware, async (req, res) => {
+router.delete('/rejectChat/:roomId', async (req, res) => {
+    const roomId = parseInt(req.params.roomId);
+    // const userId = parseInt(res.locals.user.userId);
+    const userId = parseInt(req.body.userId, 10);
+
+    if (isNaN(roomId)) {
+        return res.status(400).json({ message: '유효하지 않은 방 ID입니다.' });
+    }
+
+    try {
+        const room = await prisma.rooms.findUnique({
+            where: { roomId: roomId },
+        });
+
+        if (!room) {
+            return res.status(404).json({ message: '채팅방이 존재하지 않습니다.' });
+        }
+
+        if (room.commentAuthorId !== userId) {
+            return res.status(403).json({ message: '이 작업을 수행할 권한이 없습니다.' });
+        }
+
+        await prisma.rooms.delete({
+            where: { roomId: roomId },
+        });
+        return res.status(200).json({ message: '채팅방이 삭제되었습니다.' });
+    } catch (error) {
+        console.error('채팅방 거절 처리 중 에러 발생:', error);
+        res.status(500).json({ message: '서버 오류 발생' });
+    }
+});
+
+// // 채팅방 수락 또는 거절
+// // router.put('/respondToChat/:roomId', authMiddleware, async (req, res) => {
+// router.put('/respondToChat/:roomId', async (req, res) => {
+//     const roomId = parseInt(req.params.roomId);
+//     // const userId = parseInt(res.locals.user.userId);
+//     const userId = parseInt(req.body.userId, 10);
+
+//     if (isNaN(roomId)) {
+//         return res.status(400).json({ message: '유효하지 않은 방 ID입니다.' });
+//     }
+
+//     try {
+//         const room = await prisma.rooms.findUnique({
+//             where: { roomId: roomId },
+//         });
+
+//         if (!room) {
+//             return res.status(404).json({ message: '채팅방이 존재하지 않습니다.' });
+//         }
+
+//         // 수락/거절은 답변자만 가능
+//         if (room.commentAuthorId !== userId) {
+//             return res.status(403).json({ message: '이 작업을 수행할 권한이 없습니다.' });
+//         }
+
+//         if (room.status === 'ACCEPTED') {
+//             const updatedRoom = await prisma.rooms.update({
+//                 where: { roomId: roomId },
+//                 data: {
+//                     status: 'ACCEPTED',
+//                     isAccepted: true,
+//                 },
+//             });
+//             return res.status(200).json({ updatedRoom, message: '채팅방이 활성화되었습니다.' });
+//         } else if (decision === 'REJECT') {
+//             await prisma.rooms.delete({
+//                 where: { roomId: roomId },
+//             });
+//             return res.status(200).json({ message: '채팅방이 삭제되었습니다.' });
+//         } else {
+//             return res.status(400).json({ message: '유효하지 않은 결정입니다.' });
+//         }
+//     } catch (error) {
+//         console.error('채팅방 응답 처리 중 에러 발생:', error);
+//         res.status(500).json({ message: '서버 오류 발생' });
+//     }
+// });
 
 export default router;
