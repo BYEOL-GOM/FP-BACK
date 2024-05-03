@@ -51,12 +51,16 @@ jobs:
                     echo "DATABASE_URL=${{ secrets.DEV_DATABASE_URL }}" >> $GITHUB_ENV
                     echo "CONTAINER_NAME=my-app-dev" >> $GITHUB_ENV
                     echo "CONTAINER_PORT=${{ secrets.DEV_PORT }}" >> $GITHUB_ENV
+                    echo "NAVER_REDIRECT_URI=${{ secrets.DEV_NAVER_REDIRECT_URI }}" >> $GITHUB_ENV
                   else
                     echo "CORS_ORIGIN=${{ secrets.CORS_ORIGIN_PROD }}" >> $GITHUB_ENV
                     echo "KAKAO_REDIRECT_URI=${{ secrets.PROD_KAKAO_REDIRECT_URI }}" >> $GITHUB_ENV
                     echo "DATABASE_URL=${{ secrets.PROD_DATABASE_URL }}" >> $GITHUB_ENV
                     echo "CONTAINER_NAME=my-app-prod" >> $GITHUB_ENV
+                    echo "NAVER_REDIRECT_URI=${{ secrets.NAVER_REDIRECT_URI }}" >> $GITHUB_ENV
                     echo "CONTAINER_PORT=${{ secrets.PROD_PORT }}" >> $GITHUB_ENV
+                    echo "SENTRY_DSN=${{ secrets.SENTRY_DSN }}" >> $GITHUB_ENV
+
                   fi
 
             - uses: appleboy/ssh-action@v0.1.6
@@ -76,6 +80,17 @@ jobs:
                         -e KAKAO_REDIRECT_URI="${{ env.KAKAO_REDIRECT_URI }}" \
                         -e DATABASE_URL="${{ env.DATABASE_URL }}" \
                         -e KAKAO_REST_API_KEY="${{ secrets.KAKAO_REST_API_KEY }}" \
+                        -e NAVER_REDIRECT_URI="${{ env.NAVER_REDIRECT_URI }}" \
+                        -e NAVER_CLIENT_SECRET="${{ secrets.NAVER_CLIENT_SECRET }}" \
+                        -e NAVER_REST_API_ID="${{ secrets.NAVER_REST_API_ID }}" \
+                        -e SESSION_SECRET="${{ secrets.SESSION_SECRET }}" \
+                        -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
+                        -e ACCESS_TOKEN_SECRET="${{ secrets.ACCESS_TOKEN_SECRET }}" \
+                        -e REFRESH_TOKEN_SECRET="${{ secrets.REFRESH_TOKEN_SECRET }}" \
+                        -e ACCESS_TOKEN_LIFE="${{ secrets.ACCESS_TOKEN_LIFE }}" \
+                        -e REFRESH_TOKEN_LIFE="${{ secrets.REFRESH_TOKEN_LIFE }}" \
+                        -e CLIENT_SECRET="${{ secrets.CLIENT_SECRET }}" \
+                        -e SENTRY_DSN="${{ env.SENTRY_DSN }}" \
                         leticia0408/byeol_gom:${{ github.ref == 'refs/heads/dev' && 'latest-dev' || 'latest-prod' }}; then
                         echo "Deployment successful."
                       else
