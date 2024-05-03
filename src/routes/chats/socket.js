@@ -222,12 +222,12 @@ const initializeSocket = (server, corsOptions) => {
                 console.log(`Message sent in room ${data.roomId} by user ${socket.user.userId}: ${data.msg}`);
 
                 // roomId 참여한 다른 소켓에게 메시지 전송
-                // console.log('room.roomId.toString()', room.roomId.toString());
-                // io.to(room.roomId.toString()).emit('message', {
-                // io.emit('message', {
-                io.to(data.roomId).emit('message', {
+                // console.log('data.roomId.toString()', data.roomId.toString());
+
+                console.log(typeof data.roomId);
+                io.to(data.roomId.toString()).emit('message', {
+                    // io.to(data.roomId).emit('message', {
                     // 기존 chatting이벤트에서 emit 설정
-                    // chatId: newChat.chatId,
                     userId: socket.user.userId,
                     text: data.msg,
                     // roomId: parseInt(roomId),
