@@ -12,6 +12,7 @@ on:
             - 'src/common/**'
             - 'prisma/**'
             - 'Dockerfile.domain'
+            - '.github/workflows/deploy.yml'
 
 jobs:
     prettier-check:
