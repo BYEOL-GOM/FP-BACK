@@ -12,6 +12,7 @@ export const createChatRoomService = async (worryId, userId) => {
         if (existingWorry.userId !== userId) {
             throw new AppError('고민을 등록한 유저만 채팅방을 생성할 수 있습니다.', 403);
         }
+        // 채팅방이 이미 존재하는지 검사
         const existingRoom = await chatRepository.findRoomByWorryId(worryId);
         if (existingRoom) {
             throw new AppError(
