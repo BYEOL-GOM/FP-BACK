@@ -13,14 +13,13 @@ COPY package.json yarn.lock ./
 # 의존성 설치
 RUN yarn install
 
-# Domain 서버 코드만 복사
-COPY src/domains ./domains
+# WebSocket 서버 코드
+COPY src/websocket ./websocket
 COPY src/middlewares ./middlewares
 COPY src/utils ./utils
 COPY logs ./logs
-COPY src/swagger ./swagger
 
-# Prisma 클라이언트 생성
+# Prisma 클라이언트 생성 (필요한 경우)
 COPY prisma ./prisma
 RUN yarn prisma generate
 
@@ -28,4 +27,5 @@ RUN yarn prisma generate
 EXPOSE 3000
 
 # 애플리케이션 실행
-CMD ["pm2-runtime", "/app/domains/app.js"]
+CMD ["pm2-runtime", "/app/websocket/app.js"]
+
