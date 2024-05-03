@@ -1,5 +1,5 @@
 import cron from 'node-cron';
-import { deleteOldMessages } from './domains/worries/worry.service.js';
+import { deleteOldMessages } from './worries/worry.service.js';
 
 // 매일 자정에 스케줄러 실행
 // cron.schedule('0 0 * * *', async () => {

@@ -13,14 +13,18 @@ COPY package.json yarn.lock ./
 # 의존성 설치
 RUN yarn install
 
-# 나머지 애플리케이션 파일 복사
-COPY . .
+# Domain 서버 코드만 복사
+COPY src/domains ./domains
+COPY src/middlewares ./middlewares
+COPY src/utils ./utils
+COPY src/logs ./logs
 
 # Prisma 클라이언트 생성
+COPY prisma ./prisma
 RUN yarn prisma generate
 
 # 애플리케이션 실행을 위한 포트 열기
 EXPOSE 3000
 
 # 애플리케이션 실행
-CMD ["pm2-runtime", "src/app.js"]
+CMD ["pm2-runtime", "src/domains/app.js"]
