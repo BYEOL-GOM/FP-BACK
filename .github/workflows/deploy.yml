@@ -11,6 +11,7 @@ on:
             - 'src/utils/**'
             - 'src/common/**'
             - 'prisma/**'
+            - 'Dockerfile.domain'
 
 jobs:
     prettier-check:
