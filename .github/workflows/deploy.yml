@@ -68,7 +68,7 @@ jobs:
                   script: |
                       CURRENT_IMAGE=$(docker inspect --format='{{.Config.Image}}' ${{ env.CONTAINER_NAME }} || echo "")
                       docker system prune -a -f --volumes
-                      docker pull leticia0408/byeol_gom_domain:${{ github.ref == 'refs/heads/dev' && 'latest-dev' || 'latest-prod' }}
+                      docker pull leticia0408/byeol_gom:${{ github.ref == 'refs/heads/dev' && 'latest-dev' || 'latest-prod' }}
                       docker stop ${{ env.CONTAINER_NAME }} || true
                       docker rm ${{ env.CONTAINER_NAME }} || true
                       if docker run -d --name ${{ env.CONTAINER_NAME }} -p ${{ env.CONTAINER_PORT }}:3000 \
@@ -76,7 +76,7 @@ jobs:
                         -e KAKAO_REDIRECT_URI="${{ env.KAKAO_REDIRECT_URI }}" \
                         -e DATABASE_URL="${{ env.DATABASE_URL }}" \
                         -e KAKAO_REST_API_KEY="${{ secrets.KAKAO_REST_API_KEY }}" \
-                        leticia0408/byeol_gom_domain:${{ github.ref == 'refs/heads/dev' && 'latest-dev' || 'latest-prod' }}; then
+                        leticia0408/byeol_gom:${{ github.ref == 'refs/heads/dev' && 'latest-dev' || 'latest-prod' }}; then
                         echo "Deployment successful."
                       else
                         echo "Deployment failed, sending Slack notification."
