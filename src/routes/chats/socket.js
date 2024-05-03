@@ -164,7 +164,7 @@ const initializeSocket = (server, corsOptions) => {
 
         socket.on('chatting', async (data) => {
             console.log('여기까지 와? 11번.');
-            // console.log('Received data:', data); // 데이터 수신 확인 로그
+            console.log('Received data:', data); // 데이터 수신 확인 로그
             //---------------------------------------------------------
             console.log('~~~~~~~~~~~~~Received data.msg', data.msg);
             console.log('~~~~~~~~~~~~~Received data.roomId', data.roomId);
@@ -222,7 +222,7 @@ const initializeSocket = (server, corsOptions) => {
                 // console.log('room.roomId.toString()', room.roomId.toString());
                 // io.to(room.roomId.toString()).emit('message', {
                 // io.emit('message', {
-                io.to(roomId).emit('message', {
+                io.to(data.roomId).emit('message', {
                     // 기존 chatting이벤트에서 emit 설정
                     // chatId: newChat.chatId,
                     userId: socket.user.userId,
