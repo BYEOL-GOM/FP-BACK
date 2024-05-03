@@ -43,7 +43,9 @@
     },
     "scripts": {
         "prettier:check": "prettier --check .",
-        "dev": "node src/app.js",
-        "start": "pm2-runtime start src/app.js"
+        "dev:domain": "nodemon src/domains/app.js",
+        "dev:websocket": "nodemon src/websocket/app.js",
+        "start:domain": "pm2-runtime src/domains/app.js",
+        "start:websocket": "pm2-runtime src/websocket/app.js"
     }
 }
