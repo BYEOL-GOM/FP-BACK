@@ -164,7 +164,10 @@ const initializeSocket = (server, corsOptions) => {
 
         socket.on('chatting', async (data) => {
             console.log('여기까지 와? 11번.');
-            console.log('Received data:', data); // 데이터 수신 확인 로그
+            // console.log('Received data:', data); // 데이터 수신 확인 로그
+            //---------------------------------------------------------
+            console.log('~~~~~~~~~~~~~Received data.msg', data.msg);
+            console.log('~~~~~~~~~~~~~Received data.roomId', data.roomId);
 
             if (!socket.user) {
                 console.error('chatting-socket.user error: 인증되지 않은 사용자입니다.');
@@ -216,9 +219,11 @@ const initializeSocket = (server, corsOptions) => {
                 console.log(`Message sent in room ${roomId} by user ${socket.user.userId}: ${data.msg}`);
 
                 // roomId 참여한 다른 소켓에게 메시지 전송
-                console.log('room.roomId', room.roomId);
-                io.to(room.roomId.toString()).emit('message', {
-                    // io.to(roomId).emit('message', { // 기존 chatting이벤트에서 emit 설정
+                // console.log('room.roomId.toString()', room.roomId.toString());
+                // io.to(room.roomId.toString()).emit('message', {
+                // io.emit('message', {
+                io.to(roomId).emit('message', {
+                    // 기존 chatting이벤트에서 emit 설정
                     // chatId: newChat.chatId,
                     userId: socket.user.userId,
                     text: data.msg,
