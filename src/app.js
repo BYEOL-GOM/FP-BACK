@@ -15,7 +15,7 @@ import { loadBannedWords } from './utils/bannedWordsLoader.js';
 import { swaggerUi, specs } from './swagger/swaggerOptions.js';
 import './scheduler.js';
 import initializeSocket from './routes/chats/socket.js'; // socket.js 파일에서 함수 가져오기
-import chatRouter from '../src/routes/chats/chat.js';
+// import chatRouter from '../src/routes/chats/chat.router.js';
 // import bodyParser from 'body-parser';
 
 // 환경 변수 설정 로드
@@ -72,7 +72,6 @@ app.use(cookieParser());
 app.use(LogMiddleware);
 
 app.use('/', router);
-app.use('/chat', chatRouter);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // AWS Health Check 서버의 건강 상태 체크
