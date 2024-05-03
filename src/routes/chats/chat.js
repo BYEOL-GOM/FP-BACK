@@ -67,10 +67,10 @@ router.post('/createChatRoom', authMiddleware, async (req, res) => {
 });
 
 // 로그인한 유저에 해당하는 채팅방 전체 조회
-// router.get('/chatRooms', authMiddleware, async (req, res) => {
-router.get('/chatRooms', async (req, res) => {
-    // const userId = parseInt(res.locals.user.userId);
-    const userId = parseInt(req.body.userId, 10);
+router.get('/chatRooms', authMiddleware, async (req, res) => {
+    // router.get('/chatRooms', async (req, res) => {
+    const userId = parseInt(res.locals.user.userId);
+    // const userId = parseInt(req.body.userId, 10);
 
     // 페이지네이션
     const page = parseInt(req.query.page) || 1; // 페이지 번호, 기본값은 1
