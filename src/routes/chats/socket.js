@@ -2,7 +2,6 @@
 import { Server as SocketIOServer } from 'socket.io';
 import jwt from 'jsonwebtoken';
 import { prisma } from '../../utils/prisma/index.js';
-import moment from 'moment-timezone';
 import { clearSocketPastMessages } from '../../utils/socketMessageHandling.js';
 // import { getLastMessageTimestamp, setLastMessageTimestamp } from '../../utils/timestampUtils.js';
 
@@ -65,12 +64,12 @@ const initializeSocket = (server, corsOptions) => {
             userSockets[user.userId] = socket.id; // 사용자 ID와 소켓 ID 매핑
         } catch (error) {
             if (error.name === 'TokenExpiredError') {
-                console.log('🚨🚨🚨비상비상 에러에러 4--1번.4--1번.', error.message);
+                console.log('비상비상 에러에러 4-1번.', error.message);
                 console.error('인증 오류:', error);
                 socket.emit('error', { message: '인증 오류: ' + error.message });
                 socket.disconnect();
             } else {
-                console.log('🚨🚨🚨비상비상 에러에러 4--2번.4--2번.', error.message);
+                console.log('비상비상 에러에러 4-2번.', error.message);
                 console.error('기타 에러 발생:', error);
                 socket.emit('error', { message: '인증 오류: ' + error.message });
                 socket.disconnect();
@@ -85,7 +84,7 @@ const initializeSocket = (server, corsOptions) => {
 
             // 사용자 인증 확인
             if (!socket.user) {
-                console.error('join room-socket.user error: Authentication failed');
+                console.error('join room-socket.user error: 인증되지 않은 사용자입니다.');
                 socket.emit('error', { message: '인증되지 않은 사용자입니다.' });
                 socket.disconnect();
                 return;
@@ -97,7 +96,7 @@ const initializeSocket = (server, corsOptions) => {
                     where: { roomId: parseInt(roomId) },
                 });
                 if (!room) {
-                    console.error('비상비상 에러에러 9-1번.9-1번. >> 채팅방이 존재하지 않습니다.');
+                    console.error('채팅방이 존재하지 않습니다.');
                     socket.emit('error', { message: '채팅방이 존재하지 않습니다.' });
                     socket.disconnect();
                     return;
@@ -109,7 +108,7 @@ const initializeSocket = (server, corsOptions) => {
                     socket.emit('joined room', { roomId: roomId });
                 });
 
-                // 사용자가 채팅방에 입장할 때, 입장 여부 컬럼 true로 변경
+                // 사용자가 채팅방에 입장할 때, 채팅방 입장 여부 컬럼 값을 true로 변경
                 if (!room.hasEntered) {
                     await prisma.rooms.update({
                         where: { roomId: parseInt(roomId) },
@@ -156,7 +155,7 @@ const initializeSocket = (server, corsOptions) => {
                 const newTimestamp = new Date();
                 lastMessageTimestamps.set(`${socket.id}:${roomId}`, newTimestamp);
             } catch (error) {
-                console.error('비상비상 에러에러 9-2번.9-2번.', error);
+                console.error('비상비상 에러에러 9-2번.', error);
                 socket.emit('error', { message: '채팅방 참여 중 에러 발생.' });
                 socket.disconnect();
             }
