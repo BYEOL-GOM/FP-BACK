@@ -3,6 +3,7 @@ import express from 'express';
 import { prisma } from '../../utils/prisma/index.js';
 import authMiddleware from '../../middlewares/authMiddleware.js';
 import moment from 'moment-timezone';
+import { createChatRoomSchema, roomIdSchema } from './chat.joi.js';
 
 const router = express.Router();
 
@@ -189,6 +190,7 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
 // src/routes/chats/chat.router.js
 // 채팅방 과거 메세지 전체 조회
 router.get('/rooms/:roomId', authMiddleware, async (req, res) => {
+    // router.get('/rooms/:roomId', async (req, res) => {
     // 스키마를 이용하여 요청 파라미터 유효성 검사
     const { value, error } = roomIdSchema.validate({ roomId: req.params.roomId });
     // 유효성 검사 실패 시 에러 처리
