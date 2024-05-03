@@ -18,6 +18,7 @@ COPY src/domains ./domains
 COPY src/middlewares ./middlewares
 COPY src/utils ./utils
 COPY logs ./logs
+COPY src/swagger ./swagger
 
 # Prisma 클라이언트 생성
 COPY prisma ./prisma
