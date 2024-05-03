@@ -106,7 +106,7 @@ const io = initializeSocket(server, corsOptions); // Initialize Socket.IO with C
 
 // 웹소켓 기본 라우터
 app.get('/', (req, res) => {
-    res.status(200).json({ message: 'test' });
+    res.status(200).json({ message: '안녕? Socket.io!' });
 });
 
 server.listen(PORT, () => console.log(`${PORT} 포트로 서버가 열렸어요!`));
