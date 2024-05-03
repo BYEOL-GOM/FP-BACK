@@ -176,7 +176,7 @@ const initializeSocket = (server, corsOptions) => {
             }
             console.log('여기까지 와? 12번.');
 
-            const roomId = userRooms[socket.id];
+            // const roomId = userRooms[socket.id];
             if (!roomId) {
                 console.error('사용자가 참여한 채팅방이 존재하지 않습니다.');
                 socket.emit('error', { message: '사용자가 참여한 채팅방이 존재하지 않습니다.' });
@@ -186,7 +186,8 @@ const initializeSocket = (server, corsOptions) => {
             console.log('여기까지 와? 13번.');
             try {
                 const room = await prisma.rooms.findUnique({
-                    where: { roomId: parseInt(roomId) },
+                    // where: { roomId: parseInt(roomId) },
+                    where: { roomId: parseInt(data.roomId) },
                     select: { status: true }, // status 필드만 선택
                 });
                 // // 채팅 요청이 승인(ACCEPTED)일때만 채팅 활성화. 아니면 비활성화
@@ -210,13 +211,15 @@ const initializeSocket = (server, corsOptions) => {
                 const newChat = await prisma.chattings.create({
                     data: {
                         text: data.msg,
-                        roomId: parseInt(roomId),
+                        // roomId: parseInt(roomId),
+                        roomId: parseInt(data.roomId),
                         senderId: socket.user.userId,
                     },
                 });
 
                 console.log('New chat saved :', newChat);
-                console.log(`Message sent in room ${roomId} by user ${socket.user.userId}: ${data.msg}`);
+                // console.log(`Message sent in room ${roomId} by user ${socket.user.userId}: ${data.msg}`);
+                console.log(`Message sent in room ${data.roomId} by user ${socket.user.userId}: ${data.msg}`);
 
                 // roomId 참여한 다른 소켓에게 메시지 전송
                 // console.log('room.roomId.toString()', room.roomId.toString());
@@ -227,7 +230,8 @@ const initializeSocket = (server, corsOptions) => {
                     // chatId: newChat.chatId,
                     userId: socket.user.userId,
                     text: data.msg,
-                    roomId: parseInt(roomId),
+                    // roomId: parseInt(roomId),
+                    roomId: parseInt(data.roomId),
                     time: newChat.createdAt, // DB에서 자동 생성된 시간 사용
                 });
                 console.log('여기까지 와? 14번.');
