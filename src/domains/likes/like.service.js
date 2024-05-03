@@ -44,6 +44,16 @@ export const sendLike = async (worryId, commentId, userId, content) => {
         throw err;
     }
 
+    // 자신의 댓글에 좋아요 방지
+    const commentInfo = await LikeRepository.getCommentAndWorryInfo(commentId);
+    if (!commentInfo || commentInfo.userId === commentInfo.worry.userId) {
+        console.error('error', err.message);
+        const err = new Error('사용자는 자신이 게시한 고민에 대한 자신의 해결책에 좋아요를 보낼 수 없습니다.');
+        err.status = 400;
+        throw err;
+    }
+    console.log('💛💛💛commentInfo', commentInfo);
+
     // 좋아요(답례) 보내기. (고민(worry)을 해결된 상태로 변경)
     const present = await LikeRepository.markWorryAsSolvedAndCreateLike(worryId, commentId, userId, content);
 
@@ -89,5 +99,6 @@ export const getHelpedSolveWorryDetailsById = async (worryId, userId) => {
 
 // 좋아요를 가장 많이 받은 탑 5위 댓글 조회
 export const getTopLikedCommentAuthors = async (userId) => {
+    console.log('💛💛💛서비스 userId : ', userId);
     return await LikeRepository.findTopLikedCommentAuthors(userId);
 };

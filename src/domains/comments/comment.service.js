@@ -97,6 +97,7 @@ export const getCommentDetail = async (commentId, userId) => {
             worryUserId: updatedComment.worry?.userId, // 고민 작성자 userId
             icon: updatedComment.worry?.icon,
             isSolved: updatedComment.worry.isSolved,
+            commentAuthorId: updatedComment.worry?.commentAuthorId, // 답장 작성자 userId 추가
         };
     });
 };
