@@ -16,6 +16,27 @@ dotenv.config();
 
 const router = express.Router();
 
+// 토큰 발사대
+router.get('/someTokken', async (req, res, next) => {
+    const lastUser = await prisma.users.count();
+    const createUser = await prisma.users.create({
+        data: {
+            userCheckId: `테드스용아이디${lastUser + 1} `,
+            nickname: `고민의 늪에 빠진 곰 ${lastUser + 1}`,
+            email: user.email,
+        },
+    });
+
+    const accessToken = jwt.sign({ userId: createUser.userId }, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: process.env.ACCESS_TOKEN_LIFE,
+    });
+    const refreshToken = jwt.sign({ userId: createUser.userId }, process.env.REFRESH_TOKEN_SECRET, {
+        expiresIn: process.env.REFRESH_TOKEN_LIFE,
+    });
+    return res.status(200).json({ accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}` });
+    //return res.status(200).json(userInfo);
+});
+
 // 카카오 로그인
 router.post('/kakao', kakaoLoginController);
 
@@ -113,23 +134,31 @@ router.put('/getStar', authMiddleware, async (req, res, next) => {
 function calculateStarCost(planetType) {
     switch (planetType) {
         case 'B':
-            return 1;
+            return 0;
         case 'C':
             return 3;
         case 'D':
             return 5;
+        case 'E':
+            return 7; // E 행성의 별 비용
+        case 'F':
+            return 10; // F 행성의 별 비용
+        case 'G':
+            return 15; // G 행성의 별 비용
+        case 'H':
+            return 20; // H 행성의 별 비용
         default:
             return 0; // A 행성
     }
 }
 
-// 헹성 구입
+// 행성 구입 라우터
 router.post('/buyPlanet', authMiddleware, async (req, res) => {
     const userId = res.locals.user.userId;
     const { planetType } = req.body;
 
     // 입력값 검증
-    if (!planetType || !['A', 'B', 'C', 'D'].includes(planetType)) {
+    if (!planetType || !['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'].includes(planetType)) {
         return res.status(400).json({ message: '제공된 행성 유형이 유효하지 않습니다.' });
     }
 

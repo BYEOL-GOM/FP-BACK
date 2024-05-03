@@ -80,8 +80,12 @@ export const getCommentDetail = async (commentId, userId) => {
         // 업데이트된 답장 정보 조회
         const updatedComment = await commentRepository.getComment(commentId, prisma);
 
-        // 클라이언트에게 반환을 위한 객체 생성
-        const response = {
+        // '읽음' 상태 확인 추가
+        if (updatedComment.unRead !== false) {
+            throw new Error('메세지가 읽음 처리 되지 않았습니다', 500);
+        }
+
+        return {
             commentId: updatedComment.commentId,
             content: updatedComment.content,
             createdAt: updatedComment.createdAt,
@@ -95,7 +99,6 @@ export const getCommentDetail = async (commentId, userId) => {
             isSolved: updatedComment.worry.isSolved,
             commentAuthorId: updatedComment.worry?.commentAuthorId, // 답장 작성자 userId 추가
         };
-        return response;
     });
 };
 
