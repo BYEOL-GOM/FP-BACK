@@ -177,7 +177,7 @@ const initializeSocket = (server, corsOptions) => {
             console.log('여기까지 와? 12번.');
 
             // const roomId = userRooms[socket.id];
-            if (!roomId) {
+            if (!data.roomId) {
                 console.error('사용자가 참여한 채팅방이 존재하지 않습니다.');
                 socket.emit('error', { message: '사용자가 참여한 채팅방이 존재하지 않습니다.' });
                 return;
