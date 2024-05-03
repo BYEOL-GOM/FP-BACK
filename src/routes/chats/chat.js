@@ -78,10 +78,10 @@ router.post('/createChatRoom', authMiddleware, async (req, res) => {
 });
 
 // 로그인한 유저에 해당하는 채팅방 전체 조회
-router.get('/chatRooms', authMiddleware, async (req, res) => {
-    // router.get('/chatRooms', async (req, res) => {
-    const userId = parseInt(res.locals.user.userId);
-    // const userId = parseInt(req.body.userId, 10);
+// router.get('/chatRooms', authMiddleware, async (req, res) => {
+router.get('/chatRooms', async (req, res) => {
+    // const userId = parseInt(res.locals.user.userId);
+    const userId = parseInt(req.body.userId, 10);
 
     // 페이지네이션
     const page = parseInt(req.query.page) || 1; // 페이지 번호, 기본값은 1
@@ -124,6 +124,7 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
                             not: userId,
                         },
                     },
+                    take: 1, // 가장 최근 메시지 하나만 가져오기
                     orderBy: { createdAt: 'desc' },
                 },
             },
@@ -135,6 +136,8 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
         // 각 채팅방에 대해 반복하고, 각 방의 현재 상태를 확인하여 처리
         const updatedRooms = rooms.map((room) => {
             const lastCommentContent = room.worry.comments.length > 0 ? room.worry.comments[0].content : 'No comments';
+            const lastChatting = room.chattings.length > 0 ? room.chattings[0] : 'No messages';
+            const lastChattingMessage = lastChatting.text;
             const isRead = room.chattings.every((chat) => chat.isRead); // 모든 메시지가 읽혔는지 확인
             const formattedUpdatedAt = moment(room.updatedAt).tz('Asia/Seoul').format('YYYY-MM-DDTHH:mm:ssZ'); // 뒤에 +09:00
             // const formattedUpdatedAt = moment(room.updatedAt).tz('Asia/Seoul').format('YYYY-MM-DDTHH:mm:ss');
@@ -150,6 +153,7 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
                 isAccepted: room.status === 'ACCEPTED',
                 hasEntered: room.hasEntered, // 사용자가 방에 입장했는지 여부 표시
                 lastCommentContent: lastCommentContent,
+                lastChattingMessage: lastChattingMessage,
                 icon: room.worry.icon,
                 status: room.status,
                 updatedAt: formattedUpdatedAt,

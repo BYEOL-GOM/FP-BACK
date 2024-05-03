@@ -226,8 +226,6 @@ const initializeSocket = (server, corsOptions) => {
 
                 console.log(typeof data.roomId);
                 io.to(data.roomId.toString()).emit('message', {
-                    // io.to(data.roomId).emit('message', {
-                    // 기존 chatting이벤트에서 emit 설정
                     userId: socket.user.userId,
                     text: data.msg,
                     // roomId: parseInt(roomId),
