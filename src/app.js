@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import LogMiddleware from './middlewares/logMiddleware.js';
 import generalErrorHandler from './middlewares/generalErrorMiddleware.js';
-import router from './routes/index.js';
+import router from './domains/index.js';
 import jwt from 'jsonwebtoken';
 import bodyParser from 'body-parser';
 import { loadBannedWords } from './utils/bannedWordsLoader.js';
