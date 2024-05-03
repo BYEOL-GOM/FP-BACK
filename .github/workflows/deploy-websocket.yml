@@ -1,0 +1,21 @@
+name: Deploy WebSocket Server
+
+on:
+    push:
+        branches:
+            - main
+        paths:
+            - 'websocket/**'
+jobs:
+    deploy-websocket:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - name: Deploy to WebSocket Server
+              uses: appleboy/ssh-action@v0.1.6
+              with:
+                  host: ${{ secrets.WEBSOCKET_REMOTE_IP }}
+                  username: ${{ secrets.WEBSOCKET_REMOTE_USER }}
+                  key: ${{ secrets.WEBSOCKET_REMOTE_PRIVATE_KEY }}
+                  port: ${{ secrets.WEBSOCKET_REMOTE_SSH_PORT }}
+                  script: |
