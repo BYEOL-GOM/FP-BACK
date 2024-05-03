@@ -186,7 +186,6 @@ const initializeSocket = (server, corsOptions) => {
             console.log('여기까지 와? 13번.');
             try {
                 const room = await prisma.rooms.findUnique({
-                    // where: { roomId: parseInt(roomId) },
                     where: { roomId: parseInt(data.roomId) },
                     select: { status: true }, // status 필드만 선택
                 });
@@ -218,19 +217,13 @@ const initializeSocket = (server, corsOptions) => {
                 });
 
                 console.log('New chat saved :', newChat);
-                // console.log(`Message sent in room ${roomId} by user ${socket.user.userId}: ${data.msg}`);
                 console.log(`Message sent in room ${data.roomId} by user ${socket.user.userId}: ${data.msg}`);
 
                 // roomId 참여한 다른 소켓에게 메시지 전송
-                // console.log('data.roomId.toString()', data.roomId.toString());
-
-                console.log(typeof data.roomId);
                 io.to(data.roomId.toString()).emit('message', {
-                    // io.to(data.roomId).emit('message', {
-                    // 기존 chatting이벤트에서 emit 설정
+                    chatId: newChat.chatId,
                     userId: socket.user.userId,
                     text: data.msg,
-                    // roomId: parseInt(roomId),
                     roomId: parseInt(data.roomId),
                     time: newChat.createdAt, // DB에서 자동 생성된 시간 사용
                 });
