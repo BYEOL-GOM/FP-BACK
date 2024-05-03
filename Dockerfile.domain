@@ -17,7 +17,7 @@ RUN yarn install
 COPY src/domains ./domains
 COPY src/middlewares ./middlewares
 COPY src/utils ./utils
-COPY src/logs ./logs
+COPY logs ./logs
 
 # Prisma 클라이언트 생성
 COPY prisma ./prisma
