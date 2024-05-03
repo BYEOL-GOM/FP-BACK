@@ -27,4 +27,4 @@ RUN yarn prisma generate
 EXPOSE 3000
 
 # 애플리케이션 실행
-CMD ["pm2-runtime", "src/domains/app.js"]
+CMD ["pm2-runtime", "/app/domains/app.js"]
