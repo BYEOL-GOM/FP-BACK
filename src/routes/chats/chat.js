@@ -3,15 +3,11 @@ import express from 'express';
 import { prisma } from '../../utils/prisma/index.js';
 import authMiddleware from '../../middlewares/authMiddleware.js';
 import moment from 'moment-timezone';
-import { createChatRoomSchema, roomIdSchema } from './chat.joi.js';
-import { AppError } from '../../utils/AppError.js';
 
 const router = express.Router();
 
 // 채팅방 생성
 router.post('/createChatRoom', authMiddleware, async (req, res) => {
-    // router.post('/createChatRoom', async (req, res) => {
-
     // body에서 worryId 추출 및 유효성 검사
     const { value, error } = createChatRoomSchema.validate({ worryId: req.body.worryId });
     if (error) {
@@ -72,7 +68,6 @@ router.post('/createChatRoom', authMiddleware, async (req, res) => {
 
 // 로그인한 유저에 해당하는 채팅방 전체 조회
 router.get('/chatRooms', authMiddleware, async (req, res) => {
-    // router.get('/chatRooms', async (req, res) => {
     const userId = parseInt(res.locals.user.userId);
     // const userId = parseInt(req.body.userId, 10);
 
@@ -193,8 +188,6 @@ router.get('/chatRooms', authMiddleware, async (req, res) => {
 // src/routes/chats/chat.router.js
 // 채팅방 과거 메세지 전체 조회
 router.get('/rooms/:roomId', authMiddleware, async (req, res) => {
-    // router.get('/rooms/:roomId', async (req, res) => {
-
     // 스키마를 이용하여 요청 파라미터 유효성 검사
     const { value, error } = roomIdSchema.validate({ roomId: req.params.roomId });
     // 유효성 검사 실패 시 에러 처리
@@ -279,8 +272,6 @@ router.get('/rooms/:roomId', authMiddleware, async (req, res) => {
 
 // 채팅 신청 승인
 router.put('/acceptChat/:roomId', authMiddleware, async (req, res) => {
-    // router.put('/acceptChat/:roomId', async (req, res) => {
-
     // 스키마를 이용하여 요청 파라미터 유효성 검사
     const { value, error } = roomIdSchema.validate({ roomId: req.params.roomId });
     // 유효성 검사 실패 시 에러 처리
@@ -327,8 +318,6 @@ router.put('/acceptChat/:roomId', authMiddleware, async (req, res) => {
 
 // 채팅 신청 거절
 router.delete('/rejectChat/:roomId', authMiddleware, async (req, res) => {
-    // router.delete('/rejectChat/:roomId', async (req, res) => {
-
     // 스키마를 이용하여 요청 파라미터 유효성 검사
     const { value, error } = roomIdSchema.validate({ roomId: req.params.roomId });
     // 유효성 검사 실패 시 에러 처리
@@ -345,11 +334,12 @@ router.delete('/rejectChat/:roomId', authMiddleware, async (req, res) => {
         });
         // 채팅방이 존재하지 않을 때
         if (!room) {
-            return res.status(404).json({ message: '채팅방이 존재하지 않습니다.' });
+            throw new AppError('채팅방이 존재하지 않습니다.', 404);
         }
 
+        // 현재 유저가 고민의 답변자가 아닐 때
         if (room.commentAuthorId !== userId) {
-            return res.status(403).json({ message: '이 작업을 수행할 권한이 없습니다.' });
+            throw new AppError('고민의 답변자만 승인할 수 있습니다.', 403);
         }
         console.log('reject-room.commentAuthorId', room.commentAuthorId);
 
@@ -358,29 +348,30 @@ router.delete('/rejectChat/:roomId', authMiddleware, async (req, res) => {
         });
         return res.status(200).json({ message: '채팅방이 삭제되었습니다.' });
     } catch (error) {
-        console.error('채팅방 거절 처리 중 에러 발생:', error);
+        console.error('채팅방 거절 처리(삭제) 중 에러 발생:', error);
         next(error);
     }
 });
 
 // 채팅방 나가기 API
 router.delete('/rooms/:roomId/leave', authMiddleware, async (req, res) => {
-    // router.delete('/rooms/:roomId/leave', async (req, res) => {
-    const roomId = parseInt(req.params.roomId);
+    // 스키마를 이용하여 요청 파라미터 유효성 검사
+    const { value, error } = roomIdSchema.validate({ roomId: req.params.roomId });
+    // 유효성 검사 실패 시 에러 처리
+    if (error) {
+        throw new AppError('데이터 형식이 일치하지 않습니다.', 400);
+    }
+    const { roomId } = value;
     const userId = parseInt(res.locals.user.userId);
     // const userId = parseInt(req.body.userId, 10);
-
-    if (isNaN(roomId)) {
-        return res.status(400).json({ message: '유효하지 않은 roomId입니다.' });
-    }
 
     try {
         const room = await prisma.rooms.findUnique({
             where: { roomId: roomId },
         });
-
+        // 채팅방이 존재하지 않을 때
         if (!room) {
-            return res.status(404).json({ message: '채팅방이 존재하지 않습니다.' });
+            throw new AppError('채팅방이 존재하지 않습니다.', 404);
         }
 
         // userId 혹은 commentAuthorId가 현재 유저 ID와 일치하는지 확인 후 해당 필드를 null로 업데이트
@@ -394,6 +385,9 @@ router.delete('/rooms/:roomId/leave', authMiddleware, async (req, res) => {
                 where: { roomId: roomId },
                 data: { commentAuthorId: null },
             });
+        } else {
+            // 사용자가 이미 채팅방에 없는 경우 에러 처리
+            throw new AppError('사용자가 이미 채팅방에 존재하지 않습니다.', 400);
         }
 
         return res.status(200).json({ message: `채팅방에서 사용자 ${userId}가 나갔습니다.` });
