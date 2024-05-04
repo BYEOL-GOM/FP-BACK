@@ -164,9 +164,6 @@ const initializeSocket = (server, corsOptions) => {
         socket.on('chatting', async (data) => {
             console.log('여기까지 와? 11번.');
             console.log('Received data:', data); // 데이터 수신 확인 로그
-            //---------------------------------------------------------
-            console.log('~~~~~~~~~~~~~Received data.msg', data.msg);
-            console.log('~~~~~~~~~~~~~Received data.roomId', data.roomId);
 
             if (!socket.user) {
                 console.error('chatting-socket.user error: 인증되지 않은 사용자입니다.');
@@ -209,7 +206,6 @@ const initializeSocket = (server, corsOptions) => {
                 const newChat = await prisma.chattings.create({
                     data: {
                         text: data.msg,
-                        // roomId: parseInt(roomId),
                         roomId: parseInt(data.roomId),
                         senderId: socket.user.userId,
                     },
@@ -224,7 +220,6 @@ const initializeSocket = (server, corsOptions) => {
                     userId: socket.user.userId,
                     text: data.msg,
                     roomId: parseInt(data.roomId),
-                    // time: newChat.createdAt, // DB에서 자동 생성된 시간 사용
                     createdAt: newChat.createdAt, // DB에서 자동 생성된 시간 사용
                 });
                 console.log('여기까지 와? 14번.');
