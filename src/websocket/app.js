@@ -19,7 +19,8 @@ const PORT = process.env.CONTAINER_PORT || 3000;
 
 // CORS 미들웨어 설정
 const corsOptions = {
-    origin: ['http://localhost:3000', 'https://friendj.store'],
+    origin: ['https://byeolgom.com/', 'https://friendj.store'],
+    // origin: ['http://localhost:3000', 'https://friendj.store'],
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
