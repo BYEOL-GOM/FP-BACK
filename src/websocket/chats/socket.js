@@ -225,7 +225,8 @@ const initializeSocket = (server, corsOptions) => {
                     userId: socket.user.userId,
                     text: data.msg,
                     roomId: parseInt(data.roomId),
-                    time: newChat.createdAt, // DB에서 자동 생성된 시간 사용
+                    // time: newChat.createdAt, // DB에서 자동 생성된 시간 사용
+                    createdAt: newChat.createdAt, // DB에서 자동 생성된 시간 사용
                 });
                 console.log('여기까지 와? 14번.');
             } catch (error) {
