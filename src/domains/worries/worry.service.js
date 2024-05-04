@@ -6,7 +6,10 @@ import { prisma } from '../../utils/prisma/index.js';
 export const createWorry = async (content, icon, userId, fontColor) => {
     return await prisma.$transaction(async (prisma) => {
         const user = await worryRepository.getUserById(userId, prisma);
-        if (!user || user.remainingWorries <= 0) {
+        if (!user) {
+            throw new AppError('존재하지 않는 사용자 입니다', 404);
+        }
+        if (user.remainingWorries <= 0) {
             throw new AppError('최대 고민 작성수를 초과하였습니다', 400);
         }
         const potentialResponders = await worryRepository.getRandomUser(userId, prisma);

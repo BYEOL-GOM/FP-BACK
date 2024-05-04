@@ -143,14 +143,11 @@ export const updateUserCounts = async (worryAuthorId, commentAuthorId, prismaCli
         where: { userId: worryAuthorId, remainingWorries: { lt: 5 } },
         data: { remainingWorries: { increment: 1 } },
     });
-
-    // 답변 작성자가 고민 작성자와 다를 경우, 답변 작성자의 remainingAnswers 증가
-    if (commentAuthorId !== worryAuthorId) {
-        await prismaClient.users.updateMany({
-            where: { userId: commentAuthorId, remainingAnswers: { lt: 5 } },
-            data: { remainingAnswers: { increment: 1 } },
-        });
-    }
+    // 답변 작성자의 remainigAnswers 증가
+    await prismaClient.users.updateMany({
+        where: { userId: commentAuthorId, remainingAnswers: { lt: 5 } },
+        data: { remainingAnswers: { increment: 1 } },
+    });
 };
 
 // # 신고 정보 저장하기

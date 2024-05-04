@@ -1,29 +1,12 @@
 import express from 'express';
-import {
-    kakaoLoginController,
-    naverLoginController,
-    refreshController,
-    WorryCountController,
-} from './user.controller.js';
 import { prisma } from '../../utils/prisma/index.js';
-import axios from 'axios';
-import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import passport from 'passport';
 import authMiddleware from '../../middlewares/authMiddleware.js';
+import { WorryCountController } from './pianets.controller.js';
 
 dotenv.config();
 
 const router = express.Router();
-
-// 카카오 로그인
-router.post('/kakao', kakaoLoginController);
-
-// 네이버 로그인
-router.post('/naver', naverLoginController);
-
-// 엑세스 토큰 재발급
-router.post('/refresh', refreshController);
 
 // 좋아요된 고민의 갯수 조회하기
 router.get('/count', authMiddleware, WorryCountController);
@@ -76,7 +59,6 @@ router.get('/myNickname', authMiddleware, async (req, res, next) => {
         return res.status(500).json({ message: '서버 오류' });
     }
 });
-export default router;
 
 // 테스트용 행성 갯수 늘리기
 router.put('/getStar', authMiddleware, async (req, res, next) => {
@@ -113,23 +95,31 @@ router.put('/getStar', authMiddleware, async (req, res, next) => {
 function calculateStarCost(planetType) {
     switch (planetType) {
         case 'B':
-            return 1;
+            return 0;
         case 'C':
             return 3;
         case 'D':
             return 5;
+        case 'E':
+            return 7; // E 행성의 별 비용
+        case 'F':
+            return 10; // F 행성의 별 비용
+        case 'G':
+            return 15; // G 행성의 별 비용
+        case 'H':
+            return 20; // H 행성의 별 비용
         default:
             return 0; // A 행성
     }
 }
 
-// 헹성 구입
+// 행성 구입 라우터
 router.post('/buyPlanet', authMiddleware, async (req, res) => {
     const userId = res.locals.user.userId;
     const { planetType } = req.body;
 
     // 입력값 검증
-    if (!planetType || !['A', 'B', 'C', 'D'].includes(planetType)) {
+    if (!planetType || !['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'].includes(planetType)) {
         return res.status(400).json({ message: '제공된 행성 유형이 유효하지 않습니다.' });
     }
 
@@ -330,3 +320,5 @@ router.put('/updateDarkMode', authMiddleware, async (req, res) => {
         res.status(500).json({ message: '다크모드 설정을 업데이트하는 중 오류가 발생했습니다', error: error.message });
     }
 });
+
+export default router;

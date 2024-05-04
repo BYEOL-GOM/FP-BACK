@@ -3,13 +3,11 @@ import express from 'express';
 import { prisma } from '../../utils/prisma/index.js';
 import authMiddleware from '../../middlewares/authMiddleware.js';
 import moment from 'moment-timezone';
-import { createChatRoomSchema, roomIdSchema } from './chat.joi.js';
 
 const router = express.Router();
 
 // 채팅방 생성
 router.post('/createChatRoom', authMiddleware, async (req, res) => {
-    // router.post('/createChatRoom', async (req, res) => {
     // body에서 worryId 추출 및 유효성 검사
     const { value, error } = createChatRoomSchema.validate({ worryId: req.body.worryId });
     if (error) {
@@ -69,11 +67,9 @@ router.post('/createChatRoom', authMiddleware, async (req, res) => {
 });
 
 // 로그인한 유저에 해당하는 채팅방 전체 조회
-// router.get('/chatRooms', authMiddleware, async (req, res) => {
-router.get('/chatRooms', async (req, res) => {
-    // router.get('/chatRooms', async (req, res) => {
-    // const userId = parseInt(res.locals.user.userId);
-    const userId = parseInt(req.body.userId, 10);
+router.get('/chatRooms', authMiddleware, async (req, res) => {
+    const userId = parseInt(res.locals.user.userId);
+    // const userId = parseInt(req.body.userId, 10);
 
     // 페이지네이션
     const page = parseInt(req.query.page) || 1; // 페이지 번호, 기본값은 1
@@ -192,7 +188,6 @@ router.get('/chatRooms', async (req, res) => {
 // src/routes/chats/chat.router.js
 // 채팅방 과거 메세지 전체 조회
 router.get('/rooms/:roomId', authMiddleware, async (req, res) => {
-    // router.get('/rooms/:roomId', async (req, res) => {
     // 스키마를 이용하여 요청 파라미터 유효성 검사
     const { value, error } = roomIdSchema.validate({ roomId: req.params.roomId });
     // 유효성 검사 실패 시 에러 처리

@@ -1,0 +1,13 @@
+config:
+    target: 'http://localhost:3000'
+    phases:
+        - duration: 300
+          arrivalRate: 100
+        - duration: 300
+          arrivalRate: 200
+        - duration: 300
+          arrivalRate: 300
+scenarios:
+    - flow:
+          - get:
+                url: '/' # 테스트할 엔드포인트

@@ -1,4 +1,4 @@
-name: Deploy Domain Server on Push or Merge
+name: Deploy WebSocket Server on Push or Merge
 
 on:
     push:
@@ -6,13 +6,12 @@ on:
             - dev
             - main
         paths:
-            - 'src/domains/**'
+            - 'src/websocket/**'
             - 'src/middlewares/**'
             - 'src/utils/**'
-            - 'src/common/**'
             - 'prisma/**'
-            - 'Dockerfile.domain'
-            - '.github/workflows/deploy.yml'
+            - 'Dockerfile.websocket'
+            - '.github/workflows/deploy-websocket.yml'
 
 jobs:
     prettier-check:
@@ -35,9 +34,9 @@ jobs:
             - uses: docker/build-push-action@v2
               with:
                   context: .
-                  file: Dockerfile.domain # Ensure this Dockerfile is setup correctly
+                  file: Dockerfile.websocket
                   push: true
-                  tags: leticia0408/byeol_gom:${{ github.ref == 'refs/heads/dev' && 'latest-dev' || 'latest-prod' }}
+                  tags: leticia0408/byeol_gom_websocket:${{ github.ref == 'refs/heads/dev' && 'websocket-dev' || 'websocket-prod' }}
 
     deploy:
         runs-on: ubuntu-latest
@@ -49,14 +48,14 @@ jobs:
                     echo "CORS_ORIGIN=${{ secrets.CORS_ORIGIN_DEV }}" >> $GITHUB_ENV
                     echo "KAKAO_REDIRECT_URI=${{ secrets.DEV_KAKAO_REDIRECT_URI }}" >> $GITHUB_ENV
                     echo "DATABASE_URL=${{ secrets.DEV_DATABASE_URL }}" >> $GITHUB_ENV
-                    echo "CONTAINER_NAME=my-app-dev" >> $GITHUB_ENV
+                    echo "CONTAINER_NAME=websocket-dev" >> $GITHUB_ENV
                     echo "CONTAINER_PORT=${{ secrets.DEV_PORT }}" >> $GITHUB_ENV
                     echo "NAVER_REDIRECT_URI=${{ secrets.DEV_NAVER_REDIRECT_URI }}" >> $GITHUB_ENV
                   else
                     echo "CORS_ORIGIN=${{ secrets.CORS_ORIGIN_PROD }}" >> $GITHUB_ENV
                     echo "KAKAO_REDIRECT_URI=${{ secrets.PROD_KAKAO_REDIRECT_URI }}" >> $GITHUB_ENV
                     echo "DATABASE_URL=${{ secrets.PROD_DATABASE_URL }}" >> $GITHUB_ENV
-                    echo "CONTAINER_NAME=my-app-prod" >> $GITHUB_ENV
+                    echo "CONTAINER_NAME=websocket-prod" >> $GITHUB_ENV
                     echo "NAVER_REDIRECT_URI=${{ secrets.NAVER_REDIRECT_URI }}" >> $GITHUB_ENV
                     echo "CONTAINER_PORT=${{ secrets.PROD_PORT }}" >> $GITHUB_ENV
                     echo "SENTRY_DSN=${{ secrets.SENTRY_DSN }}" >> $GITHUB_ENV
@@ -65,14 +64,14 @@ jobs:
 
             - uses: appleboy/ssh-action@v0.1.6
               with:
-                  host: ${{ secrets.REMOTE_IP }}
+                  host: ${{ secrets.WEBSOCKET_REMOTE_IP }}
                   username: ${{ secrets.REMOTE_USER }}
-                  key: ${{ secrets.REMOTE_PRIVATE_KEY }}
+                  key: ${{ secrets.WEBSOCKET_REMOTE_PRIVATE_KEY }}
                   port: ${{ secrets.REMOTE_SSH_PORT }}
                   script: |
                       CURRENT_IMAGE=$(docker inspect --format='{{.Config.Image}}' ${{ env.CONTAINER_NAME }} || echo "")
                       docker system prune -a -f --volumes
-                      docker pull leticia0408/byeol_gom:${{ github.ref == 'refs/heads/dev' && 'latest-dev' || 'latest-prod' }}
+                      docker pull leticia0408/byeol_gom_websocket:${{ github.ref == 'refs/heads/dev' && 'websocket-dev' || 'websocket-prod' }}
                       docker stop ${{ env.CONTAINER_NAME }} || true
                       docker rm ${{ env.CONTAINER_NAME }} || true
                       if docker run -d --name ${{ env.CONTAINER_NAME }} -p ${{ env.CONTAINER_PORT }}:3000 \
@@ -91,7 +90,7 @@ jobs:
                         -e REFRESH_TOKEN_LIFE="${{ secrets.REFRESH_TOKEN_LIFE }}" \
                         -e CLIENT_SECRET="${{ secrets.CLIENT_SECRET }}" \
                         -e SENTRY_DSN="${{ env.SENTRY_DSN }}" \
-                        leticia0408/byeol_gom:${{ github.ref == 'refs/heads/dev' && 'latest-dev' || 'latest-prod' }}; then
+                        leticia0408/byeol_gom_websocket:${{ github.ref == 'refs/heads/dev' && 'websocket-dev' || 'websocket-prod' }}; then
                         echo "Deployment successful."
                       else
                         echo "Deployment failed, sending Slack notification."
