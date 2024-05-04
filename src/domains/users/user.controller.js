@@ -121,14 +121,14 @@ export const naverLoginController = async (req, res) => {
         };
 
         const findUser = await prisma.users.findFirst({
-            where: { userCheckId: user.id.toString() }, // 'toString()' 추가
+            where: { userCheckId: user.id.toString() },
         });
 
         if (!findUser) {
             const lastUser = await prisma.users.count();
             const createUser = await prisma.users.create({
                 data: {
-                    userCheckId: user.id.toString(), // 'toString()' 추가
+                    userCheckId: user.id.toString(),
                     nickname: `고민의 늪에 빠진 곰 ${lastUser + 1}`,
                     email: user.email,
                 },
@@ -203,33 +203,6 @@ export const refreshController = async (req, res, next) => {
             accessToken: `Bearer ${newAccessToken}`,
             refreshToken: `Bearer ${newRefreshToken}`,
         });
-    } catch (error) {
-        next(error);
-    }
-};
-
-// 좋아요된 고민의 갯수 조회하기
-export const WorryCountController = async (req, res, next) => {
-    try {
-        const userId = res.locals.user.userId;
-        // const { userId } = req.body;
-        // const solvedWorriesCount = await prisma.worries.count({
-        //     where: {
-        //         commentAuthorId: +userId, // 이 값은 예시입니다. 실제 commentAuthorId 값으로 대체하세요.
-        //         isSolved: true,
-        //     },
-        // });
-        const user = await prisma.users.findUnique({
-            where: {
-                userId: +userId,
-            },
-            select: {
-                remainingStars: true,
-            },
-        });
-        return res.status(200).json({ remainingStars: user.remainingStars });
-
-        // return res.status(200).json(solvedWorriesCount);
     } catch (error) {
         next(error);
     }
