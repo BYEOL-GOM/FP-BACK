@@ -5,7 +5,6 @@ import cors from 'cors';
 import LogMiddleware from '../middlewares/logMiddleware.js';
 import generalErrorHandler from '../middlewares/generalErrorMiddleware.js';
 import router from './index.js';
-import jwt from 'jsonwebtoken';
 import bodyParser from 'body-parser';
 import { loadBannedWords } from '../utils/bannedWordsLoader.js';
 import { swaggerUi, specs } from '../swagger/swaggerOptions.js';
@@ -14,6 +13,9 @@ import validUrl from 'valid-url';
 import morgan from 'morgan';
 import * as Sentry from '@sentry/node';
 import { Integrations } from '@sentry/tracing';
+
+// 환경 변수 설정 로드
+dotenv.config();
 
 const app = express();
 
@@ -100,5 +102,3 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
     console.log(`${PORT} 포트로 서버가 열렸어요!`);
 });
-
-//

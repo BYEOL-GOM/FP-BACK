@@ -5,11 +5,11 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import LogMiddleware from '../middlewares/logMiddleware.js';
 import generalErrorHandler from '../middlewares/generalErrorMiddleware.js';
-// import router from './routes/index.js';
 import { loadBannedWords } from '../utils/bannedWordsLoader.js';
-// import initializeSocket from './routes/chats/socket.js'; // socket.js 파일에서 함수 가져오기
-// import chatRouter from '../src/routes/chats/chat.js';
-// import bodyParser from 'body-parser';
+import initializeSocket from './chats/socket.js'; // socket.js 파일에서 함수 가져오기
+// import chatRouter from './chats/chat.router.js';
+// import chat from './chats/chat.js';
+import router from './index.js';
 
 // 환경 변수 설정 로드
 dotenv.config();
@@ -19,34 +19,33 @@ const PORT = process.env.CONTAINER_PORT || 3000;
 
 // CORS 미들웨어 설정
 const corsOptions = {
-    // origin: '*', // 여러 출처 허용
-    // origin: 'http://localhost:3000',
-    origin: ['http://localhost:3000', 'https://friendj.store'],
+    origin: ['https://byeolgom.com/', 'https://friendj.store'],
+    // origin: ['http://localhost:3000', 'https://friendj.store'],
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
 };
 app.use(cors(corsOptions));
-// // CORS Preflight 요청 처리
-// app.use((req, res, next) => {
-//     if (req.method === 'OPTIONS') {
-//         res.header('Access-Control-Allow-Origin', req.headers.origin);
-//         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-//         res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//         return res.status(204).json({});
-//     }
-//     next();
-// });
+// CORS Preflight 요청 처리
+app.use((req, res, next) => {
+    if (req.method === 'OPTIONS') {
+        res.header('Access-Control-Allow-Origin', req.headers.origin);
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+        return res.status(204).json({});
+    }
+    next();
+});
 // CORS Preflight 요청 처리
 app.options('*', cors(corsOptions)); // 모든 preflight 요청에 대해 응답
 
 app.use(express.json());
-// app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(LogMiddleware);
 
-// app.use('/', router);
-// app.use('/chat', chatRouter);
+// app.use('/', chatRouter);
+// app.use('/', chat); // 레이어드 아키텍처 적용 전 임시 라우터
+app.use('/', router);
 
 app.use(generalErrorHandler);
 
@@ -61,7 +60,7 @@ loadBannedWords()
 
 const server = HttpServer(app);
 // Socket.IO 서버에도 CORS 적용
-// const io = initializeSocket(server, corsOptions); // Initialize Socket.IO with CORS
+const io = initializeSocket(server, corsOptions); // Initialize Socket.IO with CORS
 
 // 웹소켓 기본 라우터
 app.get('/', (req, res) => {
@@ -69,4 +68,3 @@ app.get('/', (req, res) => {
 });
 
 server.listen(PORT, () => console.log(`${PORT} 포트로 서버가 열렸어요!`));
-//

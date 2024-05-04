@@ -15,6 +15,7 @@ RUN yarn install
 
 # WebSocket 서버 코드
 COPY src/websocket ./websocket
+COPY src/domains/users ./domains/users
 COPY src/middlewares ./middlewares
 COPY src/utils ./utils
 COPY logs ./logs

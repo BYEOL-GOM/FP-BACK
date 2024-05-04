@@ -16,18 +16,19 @@ model Users {
   nickname      String
   email         String?
   fruit         Int     @default(0)
-  remainingWorries Int @default(5) //  최대 고민작성 가능 개수 5
-  remainingAnswers Int @default(5) // 답변 가능 개수 5개
-  remainingStars  Int      @default(0) // 별의 개수 
+  remainingWorries Int @default(5)            // 최대 고민작성 가능 개수 5개
+  remainingAnswers Int @default(5)            // 답변 가능 개수 5개
+  remainingStars  Int      @default(0)        // 별의 개수 
   planet          PlanetType  @default(A)
-  darkMode          Boolean   @default(true) // 다크모드 사용 여부
+  darkMode          Boolean   @default(true)  // 다크모드 사용 여부
 
-  worry Worries[]
-  reports     Reports[]  // 신고
+  worry         Worries[]
+  reports       Reports[]  // 신고
+  comments      Comments[]
+  likesSent     Likes[]   @relation("LikeSender")         // 선물을 보낸 사람
+  planetHistory PlanetBuyHistory[]
 
-  comments  Comments[]
-  likesSent     Likes[] @relation("LikeSender")
-  planetHistory PlanetBuyHistory[]     // 선물을 보낸 사람 
+  sentChattings Chattings[] @relation("SentChattings")    // 보낸 채팅 메시지들
 }
 
 enum PlanetType {
@@ -52,10 +53,9 @@ model Worries {
   updatedAt             DateTime? @map("updatedAt") 
   deletedAt             DateTime? @map("deletedAt")                    // 소프트 삭제 
 
-
   icon                  Icon?     @map("icon")
   unRead                Boolean   @default(true)  @map("unRead")       // 아직 안읽음
- 
+
   isSolved              Boolean   @default(false)                      // 고민이 해결됐는지에 대한 여부 확인
   reportReason          String?       @map("reportReason")             // 신고 이유
 
@@ -69,6 +69,9 @@ model Worries {
   // 해결된 답변
   solvingCommentId Int?       @unique @map("solvingCommentId")
   solvingComment   Comments?  @relation("SolvingComment", fields: [solvingCommentId], references: [commentId])
+
+  // Worries와 Rooms 간의 1:1 관계 설정
+  room          Rooms?
 }
 
 enum Icon{
@@ -99,7 +102,6 @@ model Comments {
 
   likes       Likes[]
   reports     Reports[]                                               // 신고
-
 
   // 해결된 답변
   solvingWorryId Int?
@@ -150,4 +152,44 @@ model PlanetBuyHistory {
   userId    Int
   user      Users           @relation(fields: [userId], references: [userId])
   planetType PlanetType     @default(A)
+}
+
+
+// 채팅방
+model Rooms {
+  roomId      Int       @id @default(autoincrement())
+  status      RoomStatus  @default(PENDING) @map("status")  // Enum 타입으로 상태 관리
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  hasEntered  Boolean   @default(false) // 사용자가 채팅방에 최초로 입장했는지 여부
+
+  worryId     Int       @unique
+  worry       Worries   @relation(fields: [worryId], references: [worryId])
+
+  userId          Int?       // 고민을 등록한 사용자 ID
+  commentAuthorId Int?       // 댓글 작성자 ID
+
+  
+  chattings   Chattings[]
+}
+enum RoomStatus {
+  PENDING   // 요청중
+  ACCEPTED  // 승인됨
+  REJECTED  // 거절됨
+}
+
+// 채팅
+model Chattings {
+  chatId      Int      @id @default(autoincrement())
+  text        String
+  createdAt   DateTime @default(now())
+  isRead      Boolean  @default(false) // 메시지 읽음 상태를 나타내는 필드, 기본값은 false (아직 읽지 않음)
+
+  // 메시지가 속한 채팅방
+  roomId      Int
+  room        Rooms    @relation(fields: [roomId], references: [roomId], onDelete: Cascade)
+
+  // 메시지를 보낸 사용자
+  senderId    Int
+  sender      Users     @relation("SentChattings", fields: [senderId], references: [userId])
 }

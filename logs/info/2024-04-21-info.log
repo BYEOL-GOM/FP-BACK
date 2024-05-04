@@ -1,0 +1,58 @@
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 224ms","timestamp":"2024-04-20T15:03:18.503Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 107ms","timestamp":"2024-04-20T15:03:25.941Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 110ms","timestamp":"2024-04-20T15:03:51.450Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 80ms","timestamp":"2024-04-20T15:03:58.373Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 122ms","timestamp":"2024-04-20T15:04:04.130Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 133ms","timestamp":"2024-04-20T15:20:48.155Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 164ms","timestamp":"2024-04-20T15:21:12.780Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 244ms","timestamp":"2024-04-20T15:23:50.437Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 116ms","timestamp":"2024-04-20T15:24:07.615Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 131ms","timestamp":"2024-04-20T15:31:56.406Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 91ms","timestamp":"2024-04-20T15:32:10.070Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 85ms","timestamp":"2024-04-20T15:32:15.875Z"}
+{"level":"info","message":"Method: POST, URL: /top-likes, Status: 404, Duration: 4ms","timestamp":"2024-04-20T15:32:33.410Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 251ms","timestamp":"2024-04-20T15:32:40.137Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 160ms","timestamp":"2024-04-20T15:33:12.874Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 119ms","timestamp":"2024-04-20T15:33:19.071Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-20T15:33:28.124Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 135ms","timestamp":"2024-04-20T15:33:28.125Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 104ms","timestamp":"2024-04-20T15:33:32.628Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 117ms","timestamp":"2024-04-20T15:33:38.831Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 164ms","timestamp":"2024-04-20T15:33:44.525Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 107ms","timestamp":"2024-04-20T15:34:30.967Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 63ms","timestamp":"2024-04-20T15:34:38.720Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-20T15:42:46.770Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 209ms","timestamp":"2024-04-20T15:42:46.777Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 180ms","timestamp":"2024-04-20T15:43:17.590Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-20T15:43:25.250Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 93ms","timestamp":"2024-04-20T15:43:25.251Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-20T15:43:28.650Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 121ms","timestamp":"2024-04-20T15:43:28.651Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-20T15:43:33.631Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 151ms","timestamp":"2024-04-20T15:43:33.633Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 86ms","timestamp":"2024-04-20T15:43:41.023Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 257ms","timestamp":"2024-04-20T15:56:23.056Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 169ms","timestamp":"2024-04-20T15:58:39.377Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 233ms","timestamp":"2024-04-20T16:01:12.695Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 229ms","timestamp":"2024-04-20T16:01:39.417Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 243ms","timestamp":"2024-04-20T16:04:28.056Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 100ms","timestamp":"2024-04-20T16:04:39.461Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 158ms","timestamp":"2024-04-20T16:04:47.150Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 118ms","timestamp":"2024-04-20T16:04:56.130Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 206ms","timestamp":"2024-04-20T16:05:31.026Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 97ms","timestamp":"2024-04-20T16:05:36.246Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 137ms","timestamp":"2024-04-20T16:05:43.026Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 100ms","timestamp":"2024-04-20T16:05:47.098Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 90ms","timestamp":"2024-04-20T16:05:52.378Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 107ms","timestamp":"2024-04-20T16:05:57.780Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 120ms","timestamp":"2024-04-20T16:07:16.254Z"}
+{"level":"error","message":"Error Status: 400, Message: Expected ',' or '}' after property value in JSON at position 19","timestamp":"2024-04-20T16:07:21.378Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 60ms","timestamp":"2024-04-20T16:07:26.755Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-20T16:13:10.941Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 251ms","timestamp":"2024-04-20T16:13:11.058Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 84ms","timestamp":"2024-04-20T16:15:35.209Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 106ms","timestamp":"2024-04-20T16:15:54.794Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 71ms","timestamp":"2024-04-20T16:16:00.671Z"}
+{"level":"error","message":"Error Status: undefined, Message: Cannot read properties of null (reading 'nickname')","timestamp":"2024-04-20T16:16:22.888Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 500, Duration: 78ms","timestamp":"2024-04-20T16:16:22.889Z"}
+{"level":"info","message":"Method: GET, URL: /top-likes, Status: 200, Duration: 72ms","timestamp":"2024-04-20T16:16:29.102Z"}
