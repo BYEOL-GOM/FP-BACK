@@ -47,7 +47,7 @@ if (process.env.SENTRY_DSN) {
 const corsOptions = {
     // origin: '*', // 여러 출처 허용
     // origin: 'http://localhost:3000',
-    origin: ['http://localhost:3000', 'https://friendj.store', 'http://zeusonerfakergumausikeria.store:3000'],
+    origin: ['http://localhost:3000', 'https://friendj.store'],
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
