@@ -60,7 +60,14 @@ loadBannedWords()
 
 const server = HttpServer(app);
 // Socket.IO 서버에도 CORS 적용
-const io = initializeSocket(server, corsOptions); // Initialize Socket.IO with CORS
+const io = initializeSocket(server, {
+    cors: {
+        origin: ['https://byeolgom.com', 'https://friendj.store', 'https://cestsympa.store'],
+        methods: ['GET', 'POST'],
+        allowedHeaders: ['Content-Type', 'Authorization'],
+        credentials: true,
+    },
+});
 
 // 웹소켓 기본 라우터
 app.get('/', (req, res) => {
