@@ -63,7 +63,7 @@ const server = HttpServer(app);
 const io = initializeSocket(server, {
     cors: {
         origin: ['https://byeolgom.com', 'https://friendj.store', 'https://cestsympa.store'],
-        methods: ['GET', 'POST'],
+        methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
         allowedHeaders: ['Content-Type', 'Authorization'],
         credentials: true,
     },
