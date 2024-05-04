@@ -44,7 +44,8 @@ if (process.env.SENTRY_DSN) {
 // CORS 미들웨어 설정
 app.use(
     cors({
-        origin: process.env.CORS_ORIGIN,
+        // origin: [process.env.CORS_ORIGIN, 'https://friendj.store'],
+        origin: [process.env.CORS_ORIGIN],
         methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
         allowedHeaders: ['Content-Type', 'Authorization'],
     }),

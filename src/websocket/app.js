@@ -17,6 +17,7 @@ const PORT = process.env.CONTAINER_PORT || 3000;
 
 // CORS 미들웨어 설정
 const corsOptions = {
+    // origin: ['https://byeolgom.com/', 'https://friendj.store', 'https://cestsympa.store'],
     origin: ['https://byeolgom.com/', 'https://friendj.store'],
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -55,7 +56,15 @@ loadBannedWords()
 
 const server = HttpServer(app);
 // Socket.IO 서버에도 CORS 적용
-const io = initializeSocket(server, corsOptions); // Initialize Socket.IO with CORS
+const io = initializeSocket(server, {
+    cors: {
+        // origin: ['https://byeolgom.com', 'https://friendj.store', 'https://cestsympa.store'],
+        origin: ['https://byeolgom.com', 'https://friendj.store'],
+        methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+        allowedHeaders: ['Content-Type', 'Authorization'],
+        credentials: true,
+    },
+});
 
 // 웹소켓 기본 라우터
 app.get('/', (req, res) => {
