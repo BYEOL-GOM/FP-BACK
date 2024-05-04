@@ -7,8 +7,6 @@ import LogMiddleware from '../middlewares/logMiddleware.js';
 import generalErrorHandler from '../middlewares/generalErrorMiddleware.js';
 import { loadBannedWords } from '../utils/bannedWordsLoader.js';
 import initializeSocket from './chats/socket.js'; // socket.js 파일에서 함수 가져오기
-// import chatRouter from './chats/chat.router.js';
-// import chat from './chats/chat.js';
 import router from './index.js';
 
 // 환경 변수 설정 로드
@@ -19,8 +17,8 @@ const PORT = process.env.CONTAINER_PORT || 3000;
 
 // CORS 미들웨어 설정
 const corsOptions = {
-    origin: ['https://byeolgom.com/', 'https://friendj.store', 'https://cestsympa.store'],
-    // origin: ['http://localhost:3000', 'https://friendj.store'],
+    // origin: ['https://byeolgom.com/', 'https://friendj.store', 'https://cestsympa.store'],
+    origin: ['https://byeolgom.com/', 'https://friendj.store'],
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
@@ -43,8 +41,6 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(LogMiddleware);
 
-// app.use('/', chatRouter);
-// app.use('/', chat); // 레이어드 아키텍처 적용 전 임시 라우터
 app.use('/', router);
 
 app.use(generalErrorHandler);
@@ -62,7 +58,8 @@ const server = HttpServer(app);
 // Socket.IO 서버에도 CORS 적용
 const io = initializeSocket(server, {
     cors: {
-        origin: ['https://byeolgom.com', 'https://friendj.store', 'https://cestsympa.store'],
+        // origin: ['https://byeolgom.com', 'https://friendj.store', 'https://cestsympa.store'],
+        origin: ['https://byeolgom.com', 'https://friendj.store'],
         methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
         allowedHeaders: ['Content-Type', 'Authorization'],
         credentials: true,
