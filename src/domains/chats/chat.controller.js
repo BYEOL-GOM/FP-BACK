@@ -1,5 +1,5 @@
 import * as chatService from './chat.service.js';
-import { createChatRoomSchema, roomIdSchema } from './chat.joi.js';
+import { createChatRoomSchema, roomIdSchema } from './chat.joy.js';
 import { AppError } from '../../utils/AppError.js';
 
 // 채팅방 생성

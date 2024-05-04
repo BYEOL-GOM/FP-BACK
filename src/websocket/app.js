@@ -8,7 +8,7 @@ import generalErrorHandler from '../middlewares/generalErrorMiddleware.js';
 import { loadBannedWords } from '../utils/bannedWordsLoader.js';
 import initializeSocket from './chats/socket.js'; // socket.js 파일에서 함수 가져오기
 // import chatRouter from './chats/chat.router.js';
-import chat from './chats/chat.js';
+// import chat from './chats/chat.js';
 import router from './index.js';
 
 // 환경 변수 설정 로드
@@ -43,7 +43,7 @@ app.use(cookieParser());
 app.use(LogMiddleware);
 
 // app.use('/', chatRouter);
-app.use('/', chat); // 레이어드 아키텍처 적용 전 임시 라우터
+// app.use('/', chat); // 레이어드 아키텍처 적용 전 임시 라우터
 app.use('/', router);
 
 app.use(generalErrorHandler);
@@ -67,4 +67,3 @@ app.get('/', (req, res) => {
 });
 
 server.listen(PORT, () => console.log(`${PORT} 포트로 서버가 열렸어요!`));
-//

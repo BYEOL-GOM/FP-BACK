@@ -53,13 +53,7 @@ export const getChatRooms = async (page, limit, userId) => {
         const rooms = await chatRepository.findRoomsByUser(page, limit, userId);
 
         if (rooms.length === 0) {
-            // return { page, limit, totalCount: 0, rooms: [] };
-            return res.status(200).json({
-                page,
-                limit,
-                totalCount: 0,
-                rooms: [],
-            });
+            return { page, limit, totalCount: 0, formattedPastMessages: [] };
         }
         const totalCount = await chatRepository.countRoomsByUser(userId);
 
@@ -116,7 +110,7 @@ export const getPastMessages = async (roomId, userId, page, limit) => {
         const pastMessages = await chatRepository.findMessagesByRoomId(roomId, page, limit);
         // 채팅 메시지가 없는 경우
         if (pastMessages.length === 0) {
-            return res.json({ page, limit, totalCount: 0, formattedPastMessages: [] });
+            return { page, limit, totalCount: 0, formattedPastMessages: [] };
         }
 
         // 채팅방 과거 메세지 전체 개수 세기
