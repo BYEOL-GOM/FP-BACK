@@ -8,7 +8,7 @@
 
 ---
 
-# **⭐️별곰��**
+# **⭐️별곰🐻**
 
 ![Frame_4](https://github.com/BYEOL-GOM/FP-FRONT/assets/157693710/31abc8ef-8002-4760-a916-5ff6bf73f8aa)
 
