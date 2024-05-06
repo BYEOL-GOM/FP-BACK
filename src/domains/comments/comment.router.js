@@ -11,15 +11,14 @@ const router = express.Router();
 
 // 답장 보내기
 router.post('/worries/:worryId/comments/:commentId?', authMiddleware, createReplyController);
-// router.post('/worries/:worryId/comments/:commentId?', createReplyController);
 
 //  나에게 온 메세지 전체 조회
 router.get('/comments', authMiddleware, getAllLatestMessagesController);
 
 // 답장 상세조회
 router.get('/comments/:commentId', authMiddleware, getCommentDetailController);
-// router.get('/comments/:commentId', getCommentDetailController);
 
 // 별 수확하기
 router.post('/harvest', authMiddleware, updateFruitCountController);
+
 export default router;

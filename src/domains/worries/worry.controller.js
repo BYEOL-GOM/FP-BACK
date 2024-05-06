@@ -11,7 +11,6 @@ export const createWorryController = async (req, res, next) => {
         }
         const { content, icon, fontColor } = value;
         const userId = res.locals.user.userId;
-        // const { userId } = req.body;
 
         const worry = await worryService.createWorry(content, icon, +userId, fontColor);
 
@@ -33,7 +32,6 @@ export const worryDetailController = async (req, res, next) => {
         }
         const { worryId } = value;
         const userId = res.locals.user.userId;
-        // const { userId } = req.body;
 
         const worryDetail = await worryService.getWorryDetail(+worryId, +userId);
         res.status(200).json(worryDetail);
@@ -61,7 +59,6 @@ export const deleteSelectedWorryController = async (req, res, next) => {
         }
         const { worryId, commentId } = value;
         const userId = res.locals.user.userId;
-        // const { userId } = req.body;
 
         await worryService.deleteSelectedWorry(+worryId, +userId, +commentId);
 
@@ -80,7 +77,6 @@ export const reportMessageController = async (req, res, next) => {
         }
         const { worryId, commentId } = paramsValue;
         const userId = res.locals.user.userId;
-        // const { userId } = req.body;
 
         const { value: bodyValue, error: bodyError } = reportReasonSchema.validate(req.body);
         if (bodyError) {
@@ -100,8 +96,6 @@ export const reportMessageController = async (req, res, next) => {
 export const getRemainingWorries = async (req, res, next) => {
     try {
         const userId = res.locals.user.userId;
-        // const { userId } = req.body;
-
         const remainingWorries = await worryService.findRemainingWorriesByUserId(+userId);
 
         res.json({ remainingWorries });

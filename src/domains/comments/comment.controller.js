@@ -6,7 +6,6 @@ import { AppError } from '../../utils/AppError.js';
 export const getAllLatestMessagesController = async (req, res, next) => {
     try {
         const userId = res.locals.user.userId;
-        // const { userId } = req.body;
         const latestMessages = await commentService.getAllLatestMessages(+userId);
         return res.json(latestMessages);
     } catch (error) {
@@ -23,7 +22,6 @@ export const getCommentDetailController = async (req, res, next) => {
         }
         const { commentId } = value;
         const userId = res.locals.user.userId;
-        // const { userId } = req.body;
 
         const details = await commentService.getCommentDetail(+commentId, +userId);
         res.json(details);
@@ -44,7 +42,7 @@ export const createReplyController = async (req, res, next) => {
         const { worryId, commentId } = paramsValue;
         const { content, fontColor } = bodyValue;
         const userId = res.locals.user.userId;
-        // const { userId } = req.body;
+
         const comment = await commentService.createReply(+worryId, +commentId, content, +userId, fontColor);
 
         return res.status(201).json({ message: '답변이 전송되었습니다.', comment });
@@ -56,7 +54,6 @@ export const createReplyController = async (req, res, next) => {
 // # 별 수확하기
 export const updateFruitCountController = async (req, res, next) => {
     try {
-        // const { userId } = req.body;
         const userId = res.locals.user.userId;
         const result = await commentService.updateFuitCount(+userId);
         res.status(201).json(result);
