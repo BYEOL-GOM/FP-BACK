@@ -76,7 +76,7 @@ jobs:
                       docker stop ${{ env.CONTAINER_NAME }} || true
                       docker rm ${{ env.CONTAINER_NAME }} || true
                       if docker run -d --name ${{ env.CONTAINER_NAME }} -p ${{ env.CONTAINER_PORT }}:3000 \
-                        -v /var/log/myapp-websocket:/app/logs \  
+                        -v /var/log/myapp-websocket:/app/logs \
                         -e NODE_ENV="${{ env.NODE_ENV }}" \
                         -e CORS_ORIGIN="${{ env.CORS_ORIGIN }}" \
                         -e KAKAO_REDIRECT_URI="${{ env.KAKAO_REDIRECT_URI }}" \
