@@ -9,7 +9,6 @@ import bodyParser from 'body-parser';
 import { loadBannedWords } from '../utils/bannedWordsLoader.js';
 import { swaggerUi, specs } from '../swagger/swaggerOptions.js';
 import './scheduler.js';
-import validUrl from 'valid-url';
 import morgan from 'morgan';
 import * as Sentry from '@sentry/node';
 import { Integrations } from '@sentry/tracing';
@@ -33,18 +32,10 @@ if (process.env.SENTRY_DSN) {
     app.use(Sentry.Handlers.requestHandler());
     app.use(Sentry.Handlers.tracingHandler());
 }
-// // // CORS_ORIGIN 환경 변수가 유효한 URL 형식인지 검증
-
-// const corsOrigin = process.env.CORS_ORIGIN;
-// if (!validUrl.isWebUri(corsOrigin)) {
-//     console.error('Invalid CORS_ORIGIN:', corsOrigin);
-//     process.exit(1);
-// }
 
 // CORS 미들웨어 설정
 app.use(
     cors({
-        // origin: [process.env.CORS_ORIGIN, 'https://friendj.store'],
         origin: [process.env.CORS_ORIGIN],
         methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
         allowedHeaders: ['Content-Type', 'Authorization'],
