@@ -46,6 +46,7 @@ jobs:
             - name: Setup environment variables
               run: |
                   if [ "${{ github.ref }}" == "refs/heads/dev" ]; then
+                    echo "NODE_ENV=production" >> $GITHUB_ENV
                     echo "CORS_ORIGIN=${{ secrets.CORS_ORIGIN_DEV }}" >> $GITHUB_ENV
                     echo "KAKAO_REDIRECT_URI=${{ secrets.DEV_KAKAO_REDIRECT_URI }}" >> $GITHUB_ENV
                     echo "DATABASE_URL=${{ secrets.DEV_DATABASE_URL }}" >> $GITHUB_ENV
@@ -53,6 +54,7 @@ jobs:
                     echo "CONTAINER_PORT=${{ secrets.DEV_PORT }}" >> $GITHUB_ENV
                     echo "NAVER_REDIRECT_URI=${{ secrets.DEV_NAVER_REDIRECT_URI }}" >> $GITHUB_ENV
                   else
+                    echo "NODE_ENV=production" >> $GITHUB_ENV
                     echo "CORS_ORIGIN=${{ secrets.CORS_ORIGIN_PROD }}" >> $GITHUB_ENV
                     echo "KAKAO_REDIRECT_URI=${{ secrets.PROD_KAKAO_REDIRECT_URI }}" >> $GITHUB_ENV
                     echo "DATABASE_URL=${{ secrets.PROD_DATABASE_URL }}" >> $GITHUB_ENV
@@ -76,6 +78,7 @@ jobs:
                       docker stop ${{ env.CONTAINER_NAME }} || true
                       docker rm ${{ env.CONTAINER_NAME }} || true
                       if docker run -d --name ${{ env.CONTAINER_NAME }} -p ${{ env.CONTAINER_PORT }}:3000 \
+                        -e NODE_ENV="${{ env.NODE_ENV }}" \
                         -e CORS_ORIGIN="${{ env.CORS_ORIGIN }}" \
                         -e KAKAO_REDIRECT_URI="${{ env.KAKAO_REDIRECT_URI }}" \
                         -e DATABASE_URL="${{ env.DATABASE_URL }}" \
