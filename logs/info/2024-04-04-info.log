@@ -112,3 +112,8 @@
 {"level":"info","message":"Method: DELETE, URL: /32, Status: 400, Duration: 4ms","timestamp":"2024-04-04T14:31:31.793Z"}
 {"level":"info","message":"Method: DELETE, URL: /40, Status: 404, Duration: 45ms","timestamp":"2024-04-04T14:35:48.267Z"}
 {"level":"info","message":"Method: DELETE, URL: /32, Status: 403, Duration: 77ms","timestamp":"2024-04-04T14:47:45.621Z"}
+{"level":"info","message":"Method: GET, URL: /FP-BACK/src/index.html, Status: 404, Duration: 13ms","timestamp":"2024-04-03T17:34:40.751Z"}
+{"level":"info","message":"Method: POST, URL: /, Status: 201, Duration: 378ms","timestamp":"2024-04-04T10:11:50.404Z"}
+{"level":"info","message":"Method: POST, URL: /worries/353/comments, Status: 201, Duration: 65ms","timestamp":"2024-04-04T10:11:58.070Z"}
+{"level":"info","message":"Method: POST, URL: /worries/353/comments/171/sendLike, Status: 401, Duration: 2ms","timestamp":"2024-04-04T10:12:12.891Z"}
+{"level":"info","message":"Method: GET, URL: /mySolvedWorry/1?page=1&limit=10, Status: 401, Duration: 0ms","timestamp":"2024-04-04T10:12:32.428Z"}
